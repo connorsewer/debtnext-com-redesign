@@ -137,6 +137,21 @@ export function HomepageHero() {
             },
           }
         );
+
+        // 4. Fade the hero's accounts panel back out as the section un-pins.
+        // Otherwise it visually duplicates the docked panel in the handoff
+        // section rising up below. This keeps only one panel on screen at
+        // any moment during the transition.
+        gsap.to(panel, {
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "bottom bottom",
+            end: "bottom bottom-=200",
+            scrub: true,
+          },
+        });
       };
 
       if (video.readyState >= 1) wire();
@@ -207,10 +222,24 @@ export function HomepageHero() {
           </div>
         )}
 
-        {/* Dark vignette to anchor the overlay text */}
+        {/* Subtle global vignette — toned down from the original so the
+            cinematic atmospherics of the video carry through. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60"
+          className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40"
+        />
+
+        {/* Localized scrim behind the text block. A vertical band stronger
+            in the middle where the headline + form sit, so the overlay
+            stays legible against the brightest part of the cinematic
+            (sky / water highlights) without flattening the whole image. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-1/4 bottom-1/4 bg-gradient-radial from-black/45 via-black/20 to-transparent"
+          style={{
+            background:
+              "radial-gradient(ellipse 60% 80% at 50% 50%, rgba(0,0,0,0.55), rgba(0,0,0,0.25) 60%, transparent 100%)",
+          }}
         />
 
         {/* Layer 2: overlay — headline, subhead, form, disclaimer */}
@@ -221,11 +250,17 @@ export function HomepageHero() {
           <div className="mx-auto flex w-full max-w-[var(--container-content)] flex-col items-center text-center">
             <h1
               className="text-balance text-[clamp(2.75rem,8vw,7rem)] font-[500] leading-[0.95] tracking-[-0.02em] text-white"
-              style={{ fontVariationSettings: '"wght" 500' }}
+              style={{
+                fontVariationSettings: '"wght" 500',
+                textShadow: "0 2px 30px rgba(0,0,0,0.5)",
+              }}
             >
               {heroCinematic.headline}
             </h1>
-            <p className="mt-6 max-w-2xl text-body-lg text-white/80 md:mt-8">
+            <p
+              className="mt-6 max-w-2xl text-body-lg text-white/90 md:mt-8"
+              style={{ textShadow: "0 1px 16px rgba(0,0,0,0.6)" }}
+            >
               {heroCinematic.subhead}
             </p>
 
@@ -244,7 +279,7 @@ export function HomepageHero() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={heroCinematic.attachedForm.placeholder}
-                className="h-[46px] min-w-0 flex-1 rounded-l-[var(--radius-md)] border border-white/30 bg-white/5 px-5 text-body-strong text-white placeholder:text-white/60 backdrop-blur-xl focus:border-[var(--primary)] focus:outline-none"
+                className="h-[46px] min-w-0 flex-1 rounded-l-[var(--radius-md)] border border-white/40 bg-black/40 px-5 text-body-strong text-white placeholder:text-white/70 backdrop-blur-xl focus:border-[var(--primary)] focus:outline-none"
               />
               <button
                 type="submit"
@@ -258,7 +293,7 @@ export function HomepageHero() {
           {/* Bottom-pinned disclaimer pill (inside the hero section so it
               scrolls away with the rest of the overlay) */}
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 md:bottom-10">
-            <p className="rounded-[var(--radius-xl)] border border-white/15 bg-black/40 px-5 py-2 text-body-sm text-white/80 backdrop-blur-xl">
+            <p className="rounded-[var(--radius-xl)] border border-white/25 bg-black/60 px-5 py-2 text-body-sm text-white/90 backdrop-blur-xl">
               {heroCinematic.disclaimer}
             </p>
           </div>

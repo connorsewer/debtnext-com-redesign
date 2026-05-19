@@ -72,8 +72,13 @@ export function HomepageHandoffSection() {
           </div>
         </div>
 
-        <div className="flex justify-end">
-          <HeroAccountsPanel />
+        {/* Match the hero's panel width so the swap is visually continuous
+            at the moment the sticky un-pins. The hero panel is max-w-[400px]
+            and right-aligned via the sticky wrapper's flex justify-end. */}
+        <div className="flex justify-end lg:justify-self-end">
+          <div className="w-full max-w-[400px]">
+            <HeroAccountsPanel />
+          </div>
         </div>
       </div>
     </SectionContainer>
