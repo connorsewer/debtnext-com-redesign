@@ -16,21 +16,11 @@ export const homepageMeta = {
   canonical: "https://debtnext.com/",
 } as const;
 
-export const homepageHero = {
-  eyebrow: "Recovery management software",
-  h1: "Recovery operations, unified.",
-  body:
-    "Place accounts, manage agencies, track outcomes, and prove compliance from a single platform. dPlat connects credit originators with their recovery vendor network, so portfolio activity stays in one place instead of stitched across spreadsheets and email threads.",
-  primaryCta: { label: "Request a demo", href: "/demo" },
-  secondaryCta: { label: "See how it works", href: "#how-it-works" },
-  media: {
-    video: "/hero/homepage-hero.mp4",
-    poster: "/hero/homepage-hero-poster.png",
-    alt:
-      "dPlat operational dashboard showing portfolio activity, agency performance, and exception status on a dark surface.",
-  },
-} as const;
-
+// Legacy split-hero content. Superseded on the homepage by the
+// cinematic HomepageHero (see src/content/homepage-hero.ts). Kept
+// here only because other modules historically imported headline /
+// body copy from it; safe to remove once nothing references it.
+//
 // [CLAIMS REVIEW] Andrew to confirm whether "9 of 10 largest US utility
 // companies" can appear here, or stays as the softer category framing.
 export const homepageTrust = {

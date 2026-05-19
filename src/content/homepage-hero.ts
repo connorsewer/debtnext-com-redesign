@@ -23,10 +23,12 @@ export const heroCinematic = {
     "Recovery management software for credit originators. In production since 2003.",
   media: {
     video: "/hero/homepage-hero.mp4",
-    startFrame: "/hero/homepage-hero-poster.png",
-    // endFrame replaces startFrame once Connor's asset arrives. Falling back
-    // to startFrame keeps the hero functional until then.
-    endFrame: "/hero/homepage-hero-poster.png",
+    // Extracted from the mp4 (first frame); used as the LCP target and
+    // as the video element's poster while it loads.
+    startFrame: "/hero/homepage-hero-start.png",
+    // Extracted from the mp4 (last frame); fades in alongside the video
+    // fade-out during the 90-100% handoff window.
+    endFrame: "/hero/homepage-hero-end.png",
   },
 } as const;
 

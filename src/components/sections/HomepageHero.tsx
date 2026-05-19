@@ -37,6 +37,7 @@ export function HomepageHero() {
   const sectionRef = React.useRef<HTMLElement | null>(null);
   const stickyRef = React.useRef<HTMLDivElement | null>(null);
   const videoRef = React.useRef<HTMLVideoElement | null>(null);
+  const endFrameRef = React.useRef<HTMLDivElement | null>(null);
   const overlayRef = React.useRef<HTMLDivElement | null>(null);
   const panelRef = React.useRef<HTMLDivElement | null>(null);
   const [email, setEmail] = React.useState("");
@@ -59,7 +60,8 @@ export function HomepageHero() {
       const section = sectionRef.current;
       const overlay = overlayRef.current;
       const panel = panelRef.current;
-      if (!video || !section || !overlay || !panel) return;
+      const endFrame = endFrameRef.current;
+      if (!video || !section || !overlay || !panel || !endFrame) return;
 
       const wire = () => {
         // 1. Scrub video frame-by-frame from 0 to its duration as the
@@ -89,18 +91,36 @@ export function HomepageHero() {
           },
         });
 
-        // 3. Video fades out and accounts panel fades+scales in during
-        //    the last 10% — the handoff window.
+        // 3. Handoff window (90%-100%):
+        //    - Video fades out
+        //    - End-frame image fades in beneath it (visual continuity
+        //      since the video's last frame matches end-frame.png)
+        //    - Accounts panel fades + scales in on top
         gsap.to(video, {
           opacity: 0,
           ease: "none",
           scrollTrigger: {
             trigger: section,
-            start: "90% bottom",
+            start: "85% bottom",
             end: "bottom bottom",
             scrub: true,
           },
         });
+
+        gsap.fromTo(
+          endFrame,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "80% bottom",
+              end: "95% bottom",
+              scrub: true,
+            },
+          }
+        );
 
         gsap.fromTo(
           panel,
@@ -167,6 +187,24 @@ export function HomepageHero() {
             aria-hidden="true"
             className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
           />
+        )}
+
+        {/* End-frame image. Hidden until 80% scroll, fades in to provide
+            visual continuity behind the panel after the video fades out. */}
+        {!isMobile && (
+          <div
+            ref={endFrameRef}
+            aria-hidden="true"
+            className="absolute inset-0 opacity-0"
+          >
+            <Image
+              src={heroCinematic.media.endFrame}
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
         )}
 
         {/* Dark vignette to anchor the overlay text */}
