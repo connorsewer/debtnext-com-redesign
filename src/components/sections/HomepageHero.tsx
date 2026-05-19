@@ -82,6 +82,11 @@ export function HomepageHero() {
             overlay.style.opacity = String(1 - overlayOut);
             overlay.style.transform = `translateY(${-50 * overlayOut}px)`;
 
+            // Video fades IN once the user starts scrolling (0 → 3%) so
+            // at rest the high-res start-frame PNG owns the viewport.
+            // The video's first frame is lower resolution (1280×720) and
+            // would otherwise cover the 1536×1024 PNG.
+            const videoIn = ease(0.0, 0.03, p);
             // End-frame fades in 60 → 80% (behind the video for continuity)
             const endFrameIn = ease(0.6, 0.8, p);
             // Video fades out 70 → 88%
@@ -94,7 +99,8 @@ export function HomepageHero() {
             endFrame.style.opacity = String(endFrameIn);
             endFrame.style.transform = `translateX(${tx}%) scale(${scale})`;
             endFrame.style.transformOrigin = "center center";
-            video.style.opacity = String(1 - videoOut);
+            // Combine the fade-in and the late fade-out into one opacity
+            video.style.opacity = String(videoIn * (1 - videoOut));
           },
         });
       };
@@ -137,7 +143,9 @@ export function HomepageHero() {
           className="absolute inset-0 object-cover"
         />
 
-        {/* Video — scrubbed by scroll progress. */}
+        {/* Video — scrubbed by scroll progress. Starts at opacity 0 so the
+            high-res start-frame PNG is what fills the viewport at rest;
+            video fades in across the first 3% of scroll. */}
         {!isMobile && (
           <video
             ref={videoRef}
@@ -147,6 +155,7 @@ export function HomepageHero() {
             playsInline
             preload="auto"
             aria-hidden="true"
+            style={{ opacity: 0 }}
             className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
           />
         )}
