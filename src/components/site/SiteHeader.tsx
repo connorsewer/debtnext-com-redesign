@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { MobileNav } from "@/components/site/MobileNav";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
-import { primaryCta, primaryNav } from "@/content/nav";
+import { platformSubNav, primaryCta, primaryNav } from "@/content/nav";
 
 function isCurrentRoute(linkHref: string, pathname: string): boolean {
   if (linkHref === "/") return pathname === "/";
@@ -59,20 +59,70 @@ export function SiteHeader() {
         >
           {primaryNav.map((link) => {
             const isActive = isCurrentRoute(link.href, pathname);
+            const hasDropdown = link.href === "/platform";
+
+            const linkClass = cn(
+              "relative inline-flex items-center gap-1 text-[var(--text-body-strong)] font-[420] transition-colors duration-[var(--duration-instant)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)] aria-[current=page]:text-white",
+              isActive
+                ? "after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-px after:bg-[var(--primary)]"
+                : "text-[var(--text-tertiary)]"
+            );
+
+            if (!hasDropdown) {
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={linkClass}
+                >
+                  {link.label}
+                </Link>
+              );
+            }
+
             return (
-              <Link
-                key={link.href}
-                href={link.href}
-                aria-current={isActive ? "page" : undefined}
-                className={cn(
-                  "relative text-[var(--text-body-strong)] font-[420] transition-colors duration-[var(--duration-instant)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)] aria-[current=page]:text-white",
-                  isActive
-                    ? "after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-px after:bg-[var(--primary)]"
-                    : "text-[var(--text-tertiary)]"
-                )}
-              >
-                {link.label}
-              </Link>
+              <div key={link.href} className="group relative">
+                <Link
+                  href={link.href}
+                  aria-current={isActive ? "page" : undefined}
+                  aria-haspopup="menu"
+                  className={linkClass}
+                >
+                  {link.label}
+                  <svg
+                    width="10"
+                    height="6"
+                    viewBox="0 0 10 6"
+                    fill="none"
+                    aria-hidden="true"
+                    className="opacity-70 transition-transform duration-[var(--duration-instant)] group-hover:rotate-180 group-focus-within:rotate-180"
+                  >
+                    <path
+                      d="M1 1l4 4 4-4"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </Link>
+                <div
+                  role="menu"
+                  aria-label="Platform capabilities"
+                  className="invisible absolute left-0 top-full z-40 mt-2 w-72 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-2 opacity-0 shadow-[var(--shadow-nav)] transition-[opacity,transform] duration-[var(--duration-instant)] -translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0"
+                >
+                  {platformSubNav.map((sub) => (
+                    <Link
+                      key={sub.href}
+                      href={sub.href}
+                      role="menuitem"
+                      className="block rounded-[var(--radius-xs)] px-3 py-2 text-body-md text-[var(--text-tertiary)] hover:bg-[var(--accent)] hover:text-white focus-visible:bg-[var(--accent)] focus-visible:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+                    >
+                      {sub.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             );
           })}
         </nav>

@@ -16,6 +16,18 @@ export const primaryNav: NavLink[] = [
   { label: "Company", href: "/company" },
 ];
 
+/**
+ * Platform subpages exposed in the desktop nav dropdown.
+ * Mobile nav still shows just the top-level routes.
+ */
+export const platformSubNav: NavLink[] = [
+  { label: "Placement Management", href: "/platform/placement" },
+  { label: "Optimization Engine", href: "/platform/optimization" },
+  { label: "Issues Management", href: "/platform/issues" },
+  { label: "Reporting and Dashboards", href: "/platform/reporting" },
+  { label: "All capabilities", href: "/platform" },
+];
+
 export const primaryCta: NavLink = {
   label: "Request a demo",
   href: "/demo",
