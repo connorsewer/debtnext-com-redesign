@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://debtnext.com"
   ),
   title: {
-    default: "dPlat — Recovery management software",
+    default: "dPlat: Recovery management software",
     template: "%s | dPlat",
   },
   description:
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   applicationName: "dPlat",
   authors: [{ name: "DebtNext" }],
   openGraph: {
-    title: "dPlat — Recovery management software",
+    title: "dPlat: Recovery management software",
     description:
       "Recovery operations, unified. dPlat connects credit originators with their recovery vendor network.",
     type: "website",

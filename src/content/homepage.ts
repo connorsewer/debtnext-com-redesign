@@ -4,6 +4,9 @@
  * exposes its sections as typed data for the page components.
  *
  * Voice rules per CLAUDE.md §5. No em dashes. No banned phrases.
+ *
+ * [CLAIMS REVIEW] flags are preserved as comments where the .md brief
+ * carried one. Andrew Budish to confirm exact framing before launch.
  */
 
 export const homepageMeta = {
@@ -26,4 +29,137 @@ export const homepageHero = {
     alt:
       "dPlat operational dashboard showing portfolio activity, agency performance, and exception status on a dark surface.",
   },
+} as const;
+
+// [CLAIMS REVIEW] Andrew to confirm whether "9 of 10 largest US utility
+// companies" can appear here, or stays as the softer category framing.
+export const homepageTrust = {
+  eyebrow: "Trusted across regulated industries",
+  industries: [
+    "Major US utility providers",
+    "Fortune 100 financial institutions",
+    "Telecom carriers",
+    "Fintech lenders",
+    "Publicly traded debt purchasers",
+  ],
+} as const;
+
+export const homepageFeatureAccordion = {
+  eyebrow: "How it works",
+  heading: "One platform across the recovery lifecycle.",
+  intro:
+    "dPlat replaces the patchwork of spreadsheets, vendor portals, and one-off integrations that credit originators stitch together to manage recovery. Each module below is configurable to your portfolio and vendor mix.",
+  items: [
+    {
+      id: "placement",
+      title: "Placement Management",
+      body:
+        "Move accounts to the right vendor at the right time. The decision engine applies your placement rules across treatment tiers, vendor pools, and account attributes. Recalls, reallocations, and bonus structures run automatically.",
+      visualLabel: "Placement matrix with vendor allocation bars",
+    },
+    {
+      id: "optimization",
+      title: "Optimization Engine",
+      body:
+        "Reward high-performing vendors with more volume. The optimization engine evaluates closed pool performance and adjusts future placement share based on your configured parameters.",
+      visualLabel: "Performance comparison across vendor pools",
+    },
+    {
+      id: "issues",
+      title: "Issues Management",
+      body:
+        "Resolve disputes, complaints, and exceptions in one place. Every interaction is logged. SLA timers enforce response windows. Outcomes route accounts back to treatment or to permanent recall.",
+      visualLabel: "Issue worklist with SLA badges",
+    },
+    {
+      id: "reporting",
+      title: "Reporting and Dashboards",
+      body:
+        "Get the numbers without building them yourself. Pre-built reports cover liquidation, cost, net-back, and activity. Configurable dashboards feed your BI environment if you have one.",
+      visualLabel: "Executive dashboard with multiple chart panels",
+    },
+    {
+      id: "compliance",
+      title: "Compliance and Audit",
+      body:
+        "Work standards measure vendor adherence to your SLAs. Exception conditions surface deceased, bankruptcy, SCRA, and other regulated states automatically. Every action has an audit trail.",
+      visualLabel: "Work standards configuration screen",
+    },
+  ],
+} as const;
+
+// [CLAIMS REVIEW] Andrew to confirm exact framing on each metric.
+export const homepageProof = {
+  eyebrow: "At scale, in production",
+  stats: [
+    {
+      number: "60M+ accounts",
+      label: "Active inventory across client portfolios",
+    },
+    {
+      number: "$1.5B+",
+      label: "In payments annually",
+      caption: "Processed through the platform on behalf of clients",
+    },
+    {
+      number: "20+ years",
+      label: "In production",
+      caption: "Building recovery software since 2003",
+    },
+  ],
+} as const;
+
+export const homepageBenefitSplit = {
+  heading: "Place every account where it's most likely to recover.",
+  body:
+    "The dPlat decision engine takes your placement strategy and runs it. Treatment tiers, vendor pools, allocation percentages, and recall rules execute against your live portfolio without manual intervention. When a pool closes, optimization data refreshes your future allocations.",
+  bullets: [
+    "Configurable business rules at the tier, pool, and account-attribute level",
+    "Daily reconciliation with vendors keeps account balances accurate",
+    "Allocation changes apply without a release cycle",
+  ],
+  link: { label: "Explore placement management", href: "/platform/placement" },
+  media: {
+    src: "/product/dashboard-dark.png",
+    alt:
+      "dPlat decision-engine dashboard showing placement allocations adjusting after a pool close.",
+    width: 1600,
+    height: 1000,
+  },
+} as const;
+
+export const homepageIntegration = {
+  heading: "Plug into the systems you already use.",
+  body:
+    "dPlat connects to your billing system, your existing collection agencies, your law firms, and the data services you rely on for skip tracing, bankruptcy, deceased screening, and credit bureau enrichment. Integration patterns are SFTP, API, and direct file exchange.",
+  cards: [
+    {
+      title: "Billing systems",
+      body: "Real-time or scheduled account loads. Custom mapping per source.",
+      iconKey: "billing" as const,
+    },
+    {
+      title: "Recovery vendors",
+      body: "Agencies, law firms, and debt purchasers on a single web portal.",
+      iconKey: "vendors" as const,
+    },
+    {
+      title: "Data enrichment",
+      body: "Bankruptcy, decedent, SCRA, credit bureau, skip-tracing services.",
+      iconKey: "data" as const,
+    },
+    {
+      title: "BI platforms",
+      body: "Direct extracts to your warehouse plus built-in dashboards.",
+      iconKey: "bi" as const,
+    },
+  ],
+} as const;
+
+export const homepageFinalCta = {
+  heading: "Build a clearer recovery operation.",
+  body:
+    "See how dPlat handles your portfolio. Demos are run by the people who configure the platform, not a generic sales rep.",
+  primaryCta: { label: "Request a demo", href: "/demo" },
+  reassurance: "30-minute walkthrough. No commitment.",
 } as const;
