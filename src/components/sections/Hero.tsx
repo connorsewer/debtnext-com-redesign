@@ -35,7 +35,6 @@ export function Hero() {
           <h1
             id="hero-heading"
             className="mt-5 text-[length:var(--text-h1)] font-[480] leading-[var(--text-h1--line-height)] text-[var(--foreground)] md:mt-6"
-            style={{ fontSize: "var(--text-display-lg)" }}
           >
             {h1}
           </h1>
