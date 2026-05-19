@@ -250,6 +250,7 @@
 
   html {
     color-scheme: dark;
+    scroll-behavior: smooth;
     @apply bg-background text-foreground font-sans;
   }
 
@@ -279,6 +280,30 @@
   ::selection {
     background: var(--primary);
     color: var(--primary-foreground);
+  }
+
+  /* Skip-to-content link — visually hidden until focused.
+     Required for keyboard users to bypass the sticky header. */
+  .skip-link {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-size: var(--text-body-strong);
+    font-weight: 480;
+    transform: translateY(-200%);
+    transition: transform var(--duration-fast) var(--ease-standard);
+  }
+
+  .skip-link:focus,
+  .skip-link:focus-visible {
+    transform: translateY(0);
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
   }
 }
 

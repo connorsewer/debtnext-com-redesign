@@ -12,6 +12,8 @@ The content is in `content/pages/*.md`. Treat it as approved copy. Do not rewrit
 
 The content map is `docs/content-map.md`. It tells you which pages exist, what each page's purpose is, and which content sources back which claims.
 
+The persistent design brief is `.impeccable.md` at the repo root. It defines who the design is for, the 3-word brand personality, anti-references, and the 5 design principles that override default UI judgment. Read it before any design or copy work.
+
 ## 2. Tech stack
 
 - Next.js 15 with App Router

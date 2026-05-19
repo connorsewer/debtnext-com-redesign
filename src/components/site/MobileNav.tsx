@@ -2,11 +2,18 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
 
 import { Button } from "@/components/ui/button";
 import { track } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 import { primaryCta, primaryNav } from "@/content/nav";
+
+function isCurrentRoute(linkHref: string, pathname: string): boolean {
+  if (linkHref === "/") return pathname === "/";
+  return pathname === linkHref || pathname.startsWith(`${linkHref}/`);
+}
 
 /**
  * Mobile navigation drawer. Pattern from DESIGN.md §7.1 (mobile open):
@@ -16,6 +23,7 @@ import { primaryCta, primaryNav } from "@/content/nav";
  * - 44px touch targets per a11y floor
  */
 export function MobileNav() {
+  const pathname = usePathname() ?? "/";
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -85,18 +93,36 @@ export function MobileNav() {
 
           <nav
             aria-label="Mobile primary"
-            className="flex flex-1 flex-col gap-1 px-4 pt-4 pb-8"
+            className="flex flex-1 flex-col gap-1 overflow-y-auto px-4 pt-4 pb-8"
           >
-            {primaryNav.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="flex h-12 items-center text-[var(--text-h4)] font-[480] text-[var(--foreground)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {primaryNav.map((link) => {
+              const isActive = isCurrentRoute(link.href, pathname);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={isActive ? "page" : undefined}
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "flex h-12 items-center text-[var(--text-h4)] font-[480] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]",
+                    isActive
+                      ? "text-white"
+                      : "text-[var(--foreground)]"
+                  )}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "mr-3 inline-block h-1 w-3 rounded-[var(--radius-xs)]",
+                      isActive
+                        ? "bg-[var(--primary)]"
+                        : "bg-transparent"
+                    )}
+                  />
+                  {link.label}
+                </Link>
+              );
+            })}
             <div className="mt-6">
               <Button
                 asChild

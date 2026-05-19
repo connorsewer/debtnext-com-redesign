@@ -34,7 +34,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#171721",
+  // Pin the browser chrome to the dark canvas under both scheme preferences;
+  // the site itself remains dark-first regardless of the user's OS setting.
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#171721" },
+    { media: "(prefers-color-scheme: light)", color: "#171721" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
@@ -45,8 +50,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${inter.variable}`}>
       <body className="flex min-h-full flex-col">
+        <a href="#main" className="skip-link sr-only focus:not-sr-only">
+          Skip to main content
+        </a>
         <SiteHeader />
-        <main className="flex-1">{children}</main>
+        <main id="main" className="flex-1">
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>

@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
  * - link: text-only inline action.
  */
 const buttonVariants = cva(
-  "group/button relative inline-flex shrink-0 items-center justify-center whitespace-nowrap font-sans transition-colors duration-[var(--duration-instant)] ease-[var(--ease-standard)] outline-none select-none disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button relative inline-flex shrink-0 items-center justify-center whitespace-nowrap font-sans transition-colors duration-[var(--duration-instant)] ease-[var(--ease-standard)] outline-none select-none touch-manipulation disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {

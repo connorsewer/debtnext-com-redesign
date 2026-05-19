@@ -2,12 +2,18 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "@/components/site/MobileNav";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { primaryCta, primaryNav } from "@/content/nav";
+
+function isCurrentRoute(linkHref: string, pathname: string): boolean {
+  if (linkHref === "/") return pathname === "/";
+  return pathname === linkHref || pathname.startsWith(`${linkHref}/`);
+}
 
 /**
  * Top navigation. DESIGN.md §7.1:
@@ -17,6 +23,7 @@ import { primaryCta, primaryNav } from "@/content/nav";
  * - Semantic <header> + <nav>; mobile drawer in MobileNav
  */
 export function SiteHeader() {
+  const pathname = usePathname() ?? "/";
   const [scrolled, setScrolled] = React.useState(false);
 
   React.useEffect(() => {
@@ -50,15 +57,24 @@ export function SiteHeader() {
           aria-label="Primary"
           className="hidden items-center gap-8 md:flex"
         >
-          {primaryNav.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-[var(--text-body-strong)] font-[420] text-[var(--text-tertiary)] transition-colors duration-[var(--duration-instant)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {primaryNav.map((link) => {
+            const isActive = isCurrentRoute(link.href, pathname);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                className={cn(
+                  "relative text-[var(--text-body-strong)] font-[420] transition-colors duration-[var(--duration-instant)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)] aria-[current=page]:text-white",
+                  isActive
+                    ? "after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-px after:bg-[var(--primary)]"
+                    : "text-[var(--text-tertiary)]"
+                )}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-3">
