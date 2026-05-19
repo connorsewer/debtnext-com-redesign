@@ -1,0 +1,295 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   DebtNext design tokens — Mercury-style, dark-canvas-first
+   Source of truth: DESIGN.md §4 + §5
+   ============================================================ */
+
+:root {
+  /* Light token set — opt-in only via .theme-light wrappers
+     (decision-engine band, integration ecosystem strip, etc.) */
+  --background: #FFFFFF;
+  --foreground: #171721;
+  --card: #FFFFFF;
+  --card-foreground: #171721;
+  --card-alt: #f4f4f5;
+  --popover: #FFFFFF;
+  --popover-foreground: #171721;
+  --primary: #5266EB;
+  --primary-foreground: #FFFFFF;
+  --primary-hover: #4354c8;
+  --primary-active: #3442a6;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #171721;
+  --muted: #f4f4f5;
+  --muted-foreground: #535461;
+  --accent: #f4f4f5;
+  --accent-foreground: #171721;
+  --destructive: #ef4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #e4e4e7;
+  --border-soft: #EBEBEB;
+  --input: #e4e4e7;
+  --ring: #5266EB;
+  --focus: #9CB4E8;
+  --text-tertiary: #535461;
+  --chart-1: #5266EB;
+  --chart-2: #323649;
+  --chart-3: #10b981;
+  --chart-4: #f59e0b;
+  --chart-5: #06b6d4;
+
+  /* shadcn radius scale (used by primitives like accordion, dialog) */
+  --radius: 0.625rem;
+
+  /* shadcn sidebar tokens — kept for primitives that consume them */
+  --sidebar: #f4f4f5;
+  --sidebar-foreground: #171721;
+  --sidebar-primary: #5266EB;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #e4e4e7;
+  --sidebar-accent-foreground: #171721;
+  --sidebar-border: #e4e4e7;
+  --sidebar-ring: #5266EB;
+}
+
+/* Default theme = dark canvas. <html class="dark"> in layout.tsx. */
+.dark {
+  --background: #171721;
+  --foreground: #EDEDF3;
+  --card: #20212d;
+  --card-foreground: #EDEDF3;
+  --card-alt: #1e1e2a;
+  --popover: #20212d;
+  --popover-foreground: #EDEDF3;
+  --primary: #5266EB;
+  --primary-foreground: #FFFFFF;
+  --primary-hover: #4354c8;
+  --primary-active: #3442a6;
+  --secondary: #323649;
+  --secondary-foreground: #EDEDF3;
+  --muted: #20212d;
+  --muted-foreground: #a1a1aa;
+  --accent: #323649;
+  --accent-foreground: #EDEDF3;
+  --destructive: #ef4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #323649;
+  --border-soft: #2a2b38;
+  --input: #323649;
+  --ring: #5266EB;
+  --focus: #9CB4E8;
+  --text-tertiary: #C3C3CC;
+  --chart-1: #5266EB;
+  --chart-2: #323649;
+  --chart-3: #34d399;
+  --chart-4: #fbbf24;
+  --chart-5: #22d3ee;
+
+  --sidebar: #171721;
+  --sidebar-foreground: #EDEDF3;
+  --sidebar-primary: #5266EB;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #323649;
+  --sidebar-accent-foreground: #EDEDF3;
+  --sidebar-border: #323649;
+  --sidebar-ring: #5266EB;
+}
+
+/* Opt-in light contrast section inside the dark shell.
+   Use on the decision-engine deep-dive band and any other
+   intentional light surface inside dark-first pages. */
+.theme-light {
+  --background: #FFFFFF;
+  --foreground: #171721;
+  --card: #FFFFFF;
+  --card-foreground: #171721;
+  --card-alt: #f4f4f5;
+  --muted: #f4f4f5;
+  --muted-foreground: #535461;
+  --border: #e4e4e7;
+  --border-soft: #EBEBEB;
+  --text-tertiary: #535461;
+}
+
+@theme inline {
+  /* Colors — mapped to semantic CSS vars so dark/light wrappers work */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-card-alt: var(--card-alt);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-focus: var(--focus);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Type scale — DESIGN.md §4.2 (clamp for fluid responsive) */
+  --text-display-xl: clamp(2.5rem, 3.5vw + 1rem, 4rem);          /* 40 → 64 */
+  --text-display-xl--line-height: 1.1;
+  --text-display-xl--font-weight: 400;
+  --text-display-lg: clamp(2.25rem, 2.8vw + 1rem, 3.0625rem);    /* 36 → 49 */
+  --text-display-lg--line-height: 1.1;
+  --text-display-lg--font-weight: 480;
+  --text-h1: clamp(2.25rem, 2.8vw + 1rem, 3.0625rem);            /* 36 → 49 */
+  --text-h1--line-height: 1.1;
+  --text-h1--font-weight: 480;
+  --text-h2: clamp(1.875rem, 2.2vw + 1rem, 2.625rem);            /* 30 → 42 */
+  --text-h2--line-height: 1.14;
+  --text-h2--font-weight: 480;
+  --text-h3: clamp(1.5rem, 0.85vw + 1.2rem, 1.75rem);            /* 24 → 28 */
+  --text-h3--line-height: 1.21;
+  --text-h3--font-weight: 480;
+  --text-h4: 1.3125rem;                                          /* 21 */
+  --text-h4--line-height: 1.19;
+  --text-h4--font-weight: 480;
+  --text-body-lg: 1.3125rem;                                     /* 21 */
+  --text-body-lg--line-height: 1.42;
+  --text-body-lg--font-weight: 400;
+  --text-body-md: 1rem;                                          /* 16 */
+  --text-body-md--line-height: 1.5;
+  --text-body-md--font-weight: 400;
+  --text-body-strong: 1rem;                                      /* 16 / 420 */
+  --text-body-strong--line-height: 1.5;
+  --text-body-strong--font-weight: 480;
+  --text-body-sm: 0.875rem;                                      /* 14 */
+  --text-body-sm--line-height: 1.43;
+  --text-body-sm--font-weight: 420;
+  --text-caption: 0.75rem;                                       /* 12 */
+  --text-caption--line-height: 1.42;
+  --text-caption--font-weight: 480;
+
+  /* Spacing scale — DESIGN.md §4.3 */
+  --spacing: 0.25rem; /* 4px base */
+  --spacing-18: 4.5rem;  /* 72 */
+  --spacing-24: 6rem;    /* 96 */
+
+  /* Containers — DESIGN.md §4.4 */
+  --container-narrow: 40rem;     /* 640 */
+  --container-readable: 47.5rem; /* 760 */
+  --container-content: 75rem;    /* 1200 */
+  --container-page: 90rem;       /* 1440 */
+
+  /* Radii — DESIGN.md §4.5 */
+  --radius-none: 0;
+  --radius-xs: 0.25rem;   /* 4 */
+  --radius-sm: 0.5rem;    /* 8 */
+  --radius-md: 2rem;      /* 32 */
+  --radius-lg: 2.5rem;    /* 40 */
+  --radius-xl: 999px;     /* pill */
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Shadows — DESIGN.md §4.6 */
+  --shadow-nav: 0 0 6px 0 rgba(86, 86, 118, 0.1);
+  --shadow-card-light: 0 10px 16px 0 rgba(28, 28, 35, 0.02),
+                       0 6px 10px 0 rgba(28, 28, 35, 0.04),
+                       0 0 3px 0 rgba(28, 28, 35, 0.09);
+  --shadow-deep: 0 0 3px 0 rgba(0, 0, 0, 0.05),
+                 0 8px 12px 0 rgba(0, 0, 0, 0.05),
+                 0 12px 20px 0 rgba(0, 0, 0, 0.05);
+  --shadow-focus: 0 0 0 3px rgba(156, 180, 232, 0.35);
+
+  /* Motion — DESIGN.md §4.7 */
+  --duration-instant: 150ms;
+  --duration-fast: 300ms;
+  --duration-normal: 500ms;
+  --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Fonts — Inter via next/font (CSS var set in layout.tsx) */
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-heading: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+  }
+
+  html {
+    color-scheme: dark;
+    @apply bg-background text-foreground font-sans;
+  }
+
+  body {
+    font-size: var(--text-body-md);
+    line-height: var(--text-body-md--line-height);
+    font-weight: var(--text-body-md--font-weight);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-x: none;
+    @apply bg-background text-foreground;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  /* Focus-visible — DESIGN.md §7.1 / §8.1 */
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+}
+
+/* Reduced-motion accommodation — DESIGN.md §4.7 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
