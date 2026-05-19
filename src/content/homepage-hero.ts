@@ -81,17 +81,45 @@ export const heroAccountsPanel = {
 } as const;
 
 /**
- * The handoff section ("section 2" in Mercury's pattern). The accounts
- * panel from the end of the scrub lands as the right column here.
+ * The handoff section ("section 2" in Mercury's pattern). The hero's
+ * end-frame dashboard finishes its shrink-and-slide animation in roughly
+ * the right column position here, so the swap reads as continuous.
  */
+
+export type PlatformTab = {
+  id: "placement" | "performance" | "issues" | "reporting";
+  label: string;
+  body: string;
+};
+
 export const heroHandoff = {
   eyebrow: "The platform",
   heading: "Everything you do for recovery. One platform.",
   tabs: [
-    { label: "Placement and routing", active: true },
-    { label: "Vendor performance", active: false },
-    { label: "Issues and disputes", active: false },
-    { label: "Reporting and compliance", active: false },
-  ],
+    {
+      id: "placement" as const,
+      label: "Placement and routing",
+      body:
+        "Move accounts to the right vendor at the right time. Treatment tiers, vendor pools, and recall windows execute against your live portfolio.",
+    },
+    {
+      id: "performance" as const,
+      label: "Vendor performance",
+      body:
+        "Compare vendors within or across pools. Liquidation, net-back, and SLA adherence in one view. Performance feeds the optimization engine if you're using it.",
+    },
+    {
+      id: "issues" as const,
+      label: "Issues and disputes",
+      body:
+        "Resolve disputes, complaints, and exceptions in one place. SLA timers and full audit trails come standard.",
+    },
+    {
+      id: "reporting" as const,
+      label: "Reporting and compliance",
+      body:
+        "Pre-built reports for inventory, liquidation, cost, and net-back. Configurable extracts feed your BI environment on the cadence you define.",
+    },
+  ] satisfies PlatformTab[],
   link: { label: "See how it works", href: "#how-it-works" },
 } as const;

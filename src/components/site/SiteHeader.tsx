@@ -27,7 +27,11 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = React.useState(false);
 
   React.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    // Stay transparent through the very start of scroll so the navbar
+    // doesn't densify the instant a user starts touching the wheel. The
+    // cinematic hero is the first viewport — solid nav comes once the
+    // user has clearly committed to scrolling into the page.
+    const onScroll = () => setScrolled(window.scrollY > 80);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
