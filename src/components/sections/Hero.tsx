@@ -34,7 +34,7 @@ export function Hero() {
           </p>
           <h1
             id="hero-heading"
-            className="mt-5 text-[length:var(--text-h1)] font-[480] leading-[var(--text-h1--line-height)] text-[var(--foreground)] md:mt-6"
+            className="mt-5 text-display-xl text-[var(--foreground)] tracking-[0.42px] md:mt-6"
           >
             {h1}
           </h1>
