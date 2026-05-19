@@ -5,7 +5,8 @@ import { IntegrationIcon } from "@/components/icons/IntegrationIcons";
 import { BenefitSplit } from "@/components/sections/BenefitSplit";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
-import { Hero } from "@/components/sections/Hero";
+import { HomepageHandoffSection } from "@/components/sections/HomepageHandoffSection";
+import { HomepageHero } from "@/components/sections/HomepageHero";
 import { IntegrationStrip } from "@/components/sections/IntegrationStrip";
 import { ProofBand } from "@/components/sections/ProofBand";
 import { TrustBand } from "@/components/sections/TrustBand";
@@ -30,7 +31,12 @@ export default function HomePage() {
     <>
       <ScrollDepthTracker />
 
-      <Hero />
+      {/* Mercury-faithful cinematic hero. 300vh scroll-scrubbed sequence
+          on desktop; static start-frame fallback on ≤768px. */}
+      <HomepageHero />
+
+      {/* The accounts panel docks here after the scrub completes. */}
+      <HomepageHandoffSection />
 
       <TrustBand
         eyebrow={homepageTrust.eyebrow}

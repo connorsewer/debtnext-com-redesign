@@ -40,10 +40,23 @@ export function DemoForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     setFocus,
+    setValue,
   } = useForm<DemoRequest>({
     resolver: zodResolver(demoRequestSchema),
     mode: "onBlur",
   });
+
+  // Pre-fill workEmail when arriving from the homepage hero attached form
+  // via ?email=… Avoids useSearchParams + Suspense boundary requirement
+  // by reading window.location.search directly post-mount.
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get("email");
+    if (email) {
+      setValue("workEmail", email, { shouldValidate: false, shouldDirty: true });
+    }
+  }, [setValue]);
 
   function onFirstInteraction() {
     if (hasInteracted) return;
