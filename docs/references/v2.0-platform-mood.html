@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DebtNext · Brand Guidelines · Platform</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     PLATFORM, dark-canvas fintech atmosphere. Indigo signal.
+     Pill CTAs. Attached forms. Generous whitespace.
+     Motion as a feature. Dashboard mockups as visual hooks.
+     Dark default, light toggleable.
+     ============================================================ */
+
+  :root {
+    color-scheme: dark light;
+    /* DARK (default), violet-tinted near-black canvas */
+    --canvas:           oklch(0.18 0.018 280);
+    --canvas-elev:      oklch(0.22 0.020 280);
+    --canvas-elev-alt:  oklch(0.21 0.022 280);
+    --canvas-strong:    oklch(0.30 0.030 280);
+    --canvas-deep:      oklch(0.12 0.015 280);
+
+    --fg:               oklch(0.94 0.005 280);
+    --fg-mid:           oklch(0.79 0.008 280);
+    --fg-faint:         oklch(0.68 0.005 280);
+    --fg-subdued:       oklch(0.42 0.012 280);
+
+    --signal:           oklch(0.55 0.21 268);
+    --signal-hover:     oklch(0.48 0.20 268);
+    --signal-active:    oklch(0.40 0.20 268);
+    --signal-soft:      oklch(0.76 0.10 260);
+    --signal-tint:      oklch(0.55 0.21 268 / 0.12);
+    --signal-tint-bd:   oklch(0.55 0.21 268 / 0.30);
+
+    --rule:             oklch(0.30 0.030 280);
+    --rule-soft:        oklch(0.26 0.025 280);
+
+    --ok:               oklch(0.70 0.16 165);
+    --warn:             oklch(0.80 0.16 80);
+    --danger:           oklch(0.65 0.21 25);
+    --info:             oklch(0.76 0.13 220);
+
+    --max-prose:        68ch;
+
+    --ease-standard:    cubic-bezier(0.2, 0.7, 0.2, 1);
+    --ease-in-out:      cubic-bezier(0.4, 0, 0.2, 1);
+    --dur-instant:      150ms;
+    --dur-fast:         300ms;
+    --dur-normal:       500ms;
+  }
+
+  [data-theme="light"] {
+    --canvas:           oklch(0.99 0.003 280);
+    --canvas-elev:      oklch(0.97 0.003 280);
+    --canvas-elev-alt:  oklch(0.96 0.004 280);
+    --canvas-strong:    oklch(0.90 0.004 280);
+    --canvas-deep:      oklch(1 0 0);
+
+    --fg:               oklch(0.18 0.018 280);
+    --fg-mid:           oklch(0.36 0.014 280);
+    --fg-faint:         oklch(0.52 0.010 280);
+    --fg-subdued:       oklch(0.72 0.006 280);
+
+    --signal:           oklch(0.48 0.22 268);
+    --signal-hover:     oklch(0.42 0.22 268);
+    --signal-active:    oklch(0.36 0.22 268);
+    --signal-soft:      oklch(0.62 0.15 260);
+    --signal-tint:      oklch(0.50 0.22 268 / 0.08);
+    --signal-tint-bd:   oklch(0.50 0.22 268 / 0.22);
+
+    --rule:             oklch(0.88 0.005 280);
+    --rule-soft:        oklch(0.92 0.004 280);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'General Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: var(--canvas);
+    color: var(--fg);
+    line-height: 1.55;
+    font-size: 16px;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
+  }
+  ::selection { background: var(--signal); color: oklch(1 0 0); }
+
+  /* Top navigation, dark, sticky, premium */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: oklch(from var(--canvas) l c h / 0.85);
+    backdrop-filter: blur(12px) saturate(1.4);
+    -webkit-backdrop-filter: blur(12px) saturate(1.4);
+    border-bottom: 1px solid var(--rule-soft);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 72px;
+  }
+  @media (max-width: 700px) { .nav { padding: 12px 18px; height: 64px; gap: 12px; } }
+
+  .nav-mark {
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.015em;
+    color: var(--fg);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    text-decoration: none;
+  }
+  .nav-mark .accent {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 14px oklch(0.55 0.21 268 / 0.6);
+    display: inline-block;
+    margin-left: 2px;
+    position: relative;
+    top: -1px;
+  }
+
+  .nav-links { display: flex; gap: 4px; margin-left: 32px; }
+  @media (max-width: 900px) { .nav-links { display: none; } }
+  .nav-link {
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--fg-mid);
+    text-decoration: none;
+    border-radius: 32px;
+    transition: color var(--dur-instant) var(--ease-standard), background var(--dur-instant) var(--ease-standard);
+  }
+  .nav-link:hover { color: var(--fg); }
+  .nav-link.active { color: var(--fg); background: var(--canvas-elev); }
+
+  .nav-spacer { flex: 1; }
+  .nav-controls { display: flex; align-items: center; gap: 10px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    border: 0;
+    text-decoration: none;
+    transition: background var(--dur-instant) var(--ease-standard), color var(--dur-instant) var(--ease-standard), transform var(--dur-instant) var(--ease-standard), box-shadow var(--dur-instant) var(--ease-standard);
+    white-space: nowrap;
+  }
+  .btn:focus-visible { outline: 2px solid var(--signal-soft); outline-offset: 2px; }
+
+  .btn-primary {
+    background: var(--signal);
+    color: oklch(1 0 0);
+    height: 40px;
+    padding: 0 22px;
+    border-radius: 40px;
+    font-size: 15px;
+    box-shadow: 0 0 0 1px oklch(0.55 0.21 268 / 0.3), 0 4px 18px -4px oklch(0.55 0.21 268 / 0.4);
+  }
+  .btn-primary:hover { background: var(--signal-hover); transform: translateY(-1px); box-shadow: 0 0 0 1px oklch(0.55 0.21 268 / 0.5), 0 8px 28px -6px oklch(0.55 0.21 268 / 0.55); }
+  .btn-primary:active { background: var(--signal-active); transform: translateY(0); }
+
+  .btn-secondary {
+    background: oklch(from var(--signal-soft) l c h / 0.18);
+    color: var(--fg);
+    height: 32px;
+    padding: 0 14px;
+    border-radius: 32px;
+    font-size: 13.5px;
+  }
+  .btn-secondary:hover { background: oklch(from var(--signal-soft) l c h / 0.32); color: oklch(1 0 0); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--fg-mid);
+    height: 32px;
+    padding: 0 12px;
+    font-size: 14px;
+  }
+  .btn-ghost:hover { color: var(--fg); }
+
+  .icon-btn {
+    background: transparent;
+    color: var(--fg-mid);
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 0;
+    transition: background var(--dur-instant) var(--ease-standard), color var(--dur-instant) var(--ease-standard);
+  }
+  .icon-btn:hover { background: var(--canvas-elev); color: var(--fg); }
+
+  /* Layout */
+  .layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); max-width: 1320px; margin: 0 auto; gap: 56px; padding: 48px 32px 120px; }
+  @media (max-width: 1024px) { .layout { grid-template-columns: 1fr; gap: 0; padding: 32px 24px 72px; } .toc { display: none; } }
+  @media (max-width: 600px) { .layout { padding: 24px 16px 56px; } }
+
+  /* Sidebar TOC */
+  .toc { position: sticky; top: 96px; align-self: start; max-height: calc(100vh - 120px); overflow-y: auto; padding-right: 12px; }
+  .toc::-webkit-scrollbar { width: 4px; }
+  .toc::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+  .toc-section {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    padding: 16px 0 6px;
+    border-top: 1px solid var(--rule-soft);
+    margin-top: 12px;
+  }
+  .toc-section:first-of-type { border-top: 0; margin-top: 0; padding-top: 0; }
+  .toc-link {
+    display: flex;
+    gap: 10px;
+    padding: 6px 0;
+    font-size: 14px;
+    color: var(--fg-mid);
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color var(--dur-instant) var(--ease-standard);
+  }
+  .toc-link:hover { color: var(--fg); }
+  .toc-link.active { color: var(--signal); }
+  .toc-link .n { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-faint); flex-shrink: 0; min-width: 22px; }
+  .toc-link.active .n { color: var(--signal); }
+
+  /* Main column */
+  main { min-width: 0; }
+
+  /* Hero */
+  .hero { padding: 32px 0 96px; border-bottom: 1px solid var(--rule-soft); margin-bottom: 96px; position: relative; }
+  .hero-bg {
+    position: absolute;
+    inset: -40px -40px auto -40px;
+    height: 60%;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 10%, oklch(0.40 0.20 268 / 0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 10% 80%, oklch(0.55 0.18 240 / 0.10) 0%, transparent 70%);
+  }
+  .hero > * { position: relative; z-index: 1; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--signal-soft);
+    margin-bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 12px var(--signal);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+
+  h1 {
+    font-weight: 480;
+    font-size: clamp(2.5rem, 5.5vw, 4.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--fg);
+    margin-bottom: 24px;
+    max-width: 18ch;
+  }
+  h1 .accent { color: var(--signal); }
+
+  .hero-deck {
+    font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.5;
+    color: var(--fg-mid);
+    max-width: 60ch;
+    margin-bottom: 36px;
+  }
+
+  /* Attached form */
+  .form-attached {
+    display: inline-flex;
+    align-items: stretch;
+    gap: 0;
+    max-width: 480px;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  .form-attached input {
+    flex: 1;
+    min-height: 46px;
+    padding: 0 0 0 20px;
+    border-radius: 32px 0 0 32px;
+    border: 1px solid var(--fg-mid);
+    border-right: 0;
+    background: transparent;
+    color: var(--fg);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 420;
+    outline: 0;
+    transition: border-color var(--dur-instant) var(--ease-standard);
+  }
+  .form-attached input::placeholder { color: var(--fg-faint); }
+  .form-attached input:hover { border-color: var(--signal-soft); }
+  .form-attached input:focus { border-color: var(--signal); }
+  .form-attached button {
+    min-width: 124px;
+    min-height: 46px;
+    padding: 0 22px;
+    border-radius: 0 32px 32px 0;
+    background: var(--signal);
+    color: oklch(1 0 0);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    border: 0;
+    cursor: pointer;
+    transition: background var(--dur-instant) var(--ease-standard);
+  }
+  .form-attached button:hover { background: var(--signal-hover); }
+  @media (max-width: 500px) {
+    .form-attached { flex-direction: column; gap: 8px; }
+    .form-attached input { border-radius: 32px; border-right: 1px solid var(--fg-mid); }
+    .form-attached button { border-radius: 32px; }
+  }
+
+  .hero-secondary { font-size: 14px; color: var(--fg-mid); margin-top: 12px; }
+  .hero-secondary a { color: var(--signal-soft); text-decoration: none; border-bottom: 1px solid oklch(from var(--signal-soft) l c h / 0.4); }
+  .hero-secondary a:hover { color: var(--signal); border-bottom-color: var(--signal); }
+
+  .hero-meta {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule-soft);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+  @media (max-width: 800px) { .hero-meta { grid-template-columns: 1fr 1fr; gap: 20px; } }
+  .hero-meta-l { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-faint); margin-bottom: 6px; }
+  .hero-meta-v { font-size: 14px; color: var(--fg); font-weight: 500; }
+
+  /* Sections */
+  section { padding: 80px 0; border-bottom: 1px solid var(--rule-soft); scroll-margin-top: 96px; }
+  section:last-child { border-bottom: 0; }
+  .sec-head { display: grid; grid-template-columns: 80px 1fr; gap: 32px; margin-bottom: 40px; align-items: baseline; }
+  @media (max-width: 700px) { .sec-head { grid-template-columns: 1fr; gap: 8px; } }
+  .sec-num { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 13px; letter-spacing: 0.06em; color: var(--signal); padding-top: 6px; border-top: 2px solid var(--signal); display: inline-block; width: fit-content; }
+
+  h2 {
+    font-weight: 480;
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    margin-bottom: 14px;
+    max-width: 22ch;
+  }
+  h2 .accent { color: var(--signal); }
+  .sec-deck { font-size: 18px; line-height: 1.5; color: var(--fg-mid); max-width: 56ch; }
+  h3 { font-weight: 500; font-size: 22px; line-height: 1.3; letter-spacing: -0.01em; color: var(--fg); margin: 48px 0 14px; }
+  h4 { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--signal); margin: 28px 0 10px; }
+
+  p { font-size: 16px; line-height: 1.6; color: var(--fg-mid); margin-bottom: 14px; max-width: var(--max-prose); }
+  p strong { color: var(--fg); font-weight: 500; }
+  .lead { font-size: 19px; line-height: 1.55; color: var(--fg); max-width: 56ch; margin-bottom: 22px; font-weight: 400; }
+  .lead .accent { color: var(--signal); font-weight: 500; }
+
+  ul, ol { padding-left: 0; max-width: var(--max-prose); margin-bottom: 16px; list-style: none; }
+  li { font-size: 16px; line-height: 1.6; color: var(--fg-mid); margin-bottom: 8px; padding-left: 28px; position: relative; }
+  ul > li::before { content: ''; position: absolute; left: 6px; top: 0.65em; width: 8px; height: 1px; background: var(--signal); }
+  ol { counter-reset: ol; }
+  ol > li::before { counter-increment: ol; content: counter(ol, decimal-leading-zero); position: absolute; left: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--signal); font-weight: 500; top: 3px; letter-spacing: 0.04em; }
+  li strong { color: var(--fg); font-weight: 500; }
+
+  a { color: var(--signal-soft); text-decoration: none; border-bottom: 1px solid oklch(from var(--signal-soft) l c h / 0.4); transition: color var(--dur-instant) var(--ease-standard), border-color var(--dur-instant) var(--ease-standard); }
+  a:hover { color: var(--signal); border-bottom-color: var(--signal); }
+
+  code { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--signal-tint); color: var(--signal-soft); padding: 2px 7px; border-radius: 4px; border: 1px solid var(--signal-tint-bd); }
+  pre { font-family: 'JetBrains Mono', monospace; font-size: 13px; padding: 18px 22px; background: var(--canvas-elev); border: 1px solid var(--rule); border-radius: 8px; margin: 18px 0; overflow-x: auto; line-height: 1.55; color: var(--fg); }
+  pre .c { color: var(--fg-faint); }
+  pre .k { color: var(--signal-soft); }
+
+  /* Blockquote, calm, no side stripe */
+  blockquote { padding: 32px 36px; margin: 32px 0; background: var(--canvas-elev); border: 1px solid var(--rule); border-radius: 12px; max-width: var(--max-prose); position: relative; }
+  blockquote::before { content: '"'; position: absolute; top: 18px; left: 24px; font-size: 48px; font-weight: 500; color: var(--signal); line-height: 1; opacity: 0.5; }
+  blockquote p { font-size: 19px; line-height: 1.5; color: var(--fg); margin: 0 0 0 36px; max-width: none; }
+  blockquote cite { display: block; margin: 14px 0 0 36px; font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-faint); }
+
+  /* Callouts, full border, tinted bg */
+  .callout { padding: 22px 26px; background: var(--signal-tint); border: 1px solid var(--signal-tint-bd); border-radius: 12px; margin: 22px 0; max-width: var(--max-prose); }
+  .callout-h { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--signal-soft); margin-bottom: 10px; font-weight: 500; }
+  .callout p { color: var(--fg); margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout.danger { background: oklch(0.55 0.20 25 / 0.10); border-color: oklch(0.55 0.20 25 / 0.30); }
+  .callout.danger .callout-h { color: var(--danger); }
+
+  /* Do / Don't */
+  .dd { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 22px 0; max-width: var(--max-prose); }
+  @media (max-width: 700px) { .dd { grid-template-columns: 1fr; } }
+  .dd-item { background: var(--canvas-elev); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
+  .dd-header { padding: 12px 18px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; border-bottom: 1px solid var(--rule); }
+  .dd-do .dd-header { color: var(--ok); }
+  .dd-dont .dd-header { color: var(--danger); }
+  .dd-body { padding: 18px; }
+  .dd-body p { font-size: 14px; margin: 0; color: var(--fg); }
+
+  /* KPI figures */
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0; }
+  @media (max-width: 800px) { .kpis { grid-template-columns: 1fr; } }
+  .kpi { background: var(--canvas-elev); border: 1px solid var(--rule); border-radius: 12px; padding: 28px; transition: border-color var(--dur-fast) var(--ease-standard), transform var(--dur-fast) var(--ease-standard); }
+  .kpi:hover { border-color: var(--signal-tint-bd); }
+  .kpi-l { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-faint); margin-bottom: 12px; }
+  .kpi-v { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 44px; letter-spacing: -0.02em; color: var(--fg); line-height: 0.9; margin-bottom: 14px; display: flex; align-items: baseline; gap: 4px; }
+  .kpi-v small { font-size: 18px; color: var(--signal); font-weight: 500; }
+  .kpi-trend { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: var(--ok); display: inline-flex; align-items: center; gap: 4px; margin-bottom: 10px; }
+  .kpi-trend.down { color: var(--danger); }
+  .kpi-b { font-size: 13.5px; color: var(--fg-mid); line-height: 1.5; }
+
+  /* Personas */
+  .personas { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 22px 0; }
+  @media (max-width: 800px) { .personas { grid-template-columns: 1fr; } }
+  .persona { background: var(--canvas-elev); border: 1px solid var(--rule); border-radius: 12px; padding: 22px; }
+  .persona h4 { margin: 0 0 12px; }
+  .persona p { font-size: 14px; margin-bottom: 12px; }
+  .persona ul { margin: 0; }
+  .persona li { font-size: 13px; padding-left: 22px; margin-bottom: 4px; }
+  .persona li::before { width: 6px; }
+  .persona li a { font-size: 13px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 22px 0; font-size: 14.5px; background: var(--canvas-elev); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; max-width: var(--max-prose); }
+  th { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-faint); text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--rule); font-weight: 500; }
+  td { padding: 14px 18px; border-bottom: 1px solid var(--rule-soft); color: var(--fg-mid); vertical-align: top; line-height: 1.5; }
+  tr:last-child td { border-bottom: 0; }
+  td strong { color: var(--fg); font-weight: 500; }
+
+  /* Swatch */
+  .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin: 24px 0; }
+  .swatch { background: var(--canvas-elev); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
+  .swatch-color { aspect-ratio: 5/2; }
+  .swatch-info { padding: 12px 16px; }
+  .swatch-name { font-weight: 500; font-size: 14px; color: var(--fg); }
+  .swatch-tok { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-faint); margin-top: 2px; }
+  .swatch-hex { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-faint); margin-top: 2px; }
+
+  /* Logo demo */
+  .logo-demo { padding: 64px 32px; background: var(--canvas-elev); border: 1px solid var(--rule); border-radius: 16px; margin: 24px 0; display: flex; align-items: center; justify-content: center; min-height: 160px; }
+  .logo-mk-large {
+    font-weight: 600;
+    font-size: clamp(40px, 6vw, 64px);
+    letter-spacing: -0.025em;
+    color: var(--fg);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    line-height: 1;
+  }
+  .logo-mk-large .accent {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 22px oklch(0.55 0.21 268 / 0.65);
+    display: inline-block;
+    margin-left: 4px;
+    position: relative;
+    top: -3px;
+  }
+
+  /* ============================================================
+     DASHBOARD MOCKUPS, the visual hooks
+     ============================================================ */
+
+  .dashboard {
+    background: var(--canvas-elev);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 28px 0;
+    box-shadow: 0 12px 40px -16px oklch(0 0 0 / 0.4);
+  }
+  .dash-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); flex-wrap: wrap; }
+  .dash-title { font-size: 15px; font-weight: 500; color: var(--fg); display: inline-flex; align-items: center; gap: 8px; }
+  .dash-title::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 10px var(--ok); }
+  .dash-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-faint); }
+  .dash-tabs { display: inline-flex; gap: 2px; padding: 3px; background: var(--canvas-deep); border-radius: 32px; }
+  .dash-tab { padding: 6px 14px; font-size: 12px; font-weight: 500; color: var(--fg-mid); background: transparent; border: 0; border-radius: 28px; cursor: pointer; transition: background var(--dur-instant) var(--ease-standard), color var(--dur-instant) var(--ease-standard); font-family: inherit; }
+  .dash-tab[aria-pressed="true"] { background: var(--signal); color: oklch(1 0 0); }
+  .dash-tab:hover:not([aria-pressed="true"]) { color: var(--fg); }
+
+  /* Mini KPI tiles inside dashboard */
+  .mini-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+  @media (max-width: 700px) { .mini-kpis { grid-template-columns: 1fr 1fr; } }
+  .mini-kpi { padding: 16px; background: var(--canvas-elev-alt); border: 1px solid var(--rule-soft); border-radius: 10px; }
+  .mini-kpi .l { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-faint); margin-bottom: 8px; }
+  .mini-kpi .v { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 500; color: var(--fg); letter-spacing: -0.02em; line-height: 1; }
+  .mini-kpi .d { font-family: 'JetBrains Mono', monospace; font-size: 10px; margin-top: 8px; color: var(--ok); }
+  .mini-kpi .d.down { color: var(--danger); }
+
+  /* Vendor scorecard rows */
+  .vendor-list { display: flex; flex-direction: column; gap: 0; }
+  .vendor-row { display: grid; grid-template-columns: 1fr 100px 100px 60px; gap: 16px; align-items: center; padding: 14px 4px; border-bottom: 1px solid var(--rule-soft); }
+  .vendor-row:last-child { border-bottom: 0; }
+  @media (max-width: 700px) { .vendor-row { grid-template-columns: 1fr 60px; } .vendor-row .hide-sm { display: none; } }
+  .vendor-name { font-size: 14px; color: var(--fg); font-weight: 500; }
+  .vendor-name small { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-faint); font-weight: 400; display: block; margin-top: 2px; letter-spacing: 0.04em; }
+  .vendor-bar { height: 6px; background: var(--canvas-deep); border-radius: 4px; overflow: hidden; position: relative; }
+  .vendor-bar > span { display: block; height: 100%; background: var(--signal); border-radius: 4px; width: 0; transition: width 1.2s var(--ease-standard); }
+  .vendor-bar.ok > span { background: var(--ok); }
+  .vendor-bar.warn > span { background: var(--warn); }
+  .vendor-bar.danger > span { background: var(--danger); }
+  .vendor-score { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--fg); font-weight: 500; text-align: right; }
+  .vendor-status { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; text-align: center; }
+  .vendor-status.ok { background: oklch(0.50 0.13 165 / 0.18); color: var(--ok); }
+  .vendor-status.warn { background: oklch(0.55 0.13 80 / 0.18); color: var(--warn); }
+  .vendor-status.danger { background: oklch(0.55 0.18 25 / 0.18); color: var(--danger); }
+
+  /* SVG chart panel */
+  .chart-panel { display: grid; grid-template-columns: 1fr 200px; gap: 24px; align-items: center; padding-top: 16px; border-top: 1px solid var(--rule-soft); margin-top: 18px; }
+  @media (max-width: 700px) { .chart-panel { grid-template-columns: 1fr; } }
+  .chart-svg { width: 100%; height: 120px; }
+  .chart-stat { }
+  .chart-stat .l { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-faint); margin-bottom: 8px; }
+  .chart-stat .v { font-family: 'JetBrains Mono', monospace; font-size: 28px; color: var(--fg); font-weight: 500; letter-spacing: -0.02em; line-height: 1; }
+  .chart-stat .d { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ok); margin-top: 8px; }
+
+  /* Activity feed */
+  .activity { display: flex; flex-direction: column; gap: 0; padding-top: 16px; border-top: 1px solid var(--rule-soft); margin-top: 18px; }
+  .activity-row { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--rule-soft); }
+  .activity-row:last-child { border-bottom: 0; }
+  .activity-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 10px oklch(from var(--signal) l c h / 0.5); }
+  .activity-text { font-size: 13.5px; color: var(--fg); line-height: 1.4; }
+  .activity-text strong { color: var(--fg); font-weight: 500; }
+  .activity-text .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--signal-soft); letter-spacing: 0.06em; margin-right: 6px; }
+  .activity-time { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-faint); white-space: nowrap; }
+
+  /* Motion demo blocks */
+  .motion-demos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 22px 0; }
+  @media (max-width: 700px) { .motion-demos { grid-template-columns: 1fr; } }
+  .motion-cell { padding: 22px; background: var(--canvas-elev); border: 1px solid var(--rule); border-radius: 12px; cursor: pointer; transition: border-color var(--dur-fast) var(--ease-standard); }
+  .motion-cell:hover { border-color: var(--signal-tint-bd); }
+  .motion-cell .name { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: var(--signal-soft); margin-bottom: 4px; }
+  .motion-cell .spec { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-faint); margin-bottom: 16px; }
+  .motion-stage { height: 80px; background: var(--canvas-deep); border-radius: 8px; position: relative; overflow: hidden; border: 1px solid var(--rule-soft); }
+  .motion-ball { position: absolute; top: 50%; left: 14px; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 999px; background: var(--signal); box-shadow: 0 0 24px oklch(0.55 0.21 268 / 0.5); transition: left 0.36s var(--ease-standard); }
+  .motion-cell.active .motion-ball { left: calc(100% - 50px); }
+  .motion-cell .hint { font-size: 11px; color: var(--fg-faint); margin-top: 10px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; }
+
+  /* Accordion */
+  .accordion { border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; margin: 22px 0; background: var(--canvas-elev); }
+  .acc-item { border-bottom: 1px solid var(--rule); }
+  .acc-item:last-child { border-bottom: 0; }
+  .acc-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px 22px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    text-align: left;
+    color: var(--fg);
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background var(--dur-instant) var(--ease-standard);
+  }
+  .acc-trigger:hover { background: var(--canvas-elev-alt); }
+  .acc-trigger:focus-visible { outline: 2px solid var(--signal-soft); outline-offset: -2px; }
+  .acc-trigger .acc-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--signal); letter-spacing: 0.08em; margin-right: 8px; }
+  .acc-icon { width: 18px; height: 18px; flex-shrink: 0; color: var(--fg-mid); transition: transform var(--dur-fast) var(--ease-standard); }
+  .acc-trigger[aria-expanded="true"] .acc-icon { transform: rotate(180deg); color: var(--signal); }
+  .acc-panel {
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--dur-fast) var(--ease-in-out);
+  }
+  .acc-panel-inner { min-height: 0; padding: 0 22px; max-height: 0; opacity: 0; transition: max-height var(--dur-fast) var(--ease-in-out), opacity var(--dur-fast) var(--ease-in-out), padding var(--dur-fast) var(--ease-in-out); }
+  .acc-trigger[aria-expanded="true"] + .acc-panel { grid-template-rows: 1fr; }
+  .acc-trigger[aria-expanded="true"] + .acc-panel .acc-panel-inner { max-height: 800px; opacity: 1; padding: 0 22px 22px; }
+  .acc-panel p { font-size: 15px; margin-bottom: 10px; max-width: none; }
+
+  /* Reveal-on-scroll */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 600ms var(--ease-standard), transform 600ms var(--ease-standard); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* Search modal */
+  .search-modal { position: fixed; inset: 0; background: oklch(0 0 0 / 0.65); backdrop-filter: blur(4px); z-index: 100; display: none; align-items: flex-start; justify-content: center; padding-top: 12vh; }
+  .search-modal.open { display: flex; }
+  .search-panel { width: min(640px, 92vw); background: var(--canvas-elev); border: 1px solid var(--canvas-strong); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 80px oklch(0 0 0 / 0.5); }
+  .search-input-wrap { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--rule); }
+  .search-input-wrap svg { color: var(--fg-faint); flex-shrink: 0; }
+  .search-input { background: transparent; border: 0; outline: 0; color: var(--fg); font-family: inherit; font-size: 16px; flex: 1; }
+  .search-input::placeholder { color: var(--fg-faint); }
+  .search-results { max-height: 60vh; overflow-y: auto; }
+  .search-r { display: block; padding: 14px 20px; border-bottom: 1px solid var(--rule-soft); color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--rule-soft); transition: background var(--dur-instant) var(--ease-standard); }
+  .search-r:hover { background: var(--canvas-elev-alt); }
+  .search-r-s { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--signal); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 4px; }
+  .search-r-x { font-size: 13px; color: var(--fg-mid); line-height: 1.4; }
+  .search-empty { padding: 32px 20px; color: var(--fg-faint); text-align: center; font-size: 13.5px; }
+
+  /* Print */
+  @media print {
+    .nav, .toc, .search-modal, .nav-controls, .hero-bg { display: none !important; }
+    .layout { display: block; max-width: none; padding: 0; }
+    body { background: white; color: black; font-size: 11pt; line-height: 1.4; }
+    section { break-inside: avoid; page-break-after: auto; }
+    h1, h2, h3 { page-break-after: avoid; color: black; }
+    h1 .accent, h2 .accent { color: oklch(0.40 0.22 268); }
+    .callout, blockquote, .dashboard, .swatch, .kpi, .accordion, .motion-cell, .persona { background: white; border-color: oklch(0.80 0 0); color: black; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+    a { color: black; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" role="banner">
+  <a class="nav-mark" href="#top">DebtNext<span class="accent"></span></a>
+  <div class="nav-links">
+    <a class="nav-link" href="#why">Platform</a>
+    <a class="nav-link" href="#audience">Customers</a>
+    <a class="nav-link" href="#color">Design</a>
+    <a class="nav-link" href="#voice">Voice</a>
+    <a class="nav-link" href="#governance">Governance</a>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-controls">
+    <button class="icon-btn" id="searchTrigger" aria-label="Search the guidelines">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    </button>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle dark and light theme">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" id="themeIcon"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+    <button class="btn btn-primary" type="button">Request a demo</button>
+  </div>
+</nav>
+
+<div class="layout" id="top">
+
+  <aside class="toc" aria-label="Table of contents">
+    <div class="toc-section">Foundation</div>
+    <a class="toc-link" href="#intro"><span class="n">00</span>Start here</a>
+    <a class="toc-link" href="#why"><span class="n">01</span>Why DebtNext exists</a>
+    <a class="toc-link" href="#positioning"><span class="n">02</span>Positioning</a>
+    <a class="toc-link" href="#architecture"><span class="n">03</span>Brand architecture</a>
+    <a class="toc-link" href="#audience"><span class="n">04</span>Audience</a>
+    <div class="toc-section">Identity</div>
+    <a class="toc-link" href="#logo"><span class="n">05</span>Logo system</a>
+    <a class="toc-link" href="#color"><span class="n">06</span>Color</a>
+    <a class="toc-link" href="#typography"><span class="n">07</span>Typography</a>
+    <a class="toc-link" href="#iconography"><span class="n">08</span>Iconography</a>
+    <div class="toc-section">Expression</div>
+    <a class="toc-link" href="#imagery"><span class="n">09</span>Imagery</a>
+    <a class="toc-link" href="#motifs"><span class="n">10</span>Signature elements</a>
+    <a class="toc-link" href="#motion"><span class="n">11</span>Motion</a>
+    <div class="toc-section">Voice</div>
+    <a class="toc-link" href="#voice"><span class="n">12</span>Writing &amp; tone</a>
+    <a class="toc-link" href="#messaging"><span class="n">13</span>Messaging</a>
+    <div class="toc-section">Applications</div>
+    <a class="toc-link" href="#digital"><span class="n">14</span>Digital</a>
+    <a class="toc-link" href="#sales"><span class="n">15</span>Sales</a>
+    <a class="toc-link" href="#events"><span class="n">16</span>Events &amp; print</a>
+    <div class="toc-section">Operations</div>
+    <a class="toc-link" href="#governance"><span class="n">17</span>Governance</a>
+    <a class="toc-link" href="#resources"><span class="n">18</span>Resources</a>
+  </aside>
+
+  <main>
+
+    <header class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="eyebrow reveal">Brand Guidelines · v2.0 Platform · April 2026</div>
+      <h1 class="reveal">Recovery operations, <span class="accent">unified.</span></h1>
+      <p class="hero-deck reveal">The single source of truth for how DebtNext looks, sounds, and behaves across every surface. Open it for a token, a CTA pattern, a dashboard mockup, a voice rule. Press <code>⌘K</code> to search; toggle dark and light from the controls above.</p>
+
+      <form class="form-attached reveal" onsubmit="event.preventDefault();">
+        <input type="email" placeholder="you@company.com" aria-label="Work email">
+        <button type="submit">Request a demo</button>
+      </form>
+      <p class="hero-secondary reveal">Or <a href="#why">explore the platform</a> first.</p>
+
+      <div class="hero-meta">
+        <div><div class="hero-meta-l">Edition</div><div class="hero-meta-v">2.0 / Platform</div></div>
+        <div><div class="hero-meta-l">Editor</div><div class="hero-meta-v">Connor Laughlin</div></div>
+        <div><div class="hero-meta-l">Design</div><div class="hero-meta-v">Gian Rufin</div></div>
+        <div><div class="hero-meta-l">Updated</div><div class="hero-meta-v">2026-04-29</div></div>
+      </div>
+    </header>
+
+    <section id="intro" class="reveal">
+      <header class="sec-head"><div class="sec-num">00</div><div><h2>Start here.</h2><p class="sec-deck">An orientation in two screens. Read this even if you intend to skip the rest.</p></div></header>
+
+      <p class="lead">DebtNext builds <span class="accent">dPlat,</span> the recovery operating system for enterprise credit originators. We orchestrate <code>$100M+</code> in monthly placements across <code>70+</code> banks, utilities, and debt owners.</p>
+      <p>Founded 2003, ran independently for 22 years. In September 2025, Transworld Systems Inc. (TSI) acquired the company. We remain a dedicated SaaS business unit with an audited information wall between the platform and TSI's collection services.</p>
+      <p>This brand lives in a category full of sameness. Traditional vendors look like 2015 enterprise SaaS: safe blue gradients, stock photography of headsets, templated layouts. DebtNext does not. We look like a modern platform company, because that is what we are.</p>
+
+      <h3>Six things that matter most</h3>
+      <ul>
+        <li><strong>Dark canvas is the default.</strong> Every flagship surface (home, platform, features, case studies) opens in dark. Light mode exists for documentation, email, and long-form reading, but it is not the dominant identity.</li>
+        <li><strong>Indigo is the signal.</strong> <code>oklch(0.55 0.21 268)</code>. One saturated color, used with discipline. It carries primary CTAs, active states, key data points, focus rings, and the chart's primary series. Never two signals in one composition.</li>
+        <li><strong>Show product, do not decorate.</strong> Dashboard mockups, workflow nodes, vendor scorecards, and live data tiles support the adjacent copy. Avoid generative visuals that do not clarify the story.</li>
+        <li><strong>Pill geometry for actions, sharp geometry for content.</strong> Primary buttons are pill-shaped. Cards on dark are flat with no radius. Product mockups keep an 8px chrome.</li>
+        <li><strong>Motion is calm and load-bearing.</strong> Fade-ups, accordion transitions, hover micro-interactions. No bounce, no parallax, no scaling. Every animation respects <code>prefers-reduced-motion</code>.</li>
+        <li><strong>One primary CTA per band.</strong> Each hero, section, card group, or nav row contains exactly one filled signal-color action. Secondary actions are ghost, text, or muted.</li>
+      </ul>
+
+      <h3>If you're a&hellip;</h3>
+      <div class="personas">
+        <div class="persona">
+          <h4>Designer</h4>
+          <p>You'll touch identity and expression daily. Sections on motion, dashboards, and color are where the brand lives.</p>
+          <ul>
+            <li><a href="#color">06. Color</a></li>
+            <li><a href="#typography">07. Typography</a></li>
+            <li><a href="#motion">11. Motion</a></li>
+            <li><a href="#digital">14. Digital &amp; dashboards</a></li>
+          </ul>
+        </div>
+        <div class="persona">
+          <h4>Engineer</h4>
+          <p>Tokens are OKLCH-native with hex equivalents documented. Every component defines default, hover, focus, active, disabled, loading, error.</p>
+          <ul>
+            <li><a href="#color">06. Color tokens</a></li>
+            <li><a href="#motifs">10. Component patterns</a></li>
+            <li><a href="#motion">11. Motion tokens</a></li>
+            <li><a href="#digital">14. Implementation</a></li>
+          </ul>
+        </div>
+        <div class="persona">
+          <h4>Writer</h4>
+          <p>The voice section does most of the work. Re-read it weekly. The banned-phrase list is enforced.</p>
+          <ul>
+            <li><a href="#audience">04. Audience</a></li>
+            <li><a href="#voice">12. Writing</a></li>
+            <li><a href="#messaging">13. Messaging</a></li>
+            <li><a href="#positioning">02. Positioning</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-h">How to use this document</div>
+        <p>Skim the TOC on the left or the top nav. Press <code>⌘K</code> or <code>/</code> to search. Toggle theme via the sun/moon control in the nav. Sections 5 through 11 cover identity and expression. 12 and 13 cover voice. 14 through 16 cover applications. 17 covers governance.</p>
+      </div>
+    </section>
+
+    <section id="why" class="reveal">
+      <header class="sec-head"><div class="sec-num">01</div><div><h2>Why DebtNext exists.</h2><p class="sec-deck">The problem we solve, in plain English. The story behind every page that follows.</p></div></header>
+
+      <p>A major financial institution or utility has millions of delinquent accounts spread across 10 to 30+ vendors. Collection agencies, law firms, skip tracing services, debt buyers. Each vendor has its own reporting cadence, data formats, compliance posture. The institution's internal team manages this with spreadsheets, email, SharePoint, and a homegrown database from a decade ago that nobody fully understands anymore.</p>
+      <p>The result is predictable. Poor visibility into portfolio performance. Inconsistent vendor accountability. Compliance gaps that surface in exams. Money left on the table because nobody can see the whole picture. <strong>That is the problem we built DebtNext to solve.</strong></p>
+
+      <blockquote>
+        <p>The platform doesn't care who owns it. It cares about the vendor scorecard.</p>
+        <cite>Rob Novosel, Co-founder</cite>
+      </blockquote>
+
+      <h3>What dPlat actually is</h3>
+      <p>A system of record for recovery programs. It sits above the vendor ecosystem and orchestrates the entire post-charge-off lifecycle: assignment, strategy, performance scorecarding, compliance workflow, payment reconciliation, legal coordination, debt sale management.</p>
+
+      <div class="kpis">
+        <div class="kpi">
+          <div class="kpi-l">Monthly placements</div>
+          <div class="kpi-v" data-target="100" data-prefix="$" data-suffix="M+">$<span class="kpi-num">0</span>M<small>+</small></div>
+          <div class="kpi-trend">▲ 18% YoY</div>
+          <div class="kpi-b">Nine-figure recovery inventory routed through one system, every month.</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-l">Years in market</div>
+          <div class="kpi-v" data-target="22"><span class="kpi-num">0</span></div>
+          <div class="kpi-trend">Category-defining</div>
+          <div class="kpi-b">Six regulatory cycles. Three category renames. Built by operators for operators.</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-l">Enterprise clients</div>
+          <div class="kpi-v" data-target="70" data-suffix="+"><span class="kpi-num">0</span><small>+</small></div>
+          <div class="kpi-trend">▲ 9 of top 10 utilities</div>
+          <div class="kpi-b">Leading banks, major telecom providers, top-tier electric utilities.</div>
+        </div>
+      </div>
+
+      <h3>Why the brand has to be this deliberate</h3>
+      <p>Buyers in this category expect collections vendors to look a certain way: safe, corporate, slightly behind the curve. When a CRO or a VP of Credit Risk encounters a vendor that looks like a modern platform, the friction of the first impression drops sharply. The brand does real work in the sale.</p>
+      <p>Everything that follows is designed to create the moment of recognition: <strong>this is not another collections vendor.</strong></p>
+    </section>
+
+    <section id="positioning" class="reveal">
+      <header class="sec-head"><div class="sec-num">02</div><div><h2>Positioning.</h2><p class="sec-deck">Where DebtNext sits, who we beat, the one sentence that does the heaviest lifting.</p></div></header>
+
+      <h3>The positioning statement</h3>
+      <div class="callout">
+        <p><strong>For enterprise credit originators</strong> with multi-vendor recovery ecosystems, <strong>dPlat is the system of record</strong> that orchestrates placements, scorecards vendors, and enforces compliance across the full post-charge-off lifecycle. <strong>Unlike NeuAnalytics, Convoke, and EverChain,</strong> dPlat is purpose-built as the creditor's control plane and has orchestrated recovery for 22 years at enterprise scale.</p>
+      </div>
+
+      <h3>The competitive set</h3>
+      <table>
+        <thead><tr><th>Company</th><th>Their positioning</th><th>Our advantage</th></tr></thead>
+        <tbody>
+          <tr><td><strong>NeuAnalytics</strong></td><td>Enterprise receivables, compliance, vendor management SaaS with analytics and consulting heritage.</td><td>22 years as the category-defining pure-play. $100M+ monthly placements today.</td></tr>
+          <tr><td><strong>Convoke</strong></td><td>Modern recovery management SaaS, emphasizing media, chain-of-title, vendor documentation. Rebranding around AI.</td><td>Operational depth across full lifecycle, not just documentation.</td></tr>
+          <tr><td><strong>EverChain</strong></td><td>Continuously vetted scorecarded marketplace connecting creditors to certified debt buyers.</td><td>Marketplace, not a control plane. dPlat is the operating system above every placement channel.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>The claims we never make</h3>
+      <p>Every competitor uses the same adjectives. When every company uses commoditized words, those words signal sameness.</p>
+      <div class="callout danger">
+        <div class="callout-h">never lead with these</div>
+        <p data-banned-list><strong>AI-powered. Compliance-first. Omnichannel. Consumer-centric. Data-driven. Digital-first. Comprehensive. Robust. Seamless. Next-generation. Industry-leading.</strong></p>
+      </div>
+
+      <h3>What to say instead</h3>
+      <div class="dd">
+        <div class="dd-item dd-dont"><div class="dd-header">Don't</div><div class="dd-body"><p>"Our AI-powered platform leverages seamless automation to drive best-in-class results for your recovery operation."</p></div></div>
+        <div class="dd-item dd-do"><div class="dd-header">Do</div><div class="dd-body"><p>"dPlat's Decision Engine places accounts with the right vendor automatically, based on segment, performance history, and compliance standing. Rule changes deploy without IT."</p></div></div>
+      </div>
+
+      <h3>The tagline</h3>
+      <div class="logo-demo">
+        <div style="font-weight: 480; font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.025em; color: var(--fg); text-align: center; line-height: 1.1;">
+          Recovery operations,<br><span style="color: var(--signal);">unified.</span>
+        </div>
+      </div>
+      <p>Short, specific, defensible. Use the long form, <em>The recovery operating system</em>, in formal contexts. The Platform-era marquee form, <strong>Recovery operations, unified</strong>, leads home pages, hero blocks, and conference materials.</p>
+    </section>
+
+    <section id="architecture" class="reveal">
+      <header class="sec-head"><div class="sec-num">03</div><div><h2>Brand architecture.</h2><p class="sec-deck">DebtNext is the parent. dPlat is the product. TSI is the holdco.</p></div></header>
+
+      <table>
+        <thead><tr><th>Name</th><th>Refers to</th><th>When to use</th></tr></thead>
+        <tbody>
+          <tr><td><strong>DebtNext</strong></td><td>The company. The brand.</td><td>Company references, careers, events, partnerships, the acquisition story.</td></tr>
+          <tr><td><strong>dPlat</strong></td><td>The SaaS platform.</td><td>Product pages, feature docs, screenshots, pricing.</td></tr>
+          <tr><td><strong>TSI</strong></td><td>Transworld Systems Inc. Parent since September 2025.</td><td>Footer, acquisition disclosure, compliance context.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <div class="callout-h">Capitalization rules (non-negotiable)</div>
+        <p><strong>DebtNext</strong> is one word. Capital D, capital N.</p>
+        <p><strong>dPlat</strong> is lowercase d, capital P.</p>
+        <p><strong>TSI</strong> is all caps. Spell out "Transworld Systems Inc. (TSI)" on first mention.</p>
+      </div>
+
+      <h3>The TSI disclosure pattern</h3>
+      <div class="callout">
+        <p>DebtNext operates as a dedicated SaaS business unit within Transworld Systems Inc. (TSI), with an audited data separation policy governing how platform data is accessed.</p>
+      </div>
+      <p>Variations are fine. Structure is not. Route any new version through Andrew Budish before shipping.</p>
+    </section>
+
+    <section id="audience" class="reveal">
+      <header class="sec-head"><div class="sec-num">04</div><div><h2>Audience.</h2><p class="sec-deck">Four people. Every piece of work answers to one of them.</p></div></header>
+
+      <table>
+        <thead><tr><th>Role</th><th>Title</th><th>Cares about</th><th>Wins them</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Economic Buyer</strong></td><td>SVP Collections, CRO, VP Credit Risk</td><td>Liquidation rate, recovery per dollar, regulatory exposure, vendor consolidation.</td><td>Portfolio math: 1% liquidation lift on $500M = $5–10M incremental.</td></tr>
+          <tr><td><strong>Champion</strong></td><td>Director of Vendor Management</td><td>Spreadsheet pain. Manual reconciliation. PowerPoint scorecards.</td><td>Product screenshots, workflow demos, anything replacing a spreadsheet.</td></tr>
+          <tr><td><strong>Influencer</strong></td><td>CCO, Legal Counsel</td><td>Third-party risk management. CFPB, state AGs, examiners.</td><td>SOC 2 Type II, audit trails, the information wall story.</td></tr>
+          <tr><td><strong>Blocker</strong></td><td>IT, Enterprise Architecture</td><td>The decade-old database. Integration anxiety.</td><td>Integration depth, API quality, implementation timelines.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>The fear stack</h3>
+      <ol>
+        <li><strong>Regulatory exposure.</strong> CFPB, state AGs, examiners. A vendor violation becomes the creditor's liability.</li>
+        <li><strong>Revenue leakage.</strong> 2–5x performance gaps between top and bottom vendors on identical accounts.</li>
+        <li><strong>Operational waste.</strong> 40% of ops time spent on reconciliation, not strategy.</li>
+        <li><strong>Vendor inertia.</strong> Switching is painful, data is fragmented, the status quo persists by default.</li>
+        <li><strong>Audit unreadiness.</strong> When a regulator asks for oversight evidence, the answer takes weeks to assemble.</li>
+      </ol>
+    </section>
+
+    <section id="logo" class="reveal">
+      <header class="sec-head"><div class="sec-num">05</div><div><h2>Logo system.</h2><p class="sec-deck">Wordmark with a luminous indigo node.</p></div></header>
+
+      <p>The wordmark is set in General Sans SemiBold with a luminous indigo node trailing the final letter. The node is not decoration. It represents a live point in the orchestration lattice, a visual cue that every DebtNext surface is connected to a working system.</p>
+
+      <div class="logo-demo">
+        <div class="logo-mk-large">DebtNext<span class="accent"></span></div>
+      </div>
+
+      <h4>Wordmark specifications</h4>
+      <table>
+        <thead><tr><th>Property</th><th>Specification</th></tr></thead>
+        <tbody>
+          <tr><td>Typeface</td><td>General Sans, weight 600 (SemiBold)</td></tr>
+          <tr><td>Letter spacing</td><td>-0.025em</td></tr>
+          <tr><td>Node size</td><td>~20% of cap height</td></tr>
+          <tr><td>Node color</td><td>Indigo · <code>oklch(0.55 0.21 268)</code> / <code>#5266EB</code></td></tr>
+          <tr><td>Node glow (digital only)</td><td>22px radius, 65% opacity</td></tr>
+          <tr><td>Minimum size (digital)</td><td>120px wide</td></tr>
+          <tr><td>Minimum size (print)</td><td>1 inch / 25mm wide</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Misuse</h3>
+      <p>Don't stretch or skew. Don't recolor the node. Don't add drop shadows beyond the specified glow. Don't reset to a different typeface. Don't lowercase the wordmark. Don't combine with other marks without Gian's approval.</p>
+    </section>
+
+    <section id="color" class="reveal">
+      <header class="sec-head"><div class="sec-num">06</div><div><h2>Color.</h2><p class="sec-deck">A violet-tinted dark canvas, one indigo signal, two papers for light. OKLCH-native tokens.</p></div></header>
+
+      <p>The palette is small on purpose. Dark canvas, three elevated dark surfaces, one bright indigo action, three text steps, three semantic states. Hierarchy comes from tonal contrast between canvas and elevated surfaces, not from saturation.</p>
+
+      <h3>Tokens (current theme)</h3>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-color" style="background: var(--canvas);"></div><div class="swatch-info"><div class="swatch-name">Canvas</div><div class="swatch-tok">--canvas</div><div class="swatch-hex" id="hexCanvas">#171721</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: var(--canvas-elev);"></div><div class="swatch-info"><div class="swatch-name">Canvas Elevated</div><div class="swatch-tok">--canvas-elev</div><div class="swatch-hex">#20212d</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: var(--canvas-elev-alt);"></div><div class="swatch-info"><div class="swatch-name">Canvas Elev Alt</div><div class="swatch-tok">--canvas-elev-alt</div><div class="swatch-hex">#1e1e2a</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: var(--canvas-strong);"></div><div class="swatch-info"><div class="swatch-name">Canvas Strong</div><div class="swatch-tok">--canvas-strong</div><div class="swatch-hex">#323649</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: var(--signal);"></div><div class="swatch-info"><div class="swatch-name">Signal (Indigo)</div><div class="swatch-tok">--signal</div><div class="swatch-hex">#5266EB</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: var(--signal-soft);"></div><div class="swatch-info"><div class="swatch-name">Signal Soft</div><div class="swatch-tok">--signal-soft</div><div class="swatch-hex">#9CB4E8</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: var(--fg);"></div><div class="swatch-info"><div class="swatch-name">Foreground</div><div class="swatch-tok">--fg</div><div class="swatch-hex">#EDEDF3</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: var(--fg-mid);"></div><div class="swatch-info"><div class="swatch-name">Foreground Mid</div><div class="swatch-tok">--fg-mid</div><div class="swatch-hex">#C3C3CC</div></div></div>
+      </div>
+
+      <h3>Why indigo</h3>
+      <p>Indigo at <code>oklch(0.55 0.21 268)</code> reads as the highest-trust action color in the modern fintech vocabulary. It carries enough chroma to function as a single signal at small scale, holds against both the deep dark canvas and a cream light surface without shifting hue, and avoids both the violet AI-tool reflex and the navy enterprise reflex. One indigo. One job: action, focus, the most important data point.</p>
+
+      <h3>Theme behavior</h3>
+      <p>Toggle via the sun/moon control top-right. Tokens re-bind, nothing recompiles. The dark canvas (the default) carries the brand's premium fintech identity. Light mode exists for documentation, email, long-form reading, and print contexts but should not become the dominant identity on flagship surfaces.</p>
+
+      <h3>Color usage rules</h3>
+      <ul>
+        <li><strong>Signal under 10% of any surface.</strong> One filled primary CTA per band. No competing indigo elements.</li>
+        <li><strong>Tinted neutrals only.</strong> No <code>#000</code>, no <code>#fff</code>. Canvas tints toward violet at h≈280.</li>
+        <li><strong>No gradient text.</strong> Solid colors. Hierarchy by weight and size.</li>
+        <li><strong>Hierarchy through tonal contrast.</strong> Canvas → Elevated → Strong. Layer dark surfaces; do not lean on shadows.</li>
+        <li><strong>Body text contrast.</strong> All pairings pass WCAG 2.2 AA. <code>--fg</code> on <code>--canvas</code> = 14.2:1.</li>
+      </ul>
+    </section>
+
+    <section id="typography" class="reveal">
+      <header class="sec-head"><div class="sec-num">07</div><div><h2>Typography.</h2><p class="sec-deck">One sans for body and display. One mono for figures and code.</p></div></header>
+
+      <p>Typography is intentionally restrained. <strong>General Sans</strong> handles every proportional setting from caption to display. <strong>JetBrains Mono</strong> handles every figure, code block, and metadata label. Hierarchy comes from scale and weight, not from family-mixing.</p>
+
+      <h3>The two families</h3>
+      <table>
+        <thead><tr><th>Family</th><th>Role</th><th>Where it appears</th></tr></thead>
+        <tbody>
+          <tr><td><strong>General Sans</strong></td><td>UI &amp; display</td><td>Headlines, body, buttons, navigation, callouts, table cells, hero deck. The default for everything except figures.</td></tr>
+          <tr><td><strong>JetBrains Mono</strong></td><td>Figures &amp; metadata</td><td>KPI numbers ($100M+, 22, 70+), code, eyebrows, table headers, section numbers, the nav search shortcut hint.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Why General Sans</h3>
+      <p>General Sans is a contemporary humanist sans with strong character at display weights and clean rendering at body size. It carries enough personality at hero scale to feel intentional, holds at 14px UI sizes without thinning, and avoids both the Inter-as-default reflex and the geometric-sans uniformity of the SaaS category. It also reads well across both the dark canvas and the cream light surface.</p>
+
+      <h3>Type scale</h3>
+      <table>
+        <thead><tr><th>Step</th><th>Size</th><th>Weight</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>Display XL</td><td>clamp(2.5rem, 5.5vw, 4.4rem)</td><td>480</td><td>Hero h1, atmospheric headlines</td></tr>
+          <tr><td>H2</td><td>clamp(2rem, 4vw, 2.6rem)</td><td>480</td><td>Section openers</td></tr>
+          <tr><td>H3</td><td>22px</td><td>500</td><td>Subsections</td></tr>
+          <tr><td>H4 / Label</td><td>11px mono</td><td>500</td><td>In-section labels, eyebrows</td></tr>
+          <tr><td>Lead</td><td>19px</td><td>400</td><td>Section intros, callout emphasis</td></tr>
+          <tr><td>Body</td><td>16px</td><td>400</td><td>Default prose</td></tr>
+          <tr><td>UI strong</td><td>16px</td><td>500</td><td>Buttons, nav, high-emphasis labels</td></tr>
+          <tr><td>Small</td><td>13-14px</td><td>400-500</td><td>Captions, table cells</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Typography rules</h3>
+      <ul>
+        <li><strong>Body line length 60-70ch.</strong> Caps at <code>--max-prose: 68ch</code>.</li>
+        <li><strong>Weights 400, 480, 500, 600.</strong> Sparingly. 400 for body, 480 for display emphasis, 500 for UI emphasis, 600 for wordmark.</li>
+        <li><strong>Letter spacing normal or slightly tight.</strong> <code>-0.02em</code> at display, <code>0</code> at body. No aggressive negative tracking.</li>
+        <li><strong>No all-caps body.</strong> Eyebrows and short labels only.</li>
+        <li><strong>Mono for numbers in figures and tables.</strong> Tabular figures via <code>font-feature-settings: 'tnum'</code>.</li>
+      </ul>
+    </section>
+
+    <section id="iconography" class="reveal">
+      <header class="sec-head"><div class="sec-num">08</div><div><h2>Iconography.</h2><p class="sec-deck">Stroke icons. 1.5px on a 24px grid. Geometric, restrained, single weight.</p></div></header>
+
+      <p>The icon vocabulary is functional, not illustrative. 1.5px stroke at 24px, scaled proportionally. Round caps, round joins. Icons never carry color outside semantic state.</p>
+
+      <h3>Specifications</h3>
+      <table>
+        <thead><tr><th>Property</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Stroke width</td><td>1.5px at 24px (1.25px at 16px, 2px at 32px+)</td></tr>
+          <tr><td>Cap / join</td><td>Round / round</td></tr>
+          <tr><td>Default sizes</td><td>16px (small UI), 20px (UI), 24px (content), 32px (feature)</td></tr>
+          <tr><td>Default color</td><td><code>--fg</code> or <code>--fg-mid</code>. Indigo only on active state or feature icons.</td></tr>
+          <tr><td>Source</td><td>Lucide for system icons. Custom dPlat-capability icons in same grid.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Custom dPlat capability icons</h3>
+      <ul>
+        <li><strong>Decision Engine.</strong> Bifurcating arrow. Used for placement, segmentation, routing.</li>
+        <li><strong>Vendor Scorecard.</strong> 2×2 cell grid. Performance, ranking, oversight.</li>
+        <li><strong>Compliance Trail.</strong> Linked document. Audit, evidence, regulator-facing surfaces.</li>
+        <li><strong>Payment Reconcile.</strong> Two-arrow loop. Settlement, posting flows.</li>
+        <li><strong>Information Wall.</strong> Divided shield. TSI separation policy contexts.</li>
+      </ul>
+    </section>
+
+    <section id="imagery" class="reveal">
+      <header class="sec-head"><div class="sec-num">09</div><div><h2>Imagery.</h2><p class="sec-deck">Dashboard mockups first. Atmospheric secondary. No stock photography.</p></div></header>
+
+      <h3>Category 1 · Dashboard mockups (preferred)</h3>
+      <p>The strongest imagery on every flagship surface is a recognizable slice of dPlat: a vendor scorecard, a KPI tile grid, a placement decision panel, a compliance event timeline. See the live mockups in <a href="#digital">section 14</a> for the canonical patterns. Use real-feeling but anonymized data. Optimize for responsive cropping.</p>
+
+      <h3>Category 2 · Atmospheric and generative</h3>
+      <p>Dark cinematic backgrounds, indigo radial gradients on hero blocks, abstract orchestration-lattice motifs in SVG. Atmospheric imagery sets the premium fintech tone without competing with product visuals.</p>
+
+      <h3>Category 3 · Custom illustration</h3>
+      <p>Commissioned. Geometric, line-based, monochrome with a single indigo accent. Used for editorial features, integration diagrams, complex concept explainers. Approved illustrators only.</p>
+
+      <h3>Category 4 · Photography (emergency use only)</h3>
+      <p>Last resort. If used: cool-toned, journalistic distance, no handshakes, no headsets, no business attire portraits. Approval required from Gian.</p>
+
+      <div class="callout">
+        <div class="callout-h">Imagery treatment rules</div>
+        <p>Critical hero media is preloaded only when it materially improves LCP. Below-fold imagery lazy-loads. Decorative atmospheric images use empty alt text. Meaningful product screenshots get descriptive alt. Charts get text summaries near the visual or in <code>aria-describedby</code>.</p>
+      </div>
+    </section>
+
+    <section id="motifs" class="reveal">
+      <header class="sec-head"><div class="sec-num">10</div><div><h2>Signature elements.</h2><p class="sec-deck">Four motifs. Each has a job.</p></div></header>
+
+      <h3>Motif 1 · The Orchestration Lattice</h3>
+      <p>A network of nodes connected by hairline rules. The visual analog of dPlat: every account, every vendor, every payment connected through one system. Used as ambient backdrop on hero blocks and section dividers.</p>
+      <div class="logo-demo" style="padding: 36px; min-height: 200px;">
+        <svg viewBox="0 0 480 200" style="width: 100%; max-width: 600px;" aria-hidden="true">
+          <g stroke="currentColor" stroke-width="0.6" fill="none" style="color: var(--rule); opacity: 0.7;">
+            <path d="M60 50 L180 100 L300 70 L420 130"/>
+            <path d="M60 170 L180 100 L300 70"/>
+            <path d="M60 50 L60 170"/>
+            <path d="M300 70 L300 170 L420 130"/>
+            <path d="M180 100 L300 170"/>
+            <path d="M180 100 L60 170"/>
+          </g>
+          <g fill="var(--signal)">
+            <circle cx="60" cy="50" r="4"><animate attributeName="r" values="3.5;5;3.5" dur="3.2s" repeatCount="indefinite"/></circle>
+            <circle cx="60" cy="170" r="3.5"><animate attributeName="r" values="3;4.5;3" dur="3.6s" repeatCount="indefinite"/></circle>
+            <circle cx="180" cy="100" r="5"><animate attributeName="r" values="4.5;6;4.5" dur="2.8s" repeatCount="indefinite"/></circle>
+            <circle cx="300" cy="70" r="4"><animate attributeName="r" values="3.5;5;3.5" dur="3s" repeatCount="indefinite"/></circle>
+            <circle cx="300" cy="170" r="3.5"><animate attributeName="r" values="3;4.5;3" dur="3.4s" repeatCount="indefinite"/></circle>
+            <circle cx="420" cy="130" r="4"><animate attributeName="r" values="3.5;5;3.5" dur="3.1s" repeatCount="indefinite"/></circle>
+          </g>
+        </svg>
+      </div>
+
+      <h3>Motif 2 · The Flow Diagram</h3>
+      <p>The post-charge-off lifecycle: Placement → Strategy → Action → Reconcile → Report. Used on the platform page, product overview decks, RFP responses.</p>
+
+      <h3>Motif 3 · The Vendor Matrix</h3>
+      <p>A grid of cells colored by performance. The visual analog of the scorecard. See it live in the dashboard mockup in <a href="#digital">section 14</a>.</p>
+
+      <h3>Motif 4 · The luminous node</h3>
+      <p>The single indigo dot. The wordmark accent, the hero eyebrow pulse, the active status indicator. One element across every scale, repeated wherever the system signals "live."</p>
+    </section>
+
+    <section id="motion" class="reveal">
+      <header class="sec-head"><div class="sec-num">11</div><div><h2>Motion.</h2><p class="sec-deck">Calm, fluid, load-bearing. Animation is a brand element. Click any demo below to play.</p></div></header>
+
+      <p class="lead">Motion is a <span class="accent">core brand element,</span> not an afterthought. It signals platform sophistication, communicates state change, and earns reader attention without demanding it. We use animation deliberately: hero reveals, accordion transitions, hover micro-interactions, counter animations on KPIs, fade-ups on scroll, and ambient breathing on the orchestration lattice.</p>
+
+      <h3>Motion philosophy</h3>
+      <ul>
+        <li><strong>Calm, not loud.</strong> Easing is <code>cubic-bezier(0.2, 0.7, 0.2, 1)</code>, a long deceleration curve. No bounce, no elastic, no overshoot.</li>
+        <li><strong>Confirmatory, not decorative.</strong> Every animation confirms a state change the user initiated, or reveals content as it enters the viewport.</li>
+        <li><strong>Fast at the small scale, slower at the narrative scale.</strong> Hover and focus: 150ms. Accordion and panel: 300ms. Hero reveals: 500ms.</li>
+        <li><strong>Property restraint.</strong> Animate <code>opacity</code>, <code>transform</code>, <code>background-color</code>, <code>color</code>, and <code>border-color</code>. Avoid <code>width</code>, <code>height</code>, <code>top</code>, <code>left</code>.</li>
+        <li><strong>Reduced motion is a first-class citizen.</strong> <code>prefers-reduced-motion: reduce</code> disables every entrance animation and keeps state changes immediate.</li>
+      </ul>
+
+      <h3>Motion tokens</h3>
+      <table>
+        <thead><tr><th>Token</th><th>Value</th><th>Used for</th></tr></thead>
+        <tbody>
+          <tr><td><code>--dur-instant</code></td><td>150ms</td><td>Hover, focus, link underlines, button color shifts</td></tr>
+          <tr><td><code>--dur-fast</code></td><td>300ms</td><td>Accordions, small fades, panel reveals, theme transitions</td></tr>
+          <tr><td><code>--dur-normal</code></td><td>500ms</td><td>Hero media fade-ins, KPI counter animations, section entry</td></tr>
+          <tr><td><code>--ease-standard</code></td><td>cubic-bezier(0.2, 0.7, 0.2, 1)</td><td>Default UI motion</td></tr>
+          <tr><td><code>--ease-in-out</code></td><td>cubic-bezier(0.4, 0, 0.2, 1)</td><td>Accordions and reversible motion</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Live demos</h3>
+      <p>Click any cell to play. Each demo shows the token in action; hover to preview before clicking.</p>
+      <div class="motion-demos">
+        <div class="motion-cell" data-dur="150">
+          <div class="name">--dur-instant</div>
+          <div class="spec">150ms · ease-standard · hover, focus</div>
+          <div class="motion-stage"><span class="motion-ball"></span></div>
+          <div class="hint">Click to play</div>
+        </div>
+        <div class="motion-cell" data-dur="300">
+          <div class="name">--dur-fast</div>
+          <div class="spec">300ms · ease-standard · accordions, panels, theme</div>
+          <div class="motion-stage"><span class="motion-ball"></span></div>
+          <div class="hint">Click to play</div>
+        </div>
+        <div class="motion-cell" data-dur="500">
+          <div class="name">--dur-normal</div>
+          <div class="spec">500ms · ease-standard · hero reveals, narrative</div>
+          <div class="motion-stage"><span class="motion-ball"></span></div>
+          <div class="hint">Click to play</div>
+        </div>
+        <div class="motion-cell" data-dur="800">
+          <div class="name">narrative</div>
+          <div class="spec">800ms · ease-in-out · long-form, hero media</div>
+          <div class="motion-stage"><span class="motion-ball"></span></div>
+          <div class="hint">Click to play</div>
+        </div>
+      </div>
+
+      <h3>Accordion (live)</h3>
+      <p>The canonical pattern for revealing one capability at a time without changing the visual field.</p>
+      <div class="accordion" id="liveAccordion">
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false" aria-controls="acc-1">
+            <span><span class="acc-num">01</span>Decision Engine</span>
+            <svg class="acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="acc-panel" id="acc-1"><div class="acc-panel-inner"><p>Places accounts with the right vendor automatically, based on segment, performance history, and compliance standing. Rule changes deploy without IT.</p></div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="true" aria-controls="acc-2">
+            <span><span class="acc-num">02</span>Vendor Scorecard</span>
+            <svg class="acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="acc-panel" id="acc-2"><div class="acc-panel-inner"><p>Replaces manual reconciliation, monthly QBR-by-PowerPoint, and "I cannot answer that question without a week of data gathering." Every vendor scored on identical data, refreshed automatically.</p></div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false" aria-controls="acc-3">
+            <span><span class="acc-num">03</span>Compliance Trail</span>
+            <svg class="acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="acc-panel" id="acc-3"><div class="acc-panel-inner"><p>Captures every placement, every decision, every complaint, every payment. When a regulator asks for oversight evidence, the answer is a query.</p></div></div>
+        </div>
+      </div>
+
+      <h3>Reveal-on-scroll</h3>
+      <p>Sections fade up as they enter the viewport, 24px translate over 600ms with ease-standard. The effect is calm and load-bearing: a reader who scrolls past quickly sees no animation lag; a reader who slows to read sees the page assemble itself around them. <code>IntersectionObserver</code>-driven; respects <code>prefers-reduced-motion</code>.</p>
+
+      <h3>Counter animation on KPIs</h3>
+      <p>The figures in section 01 ($100M+, 22, 70+) count up from 0 to target on first viewport entry. Played once per session via <code>IntersectionObserver</code>. The number is animated, not the layout, so there is no shift. Scroll back to <a href="#why">section 01</a> in a fresh tab to see it play.</p>
+
+      <h3>What we do not animate</h3>
+      <ul>
+        <li><strong>Layout properties.</strong> No <code>width</code>, <code>height</code>, <code>top</code>, <code>left</code>. Always <code>transform</code>.</li>
+        <li><strong>Bounce or elastic.</strong> Decel curves only.</li>
+        <li><strong>Parallax.</strong> Doesn't earn its cost.</li>
+        <li><strong>Hero images on scroll.</strong> Never.</li>
+        <li><strong>Auto-rotating carousels without pause control.</strong> Inaccessible.</li>
+        <li><strong>Scale-on-hover for cards.</strong> Border or color shift is enough.</li>
+      </ul>
+    </section>
+
+    <section id="voice" class="reveal">
+      <header class="sec-head"><div class="sec-num">12</div><div><h2>Writing &amp; tone.</h2><p class="sec-deck">The voice system. The strongest discipline in the brand.</p></div></header>
+
+      <p class="lead">Confident, specific, never marketing-speak. We sound like a senior operator who has run this play before, talking to another senior operator.</p>
+
+      <h3>Core principles</h3>
+      <ul>
+        <li><strong>Mechanism, then proof, then provocation.</strong> Name what the system does. Show the number. Only then say something bold.</li>
+        <li><strong>One specific noun per sentence.</strong> "Spreadsheets" beats "tools." "Seven agencies" beats "multiple vendors."</li>
+        <li><strong>The fear stack does the opening.</strong> Lead with the current-state pain, not the platform's feature.</li>
+        <li><strong>Numbers in mono.</strong> Tabular figures. Always.</li>
+        <li><strong>Active voice.</strong> "dPlat orchestrates placements" not "Placements are orchestrated by dPlat."</li>
+      </ul>
+
+      <h3>Hard rules (non-negotiable)</h3>
+      <ul>
+        <li><strong>No em dashes.</strong> Use commas, colons, semicolons, periods, or parentheses.</li>
+        <li><strong>No "not X, it's Y."</strong> Pick the right thing the first time.</li>
+        <li><strong>No three-adjective phrases.</strong> One adjective or none.</li>
+        <li><strong>No exclamation points.</strong> Ever.</li>
+        <li><strong>No emoji.</strong> Anywhere in product or marketing surfaces.</li>
+        <li><strong>Sentence case.</strong> Headlines and UI labels. No all-caps body.</li>
+      </ul>
+
+      <h3>The banned phrase list</h3>
+      <div class="callout danger">
+        <div class="callout-h">never write</div>
+        <p data-banned-list>AI-powered. Compliance-first. Omnichannel. Consumer-centric. Data-driven. Digital-first. Comprehensive. Robust. Seamless. Next-generation. Industry-leading. World-class. Cutting-edge. Best-in-class. Mission-critical. Empower. Unlock. Elevate. Transform. Optimize. Accelerate. Streamline.</p>
+      </div>
+
+      <h3>Required vocabulary</h3>
+      <ul>
+        <li><strong>System of record.</strong> The frame for what dPlat is.</li>
+        <li><strong>Orchestrate.</strong> What dPlat does to vendors and placements.</li>
+        <li><strong>Recovery operating system.</strong> The tagline. Don't dilute.</li>
+        <li><strong>Vendor scorecard.</strong> The artifact dPlat replaces.</li>
+        <li><strong>Information wall.</strong> The audited separation between dPlat and TSI.</li>
+        <li><strong>Decision Engine.</strong> The named capability. Capitalize.</li>
+        <li><strong>Post-charge-off.</strong> The market segment.</li>
+      </ul>
+    </section>
+
+    <section id="messaging" class="reveal">
+      <header class="sec-head"><div class="sec-num">13</div><div><h2>Messaging.</h2><p class="sec-deck">Three altitudes. Four pillars.</p></div></header>
+
+      <h3>Three altitudes</h3>
+      <table>
+        <thead><tr><th>Altitude</th><th>When</th><th>Sentence</th></tr></thead>
+        <tbody>
+          <tr><td>30s</td><td>Conference intro, exec hand-off</td><td>"DebtNext builds dPlat, the recovery operating system for enterprise creditors. We orchestrate $100M+ in monthly placements across 70+ banks, utilities, and debt owners."</td></tr>
+          <tr><td>2m</td><td>Discovery call, first-meeting deck</td><td>The 30s + the four pillars + the proof line + the TSI disclosure.</td></tr>
+          <tr><td>15m</td><td>Sales pitch, conference talk</td><td>The 2m + Decision Engine demo + Vendor Scorecard demo + Compliance Trail demo.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Four value pillars</h3>
+      <div class="dd">
+        <div class="dd-item"><div class="dd-header" style="color: var(--signal);">Pillar 01</div><div class="dd-body"><p><strong>Vendor accountability without spreadsheets.</strong> The Vendor Scorecard replaces manual reconciliation, monthly QBR-by-PowerPoint, and "I cannot answer that question without a week of data gathering."</p></div></div>
+        <div class="dd-item"><div class="dd-header" style="color: var(--signal);">Pillar 02</div><div class="dd-body"><p><strong>Compliance evidence on demand.</strong> The Compliance Trail captures every placement, every decision, every complaint, every payment. When a regulator asks for oversight evidence, the answer is a query.</p></div></div>
+      </div>
+      <div class="dd">
+        <div class="dd-item"><div class="dd-header" style="color: var(--signal);">Pillar 03</div><div class="dd-body"><p><strong>Decisioning that ships without IT.</strong> The Decision Engine lets vendor management teams change placement rules, segmentation, and exception logic in days, not quarters.</p></div></div>
+        <div class="dd-item"><div class="dd-header" style="color: var(--signal);">Pillar 04</div><div class="dd-body"><p><strong>One system above every vendor.</strong> One UI, one data model, one audit trail across 5 to 50+ agencies, law firms, debt buyers, and investigators.</p></div></div>
+      </div>
+    </section>
+
+    <section id="digital" class="reveal">
+      <header class="sec-head"><div class="sec-num">14</div><div><h2>Digital &amp; <span class="accent">dashboards.</span></h2><p class="sec-deck">Live dashboard mockups, attached forms, and the patterns every flagship surface should adopt.</p></div></header>
+
+      <p class="lead">Dashboard mockups are <span class="accent">the strongest imagery</span> on every flagship surface. They make capabilities tangible. They turn benefit copy into proof. Below: three canonical mockups that should appear, in some form, on the platform page, every feature page, and the pitch deck.</p>
+
+      <h3>Dashboard mockup · Vendor Scorecard</h3>
+      <p>The canonical product visual. Shows real-feeling but anonymized data. Tabular figures in mono. Performance encoded in indigo bar fills with three semantic state colors. KPI tiles above for portfolio-level context. Activity feed below for live operations feel.</p>
+
+      <div class="dashboard">
+        <div class="dash-head">
+          <div class="dash-title">Vendor Scorecard, Q2 2026</div>
+          <div class="dash-tabs">
+            <button class="dash-tab" aria-pressed="false">7d</button>
+            <button class="dash-tab" aria-pressed="true">30d</button>
+            <button class="dash-tab" aria-pressed="false">QTD</button>
+            <button class="dash-tab" aria-pressed="false">YTD</button>
+          </div>
+          <div class="dash-meta">Updated 2 min ago</div>
+        </div>
+
+        <div class="mini-kpis">
+          <div class="mini-kpi"><div class="l">Placements / mo</div><div class="v">$104.2M</div><div class="d">▲ 4.2% vs prior</div></div>
+          <div class="mini-kpi"><div class="l">Liquidation %</div><div class="v">12.8%</div><div class="d">▲ 0.6 pts</div></div>
+          <div class="mini-kpi"><div class="l">Active vendors</div><div class="v">27</div><div class="d">▲ 2 onboarded</div></div>
+          <div class="mini-kpi"><div class="l">SLA breaches</div><div class="v">3</div><div class="d down">▼ from 11</div></div>
+        </div>
+
+        <div class="vendor-list">
+          <div class="vendor-row">
+            <div class="vendor-name">Agency Alpha<small>vendor-001 · active 4y</small></div>
+            <div class="vendor-bar ok hide-sm"><span style="--w: 92%;"></span></div>
+            <div class="vendor-score hide-sm">92.4</div>
+            <div class="vendor-status ok">Prioritize</div>
+          </div>
+          <div class="vendor-row">
+            <div class="vendor-name">Beta Recovery<small>vendor-008 · active 2y</small></div>
+            <div class="vendor-bar ok hide-sm"><span style="--w: 84%;"></span></div>
+            <div class="vendor-score hide-sm">84.1</div>
+            <div class="vendor-status ok">Maintain</div>
+          </div>
+          <div class="vendor-row">
+            <div class="vendor-name">Carlton &amp; Holt LLP<small>vendor-013 · law firm</small></div>
+            <div class="vendor-bar ok hide-sm"><span style="--w: 91%;"></span></div>
+            <div class="vendor-score hide-sm">91.0</div>
+            <div class="vendor-status ok">Prioritize</div>
+          </div>
+          <div class="vendor-row">
+            <div class="vendor-name">Delta Capital<small>vendor-021 · debt buyer</small></div>
+            <div class="vendor-bar warn hide-sm"><span style="--w: 68%;"></span></div>
+            <div class="vendor-score hide-sm">67.8</div>
+            <div class="vendor-status warn">Review</div>
+          </div>
+          <div class="vendor-row">
+            <div class="vendor-name">Echo Receivables<small>vendor-024 · active 1y</small></div>
+            <div class="vendor-bar danger hide-sm"><span style="--w: 42%;"></span></div>
+            <div class="vendor-score hide-sm">41.6</div>
+            <div class="vendor-status danger">Probation</div>
+          </div>
+        </div>
+
+        <div class="chart-panel">
+          <svg class="chart-svg" viewBox="0 0 400 120" aria-label="Liquidation rate over 12 weeks">
+            <g stroke="currentColor" style="color: var(--rule-soft);" stroke-width="1">
+              <line x1="0" y1="30" x2="400" y2="30" stroke-dasharray="2,4"/>
+              <line x1="0" y1="60" x2="400" y2="60" stroke-dasharray="2,4"/>
+              <line x1="0" y1="90" x2="400" y2="90" stroke-dasharray="2,4"/>
+            </g>
+            <path id="chartLine" d="M 0 80 L 36 76 L 72 70 L 108 64 L 144 68 L 180 58 L 216 52 L 252 48 L 288 42 L 324 40 L 360 32 L 400 28" stroke="var(--signal)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="900" stroke-dashoffset="900"/>
+            <g fill="var(--signal)">
+              <circle cx="400" cy="28" r="4"/>
+            </g>
+          </svg>
+          <div class="chart-stat">
+            <div class="l">Liquidation, 12wk</div>
+            <div class="v">12.8%</div>
+            <div class="d">▲ from 9.4% baseline</div>
+          </div>
+        </div>
+
+        <div class="activity">
+          <div class="activity-row">
+            <span class="activity-dot"></span>
+            <div class="activity-text"><span class="label">PLACEMENT</span><strong>2,847 accounts</strong> routed to Agency Alpha via Decision Engine rule v4.2</div>
+            <span class="activity-time">just now</span>
+          </div>
+          <div class="activity-row">
+            <span class="activity-dot"></span>
+            <div class="activity-text"><span class="label">COMPLIANCE</span>Echo Receivables flagged: 3rd FDCPA-adjacent complaint in 30d</div>
+            <span class="activity-time">2m ago</span>
+          </div>
+          <div class="activity-row">
+            <span class="activity-dot"></span>
+            <div class="activity-text"><span class="label">PAYMENT</span><strong>$1.42M</strong> reconciled across 14 vendor remittance files</div>
+            <span class="activity-time">11m ago</span>
+          </div>
+          <div class="activity-row">
+            <span class="activity-dot"></span>
+            <div class="activity-text"><span class="label">SCORECARD</span>Q2 vendor scorecards published to 27 partner portals</div>
+            <span class="activity-time">2h ago</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>Dashboard usage rules</h3>
+      <ul>
+        <li><strong>Real-feeling, anonymized data.</strong> No real client names, account numbers, or PII.</li>
+        <li><strong>Indigo for the primary chart series.</strong> Other series use the chart palette (success, warn, info).</li>
+        <li><strong>Live indicators where the system breathes.</strong> The pulsing dot, the "Updated 2 min ago" timestamp, the active activity feed.</li>
+        <li><strong>Animate bars and lines on scroll into view.</strong> Once per page-load. Played via <code>IntersectionObserver</code>.</li>
+        <li><strong>Print-safe.</strong> Dashboard mockups should remain legible when printed in grayscale.</li>
+      </ul>
+
+      <h3>Website (debtnext.com) patterns</h3>
+      <ul>
+        <li><strong>Header navigation.</strong> Dark, sticky, 72px tall, 5 top-level links max, exactly one filled primary CTA. See the nav at the top of this page.</li>
+        <li><strong>Hero.</strong> Concise headline (under 18 chars per line), short deck (1-2 sentences), attached email/demo form or single pill CTA, atmospheric or product media. See the hero on this page.</li>
+        <li><strong>Feature accordion.</strong> Reveal one capability at a time. Active item updates a paired product visual. See <a href="#motion">section 11</a> for the live pattern.</li>
+        <li><strong>Dashboard band.</strong> Real product visual, full-bleed or framed. The vendor scorecard mockup above is the canonical example.</li>
+        <li><strong>Social proof.</strong> Quiet section. Testimonial card on dark with <code>--canvas-elev</code> background. No carousel without pause control.</li>
+        <li><strong>Benefit deep-dives.</strong> 2-4 sections, each one concept. Alternate dark / elevated dark / dark. One CTA per band.</li>
+        <li><strong>Final CTA.</strong> Strong dark band. One filled primary action. Short conversion copy.</li>
+        <li><strong>Footer.</strong> Comprehensive grouped links, muted dark surface, TSI disclosure, copyright.</li>
+      </ul>
+
+      <h3>LinkedIn</h3>
+      <ul>
+        <li>Hero card on dark canvas. Wordmark with indigo node, no decorative imagery.</li>
+        <li>Posts open with a specific number or named persona, never a generic claim.</li>
+        <li>Carousels: 5–7 slides at 1080×1350. First slide is the hook (one sentence + one number). Last slide is the CTA.</li>
+        <li>No emoji, no exclamation points, no "thrilled to announce."</li>
+      </ul>
+
+      <h3>Email &amp; transactional</h3>
+      <ul>
+        <li>Light theme (cream paper). Rendering across email clients is too inconsistent for dark.</li>
+        <li>General Sans with Helvetica Neue / Arial fallback.</li>
+        <li>Signature: name, role, wordmark, "A TSI Company" line. No banner, no calendar widget.</li>
+        <li>Transactional emails follow the same shell as marketing email; copy stays product-specific.</li>
+      </ul>
+
+      <h3>Video</h3>
+      <ul>
+        <li>Intro: 1.5 seconds. The luminous node fades in, scales to wordmark, holds.</li>
+        <li>Lower thirds: General Sans Medium 28px on dark.</li>
+        <li>Outro: tagline plus URL on dark. Two seconds. No music swell.</li>
+        <li>Motion follows section 11 tokens. No bounce, no parallax.</li>
+      </ul>
+    </section>
+
+    <section id="sales" class="reveal">
+      <header class="sec-head"><div class="sec-num">15</div><div><h2>Sales collateral.</h2><p class="sec-deck">Pitch deck, one-pagers, case studies, RFPs.</p></div></header>
+
+      <h3>Pitch deck</h3>
+      <table>
+        <thead><tr><th>Slide</th><th>Content</th></tr></thead>
+        <tbody>
+          <tr><td>1 · Title</td><td>Tagline + buyer logo. Dark canvas, wordmark upper left, "A TSI Company" lower right.</td></tr>
+          <tr><td>2 · Problem</td><td>Fear stack. Three numbers anchored in their portfolio.</td></tr>
+          <tr><td>3 · Mechanism</td><td>What dPlat is + the Flow Diagram motif.</td></tr>
+          <tr><td>4–6 · Pillars</td><td>One slide per value pillar. Each: claim + proof + dashboard mockup.</td></tr>
+          <tr><td>7 · Proof</td><td>$100M+, 22, 70+ as KPI tiles with trend deltas.</td></tr>
+          <tr><td>8 · Customer</td><td>Named logo, the metric, the quote.</td></tr>
+          <tr><td>9 · Compliance</td><td>SOC 2 Type II, the information wall, the audit trail.</td></tr>
+          <tr><td>10 · Next step</td><td>One CTA. Calendar link. Wordmark.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>One-pagers</h3>
+      <ul>
+        <li>Letter or A4, dark canvas, single page. Two columns max.</li>
+        <li>One headline + the mechanism + three proof points + one dashboard screenshot.</li>
+        <li>QR code in the lower-right, links to the matching web page.</li>
+      </ul>
+
+      <h3>Case study template</h3>
+      <ol>
+        <li>Customer + segment + portfolio scale.</li>
+        <li>The problem in their words (one quote).</li>
+        <li>The dPlat capability that did the work.</li>
+        <li>The metric that moved. Specific. Sourced.</li>
+        <li>The closing quote. Named individual, title, company.</li>
+      </ol>
+    </section>
+
+    <section id="events" class="reveal">
+      <header class="sec-head"><div class="sec-num">16</div><div><h2>Events &amp; print.</h2><p class="sec-deck">Booth, business cards, signage, swag.</p></div></header>
+
+      <ul>
+        <li><strong>Booth.</strong> Dark backdrop, one luminous node mark, one screen showing dPlat product UI on loop. No banners, no tagline variations.</li>
+        <li><strong>Business cards.</strong> Letterpress on heavy uncoated black stock. Wordmark white, node indigo (Pantone 2728 closest).</li>
+        <li><strong>Office signage.</strong> Wordmark only. Never the tagline. Wayfinding in General Sans Medium ≥36pt for ADA.</li>
+        <li><strong>Swag.</strong> Notebook with foil-stamped wordmark, ceramic mug with the node, technical-jersey hoodie in charcoal. Banned: stress balls, plastic items, lanyards.</li>
+      </ul>
+    </section>
+
+    <section id="governance" class="reveal">
+      <header class="sec-head"><div class="sec-num">17</div><div><h2>Governance.</h2><p class="sec-deck">Who owns what. How exceptions move.</p></div></header>
+
+      <table>
+        <thead><tr><th>Role</th><th>Owner</th><th>Approves</th></tr></thead>
+        <tbody>
+          <tr><td>Brand strategy &amp; voice</td><td>Connor Laughlin (VP Marketing &amp; GTM)</td><td>Positioning, taglines, voice rules, audience.</td></tr>
+          <tr><td>Identity &amp; visual system</td><td>Gian Rufin (Sr. Brand Manager)</td><td>Logo, color, type, motifs, motion, imagery.</td></tr>
+          <tr><td>Compliance &amp; TSI disclosure</td><td>Andrew Budish</td><td>Any new TSI disclosure, regulatory copy.</td></tr>
+          <tr><td>Sales collateral</td><td>RevOps + Connor</td><td>Pitch deck, ROI model, RFP library.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Approval tiers</h3>
+      <ol>
+        <li><strong>Tier 1.</strong> Existing assets used as-is. No approval needed.</li>
+        <li><strong>Tier 2.</strong> New visual, layout, social card using existing system. Gian approves within 48 hours.</li>
+        <li><strong>Tier 3.</strong> Net-new headline, claim, statistic, tagline variation. Gian + Connor.</li>
+        <li><strong>Tier 4.</strong> Anything touching TSI, compliance, the information wall. Add Andrew.</li>
+      </ol>
+
+      <h3>Exception process</h3>
+      <p>Exceptions exist. To request one, post in <code>#brand-exceptions</code> with the surface, the rule being broken, the reason, the proposed alternative, the expiration date. Gian approves or rejects within 48 hours. Approved exceptions are logged in the asset library and reviewed quarterly.</p>
+    </section>
+
+    <section id="resources" class="reveal">
+      <header class="sec-head"><div class="sec-num">18</div><div><h2>Resources.</h2><p class="sec-deck">Files, contacts, FAQ.</p></div></header>
+
+      <h3>Downloads</h3>
+      <ul>
+        <li>Logo SVGs (primary, light, reverse). <code>/asset-library/logo/</code></li>
+        <li>OKLCH token JSON. <code>/asset-library/tokens/dn.tokens.json</code></li>
+        <li>Dashboard mockup library (Figma). <code>/asset-library/dashboards/</code></li>
+        <li>Pitch deck (Keynote master). <code>/asset-library/sales/dn.pitch.key</code></li>
+        <li>One-pager templates. <code>/asset-library/sales/one-pagers/</code></li>
+        <li>RFP library, indexed by question theme. <code>/asset-library/rfp/</code></li>
+      </ul>
+
+      <h3>Contacts</h3>
+      <table>
+        <thead><tr><th>Question</th><th>Person</th></tr></thead>
+        <tbody>
+          <tr><td>Brand voice, taglines, headlines</td><td>Connor Laughlin · connor.laughlin@debtnext.com</td></tr>
+          <tr><td>Logo, color, type, layout, motion</td><td>Gian Rufin · gian.rufin@debtnext.com</td></tr>
+          <tr><td>TSI / compliance language</td><td>Andrew Budish · andrew.budish@debtnext.com</td></tr>
+          <tr><td>Asset access, vendor onboarding</td><td>Marketing Ops · marketing-ops@debtnext.com</td></tr>
+        </tbody>
+      </table>
+
+      <h3>FAQ</h3>
+      <h4>Can I use a different font in a specific deck?</h4>
+      <p>No. General Sans / JetBrains Mono only. If a partner deck constrains the fonts, request an exception via section 17.</p>
+      <h4>Can I use indigo on every CTA?</h4>
+      <p>Yes for primary actions and active states. No for secondary buttons, which stay neutral. One filled primary indigo per band, period.</p>
+      <h4>Can I write "AI-powered" if it's accurate?</h4>
+      <p>No. Name the specific capability: "Decision Engine," "Scorecard Analytics," "Workflow Rules."</p>
+      <h4>Can I use an em dash if it's grammatically correct?</h4>
+      <p>No. Use a comma, colon, semicolon, period, or parentheses.</p>
+      <h4>Can I animate things outside the motion tokens?</h4>
+      <p>No. The five tokens cover every animation in the system. Custom durations or curves require approval from Gian.</p>
+    </section>
+
+  </main>
+</div>
+
+<!-- Search modal -->
+<div class="search-modal" id="searchModal" role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-panel">
+    <div class="search-input-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input class="search-input" id="searchInput" type="text" placeholder="Search the guidelines..." autocomplete="off">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-faint); border: 1px solid var(--rule); padding: 2px 6px; letter-spacing: 0.1em; border-radius: 4px;">esc</span>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-empty">Type to search across every section.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const html = document.documentElement;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // THEME TOGGLE
+  const themeBtn = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const SUN_SVG = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';
+  const MOON_SVG = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  function applyThemeIcon(theme) {
+    themeIcon.innerHTML = theme === 'dark' ? SUN_SVG : MOON_SVG;
+  }
+  function setTheme(theme) {
+    html.setAttribute('data-theme', theme);
+    applyThemeIcon(theme);
+    try { localStorage.setItem('dn-theme-platform', theme); } catch(e){}
+  }
+  try { const saved = localStorage.getItem('dn-theme-platform'); if (saved === 'dark' || saved === 'light') setTheme(saved); else applyThemeIcon('dark'); } catch(e) { applyThemeIcon('dark'); }
+  themeBtn.addEventListener('click', () => setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+  // SIDEBAR active link tracking
+  const links = document.querySelectorAll('.toc-link');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('main section[id]');
+  const byId = new Map();
+  links.forEach(a => byId.set(a.getAttribute('href').slice(1), a));
+  const navById = new Map();
+  navLinks.forEach(a => navById.set(a.getAttribute('href').slice(1), a));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      const link = byId.get(e.target.id);
+      const navLink = navById.get(e.target.id);
+      if (e.isIntersecting) {
+        if (link) { links.forEach(l => l.classList.remove('active')); link.classList.add('active'); }
+        if (navLink) { navLinks.forEach(l => l.classList.remove('active')); navLink.classList.add('active'); }
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => io.observe(s));
+
+  // REVEAL ON SCROLL
+  if (!reduced) {
+    const revealIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealIO.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealIO.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+
+  // KPI COUNTER ANIMATION
+  function animateNumber(el, target, dur) {
+    if (reduced) { el.textContent = target; return; }
+    const start = performance.now();
+    function step(now) {
+      const t = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(target * eased);
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  const kpiIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const numEl = e.target.querySelector('.kpi-num');
+        const target = parseInt(e.target.getAttribute('data-target'), 10);
+        if (numEl && target) animateNumber(numEl, target, 1200);
+        kpiIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('.kpi-v[data-target]').forEach(el => kpiIO.observe(el));
+
+  // VENDOR BAR ANIMATION (on scroll into view)
+  const barIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.vendor-bar > span').forEach(span => {
+          const w = span.style.getPropertyValue('--w');
+          if (w) span.style.width = w;
+        });
+        // Animate chart line
+        const chart = e.target.querySelector('#chartLine');
+        if (chart && !reduced) {
+          chart.style.transition = 'stroke-dashoffset 1.5s var(--ease-standard)';
+          chart.style.strokeDashoffset = '0';
+        } else if (chart) {
+          chart.style.strokeDashoffset = '0';
+        }
+        barIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.25 });
+  document.querySelectorAll('.dashboard').forEach(el => barIO.observe(el));
+
+  // MOTION DEMOS (click to play)
+  document.querySelectorAll('.motion-cell').forEach(cell => {
+    const ball = cell.querySelector('.motion-ball');
+    const dur = parseInt(cell.getAttribute('data-dur'), 10);
+    ball.style.transitionDuration = dur + 'ms';
+    function play() {
+      cell.classList.add('active');
+      setTimeout(() => cell.classList.remove('active'), dur + 200);
+    }
+    cell.addEventListener('click', play);
+  });
+
+  // ACCORDION
+  document.querySelectorAll('.acc-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const expanded = trigger.getAttribute('aria-expanded') === 'true';
+      trigger.setAttribute('aria-expanded', String(!expanded));
+    });
+  });
+
+  // DASHBOARD TABS (visual demo only)
+  document.querySelectorAll('.dash-tabs').forEach(group => {
+    const tabs = group.querySelectorAll('.dash-tab');
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.setAttribute('aria-pressed', 'false'));
+      tab.setAttribute('aria-pressed', 'true');
+    }));
+  });
+
+  // SEARCH MODAL
+  const searchBtn = document.getElementById('searchTrigger');
+  const modal = document.getElementById('searchModal');
+  const input = document.getElementById('searchInput');
+  const results = document.getElementById('searchResults');
+  const searchIndex = Array.from(sections).map(s => {
+    const id = s.id;
+    const heading = s.querySelector('h2')?.textContent.trim() || id;
+    const number = s.querySelector('.sec-num')?.textContent.trim() || '';
+    const text = s.innerText.replace(/\s+/g, ' ').trim();
+    return { id, heading, number, text, lower: text.toLowerCase() };
+  });
+  function openSearch() { modal.classList.add('open'); requestAnimationFrame(() => input.focus()); }
+  function closeSearch() { modal.classList.remove('open'); input.value = ''; render(''); }
+  searchBtn.addEventListener('click', openSearch);
+  modal.addEventListener('click', e => { if (e.target === modal) closeSearch(); });
+  function render(q) {
+    const query = q.trim().toLowerCase();
+    if (!query) { results.innerHTML = '<div class="search-empty">Type to search across every section.</div>'; return; }
+    const hits = searchIndex.map(it => {
+      const i = it.lower.indexOf(query);
+      if (i === -1) return null;
+      const start = Math.max(0, i - 60);
+      const end = Math.min(it.text.length, i + query.length + 80);
+      const snippet = (start > 0 ? '... ' : '') + it.text.slice(start, end) + (end < it.text.length ? ' ...' : '');
+      return { ...it, snippet };
+    }).filter(Boolean).slice(0, 12);
+    if (!hits.length) { results.innerHTML = '<div class="search-empty">No matches.</div>'; return; }
+    results.innerHTML = hits.map(h => `<a class="search-r" href="#${h.id}"><div class="search-r-s">${h.number} &middot; ${h.heading}</div><div class="search-r-x">${escapeHtml(h.snippet)}</div></a>`).join('');
+    results.querySelectorAll('.search-r').forEach(a => a.addEventListener('click', closeSearch));
+  }
+  function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  input.addEventListener('input', () => render(input.value));
+  document.addEventListener('keydown', e => {
+    const cmdK = (e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey);
+    if (cmdK) { e.preventDefault(); modal.classList.contains('open') ? closeSearch() : openSearch(); }
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') { e.preventDefault(); openSearch(); }
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeSearch();
+  });
+})();
+</script>
+</body>
+</html>
