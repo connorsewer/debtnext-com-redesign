@@ -46,7 +46,7 @@ export function HomepageHero() {
 
   const [isMobile, setIsMobile] = React.useState(false);
   React.useEffect(() => {
-    const mq = window.matchMedia("(max-width: 768px)");
+    const mq = window.matchMedia("(max-width: 767px)");
     const handler = () => setIsMobile(mq.matches);
     handler();
     mq.addEventListener("change", handler);
@@ -77,7 +77,7 @@ export function HomepageHero() {
         // event firing. Bail before creating a ScrollTrigger that would inject
         // a .pin-spacer wrapping the sticky div on a layout that no longer
         // wants the cinematic.
-        if (window.matchMedia("(max-width: 768px)").matches) return;
+        if (window.matchMedia("(max-width: 767px)").matches) return;
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
         const duration = video.duration || 1;
