@@ -38,7 +38,7 @@ export function SectionContainer({
         surface === "light" && "theme-light",
         "bg-[var(--background)] text-[var(--foreground)]",
         surface === "elevated-dark" && "bg-[var(--card)]",
-        "py-12 md:py-20 lg:py-24",
+        "py-[var(--space-section-mobile)] md:py-[var(--space-section-tablet)] lg:py-[var(--space-section-desktop)]",
         className
       )}
       {...rest}
