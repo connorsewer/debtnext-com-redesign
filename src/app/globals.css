@@ -233,6 +233,10 @@
   --spacing-18: 4.5rem;  /* 72 */
   --spacing-24: 6rem;    /* 96 */
 
+  /* Touch targets — DESIGN.md §9.3 (iOS HIG 44px floor) */
+  --size-touch: 2.75rem;        /* 44 */
+  --size-touch-comfortable: 3rem; /* 48 (Material) */
+
   /* Containers — DESIGN.md §4.4 */
   --container-narrow: 40rem;     /* 640 */
   --container-readable: 47.5rem; /* 760 */
@@ -283,6 +287,16 @@
 @utility container-form {
   container-type: inline-size;
   container-name: form;
+}
+@utility min-h-touch {
+  min-height: var(--size-touch);
+}
+@utility min-w-touch {
+  min-width: var(--size-touch);
+}
+@utility min-size-touch {
+  min-height: var(--size-touch);
+  min-width: var(--size-touch);
 }
 
 @layer base {
