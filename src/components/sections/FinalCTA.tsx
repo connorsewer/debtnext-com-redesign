@@ -46,6 +46,7 @@ export function FinalCTA({
             asChild
             variant="primary"
             size="md"
+            className="min-h-touch"
             onClick={() =>
               track({
                 event: "cta_primary_click",

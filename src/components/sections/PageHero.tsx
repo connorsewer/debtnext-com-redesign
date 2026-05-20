@@ -83,6 +83,7 @@ export function PageHero({
               asChild
               variant="primary"
               size="md"
+              className="min-h-touch"
               onClick={() =>
                 track({
                   event: "cta_primary_click",
@@ -98,6 +99,7 @@ export function PageHero({
                 asChild
                 variant="ghost"
                 size="text"
+                className="inline-flex min-h-touch items-center"
                 onClick={() =>
                   track({
                     event: "cta_secondary_click",

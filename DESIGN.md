@@ -1237,6 +1237,9 @@ Every GSAP/Framer/CSS transition has a quiet fallback under `prefers-reduced-mot
 | `ProcessStrip` | Horizontal numbered strip at ≥768px container. Vertical timeline with thin left rule + number bubbles below. Step content (title + body) stacks under each numbered marker on narrow. |
 | `AttachedForm` | Pill-attached input+button at ≥384px container width. Stacked input top / full-width button below at narrower. Each surface keeps pill radius (`--radius-xl`). |
 | `CardGrid` | 1 column below 384px container, 2 at ≥384, 3 at ≥1024, 4 at ≥1280. Driven by container width via `@<size>/card:` variants — nests correctly inside other sections. |
+| `Hero` / `PageHero` | Eyebrow/H1/body use fluid clamp tokens. Split variant flips to stacked at narrow widths (container-section). AttachedForm-in-hero follows its own contract. |
+| `TrustBand` / `ProofBand` / `IntegrationStrip` | Logo rows wrap cleanly without crushing logos. `prefers-reduced-motion` honored on ProofBand reveal. |
+| `FinalCTA` | Single primary CTA, ≥44px tall (`min-h-touch`), `env(safe-area-inset-bottom)` padding. |
 
 ## 10. Content and tone standards
 
