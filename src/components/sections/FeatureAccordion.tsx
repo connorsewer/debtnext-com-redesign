@@ -71,8 +71,8 @@ export function FeatureAccordion({
         ) : null}
       </div>
 
-      <div className="mt-10 grid gap-10 md:mt-14 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-        <ul className="flex flex-col">
+      <div className="container-section mt-10 grid gap-10 md:mt-14 @lg/section:grid-cols-[1fr_1.1fr] @lg/section:gap-16">
+        <ul className="order-1 flex flex-col @lg/section:order-none">
           {items.map((item) => {
             const isOpen = activeId === item.id;
             const panelId = `feat-${item.id}-panel`;
@@ -90,7 +90,7 @@ export function FeatureAccordion({
                     aria-expanded={isOpen}
                     onClick={() => handleToggle(item.id, item)}
                     className={cn(
-                      "flex w-full items-center justify-between gap-6 py-5 text-left text-h4 font-[480] transition-colors duration-[var(--duration-instant)]",
+                      "flex w-full min-h-touch items-center justify-between gap-6 py-5 text-left text-h4 font-[480] transition-colors duration-[var(--duration-instant)]",
                       isOpen
                         ? "text-[var(--foreground)]"
                         : "text-[var(--text-tertiary)] hover:text-white"
@@ -128,7 +128,7 @@ export function FeatureAccordion({
           })}
         </ul>
 
-        <div className="relative min-h-[20rem] overflow-hidden rounded-[var(--radius-sm)] bg-[var(--card)] shadow-[var(--shadow-nav)] ring-1 ring-[var(--border)] lg:min-h-[28rem]">
+        <div className="relative order-2 min-h-[14rem] overflow-hidden rounded-[var(--radius-sm)] bg-[var(--card)] shadow-[var(--shadow-nav)] ring-1 ring-[var(--border)] @lg/section:order-none @lg/section:min-h-[28rem]">
           {items.map((item) => (
             <div
               key={item.id}

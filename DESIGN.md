@@ -1229,7 +1229,9 @@ Every GSAP/Framer/CSS transition has a quiet fallback under `prefers-reduced-mot
 
 ### 9.7 Primitive responsive contracts
 
-(Filled in during Phase 2.)
+| Primitive | Behavior |
+|---|---|
+| `FeatureAccordion` | Single column below 1024px container width. Visual pane renders as `order-2` (below the accordion list) at narrow widths; side-by-side `[1fr_1.1fr]` grid at ≥1024px container width. Triggers ≥44px (`min-h-touch`). |
 
 ## 10. Content and tone standards
 
