@@ -56,6 +56,7 @@ export function HomepageHero() {
   useGSAP(
     () => {
       if (isMobile) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       const video = videoRef.current;
       const section = sectionRef.current;
       const sticky = stickyRef.current;

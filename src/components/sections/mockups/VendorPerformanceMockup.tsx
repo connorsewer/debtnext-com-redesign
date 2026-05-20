@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export const vendorPerformanceMockupTitle = "Vendor scorecard · YTD";
 
@@ -19,13 +19,14 @@ const vendors = [
  * - Sparklines draw left → right via pathLength
  */
 export function VendorPerformanceMockup() {
+  const shouldReduce = useReducedMotion();
   return (
     <>
       <motion.div
         className="flex items-baseline justify-between border-b border-[var(--border)] pb-3"
-        initial={{ opacity: 0, y: -6 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35 }}
+        initial={shouldReduce ? false : { opacity: 0, y: -6 }}
+        animate={shouldReduce ? false : { opacity: 1, y: 0 }}
+        transition={shouldReduce ? { duration: 0 } : { duration: 0.35 }}
       >
         <div>
           <p className="text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
@@ -46,20 +47,24 @@ export function VendorPerformanceMockup() {
           <motion.li
             key={v.name}
             className="flex items-center gap-4"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, delay: 0.08 + i * 0.08 }}
+            initial={shouldReduce ? false : { opacity: 0, y: 6 }}
+            animate={shouldReduce ? false : { opacity: 1, y: 0 }}
+            transition={shouldReduce ? { duration: 0 } : { duration: 0.35, delay: 0.08 + i * 0.08 }}
           >
             <motion.span
               className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-caption font-[480] text-[var(--card)]"
               style={{ backgroundColor: v.gradeColor }}
-              initial={{ scale: 0.6, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{
-                duration: 0.4,
-                delay: 0.12 + i * 0.08,
-                ease: [0.2, 0.7, 0.2, 1],
-              }}
+              initial={shouldReduce ? false : { scale: 0.6, opacity: 0 }}
+              animate={shouldReduce ? false : { scale: 1, opacity: 1 }}
+              transition={
+                shouldReduce
+                  ? { duration: 0 }
+                  : {
+                      duration: 0.4,
+                      delay: 0.12 + i * 0.08,
+                      ease: [0.2, 0.7, 0.2, 1],
+                    }
+              }
             >
               {v.grade}
             </motion.span>
@@ -102,13 +107,17 @@ export function VendorPerformanceMockup() {
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.2 + i * 0.08,
-                  ease: "easeOut",
-                }}
+                initial={shouldReduce ? false : { pathLength: 0, opacity: 0 }}
+                animate={shouldReduce ? false : { pathLength: 1, opacity: 1 }}
+                transition={
+                  shouldReduce
+                    ? { duration: 0 }
+                    : {
+                        duration: 0.8,
+                        delay: 0.2 + i * 0.08,
+                        ease: "easeOut",
+                      }
+                }
               />
             </svg>
           </motion.li>
