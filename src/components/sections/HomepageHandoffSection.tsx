@@ -150,7 +150,7 @@ export function HomepageHandoffSection() {
           </div>
 
           {/* Tabs + body + link, anchored in the bottom portion of the viewport. */}
-          <div className="absolute bottom-[5vh] left-1/2 w-full -translate-x-1/2 px-4 text-center md:bottom-[6vh]">
+          <div className="absolute bottom-[3vh] left-1/2 w-full -translate-x-1/2 px-4 text-center md:bottom-[3.5vh]">
             <div
               role="tablist"
               aria-label="dPlat capability surfaces"

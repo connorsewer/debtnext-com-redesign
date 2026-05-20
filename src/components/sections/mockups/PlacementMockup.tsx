@@ -9,7 +9,6 @@ const pools = [
   { tier: "Primary", pct: 28, vendors: 3, bar: "from-[var(--chart-3)] to-[#22c55e]" },
   { tier: "Secondary", pct: 18, vendors: 2, bar: "from-[var(--chart-4)] to-[#d97706]" },
   { tier: "Tertiary", pct: 12, vendors: 4, bar: "from-[var(--chart-5)] to-[#0891b2]" },
-  { tier: "Specialty", pct: 7, vendors: 1, bar: "from-[var(--text-tertiary)] to-[var(--text-tertiary)]/60" },
 ];
 
 /**
@@ -52,7 +51,7 @@ export function PlacementMockup() {
         </div>
       </motion.div>
 
-      <ul className="mt-4 space-y-3">
+      <ul className="mt-4 space-y-2.5">
         {pools.map((pool, i) => (
           <li key={pool.tier} className="flex items-center gap-4">
             <motion.div
@@ -93,15 +92,6 @@ export function PlacementMockup() {
         ))}
       </ul>
 
-      <motion.div
-        className="mt-5 flex items-center justify-between border-t border-[var(--border)] pt-4 text-body-sm text-[var(--text-tertiary)]"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4, delay: 0.9 }}
-      >
-        <span>Daily reconciliation</span>
-        <span className="text-[var(--chart-3)]">All vendors current</span>
-      </motion.div>
     </>
   );
 }

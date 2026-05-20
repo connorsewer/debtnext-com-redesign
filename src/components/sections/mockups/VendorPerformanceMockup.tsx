@@ -7,7 +7,6 @@ export const vendorPerformanceMockupTitle = "Vendor scorecard · YTD";
 const vendors = [
   { name: "ABC Recovery", grade: "A", liq: 18.7, delta: "+2.1", trend: [4, 6, 5, 8, 9, 11, 13, 15], gradeColor: "var(--chart-3)" },
   { name: "Global Collect", grade: "A-", liq: 16.3, delta: "+0.8", trend: [6, 7, 7, 9, 8, 10, 11, 12], gradeColor: "var(--chart-3)" },
-  { name: "Best Resolution", grade: "B+", liq: 15.2, delta: "+0.3", trend: [10, 9, 11, 10, 12, 11, 12, 13], gradeColor: "var(--chart-4)" },
   { name: "Summit Recovery", grade: "B", liq: 13.5, delta: "-0.4", trend: [12, 13, 14, 11, 12, 10, 11, 10], gradeColor: "var(--chart-4)" },
   { name: "GDW Recovery", grade: "C", liq: 9.6, delta: "-1.7", trend: [11, 10, 11, 9, 9, 8, 7, 6], gradeColor: "var(--destructive)" },
 ];
@@ -42,7 +41,7 @@ export function VendorPerformanceMockup() {
         <p className="text-body-sm text-[var(--chart-3)]">+1.3% vs prior 30d</p>
       </motion.div>
 
-      <ul className="mt-4 space-y-3">
+      <ul className="mt-4 space-y-2.5">
         {vendors.map((v, i) => (
           <motion.li
             key={v.name}
