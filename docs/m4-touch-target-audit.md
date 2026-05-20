@@ -24,7 +24,7 @@ Asserts every visible interactive element (`a`, `button`, `[role="button"]`, che
 
 ## What this guards against
 
-Touch targets below 44×44 force precision tapping on phones and are the most common a11y regression when developers compose new layouts from inline `<Link>` elements or `size="text"` ghost buttons. The audit runs at 375 because that's the iPhone 12 mini / 13 mini width, the narrowest first-class iOS target. Anything narrower (320, iPhone SE) inherits the same DOM, so a pass at 375 implies a pass at 320 for the same element. Re-run this spec whenever a new interactive element ships to a public route, or when a shared component (`Button`, `CardGrid`, `SiteHeader`, `SiteFooter`) changes class names.
+Touch targets below 44×44 force precision tapping on phones and are the most common a11y regression when developers compose new layouts from inline `<Link>` elements or `size="text"` ghost buttons. The audit runs at 375 because that's the iPhone 12 mini / 13 mini width, the narrowest first-class iOS target. For the same element, a 44px floor at 375 holds at 320 since none of the touch utilities scale with viewport. Layout-level regressions at 320 are still possible and are covered by the breakpoint-matrix spec. Re-run this spec whenever a new interactive element ships to a public route, or when a shared component (`Button`, `CardGrid`, `SiteHeader`, `SiteFooter`) changes class names.
 
 ## Initial failures (pre-fix snapshot)
 
