@@ -26,12 +26,16 @@ const buttonVariants = cva(
         link: "rounded-[var(--radius-xs)] bg-transparent text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] p-0",
       },
       size: {
-        // Primary pill — 40px height per DESIGN.md §8.1
-        md: "h-10 px-5 text-[var(--text-body-strong)] font-[480] leading-none",
+        // Primary pill — 40px design height per DESIGN.md §8.1, with a 44px
+        // touch floor (min-h-touch) so the rendered hit area satisfies the
+        // a11y minimum from CLAUDE.md §11.
+        md: "h-10 min-h-touch px-5 text-[var(--text-body-strong)] font-[480] leading-none",
         // Secondary dark — 32px
         sm: "h-8 px-3 text-[var(--text-body-sm)] font-[420] leading-none",
-        // Ghost / link size — only sets padding/typography
-        text: "h-auto px-0 text-[var(--text-body-strong)] font-[480] leading-none",
+        // Ghost / link size — only sets padding/typography. Adds 44px
+        // touch floor so secondary ghost CTAs satisfy the a11y minimum
+        // (CLAUDE.md §11) without changing visual text size.
+        text: "inline-flex h-auto min-h-touch items-center px-0 text-[var(--text-body-strong)] font-[480] leading-none",
         // Icon-only square (used in mobile nav)
         icon: "size-10 p-0",
       },

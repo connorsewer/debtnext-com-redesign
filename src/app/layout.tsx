@@ -50,7 +50,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${inter.variable}`}>
       <body className="flex min-h-full flex-col">
-        <a href="#main" className="skip-link sr-only focus:not-sr-only">
+        <a href="#main" className="skip-link">
           Skip to main content
         </a>
         <SiteHeader />

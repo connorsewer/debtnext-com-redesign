@@ -20,7 +20,7 @@ export function SiteFooter() {
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Link
               href="/"
-              className="text-[var(--text-h4)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+              className="inline-flex min-h-touch min-w-touch items-center text-[var(--text-h4)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
               aria-label="DebtNext home"
             >
               <Wordmark />
@@ -40,7 +40,7 @@ export function SiteFooter() {
                   <li key={`${group.title}-${link.label}`}>
                     <Link
                       href={link.href}
-                      className="text-[var(--text-body-sm)] text-[var(--text-tertiary)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+                      className="inline-flex min-h-touch min-w-touch items-center text-[var(--text-body-sm)] text-[var(--text-tertiary)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
                     >
                       {link.label}
                     </Link>
@@ -61,7 +61,7 @@ export function SiteFooter() {
             <Link
               href="https://www.linkedin.com/company/debtnext"
               aria-label="DebtNext on LinkedIn"
-              className="text-[var(--text-tertiary)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+              className="inline-flex min-size-touch items-center justify-center text-[var(--text-tertiary)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
             >
               <svg
                 width="20"

@@ -54,7 +54,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Link
             href="/"
-            className="text-[var(--text-h4)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+            className="inline-flex min-h-touch min-w-touch items-center text-[var(--text-h4)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
             aria-label="DebtNext home"
           >
             <Wordmark />
