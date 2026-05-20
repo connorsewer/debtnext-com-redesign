@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-import { FramedDashboard } from "./FramedDashboard";
+export const vendorPerformanceMockupTitle = "Vendor scorecard · YTD";
 
 const vendors = [
   { name: "ABC Recovery", grade: "A", liq: 18.7, delta: "+2.1", trend: [4, 6, 5, 8, 9, 11, 13, 15], gradeColor: "var(--chart-3)" },
@@ -21,7 +21,7 @@ const vendors = [
  */
 export function VendorPerformanceMockup() {
   return (
-    <FramedDashboard title="Vendor scorecard · YTD">
+    <>
       <motion.div
         className="flex items-baseline justify-between border-b border-[var(--border)] pb-3"
         initial={{ opacity: 0, y: -6 }}
@@ -115,6 +115,6 @@ export function VendorPerformanceMockup() {
           </motion.li>
         ))}
       </ul>
-    </FramedDashboard>
+    </>
   );
 }

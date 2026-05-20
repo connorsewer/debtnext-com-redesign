@@ -1,21 +1,45 @@
 /**
- * Per-tab mockup components used in HomepageHandoffSection (and
- * potentially other capability surfaces later). Each is a self-contained
- * CSS/SVG composition that conveys the active tab's capability without
- * leaning on the full dashboard PNG.
+ * Per-tab mockup components used in HomepageHandoffSection. Each renders
+ * the BARE inner content of a framed dashboard — the parent supplies one
+ * shared FramedDashboard bezel so the bezel stays anchored across tab
+ * switches and across the hero→Platform handoff.
  */
 
 export { FramedDashboard } from "./FramedDashboard";
-export { PlacementMockup } from "./PlacementMockup";
-export { VendorPerformanceMockup } from "./VendorPerformanceMockup";
-export { IssuesMockup } from "./IssuesMockup";
-export { ReportingMockup } from "./ReportingMockup";
+export {
+  PlacementMockup,
+  placementMockupTitle,
+} from "./PlacementMockup";
+export {
+  VendorPerformanceMockup,
+  vendorPerformanceMockupTitle,
+} from "./VendorPerformanceMockup";
+export {
+  IssuesMockup,
+  issuesMockupTitle,
+} from "./IssuesMockup";
+export {
+  ReportingMockup,
+  reportingMockupTitle,
+} from "./ReportingMockup";
 
 import type { PlatformTab } from "@/content/homepage-hero";
-import { PlacementMockup } from "./PlacementMockup";
-import { VendorPerformanceMockup } from "./VendorPerformanceMockup";
-import { IssuesMockup } from "./IssuesMockup";
-import { ReportingMockup } from "./ReportingMockup";
+import {
+  PlacementMockup,
+  placementMockupTitle,
+} from "./PlacementMockup";
+import {
+  VendorPerformanceMockup,
+  vendorPerformanceMockupTitle,
+} from "./VendorPerformanceMockup";
+import {
+  IssuesMockup,
+  issuesMockupTitle,
+} from "./IssuesMockup";
+import {
+  ReportingMockup,
+  reportingMockupTitle,
+} from "./ReportingMockup";
 
 export function MockupForTab({ id }: { id: PlatformTab["id"] }) {
   switch (id) {
@@ -27,5 +51,18 @@ export function MockupForTab({ id }: { id: PlatformTab["id"] }) {
       return <IssuesMockup />;
     case "reporting":
       return <ReportingMockup />;
+  }
+}
+
+export function mockupTitleForTab(id: PlatformTab["id"]): string {
+  switch (id) {
+    case "placement":
+      return placementMockupTitle;
+    case "performance":
+      return vendorPerformanceMockupTitle;
+    case "issues":
+      return issuesMockupTitle;
+    case "reporting":
+      return reportingMockupTitle;
   }
 }

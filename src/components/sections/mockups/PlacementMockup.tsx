@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-import { FramedDashboard } from "./FramedDashboard";
+export const placementMockupTitle = "Placement run · 12:04 PM";
 
 const pools = [
   { tier: "Pre-collect", pct: 35, vendors: 2, bar: "from-[var(--primary)] to-[var(--primary-hover)]" },
@@ -20,7 +20,7 @@ const pools = [
  */
 export function PlacementMockup() {
   return (
-    <FramedDashboard title="Placement run · 12:04 PM">
+    <>
       <motion.div
         className="flex items-center justify-between border-b border-[var(--border)] pb-4"
         initial={{ opacity: 0, y: -6 }}
@@ -102,6 +102,6 @@ export function PlacementMockup() {
         <span>Daily reconciliation</span>
         <span className="text-[var(--chart-3)]">All vendors current</span>
       </motion.div>
-    </FramedDashboard>
+    </>
   );
 }

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-import { FramedDashboard } from "./FramedDashboard";
+export const reportingMockupTitle = "Liquidation trend · 8 weeks";
 
 const inventory = [62, 60, 64, 63, 66, 68, 71, 73];
 const liquidation = [22, 24, 23, 27, 28, 30, 33, 35];
@@ -35,7 +35,7 @@ const ptLiq = (v: number, i: number) => {
  */
 export function ReportingMockup() {
   return (
-    <FramedDashboard title="Liquidation trend · 8 weeks">
+    <>
       <div className="grid grid-cols-3 gap-3 border-b border-[var(--border)] pb-4">
         {[
           { label: "Inventory", value: "$2.48B", tone: "fg" },
@@ -133,6 +133,6 @@ export function ReportingMockup() {
         <span>Scheduled · weekly</span>
         <span className="text-[var(--foreground)]">Power BI · Snowflake</span>
       </motion.div>
-    </FramedDashboard>
+    </>
   );
 }

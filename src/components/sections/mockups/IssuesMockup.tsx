@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-import { FramedDashboard } from "./FramedDashboard";
+export const issuesMockupTitle = "Issues queue · all vendors";
 
 const issues = [
   { type: "Dispute", account: "Account 1042-887", desc: "Balance contested by consumer", vendor: "Global Collect", sla: "Due 22h", slaTone: "warn", status: "Investigating" },
@@ -26,7 +26,7 @@ const slaClass = (tone: string) => {
  */
 export function IssuesMockup() {
   return (
-    <FramedDashboard title="Issues queue · all vendors">
+    <>
       <div className="grid grid-cols-3 gap-3 border-b border-[var(--border)] pb-4">
         {[
           { label: "Open", value: "127", tone: "fg" },
@@ -95,6 +95,6 @@ export function IssuesMockup() {
           </motion.li>
         ))}
       </ul>
-    </FramedDashboard>
+    </>
   );
 }
