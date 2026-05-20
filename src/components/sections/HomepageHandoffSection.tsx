@@ -1,29 +1,28 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { SectionContainer } from "@/components/sections/SectionContainer";
+import { MockupForTab } from "@/components/sections/mockups";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
-import {
-  heroCinematic,
-  heroHandoff,
-  type PlatformTab,
-} from "@/content/homepage-hero";
+import { heroHandoff, type PlatformTab } from "@/content/homepage-hero";
 
 /**
  * The "section 2" that catches the dashboard at the end of the hero scrub.
  *
- * Left column: 4 interactive tabs — Placement and routing / Vendor
- * performance / Issues and disputes / Reporting and compliance. Each tab,
- * when activated, swaps the right-column copy and the small caption that
- * sits over the dashboard.
+ * Left column: 4 interactive tabs. Click or arrow-key navigates; the
+ * active tab determines the right-column mockup, body copy, and the
+ * caption pill on the mockup's window chrome.
  *
- * Right column: the dashboard image at the same size and position the
- * hero's end-frame settles into when it finishes its shrink-and-slide
- * animation. The user shouldn't perceive a swap at the section boundary.
+ * Right column: a hand-built CSS/SVG mockup per tab (no shared dashboard
+ * PNG). Each mockup is its own focused widget — placement allocations,
+ * vendor scorecard, issues queue, reporting trend — wrapped in the
+ * shared FramedDashboard bezel for visual consistency.
+ *
+ * Transition between mockups cross-fades with a small vertical lift so
+ * the swap reads as deliberate, not as content snapping in/out.
  */
 export function HomepageHandoffSection() {
   const [activeId, setActiveId] = React.useState<PlatformTab["id"]>(
@@ -76,7 +75,6 @@ export function HomepageHandoffSection() {
                     }
                   }}
                   onKeyDown={(e) => {
-                    // Arrow-key navigation per WAI-ARIA tablist guidance.
                     if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
                     e.preventDefault();
                     const idx = heroHandoff.tabs.findIndex(
@@ -113,7 +111,6 @@ export function HomepageHandoffSection() {
             })}
           </div>
 
-          {/* Active tab body — short description, swaps with selection */}
           <div
             id={`platform-panel-${active.id}`}
             role="tabpanel"
@@ -133,26 +130,28 @@ export function HomepageHandoffSection() {
           </div>
         </div>
 
-        {/* Right column: dashboard. Anchored to the position the hero's
-            end-frame finishes its shrink animation at, so the un-pin
-            transition reads as continuous rather than a swap. */}
-        <div className="relative">
-          <div className="overflow-hidden rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] shadow-[var(--shadow-deep)]">
-            <Image
-              src={heroCinematic.media.endFrame}
-              alt={`dPlat dashboard, ${active.label} view`}
-              width={1536}
-              height={1024}
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="h-auto w-full"
-              priority={false}
-            />
-          </div>
-          {/* Per-tab caption overlay — quietly labels what the user is
-              looking at without redrawing the dashboard per tab. Real
-              per-tab dashboard variants land in M4 content work. */}
-          <div className="pointer-events-none absolute left-4 top-4 rounded-[var(--radius-xs)] bg-black/60 px-3 py-1.5 text-caption font-[480] uppercase tracking-wider text-white backdrop-blur-xl">
-            {active.label}
+        {/* Right column: tab-specific mockup. Each mockup is absolutely
+            positioned in a stack and cross-faded by active state so the
+            swap is smooth instead of snapping. */}
+        <div className="relative" data-handoff-mockup-frame>
+          <div className="relative aspect-[3/2] w-full">
+            {heroHandoff.tabs.map((tab) => {
+              const isActive = tab.id === activeId;
+              return (
+                <div
+                  key={tab.id}
+                  aria-hidden={!isActive}
+                  className={cn(
+                    "absolute inset-0 transition-all duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
+                    isActive
+                      ? "opacity-100 translate-y-0"
+                      : "pointer-events-none opacity-0 translate-y-2"
+                  )}
+                >
+                  <MockupForTab id={tab.id} />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

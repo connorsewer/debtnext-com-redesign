@@ -7,38 +7,43 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
+import { FramedDashboard } from "@/components/sections/mockups/FramedDashboard";
 import { track } from "@/lib/analytics";
 import { heroCinematic } from "@/content/homepage-hero";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 /**
- * Mercury-faithful cinematic hero with a "hold + transform-to-right" finale.
+ * Cinematic homepage hero with a held framed-dashboard finale.
  *
- * Outer section is 400vh, giving a pinned scrub range of ~300vh (3 viewport
- * heights of scroll). A single master ScrollTrigger drives every animation
- * via onUpdate(progress 0→1) so percentages map directly to the pinned range:
+ * Outer section is 450vh, giving a pinned scrub range of ~350vh of
+ * scroll. A single master ScrollTrigger drives everything via
+ * onUpdate(progress 0→1):
  *
- *   p = 0       — start frame, headline + form + disclaimer visible
- *   p = 0→0.12  — overlay fades out and rises ~50px
+ *   p = 0       — start frame PNG owns the viewport; overlay + form visible
+ *   p = 0→0.03  — video fades IN once the user starts scrolling
+ *   p = 0→0.12  — overlay fades out + lifts -50px
  *   p = 0→1     — video scrubs frame-by-frame
- *   p = 0.6→0.8 — end-frame image fades in beneath the video
- *   p = 0.7→0.88— video fades out, leaving the dashboard at full viewport
- *   p = 0.88→0.95 — HOLD (dashboard at full-bleed, no further animation)
- *   p = 0.95→1  — dashboard scales to ~0.45 and translates right, landing
- *                 in the right column of the handoff section that follows
+ *   p = 0.6→0.8 — end-frame layer (cliffside + laptop) fades in
+ *   p = 0.7→0.85— video fades out
+ *   p = 0.82→0.92 — cliffside cinematic (start + end frame layers) fades out
+ *   p = 0.85→0.93 — framed standalone dashboard fades in, centered on dark canvas
+ *   p = 0.93→0.97 — HOLD on framed dashboard
+ *   p = 0.97→1  — framed dashboard scales (1 → 0.55) and slides 28% right,
+ *                 fades out at the very end so the handoff section's mockup
+ *                 picks up at the same screen position without doubling
  *
  * Mobile (≤768px): scrubbing is disabled. Static start-frame with overlay
- * shown statically. The next section begins below it.
- *
- * Reduced motion: respected at the global @media level in globals.css.
+ * shown statically. Next section begins below.
  */
 export function HomepageHero() {
   const router = useRouter();
   const sectionRef = React.useRef<HTMLElement | null>(null);
   const stickyRef = React.useRef<HTMLDivElement | null>(null);
   const videoRef = React.useRef<HTMLVideoElement | null>(null);
+  const startFrameRef = React.useRef<HTMLDivElement | null>(null);
   const endFrameRef = React.useRef<HTMLDivElement | null>(null);
+  const framedDashRef = React.useRef<HTMLDivElement | null>(null);
   const overlayRef = React.useRef<HTMLDivElement | null>(null);
   const [email, setEmail] = React.useState("");
 
@@ -57,8 +62,10 @@ export function HomepageHero() {
       const video = videoRef.current;
       const section = sectionRef.current;
       const overlay = overlayRef.current;
+      const startFrame = startFrameRef.current;
       const endFrame = endFrameRef.current;
-      if (!video || !section || !overlay || !endFrame) return;
+      const framedDash = framedDashRef.current;
+      if (!video || !section || !overlay || !startFrame || !endFrame || !framedDash) return;
 
       const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
       const ease = (a: number, b: number, p: number) => clamp01((p - a) / (b - a));
@@ -72,35 +79,40 @@ export function HomepageHero() {
           end: "bottom bottom",
           scrub: 0.5,
           onUpdate: (self) => {
-            const p = self.progress; // 0 → 1 over the pinned scrub range
+            const p = self.progress;
 
-            // Video scrubs the entire range
             video.currentTime = duration * p;
 
-            // Overlay fades out + lifts 0 → 12%
+            // Overlay fades out + lifts
             const overlayOut = ease(0, 0.12, p);
             overlay.style.opacity = String(1 - overlayOut);
             overlay.style.transform = `translateY(${-50 * overlayOut}px)`;
 
-            // Video fades IN once the user starts scrolling (0 → 3%) so
-            // at rest the high-res start-frame PNG owns the viewport.
-            // The video's first frame is lower resolution (1280×720) and
-            // would otherwise cover the 1536×1024 PNG.
+            // Video fades in once scroll starts, fades out late
             const videoIn = ease(0.0, 0.03, p);
-            // End-frame fades in 60 → 80% (behind the video for continuity)
-            const endFrameIn = ease(0.6, 0.8, p);
-            // Video fades out 70 → 88%
-            const videoOut = ease(0.7, 0.88, p);
-            // Dashboard shrink + slide right 95 → 100% (after a 7-point hold)
-            const shrinkP = ease(0.95, 1, p);
-            const scale = 1 - 0.55 * shrinkP; // 1 → 0.45
-            const tx = 28 * shrinkP;          // 0% → 28% of width
-
-            endFrame.style.opacity = String(endFrameIn);
-            endFrame.style.transform = `translateX(${tx}%) scale(${scale})`;
-            endFrame.style.transformOrigin = "center center";
-            // Combine the fade-in and the late fade-out into one opacity
+            const videoOut = ease(0.7, 0.85, p);
             video.style.opacity = String(videoIn * (1 - videoOut));
+
+            // End-frame (cliffside + laptop view) fades in mid-scrub
+            const endFrameIn = ease(0.6, 0.8, p);
+            // Then both the cliffside layers fade out as the held framed
+            // dashboard takes over
+            const cliffOut = ease(0.82, 0.92, p);
+            startFrame.style.opacity = String(1 - cliffOut);
+            endFrame.style.opacity = String(endFrameIn * (1 - cliffOut));
+
+            // Framed standalone dashboard: fade in late, hold, then
+            // scale+slide+fade as the handoff into Platform begins.
+            const dashIn = ease(0.85, 0.93, p);
+            const dashHandoffP = ease(0.97, 1, p);
+            const dashScale = 1 - 0.45 * dashHandoffP; // 1 → 0.55
+            const dashTx = 28 * dashHandoffP;          // 0% → 28%
+            // Fade the framed dashboard out at the very end so the
+            // handoff section's per-tab mockup takes over cleanly.
+            const dashOpacity = dashIn * (1 - dashHandoffP * 0.85);
+            framedDash.style.opacity = String(dashOpacity);
+            framedDash.style.transform = `translateX(${dashTx}%) scale(${dashScale})`;
+            framedDash.style.transformOrigin = "center center";
           },
         });
       };
@@ -126,26 +138,27 @@ export function HomepageHero() {
     <section
       ref={sectionRef}
       data-slot="homepage-hero"
-      className="relative bg-[var(--background)] md:h-[400vh]"
+      className="relative bg-[var(--background)] md:h-[450vh]"
     >
       <div
         ref={stickyRef}
         className="relative h-screen w-full overflow-hidden md:sticky md:top-0"
       >
-        {/* Layer 1: start frame Image — LCP target, always visible. */}
-        <Image
-          src={heroCinematic.media.startFrame}
-          alt=""
-          fill
-          sizes="100vw"
-          priority
-          aria-hidden="true"
-          className="absolute inset-0 object-cover"
-        />
+        {/* Layer 1: start-frame PNG. LCP target; wrapped so we can fade
+            the cliffside out as the framed-dashboard finale takes over. */}
+        <div ref={startFrameRef} className="absolute inset-0">
+          <Image
+            src={heroCinematic.media.startFrame}
+            alt=""
+            fill
+            sizes="100vw"
+            priority
+            aria-hidden="true"
+            className="object-cover"
+          />
+        </div>
 
-        {/* Video — scrubbed by scroll progress. Starts at opacity 0 so the
-            high-res start-frame PNG is what fills the viewport at rest;
-            video fades in across the first 3% of scroll. */}
+        {/* Layer 2: video — scrubbed by scroll progress. */}
         {!isMobile && (
           <video
             ref={videoRef}
@@ -160,14 +173,13 @@ export function HomepageHero() {
           />
         )}
 
-        {/* End-frame layer. Wraps the dashboard image so we can scale +
-            translate the entire wrapper via transform during the finale.
-            Hidden by default — fades in 60-80% scrub, transforms 95-100%. */}
+        {/* Layer 3: end-frame (cliffside + laptop) — fades in mid-scrub
+            to bridge from the video into the held-dashboard finale. */}
         {!isMobile && (
           <div
             ref={endFrameRef}
             aria-hidden="true"
-            className="absolute inset-0 opacity-0 will-change-transform"
+            className="absolute inset-0 opacity-0"
           >
             <Image
               src={heroCinematic.media.endFrame}
@@ -179,16 +191,38 @@ export function HomepageHero() {
           </div>
         )}
 
-        {/* Single soft vignette covering the whole hero — no banded
-            mid-section scrim. Slightly stronger at the very top/bottom
-            edges so the navbar and disclaimer pill stay legible against
-            bright sky and bright lower-foreground; transparent through
-            the middle band where the headline lives. Headline + subhead
-            carry their own text-shadow for contrast. */}
+        {/* Single soft vignette — handles nav and disclaimer legibility
+            without banding the middle of the image. */}
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/40"
         />
+
+        {/* Layer 4: framed standalone dashboard finale. Hidden by default;
+            fades in late in the scrub, holds, then scales + slides right
+            as the handoff begins. Sits over the cliffside layers (which
+            are by then faded out) on the dark canvas. */}
+        {!isMobile && (
+          <div
+            ref={framedDashRef}
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 opacity-0 will-change-transform md:px-8 lg:px-12"
+          >
+            <FramedDashboard
+              title="DebtNext · Executive Portfolio Overview"
+              className="w-full max-w-5xl"
+            >
+              <Image
+                src="/product/dashboard-dark.png"
+                alt=""
+                width={1536}
+                height={1024}
+                sizes="(min-width: 1024px) 80vw, 100vw"
+                className="block h-auto w-full"
+              />
+            </FramedDashboard>
+          </div>
+        )}
 
         {/* Overlay — headline, subhead, form, disclaimer. */}
         <div
