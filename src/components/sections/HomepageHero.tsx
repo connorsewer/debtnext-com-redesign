@@ -55,6 +55,9 @@ export function HomepageHero() {
 
   useGSAP(
     () => {
+      // Early bail when React state has settled mobile. The synchronous wire()
+      // path relies on this; the deferred (loadedmetadata) path also re-checks
+      // matchMedia live inside wire() to catch the state-flip race.
       if (isMobile) return;
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       const video = videoRef.current;
