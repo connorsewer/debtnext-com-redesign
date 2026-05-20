@@ -251,18 +251,32 @@ Full system rebuild against the approved spec at `docs/superpowers/specs/2026-05
 
 **Phase 3 — Platform handoff mobile (2026-05-20):** `useIsMobile()` and `useInView()` shared hooks at `src/hooks/`. `HomepageHandoffSection.tsx` branches at `(max-width: 767px)`: desktop keeps the 300vh GSAP-pinned scroll cinematic; mobile renders a calm static stack (heading, then 4 vertical mockup blocks each with a `FramedDashboard` and the shared "See how it works" link). `useGSAP` bails on mobile with `isMobile` in deps so devtools resize cleans up triggers. Each mockup's Framer entrance is gated by `useInView`. `FramedDashboard` padding tightens to `p-3` below 384px container width.
 
-**Phase 4 — QA + CI (2026-05-20):** 9-breakpoint × 11-route matrix (99 tests) passing. axe-core CI workflow runs on every PR at 375 and 1440. Touch-target audit (all interactive elements ≥44×44 at 375) zero failures across 11 routes. Reduced-motion verification (no running animations under `prefers-reduced-motion: reduce`) green across 11 routes. Platform mobile contract spec verifies the static-stack render and catches GSAP pin-spacer regressions. Lighthouse mobile passes LCP / CLS / INP on 10 of 11 routes; homepage `/` misses LCP at 2.86s due to the 11 MB hero MP4 (deferred to post-M4 — see `docs/m4-perf-baseline.md`). Two new accent-text tokens (`--accent-text-dark`, `--accent-text-light`) shipped to clear WCAG 2.2 AA contrast for eyebrows and inline links; `--primary` stays exclusive to filled CTA surfaces.
+**Phase 4 — QA + CI (2026-05-20):** 9-breakpoint × 11-route matrix (99 tests) passing. axe-core CI workflow runs on every PR at 375 and 1440. Touch-target audit (all interactive elements ≥44×44 at 375) zero failures across 11 routes. Reduced-motion verification (no running animations under `prefers-reduced-motion: reduce`) green across 11 routes. Platform mobile contract spec verifies the static-stack render and catches GSAP pin-spacer regressions. Lighthouse mobile passes LCP / CLS / INP on 10 of 11 routes; homepage `/` misses LCP at 2.86s due to the 11 MB hero MP4 (deferred to post-M4, see `docs/m4-perf-baseline.md`). Two new accent-text tokens (`--accent-text-dark`, `--accent-text-light`) shipped to clear WCAG 2.2 AA contrast for eyebrows and inline links; `--primary` stays exclusive to filled CTA surfaces.
+
+**Post-merge hotfix (2026-05-20, PR #2 `8854da7`):** Phase 2 shipped a container-query self-reference bug where `container-section` was declared on the same element that used `@md/section:` / `@lg/section:` queries. Per CSS spec, container queries can't query the element they're declared on, so desktop multi-column layouts silently fell back to the 1-column mobile rule. Fix moved `container-section` to `SectionContainer`'s inner wrapper and removed the redundant declarations from `BenefitSplit`, `FeatureAccordion`, and `ProcessStrip`. New regression spec at `tests/responsive/container-query-layouts.spec.ts` asserts BenefitSplit on `/` renders side-by-side at 1440 and stacked at 375. Suite total: 164 tests, all green against production build.
+
+**Tooling (2026-05-20, PR #3 `bd2d7ce`):** GreenSock's official gsap-skills pack installed at `.claude/skills/`. 8 skills covering core, timeline, ScrollTrigger, plugins, utils, React, performance, frameworks. Auto-loads on next session start. All formerly Club GSAP plugins (SplitText, MorphSVG, Flip, Draggable, Inertia, Observer, ScrollSmoother, etc.) are free post-Webflow acquisition, so the full plugin surface is available.
 
 ## Post-M4 follow-ups
 
-These were originally bundled into M4 but are deferred so the mobile responsive milestone can ship.
+These were originally bundled into M4 but are deferred so the mobile responsive milestone could ship.
+
+**Launch-critical (likely M5 candidates):**
 
 1. **Hero MP4 byte budget** — `/` misses LCP at 2.86s. Move the 11 MB hero MP4 to Mux or add a multi-resolution source ladder. Until then, `/` is the only route above the 2.5s LCP target.
-2. **Fontshare General Sans CDN call** — currently a third-party request (~30 KB, one weight). Doesn't appear as render-blocking in Lighthouse, but consider downloading and serving via `next/font/local` to remove the cross-origin hop.
-3. **Analytics**: GA4/GTM IDs (placeholders in `.env.example`). Verify `cta_primary_click`, `cta_secondary_click`, `form_*`, `accordion_toggle` (also fired by Platform tab clicks via `track`), `scroll_depth`, `video_play` events fire in GTM Preview.
-4. **SEO**: per-route OG images via `app/<route>/opengraph-image.tsx` using `@vercel/og`. `Organization` + `SoftwareApplication` JSON-LD on `/`. `ContactPage` JSON-LD on `/demo`.
-5. **DoD walkthrough**: `CLAUDE.md §14` checklist per page.
+2. **Analytics**: GA4/GTM IDs (placeholders in `.env.example`). Verify `cta_primary_click`, `cta_secondary_click`, `form_*`, `accordion_toggle` (also fired by Platform tab clicks via `track`), `scroll_depth`, `video_play` events fire in GTM Preview.
+3. **SEO**: per-route OG images via `app/<route>/opengraph-image.tsx` using `@vercel/og`. `Organization` + `SoftwareApplication` JSON-LD on `/`. `ContactPage` JSON-LD on `/demo`.
+4. **DoD walkthrough**: `CLAUDE.md §14` checklist per page.
+
+**Polish (anytime):**
+
+5. **Fontshare General Sans CDN call** — currently a third-party request (~30 KB, one weight). Doesn't appear as render-blocking in Lighthouse, but consider downloading and serving via `next/font/local` to remove the cross-origin hop.
 6. **Breakpoint constant extraction**: `useIsMobile` and `HomepageHero` now both use `(max-width: 767px)` (Task 25.1). Could extract to a shared constant if more callers emerge.
+7. **CI single-build optimization**: the a11y workflow runs `npm run build` explicitly and then `npm run test:e2e`, which re-runs `npm run build && npm run start` via Playwright's `webServer` block. CI builds twice per run (~3-5 min wasted). Worth fixing only if CI runtime becomes an issue.
+
+**Open decision — animation strategy (M5 or M6):**
+
+8. **Motion pass across all pages.** Today only `HomepageHero` (cinematic) and `HomepageHandoffSection` (scroll-driven tab progression) use GSAP (572 LOC across 2 files). 10 other pages have no scroll-driven motion. With gsap-skills now installed, opportunities span section reveals (every page), number counters (ProofBand stats), marquee/auto-scroll (IntegrationStrip logos), SplitText heading reveals (PageHero across all pages), Flip transitions (accordion/tabs), ScrollSmoother (global feel), and stagger entrances (CardGrid, ComparisonTable, ProcessStrip). Risks: perf on `/` (already at 2.86s LCP), reduced-motion discipline per animation, mobile battery/jank, distraction from launch-critical items 1-4. Connor to decide M5 framing: (a) launch-critical first, motion as M6 after launch; (b) bundle both in a longer M5; (c) brainstorm fresh before scoping.
 
 ---
 
