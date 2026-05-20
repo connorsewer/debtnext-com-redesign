@@ -18,24 +18,26 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "rounded-[var(--radius-lg)] bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)] aria-busy:cursor-progress",
+          "rounded-[var(--radius-lg)] bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)] aria-busy:cursor-progress",
         "secondary-dark":
-          "rounded-[var(--radius-md)] bg-[rgba(156,180,232,0.2)] text-[var(--foreground)] hover:bg-[rgba(156,180,232,0.35)] hover:text-white",
+          "rounded-[var(--radius-md)] bg-[rgba(156,180,232,0.2)] text-foreground hover:bg-[rgba(156,180,232,0.35)] hover:text-white",
         ghost:
-          "rounded-[var(--radius-xs)] bg-transparent text-[var(--foreground)] hover:text-white hover:underline hover:decoration-[var(--primary)] hover:underline-offset-4",
-        link: "rounded-[var(--radius-xs)] bg-transparent text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] p-0",
+          "rounded-[var(--radius-xs)] bg-transparent text-foreground hover:text-white hover:underline hover:decoration-[var(--primary)] hover:underline-offset-4",
+        link: "rounded-[var(--radius-xs)] bg-transparent text-foreground underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] p-0",
       },
       size: {
         // Primary pill — 40px design height per DESIGN.md §8.1, with a 44px
         // touch floor (min-h-touch) so the rendered hit area satisfies the
         // a11y minimum from CLAUDE.md §11.
-        md: "h-10 min-h-touch px-5 text-[var(--text-body-strong)] font-[480] leading-none",
+        // The `length:` data type hint disambiguates this from a color
+        // utility for tailwind-merge, so the variant's text color is kept.
+        md: "h-10 min-h-touch px-5 text-[length:var(--text-body-strong)] font-[480] leading-none",
         // Secondary dark — 32px
-        sm: "h-8 px-3 text-[var(--text-body-sm)] font-[420] leading-none",
+        sm: "h-8 px-3 text-[length:var(--text-body-sm)] font-[420] leading-none",
         // Ghost / link size — only sets padding/typography. Adds 44px
         // touch floor so secondary ghost CTAs satisfy the a11y minimum
         // (CLAUDE.md §11) without changing visual text size.
-        text: "inline-flex h-auto min-h-touch items-center px-0 text-[var(--text-body-strong)] font-[480] leading-none",
+        text: "inline-flex h-auto min-h-touch items-center px-0 text-[length:var(--text-body-strong)] font-[480] leading-none",
         // Icon-only square (used in mobile nav)
         icon: "size-10 p-0",
       },
