@@ -55,6 +55,12 @@ export function HomepageHandoffSection() {
         trigger: sectionRef.current,
         start: "top top",
         end: () => `+=${window.innerHeight * VH_PER_TAB * tabCount}`,
+        // Recompute start/end on every refresh — important because the
+        // hero's GSAP pin spacer (added in HomepageHero) shifts this
+        // section's document position AFTER this trigger is created.
+        // Without this, the trigger caches a stale start and fires
+        // mid-cinematic, dragging activeId straight to "reporting".
+        invalidateOnRefresh: true,
         onUpdate: (self) => {
           const idx = Math.min(
             tabCount - 1,
@@ -67,6 +73,10 @@ export function HomepageHandoffSection() {
           }
         },
       });
+      // Belt-and-suspenders: explicitly refresh after creation so the
+      // hero's pin spacer (which is added in HomepageHero's useGSAP) is
+      // already in place when this trigger snapshots its positions.
+      ScrollTrigger.refresh();
       return () => trigger.kill();
     },
     { scope: sectionRef }
