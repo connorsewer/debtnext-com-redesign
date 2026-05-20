@@ -1,8 +1,44 @@
+@import url("https://api.fontshare.com/v2/css?f[]=general-sans@600&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------
+   Wordmark "live node" — luminous indigo dot trailing the
+   DebtNext wordmark in nav chrome. Represents a live point in
+   the orchestration lattice; subtle pulse, honored by
+   prefers-reduced-motion.
+   ------------------------------------------------------------ */
+@keyframes dn-node-pulse {
+  0%,
+  100% {
+    opacity: 0.85;
+    box-shadow:
+      0 0 6px rgba(82, 102, 235, 0.55),
+      0 0 14px rgba(82, 102, 235, 0.28);
+  }
+  50% {
+    opacity: 1;
+    box-shadow:
+      0 0 10px rgba(82, 102, 235, 0.75),
+      0 0 22px rgba(82, 102, 235, 0.42);
+  }
+}
+
+.dn-node {
+  box-shadow:
+    0 0 6px rgba(82, 102, 235, 0.55),
+    0 0 14px rgba(82, 102, 235, 0.28);
+  animation: dn-node-pulse 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dn-node {
+    animation: none;
+  }
+}
 
 /* ============================================================
    DebtNext design tokens — Mercury-style, dark-canvas-first

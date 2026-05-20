@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Wordmark } from "@/components/site/Wordmark";
 import { footerGroups, tsiOwnershipLine } from "@/content/nav";
 
 /**
@@ -19,10 +20,10 @@ export function SiteFooter() {
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Link
               href="/"
-              className="text-[var(--text-h4)] font-[480] tracking-tight text-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
-              aria-label="dPlat home"
+              className="text-[var(--text-h4)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+              aria-label="DebtNext home"
             >
-              dPlat
+              <Wordmark />
             </Link>
             <p className="mt-4 max-w-xs text-[var(--text-body-sm)] leading-5">
               Recovery management software for credit originators. Built since 2003.

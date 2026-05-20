@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "@/components/site/MobileNav";
+import { Wordmark } from "@/components/site/Wordmark";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { platformSubNav, primaryCta, primaryNav } from "@/content/nav";
@@ -53,10 +54,10 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Link
             href="/"
-            className="text-[var(--text-h4)] font-[480] tracking-tight text-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
-            aria-label="dPlat home"
+            className="text-[var(--text-h4)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+            aria-label="DebtNext home"
           >
-            dPlat
+            <Wordmark />
           </Link>
         </div>
 

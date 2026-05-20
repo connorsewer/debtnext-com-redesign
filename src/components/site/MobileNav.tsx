@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
 
 import { Button } from "@/components/ui/button";
+import { Wordmark } from "@/components/site/Wordmark";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { primaryCta, primaryNav } from "@/content/nav";
@@ -63,9 +64,10 @@ export function MobileNav() {
             <Link
               href="/"
               onClick={() => setOpen(false)}
-              className="text-[var(--text-h4)] font-[480] text-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+              aria-label="DebtNext home"
+              className="text-[var(--text-h4)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
             >
-              dPlat
+              <Wordmark />
             </Link>
             <Dialog.Close asChild>
               <button
