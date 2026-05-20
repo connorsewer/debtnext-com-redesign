@@ -1173,41 +1173,63 @@ Mercury-like marketing pages should avoid dense tables unless they are product p
 - Provide sorting states and keyboard-accessible controls.
 - On mobile, convert dense tables into stacked cards or horizontal scroll with clear affordance.
 
-## 9. Responsive behavior
+## 9. Responsive system
 
-### Breakpoints
+Anchored to 360px (one notch below iPhone SE) and 1440px viewports. Components use container queries to react to their container, not the viewport, so a primitive composes correctly when nested.
 
-| Breakpoint | Width | Behavior |
-|---|---:|---|
-| Mobile | `<640px` | Single column, 16px horizontal padding, nav collapses, smaller hero typography |
-| Tablet | `640px-1023px` | 2-column layouts allowed, 24px horizontal padding, nav may collapse |
-| Desktop | `1024px-1439px` | 12-column grid, max content width 1200px, standard typography |
-| Wide | `>=1440px` | max site shell 1440px, full atmospheric sections allowed |
+### 9.1 Fluid type scale (Utopia)
 
-### Mobile rules
+Formula: `clamp(min_rem, calc(intercept_rem + slope_vw), max_rem)` where `slope = (max_px - min_px) / 10.8` and `intercept_rem = (min_px - slope * 3.6) / 16`.
 
-- Header height: 56px-64px.
-- Section padding: 32px-48px.
-- Hero H1: 36px-40px.
-- Body text: 16px minimum.
-- All interactive targets: 44px by 44px minimum.
-- Cards stack vertically.
-- Split hero becomes stacked hero.
-- Attached form may remain one row if width allows; otherwise stack with full-width input and button.
+Anchors: 360px / 1440px viewport.
 
-### Tablet rules
+| Token | min → max (px) | clamp |
+|---|---|---|
+| --text-display-xl | 40 → 64 | clamp(2.5rem, calc(2rem + 2.2222vw), 4rem) |
+| --text-display-lg | 36 → 49 | clamp(2.25rem, calc(1.9792rem + 1.2037vw), 3.0625rem) |
+| --text-h1 | 36 → 49 | same as display-lg |
+| --text-h2 | 30 → 42 | clamp(1.875rem, calc(1.625rem + 1.1111vw), 2.625rem) |
+| --text-h3 | 24 → 28 | clamp(1.5rem, calc(1.4167rem + 0.3704vw), 1.75rem) |
+| --text-h4 / --text-body-lg | 18 → 21 | clamp(1.125rem, calc(1.0625rem + 0.2778vw), 1.3125rem) |
+| --text-body-md / --text-body-strong | 15 → 16 | clamp(0.9375rem, calc(0.9167rem + 0.0926vw), 1rem) |
+| --text-body-sm | 13 → 14 | clamp(0.8125rem, calc(0.7917rem + 0.0926vw), 0.875rem) |
+| --text-caption | 12 (static) | 0.75rem |
 
-- Use 24px horizontal gutters.
-- Product media should not be cropped in a way that hides meaning.
-- Feature cards can use 2-column grids.
-- Nav may collapse if link density causes crowding.
+The atmospheric hero `clamp(2.75rem, 8vw, 7rem)` is a documented one-off escalation; do not extend that ramp to other tokens.
 
-### Desktop rules
+### 9.2 Container queries
 
-- Use 72px-96px section padding.
-- Preserve whitespace around product media.
-- Keep body copy line length under 70 characters.
-- Use 12-column grid for alignment.
+Three named containers are available globally:
+
+- `container-section` — top-level sections
+- `container-card` — card grids and BenefitSplit
+- `container-form` — AttachedForm and DemoForm
+
+Children use Tailwind v4 variants: `@md/section:flex-row`, `@sm/card:grid-cols-2`, etc.
+
+### 9.3 Touch targets
+
+44px floor (iOS HIG). Apply via `min-h-touch min-w-touch` or `min-size-touch` on all `<a>` and `<button>` in interactive surfaces.
+
+### 9.4 Safe-area-insets
+
+Fixed nav uses `env(safe-area-inset-top)`. FinalCTA and bottom sticky CTAs use `env(safe-area-inset-bottom)`. DemoForm submit row honors `env(safe-area-inset-bottom)`.
+
+### 9.5 Section padding
+
+- `--space-section-mobile: 48px`
+- `--space-section-tablet: 56px`
+- `--space-section-desktop: 72px`
+
+`SectionContainer` pipes these through automatically.
+
+### 9.6 Reduced motion
+
+Every GSAP/Framer/CSS transition has a quiet fallback under `prefers-reduced-motion: reduce`. No exceptions.
+
+### 9.7 Primitive responsive contracts
+
+(Filled in during Phase 2.)
 
 ## 10. Content and tone standards
 
