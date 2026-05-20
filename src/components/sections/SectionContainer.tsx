@@ -43,7 +43,7 @@ export function SectionContainer({
       )}
       {...rest}
     >
-      <div className={cn("mx-auto px-4 md:px-6 lg:px-8", containerClass)}>
+      <div className={cn("container-section mx-auto px-4 md:px-6 lg:px-8", containerClass)}>
         {children}
       </div>
     </As>

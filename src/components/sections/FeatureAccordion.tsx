@@ -71,7 +71,7 @@ export function FeatureAccordion({
         ) : null}
       </div>
 
-      <div className="container-section mt-10 grid gap-10 md:mt-14 @lg/section:grid-cols-[1fr_1.1fr] @lg/section:gap-16">
+      <div className="mt-10 grid gap-10 md:mt-14 @lg/section:grid-cols-[1fr_1.1fr] @lg/section:gap-16">
         <ul className="order-1 flex flex-col @lg/section:order-none">
           {items.map((item) => {
             const isOpen = activeId === item.id;

@@ -50,7 +50,7 @@ export function BenefitSplit({
     <SectionContainer surface={surface} id={id}>
       <div
         className={cn(
-          "container-section grid items-center gap-12 @md/section:gap-16",
+          "grid items-center gap-12 @md/section:gap-16",
           "@md/section:grid-cols-2"
         )}
       >

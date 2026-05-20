@@ -36,7 +36,7 @@ export function ProcessStrip({
         </h2>
       </div>
 
-      <ol className="container-section mt-10 flex flex-col gap-0 md:mt-14 @md/section:grid @md/section:gap-px @md/section:overflow-hidden @md/section:rounded-[var(--radius-sm)] @md/section:bg-[var(--border)] @md/section:grid-cols-3 @lg/section:grid-cols-5">
+      <ol className="mt-10 flex flex-col gap-0 md:mt-14 @md/section:grid @md/section:gap-px @md/section:overflow-hidden @md/section:rounded-[var(--radius-sm)] @md/section:bg-[var(--border)] @md/section:grid-cols-3 @lg/section:grid-cols-5">
         {steps.map((step, idx) => (
           <li
             key={step.title}
