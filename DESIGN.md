@@ -1232,6 +1232,7 @@ Every GSAP/Framer/CSS transition has a quiet fallback under `prefers-reduced-mot
 | Primitive | Behavior |
 |---|---|
 | `FeatureAccordion` | Single column below 1024px container width. Visual pane renders as `order-2` (below the accordion list) at narrow widths; side-by-side `[1fr_1.1fr]` grid at ≥1024px container width. Triggers ≥44px (`min-h-touch`). |
+| `BenefitSplit` | Vertical (text → media) below 768px container width. `reverse` prop ignored at narrow widths; takes effect at `@md/section` and above. |
 
 ## 10. Content and tone standards
 
