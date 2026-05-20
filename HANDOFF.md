@@ -241,24 +241,28 @@ Cross-referenced against `/ui-ux-pro-max` skill output. Applied:
 
 ---
 
-## What's pending (M4)
+## M4 mobile responsive rebuild (deployed)
 
-Per the plan, M4 is the final polish pass.
+Full system rebuild against the approved spec at `docs/superpowers/specs/2026-05-20-mobile-responsive-rebuild-design.md`. Shipped 2026-05-20 across four phases.
 
-**Status (2026-05-20):** Mobile responsive rebuild design spec **approved** and committed at `docs/superpowers/specs/2026-05-20-mobile-responsive-rebuild-design.md`. Implementation plan via `writing-plans` is the next step. M4 is broader than just responsive (perf, analytics, SEO, OG, DoD) — those remain pending; the responsive rebuild expanded item 1 below from "QA pass" into a full system rebuild (foundation tokens → primitives → Platform mobile branch → QA + CI).
+**Phase 1 — Foundation (2026-05-20):** fluid type scale normalized to Utopia 360→1440; container queries enabled (`container-section`, `container-card`, `container-form`); touch-target tokens + utilities added; `env(safe-area-inset-*)` applied to SiteHeader, FinalCTA, DemoForm; mobile/tablet/desktop section padding tokens shipped; reduced-motion audit complete (Framer + GSAP + CSS transitions). DESIGN.md §9 documents the foundation.
 
-**Phase 1 (foundation) complete (2026-05-20):** fluid type scale normalized to Utopia 360→1440; container queries enabled (`container-section`, `container-card`, `container-form`); touch-target tokens + utilities added; `env(safe-area-inset-*)` applied to SiteHeader, FinalCTA, DemoForm; mobile/tablet/desktop section padding tokens shipped; reduced-motion audit complete (Framer + GSAP + CSS transitions). DESIGN.md §9 documents the foundation.
+**Phase 2 — Primitives (2026-05-20):** FeatureAccordion (single column + 44px triggers below 1024 container), BenefitSplit (vertical below 768 container, `mediaPosition` gated), ComparisonTable (desktop table ≥1024 / sticky-first-column 768–1023 / card stack <768), ProcessStrip (vertical timeline below 768 container), AttachedForm (stacked below 384 container, pill radius preserved), CardGrid (1/2/3/4 cols by container at 384/1024/1280); remaining primitives (HomepageHero, PageHero, TrustBand, ProofBand, IntegrationStrip, FinalCTA) audited and patched where touch targets or fluid tokens needed correction. DESIGN.md §9.7 contains the 9-row contract table.
 
-**Phase 2 (primitive responsive contracts) complete (2026-05-20):** FeatureAccordion (single column + 44px triggers below 1024 container), BenefitSplit (vertical below 768 container, `mediaPosition` gated), ComparisonTable (desktop table ≥1024 / sticky-first-column 768–1023 / card stack <768), ProcessStrip (vertical timeline below 768 container), AttachedForm (stacked below 384 container, pill radius preserved), CardGrid (1/2/3/4 cols by container at 384/1024/1280); remaining primitives (HomepageHero, PageHero, TrustBand, ProofBand, IntegrationStrip, FinalCTA) audited and patched where touch targets or fluid tokens needed correction. DESIGN.md §9.7 contains the 9-row contract table.
+**Phase 3 — Platform handoff mobile (2026-05-20):** `useIsMobile()` and `useInView()` shared hooks at `src/hooks/`. `HomepageHandoffSection.tsx` branches at `(max-width: 767px)`: desktop keeps the 300vh GSAP-pinned scroll cinematic; mobile renders a calm static stack (heading, then 4 vertical mockup blocks each with a `FramedDashboard` and the shared "See how it works" link). `useGSAP` bails on mobile with `isMobile` in deps so devtools resize cleans up triggers. Each mockup's Framer entrance is gated by `useInView`. `FramedDashboard` padding tightens to `p-3` below 384px container width.
 
-**Phase 3 (Platform handoff mobile branch) complete (2026-05-20):** `useIsMobile()` and `useInView()` shared hooks at `src/hooks/`. `HomepageHandoffSection.tsx` branches at `(max-width: 767px)` — desktop keeps the 300vh GSAP-pinned scroll cinematic; mobile renders a calm static stack (heading, then 4 vertical mockup blocks each with a `FramedDashboard` and the shared "See how it works" link). `useGSAP` bails on mobile with `isMobile` in deps so devtools resize cleans up triggers. Each mockup's Framer entrance is now gated by `useInView`, so on mobile the stack staggers as the user scrolls and on desktop the per-tab re-mount still fires immediately. `FramedDashboard` padding tightens to `p-3` below 384px container width.
+**Phase 4 — QA + CI (2026-05-20):** 9-breakpoint × 11-route matrix (99 tests) passing. axe-core CI workflow runs on every PR at 375 and 1440. Touch-target audit (all interactive elements ≥44×44 at 375) zero failures across 11 routes. Reduced-motion verification (no running animations under `prefers-reduced-motion: reduce`) green across 11 routes. Platform mobile contract spec verifies the static-stack render and catches GSAP pin-spacer regressions. Lighthouse mobile passes LCP / CLS / INP on 10 of 11 routes; homepage `/` misses LCP at 2.86s due to the 11 MB hero MP4 (deferred to post-M4 — see `docs/m4-perf-baseline.md`). Two new accent-text tokens (`--accent-text-dark`, `--accent-text-light`) shipped to clear WCAG 2.2 AA contrast for eyebrows and inline links; `--primary` stays exclusive to filled CTA surfaces.
 
-1. **Responsive rebuild** — full system: fluid type scale via clamp, Tailwind v4 container queries, touch-target tokens, safe-area-insets, mobile section padding, reduced-motion audit; per-primitive responsive contracts on 10 components; bespoke Platform handoff mobile branch (calm static stack below 768px, no GSAP pin); 9-breakpoint QA matrix (320/375/414/768/1024/1280/1440 + landscape phone + landscape tablet) on every route. See the design spec for the full contract.
-2. **axe-core in CI** — install `@axe-core/playwright` (already a devDep) and wire to GitHub Actions matrix per CLAUDE.md §11.
-3. **Performance**: Lighthouse mobile per route. Targets: LCP < 2.5s, CLS < 0.1, INP < 200ms. The 11 MB re-encoded hero MP4 may need byte-budget work. Verify Next/Image is serving AVIF/WebP for `dashboard-dark.png` and the hero PNGs. The Fontshare CDN font (one weight, ~30 KB) is now a third-party request — consider downloading General Sans 600 and using `next/font/local` if it bottlenecks LCP.
-4. **Analytics**: GA4/GTM IDs (placeholders in `.env.example`). Verify `cta_primary_click`, `cta_secondary_click`, `form_*`, `accordion_toggle` (also fired by Platform tab clicks via `track`), `scroll_depth`, `video_play` events fire in GTM Preview.
-5. **SEO**: Per-route OG images via `app/<route>/opengraph-image.tsx` using `@vercel/og`. `Organization` + `SoftwareApplication` JSON-LD on `/`. `ContactPage` JSON-LD on `/demo`.
-6. **DoD walkthrough**: `CLAUDE.md §14` checklist per page.
+## Post-M4 follow-ups
+
+These were originally bundled into M4 but are deferred so the mobile responsive milestone can ship.
+
+1. **Hero MP4 byte budget** — `/` misses LCP at 2.86s. Move the 11 MB hero MP4 to Mux or add a multi-resolution source ladder. Until then, `/` is the only route above the 2.5s LCP target.
+2. **Fontshare General Sans CDN call** — currently a third-party request (~30 KB, one weight). Doesn't appear as render-blocking in Lighthouse, but consider downloading and serving via `next/font/local` to remove the cross-origin hop.
+3. **Analytics**: GA4/GTM IDs (placeholders in `.env.example`). Verify `cta_primary_click`, `cta_secondary_click`, `form_*`, `accordion_toggle` (also fired by Platform tab clicks via `track`), `scroll_depth`, `video_play` events fire in GTM Preview.
+4. **SEO**: per-route OG images via `app/<route>/opengraph-image.tsx` using `@vercel/og`. `Organization` + `SoftwareApplication` JSON-LD on `/`. `ContactPage` JSON-LD on `/demo`.
+5. **DoD walkthrough**: `CLAUDE.md §14` checklist per page.
+6. **Breakpoint constant extraction**: `useIsMobile` and `HomepageHero` now both use `(max-width: 767px)` (Task 25.1). Could extract to a shared constant if more callers emerge.
 
 ---
 
