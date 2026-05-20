@@ -243,9 +243,11 @@ Cross-referenced against `/ui-ux-pro-max` skill output. Applied:
 
 ## What's pending (M4)
 
-Per the plan, M4 is the final polish pass. Hasn't started.
+Per the plan, M4 is the final polish pass.
 
-1. **Responsive QA** at 375, 414, 768, 1024, 1280, 1440. Particular attention: hero attached-form below 640px, FeatureAccordion stacking, ComparisonTable mobile fallback on `/why-dplat`, **the new Platform centered-stack layout on tablet + mobile** (only verified at 1373×779 and 1440×900 so far).
+**Status (2026-05-20):** Mobile responsive rebuild design spec **approved** and committed at `docs/superpowers/specs/2026-05-20-mobile-responsive-rebuild-design.md`. Implementation plan via `writing-plans` is the next step. M4 is broader than just responsive (perf, analytics, SEO, OG, DoD) — those remain pending; the responsive rebuild expanded item 1 below from "QA pass" into a full system rebuild (foundation tokens → primitives → Platform mobile branch → QA + CI).
+
+1. **Responsive rebuild** — full system: fluid type scale via clamp, Tailwind v4 container queries, touch-target tokens, safe-area-insets, mobile section padding, reduced-motion audit; per-primitive responsive contracts on 10 components; bespoke Platform handoff mobile branch (calm static stack below 768px, no GSAP pin); 9-breakpoint QA matrix (320/375/414/768/1024/1280/1440 + landscape phone + landscape tablet) on every route. See the design spec for the full contract.
 2. **axe-core in CI** — install `@axe-core/playwright` (already a devDep) and wire to GitHub Actions matrix per CLAUDE.md §11.
 3. **Performance**: Lighthouse mobile per route. Targets: LCP < 2.5s, CLS < 0.1, INP < 200ms. The 11 MB re-encoded hero MP4 may need byte-budget work. Verify Next/Image is serving AVIF/WebP for `dashboard-dark.png` and the hero PNGs. The Fontshare CDN font (one weight, ~30 KB) is now a third-party request — consider downloading General Sans 600 and using `next/font/local` if it bottlenecks LCP.
 4. **Analytics**: GA4/GTM IDs (placeholders in `.env.example`). Verify `cta_primary_click`, `cta_secondary_click`, `form_*`, `accordion_toggle` (also fired by Platform tab clicks via `track`), `scroll_depth`, `video_play` events fire in GTM Preview.
