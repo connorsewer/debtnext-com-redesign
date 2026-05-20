@@ -45,9 +45,9 @@ export function CardGrid({
   id,
 }: CardGridProps) {
   const colClass = {
-    2: "md:grid-cols-2",
-    3: "md:grid-cols-2 lg:grid-cols-3",
-    4: "md:grid-cols-2 lg:grid-cols-4",
+    2: "@sm/card:grid-cols-2",
+    3: "@sm/card:grid-cols-2 @5xl/card:grid-cols-3",
+    4: "@sm/card:grid-cols-2 @5xl/card:grid-cols-3 @7xl/card:grid-cols-4",
   }[columns];
 
   return (
@@ -68,7 +68,7 @@ export function CardGrid({
         ) : null}
       </div>
 
-      <ul className={cn("mt-10 grid gap-4 md:mt-14", colClass)}>
+      <ul className={cn("container-card mt-10 grid gap-4 md:mt-14", colClass)}>
         {cards.map((card) => (
           <li
             key={card.title}
