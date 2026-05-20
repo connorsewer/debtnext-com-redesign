@@ -5,14 +5,14 @@
 See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 **Core value:** Convert qualified enterprise buyers into demo requests. The single conversion action is "Request a demo".
-**Current focus:** GSD bootstrap complete. M5 to be opened via `/gsd-new-milestone` (launch-critical + motion bundle).
+**Current focus:** M5 — Launch readiness + motion pass. Defining requirements.
 
 ## Current Position
 
-- **Phase:** Not started (M5 not yet opened)
+- **Phase:** Not started (defining M5 requirements)
 - **Plan:** —
-- **Status:** GSD `.planning/` apparatus bootstrapped retroactively after M1–M4 shipped. Ready to formally open M5 via `/gsd-new-milestone`.
-- **Last activity:** 2026-05-20 — Bootstrap PROJECT.md, MILESTONES.md, STATE.md, config.json against M1–M4 shipped state.
+- **Status:** Defining requirements for M5
+- **Last activity:** 2026-05-20 — Milestone M5 started (option b: bundle launch-critical + motion)
 
 ## Accumulated Context
 

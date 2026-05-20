@@ -8,6 +8,20 @@ Production marketing website for DebtNext at debtnext.com, modeled on Mercury.co
 
 Convert qualified enterprise buyers into demo requests. Every page, every CTA, every section exists to produce one outcome: a "Request a demo" submission from a VP-or-above buyer at a regulated credit originator.
 
+## Current Milestone: M5 Launch readiness + motion pass
+
+**Goal:** Take the site from "shipped" to "launchable". Fix the `/` LCP regression, wire analytics, ship SEO baseline, walk the Definition-of-Done on every route, and add restrained motion to the 10 non-home pages.
+
+**Target feature categories:**
+
+- Hero performance (bring `/` under the 2.5s LCP target on 4G mobile)
+- Analytics (GA4 + GTM dataLayer; verify all CLAUDE.md §13 events in GTM Preview)
+- SEO baseline (per-route OG images, JSON-LD on `/` and `/demo`)
+- Definition-of-done walkthrough on every v1 route (CLAUDE.md §14 checklist)
+- Restrained motion pass across the 10 non-home pages
+
+**Phase numbering:** Continues from M4. M5 starts at Phase 5.
+
 ## Requirements
 
 ### Validated
