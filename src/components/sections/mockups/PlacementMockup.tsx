@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { useInView } from "@/hooks/use-in-view";
 
 export const placementMockupTitle = "Placement run · 12:04 PM";
 
@@ -19,12 +20,13 @@ const pools = [
  */
 export function PlacementMockup() {
   const shouldReduce = useReducedMotion();
+  const [containerRef, inView] = useInView<HTMLDivElement>();
   return (
-    <>
+    <div ref={containerRef}>
       <motion.div
         className="flex items-center justify-between border-b border-[var(--border)] pb-4"
         initial={shouldReduce ? false : { opacity: 0, y: -6 }}
-        animate={shouldReduce ? false : { opacity: 1, y: 0 }}
+        animate={shouldReduce ? false : (inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 })}
         transition={shouldReduce ? { duration: 0 } : { duration: 0.35, ease: [0.2, 0.7, 0.2, 1] }}
       >
         <div>
@@ -58,7 +60,7 @@ export function PlacementMockup() {
             <motion.div
               className="w-28 shrink-0"
               initial={shouldReduce ? false : { opacity: 0, x: -8 }}
-              animate={shouldReduce ? false : { opacity: 1, x: 0 }}
+              animate={shouldReduce ? false : (inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 })}
               transition={shouldReduce ? { duration: 0 } : { duration: 0.3, delay: 0.1 + i * 0.06 }}
             >
               <p className="text-body-strong font-[480] text-[var(--foreground)]">
@@ -72,7 +74,7 @@ export function PlacementMockup() {
               <motion.div
                 className={`absolute inset-y-0 left-0 rounded-full bg-gradient-to-r ${pool.bar}`}
                 initial={shouldReduce ? { width: `${pool.pct * 2.4}%` } : { width: 0 }}
-                animate={{ width: `${pool.pct * 2.4}%` }}
+                animate={shouldReduce || inView ? { width: `${pool.pct * 2.4}%` } : { width: 0 }}
                 transition={
                   shouldReduce
                     ? { duration: 0 }
@@ -88,7 +90,7 @@ export function PlacementMockup() {
               className="w-10 shrink-0 text-right text-body-strong font-[480] text-[var(--foreground)]"
               style={{ fontVariantNumeric: "tabular-nums" }}
               initial={shouldReduce ? false : { opacity: 0 }}
-              animate={shouldReduce ? false : { opacity: 1 }}
+              animate={shouldReduce ? false : (inView ? { opacity: 1 } : { opacity: 0 })}
               transition={shouldReduce ? { duration: 0 } : { duration: 0.3, delay: 0.5 + i * 0.08 }}
             >
               {pool.pct}%
@@ -97,6 +99,6 @@ export function PlacementMockup() {
         ))}
       </ul>
 
-    </>
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { useInView } from "@/hooks/use-in-view";
 
 export const issuesMockupTitle = "Issues queue · all vendors";
 
@@ -25,8 +26,9 @@ const slaClass = (tone: string) => {
  */
 export function IssuesMockup() {
   const shouldReduce = useReducedMotion();
+  const [containerRef, inView] = useInView<HTMLDivElement>();
   return (
-    <>
+    <div ref={containerRef}>
       <div className="grid grid-cols-3 gap-3 border-b border-[var(--border)] pb-4">
         {[
           { label: "Open", value: "127", tone: "fg" },
@@ -36,7 +38,7 @@ export function IssuesMockup() {
           <motion.div
             key={tile.label}
             initial={shouldReduce ? false : { opacity: 0, y: -6 }}
-            animate={shouldReduce ? false : { opacity: 1, y: 0 }}
+            animate={shouldReduce ? false : (inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 })}
             transition={shouldReduce ? { duration: 0 } : { duration: 0.35, delay: i * 0.08 }}
           >
             <p className="text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
@@ -65,7 +67,7 @@ export function IssuesMockup() {
             key={it.account}
             className="flex items-start gap-3 rounded-[var(--radius-xs)] border border-[var(--border)] bg-[var(--card-alt)] p-3"
             initial={shouldReduce ? false : { opacity: 0, y: 8 }}
-            animate={shouldReduce ? false : { opacity: 1, y: 0 }}
+            animate={shouldReduce ? false : (inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 })}
             transition={
               shouldReduce
                 ? { duration: 0 }
@@ -99,6 +101,6 @@ export function IssuesMockup() {
           </motion.li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }

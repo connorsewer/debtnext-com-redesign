@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { useInView } from "@/hooks/use-in-view";
 
 export const vendorPerformanceMockupTitle = "Vendor scorecard · YTD";
 
@@ -20,12 +21,13 @@ const vendors = [
  */
 export function VendorPerformanceMockup() {
   const shouldReduce = useReducedMotion();
+  const [containerRef, inView] = useInView<HTMLDivElement>();
   return (
-    <>
+    <div ref={containerRef}>
       <motion.div
         className="flex items-baseline justify-between border-b border-[var(--border)] pb-3"
         initial={shouldReduce ? false : { opacity: 0, y: -6 }}
-        animate={shouldReduce ? false : { opacity: 1, y: 0 }}
+        animate={shouldReduce ? false : (inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 })}
         transition={shouldReduce ? { duration: 0 } : { duration: 0.35 }}
       >
         <div>
@@ -48,14 +50,14 @@ export function VendorPerformanceMockup() {
             key={v.name}
             className="flex items-center gap-4"
             initial={shouldReduce ? false : { opacity: 0, y: 6 }}
-            animate={shouldReduce ? false : { opacity: 1, y: 0 }}
+            animate={shouldReduce ? false : (inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 })}
             transition={shouldReduce ? { duration: 0 } : { duration: 0.35, delay: 0.08 + i * 0.08 }}
           >
             <motion.span
               className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-caption font-[480] text-[var(--card)]"
               style={{ backgroundColor: v.gradeColor }}
               initial={shouldReduce ? false : { scale: 0.6, opacity: 0 }}
-              animate={shouldReduce ? false : { scale: 1, opacity: 1 }}
+              animate={shouldReduce ? false : (inView ? { scale: 1, opacity: 1 } : { scale: 0.6, opacity: 0 })}
               transition={
                 shouldReduce
                   ? { duration: 0 }
@@ -108,7 +110,7 @@ export function VendorPerformanceMockup() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 initial={shouldReduce ? false : { pathLength: 0, opacity: 0 }}
-                animate={shouldReduce ? false : { pathLength: 1, opacity: 1 }}
+                animate={shouldReduce ? false : (inView ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 })}
                 transition={
                   shouldReduce
                     ? { duration: 0 }
@@ -123,6 +125,6 @@ export function VendorPerformanceMockup() {
           </motion.li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
