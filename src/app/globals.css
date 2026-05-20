@@ -272,6 +272,19 @@
   --font-heading: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
+@utility container-section {
+  container-type: inline-size;
+  container-name: section;
+}
+@utility container-card {
+  container-type: inline-size;
+  container-name: card;
+}
+@utility container-form {
+  container-type: inline-size;
+  container-name: form;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
