@@ -72,6 +72,10 @@
   --input: #e4e4e7;
   --ring: #5266EB;
   --focus: #9CB4E8;
+  /* Accent text on dark surfaces (eyebrows, inline link CTAs). Lifted from --primary so it clears WCAG AA on #171721, #1e1e2a, and #20212d. Do not use on filled CTAs; that's --primary. */
+  --accent-text-dark: #7280F4;
+  /* Accent text on light surfaces (light-card highlight columns, light eyebrows). Deepened from --primary so it clears WCAG AA on #FFFFFF and #f4f4f5. Do not use on filled CTAs; that's --primary. */
+  --accent-text-light: #4354C8;
   --text-tertiary: #535461;
   --chart-1: #5266EB;
   --chart-2: #323649;
@@ -119,6 +123,10 @@
   --input: #323649;
   --ring: #5266EB;
   --focus: #9CB4E8;
+  /* Accent text on dark surfaces (eyebrows, inline link CTAs). Lifted from --primary so it clears WCAG AA on #171721, #1e1e2a, and #20212d. Do not use on filled CTAs; that's --primary. */
+  --accent-text-dark: #7280F4;
+  /* Accent text on light surfaces (light-card highlight columns, light eyebrows). Deepened from --primary so it clears WCAG AA on #FFFFFF and #f4f4f5. Do not use on filled CTAs; that's --primary. */
+  --accent-text-light: #4354C8;
   --text-tertiary: #C3C3CC;
   --chart-1: #5266EB;
   --chart-2: #323649;
@@ -178,6 +186,8 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-focus: var(--focus);
+  --color-accent-text-dark: var(--accent-text-dark);
+  --color-accent-text-light: var(--accent-text-light);
   --color-text-tertiary: var(--text-tertiary);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);

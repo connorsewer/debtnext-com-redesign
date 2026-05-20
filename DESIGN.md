@@ -285,9 +285,11 @@ Design and build with semantic tokens. Component guidance must reference tokens 
 | `--card` | `#20212d` | Elevated dark cards and product panels |
 | `--card-alt` | `#1e1e2a` | Alternative elevated dark surface |
 | `--secondary` | `#323649` | Muted interactive and secondary dark surfaces |
-| `--primary` | `#5266EB` | Primary action, selected states, charts, focus anchor |
+| `--primary` | `#5266EB` | Filled CTA surfaces only (pill buttons, selected tabs, focus anchor, primary chart series). Do not use as text on the dark canvas; it fails WCAG AA there. |
 | `--primary-hover` | `#4354c8` | Primary CTA hover |
 | `--primary-active` | `#3442a6` | Primary CTA pressed/active |
+| `--accent-text-dark` | `#7280F4` | Accent text on dark surfaces (eyebrows, inline link CTAs like "See how it works"). Lifted from `--primary` so it clears 4.5:1 on `#171721`, `#1e1e2a`, and `#20212d`. |
+| `--accent-text-light` | `#4354C8` | Accent text on light surfaces (light-card highlight columns, light eyebrows). Deepened from `--primary` so it clears 4.5:1 on `#FFFFFF` and `#f4f4f5`. |
 | `--focus` | `#9CB4E8` | Focus rings and soft interactive highlights |
 | `--muted-foreground` | `#a1a1aa` | Secondary dark-canvas text |
 | `--text-tertiary` | `#C3C3CC` | Captions, metadata, disabled copy on dark |
@@ -300,7 +302,9 @@ Design and build with semantic tokens. Component guidance must reference tokens 
 
 ### Color role rules
 
-- `--primary` must be reserved for primary CTAs, active states, selected tabs, meaningful highlights, focus anchors, and the most important chart series.
+- `--primary` (`#5266EB`) is the primary action color exclusively on filled CTA surfaces (pill buttons, selected tabs, primary chart series, focus anchors). It must not be used as text on the dark canvas; the contrast ratio there is 3.77:1, below the WCAG 2.2 AA floor.
+- `--accent-text-dark` (`#7280F4`) is the accent text color for eyebrows and inline link CTAs on dark surfaces. It's a brand-blue family member lifted from `--primary` to clear 4.5:1 on `#171721`, `#1e1e2a`, and `#20212d`. Do not use it on filled CTA surfaces; that's `--primary`.
+- `--accent-text-light` (`#4354C8`) is the accent text color for highlight columns and eyebrows on light surfaces. It's a brand-blue family member deepened from `--primary` to clear 4.5:1 on `#FFFFFF` and `#f4f4f5`. Do not use it on filled CTA surfaces; that's `--primary`.
 - `--focus` may be used for focus rings, soft hover overlays, and secondary highlights. It must not become the primary CTA fill.
 - `--background` and `--card` must carry the dark-first identity.
 - Light surfaces must be used intentionally for contrast or complex content, not as the default page background.

@@ -83,7 +83,7 @@ export function CardGrid({
               </span>
             ) : null}
             {card.eyebrow ? (
-              <p className="text-caption font-[480] uppercase tracking-wider text-[var(--primary)]">
+              <p className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
                 {card.eyebrow}
               </p>
             ) : null}

@@ -141,7 +141,7 @@ export function FeatureAccordion({
               {/* M2 placeholder visual — replaced with real product
                   screenshots in M3 per content-map.md. */}
               <div className="flex h-full w-full flex-col items-center justify-center gap-4 rounded-[var(--radius-xs)] bg-[var(--card-alt)] p-8 text-center">
-                <span className="text-caption font-[480] uppercase tracking-wider text-[var(--primary)]">
+                <span className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
                   Visual
                 </span>
                 <p className="text-h3 font-[480] text-[var(--foreground)]">

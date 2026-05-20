@@ -49,7 +49,7 @@ export function ProcessStrip({
               {idx + 1}
             </span>
             <div className="flex flex-col gap-3">
-              <span className="text-caption font-[480] uppercase tracking-wider text-[var(--primary)]">
+              <span className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
                 Step {String(idx + 1).padStart(2, "0")}
               </span>
               <h3 className="text-h4 font-[480] text-[var(--foreground)]">

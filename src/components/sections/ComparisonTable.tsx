@@ -78,7 +78,7 @@ export function ComparisonTable({
                     className={cn(
                       "px-4 py-4 text-body-strong font-[480]",
                       idx === primaryColIdx
-                        ? "text-[var(--primary)]"
+                        ? "text-[var(--accent-text-light)]"
                         : "text-[var(--foreground)]"
                     )}
                   >
@@ -143,7 +143,7 @@ export function ComparisonTable({
                     className={cn(
                       "text-body-sm",
                       idx === primaryColIdx
-                        ? "font-[480] text-[var(--primary)]"
+                        ? "font-[480] text-[var(--accent-text-light)]"
                         : "text-[var(--text-tertiary)]"
                     )}
                   >

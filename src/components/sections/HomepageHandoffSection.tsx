@@ -132,7 +132,7 @@ export function HomepageHandoffSection() {
         className="container-section bg-[var(--background)] py-[var(--space-section-mobile)]"
       >
         <div className="mx-auto max-w-[var(--container-page)] px-4">
-          <p className="text-caption font-[480] uppercase tracking-wider text-[var(--primary)]">
+          <p className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
             {heroHandoff.eyebrow}
           </p>
           <h2 className="mt-2 text-h2 text-[var(--foreground)]">
@@ -158,7 +158,7 @@ export function HomepageHandoffSection() {
           <div className="mt-12">
             <Link
               href={heroHandoff.link.href}
-              className="min-h-touch inline-flex items-center gap-1 text-body-strong text-[var(--primary)]"
+              className="min-h-touch inline-flex items-center gap-1 text-body-strong text-[var(--accent-text-dark)]"
             >
               {heroHandoff.link.label} <span aria-hidden="true">→</span>
             </Link>
