@@ -1233,6 +1233,7 @@ Every GSAP/Framer/CSS transition has a quiet fallback under `prefers-reduced-mot
 |---|---|
 | `FeatureAccordion` | Single column below 1024px container width. Visual pane renders as `order-2` (below the accordion list) at narrow widths; side-by-side `[1fr_1.1fr]` grid at ≥1024px container width. Triggers ≥44px (`min-h-touch`). |
 | `BenefitSplit` | Vertical (text → media) below 768px container width. `mediaPosition` prop ignored at narrow widths; takes effect at `@md/section` and above. |
+| `ComparisonTable` | Desktop table at ≥1024px container. Sticky first column with horizontal scroll at 768–1023. Card stack with paired `<dt>`/`<dd>` label+value below 768. |
 
 ## 10. Content and tone standards
 

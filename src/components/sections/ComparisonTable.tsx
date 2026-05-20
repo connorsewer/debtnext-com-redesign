@@ -42,82 +42,84 @@ export function ComparisonTable({
 
   return (
     <SectionContainer surface={surface}>
-      <div className="max-w-3xl">
-        {eyebrow ? (
-          <p className="text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
-            {eyebrow}
-          </p>
-        ) : null}
-        <h2 className="mt-3 text-h2 font-[480] text-[var(--foreground)]">
-          {heading}
-        </h2>
-        {body ? (
-          <p className="mt-5 text-body-lg text-[var(--text-tertiary)]">
-            {body}
-          </p>
-        ) : null}
-      </div>
+      <div className="container-section">
+        <div className="max-w-3xl">
+          {eyebrow ? (
+            <p className="text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
+              {eyebrow}
+            </p>
+          ) : null}
+          <h2 className="mt-3 text-h2 font-[480] text-[var(--foreground)]">
+            {heading}
+          </h2>
+          {body ? (
+            <p className="mt-5 text-body-lg text-[var(--text-tertiary)]">
+              {body}
+            </p>
+          ) : null}
+        </div>
 
-      {/* Desktop / tablet: real table semantics */}
-      <div className="mt-10 hidden overflow-x-auto md:block md:mt-14">
-        <table className="w-full border-collapse text-left">
-          <thead>
-            <tr className="border-b border-[var(--border)]">
-              <th
-                scope="col"
-                className="px-4 py-4 text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]"
-              >
-                Capability
-              </th>
-              {columns.map((col, idx) => (
+        {/* Tablet (768-1023 container width): horizontal scroll with sticky first column.
+            Desktop (≥1024 container width): full table, no scroll. */}
+        <div className="mt-10 hidden overflow-x-auto @md/section:block @md/section:mt-14 @lg/section:overflow-visible">
+          <table className="w-full border-collapse text-left">
+            <thead>
+              <tr className="border-b border-[var(--border)]">
                 <th
-                  key={col.label}
                   scope="col"
-                  className={cn(
-                    "px-4 py-4 text-body-strong font-[480]",
-                    idx === primaryColIdx
-                      ? "text-[var(--primary)]"
-                      : "text-[var(--foreground)]"
-                  )}
+                  className="sticky left-0 z-10 bg-[var(--background)] px-4 py-4 text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)] @lg/section:static @lg/section:bg-transparent"
                 >
-                  {col.label}
+                  Capability
                 </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => (
-              <tr
-                key={row.capability}
-                className="border-b border-[var(--border)] last:border-b-0"
-              >
-                <th
-                  scope="row"
-                  className="px-4 py-4 text-body-strong font-[480] text-[var(--foreground)]"
-                >
-                  {row.capability}
-                </th>
-                {row.values.map((value, idx) => (
-                  <td
-                    key={`${row.capability}-${idx}`}
+                {columns.map((col, idx) => (
+                  <th
+                    key={col.label}
+                    scope="col"
                     className={cn(
-                      "px-4 py-4 text-body-md",
+                      "px-4 py-4 text-body-strong font-[480]",
                       idx === primaryColIdx
-                        ? "bg-[var(--card-alt)] font-[480] text-[var(--foreground)]"
-                        : "text-[var(--text-tertiary)]"
+                        ? "text-[var(--primary)]"
+                        : "text-[var(--foreground)]"
                     )}
                   >
-                    {value}
-                  </td>
+                    {col.label}
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {rows.map((row) => (
+                <tr
+                  key={row.capability}
+                  className="border-b border-[var(--border)] last:border-b-0"
+                >
+                  <th
+                    scope="row"
+                    className="sticky left-0 z-10 bg-[var(--background)] px-4 py-4 text-body-strong font-[480] text-[var(--foreground)] @lg/section:static @lg/section:bg-transparent"
+                  >
+                    {row.capability}
+                  </th>
+                  {row.values.map((value, idx) => (
+                    <td
+                      key={`${row.capability}-${idx}`}
+                      className={cn(
+                        "px-4 py-4 text-body-md",
+                        idx === primaryColIdx
+                          ? "bg-[var(--card-alt)] font-[480] text-[var(--foreground)]"
+                          : "text-[var(--text-tertiary)]"
+                      )}
+                    >
+                      {value}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      {/* Mobile: stacked cards keyed by capability */}
-      <ul className="mt-10 space-y-4 md:hidden">
+        {/* Mobile (<768 container width): stacked cards with paired label/value */}
+        <ul className="mt-10 space-y-4 @md/section:hidden">
         {rows.map((row) => (
           <li
             key={row.capability}
@@ -155,7 +157,8 @@ export function ComparisonTable({
             </dl>
           </li>
         ))}
-      </ul>
+        </ul>
+      </div>
     </SectionContainer>
   );
 }
