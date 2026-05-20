@@ -45,10 +45,12 @@ export function ProofBand({ eyebrow, stats, surface = "dark" }: ProofBandProps) 
         </p>
       ) : null}
       <ul
-        className="mt-10 grid gap-8 md:mt-12"
-        style={{
-          gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
-        }}
+        className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 md:mt-12 md:[grid-template-columns:repeat(var(--proof-cols),minmax(0,1fr))]"
+        style={
+          {
+            ["--proof-cols" as string]: stats.length,
+          } as React.CSSProperties
+        }
       >
         {stats.map((stat, idx) => (
           <motion.li
