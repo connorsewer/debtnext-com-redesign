@@ -114,21 +114,29 @@ export function SiteHeader() {
                     />
                   </svg>
                 </Link>
-                <div
-                  role="menu"
-                  aria-label="Platform capabilities"
-                  className="invisible absolute left-0 top-full z-40 mt-2 w-72 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-2 opacity-0 shadow-[var(--shadow-nav)] transition-[opacity,transform] duration-[var(--duration-instant)] -translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0"
-                >
-                  {platformSubNav.map((sub) => (
-                    <Link
-                      key={sub.href}
-                      href={sub.href}
-                      role="menuitem"
-                      className="block rounded-[var(--radius-xs)] px-3 py-2 text-body-md text-[var(--text-tertiary)] hover:bg-[var(--accent)] hover:text-white focus-visible:bg-[var(--accent)] focus-visible:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
-                    >
-                      {sub.label}
-                    </Link>
-                  ))}
+                {/*
+                  Hover bridge: the 8px gap between trigger and panel becomes
+                  pt-2 inside the wrapper, so the mouse stays over a descendant
+                  of `group` while crossing it. Without this, group-hover drops
+                  the instant the cursor leaves the trigger.
+                */}
+                <div className="invisible absolute left-0 top-full z-40 pt-2 opacity-0 -translate-y-1 transition-[opacity,transform] duration-[var(--duration-instant)] group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0">
+                  <div
+                    role="menu"
+                    aria-label="Platform capabilities"
+                    className="w-72 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-2 shadow-[var(--shadow-nav)]"
+                  >
+                    {platformSubNav.map((sub) => (
+                      <Link
+                        key={sub.href}
+                        href={sub.href}
+                        role="menuitem"
+                        className="block rounded-[var(--radius-xs)] px-3 py-2 text-body-md text-[var(--text-tertiary)] hover:bg-[var(--accent)] hover:text-white focus-visible:bg-[var(--accent)] focus-visible:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             );
