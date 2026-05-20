@@ -40,7 +40,10 @@ export function SiteHeader() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-30 w-full transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
+        // Fixed so the hero (and other section heroes) extend behind the
+        // navbar — the dark body bg never shows above the hero. Padding
+        // for non-home pages is added via PageHero.
+        "fixed inset-x-0 top-0 z-30 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
         scrolled
           ? "bg-[var(--background)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--background)]/70 shadow-[var(--shadow-nav)]"
           : "bg-transparent"

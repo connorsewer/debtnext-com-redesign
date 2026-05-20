@@ -46,7 +46,11 @@ export function PageHero({
     <SectionContainer
       surface="dark"
       containerSize="page"
-      className="border-b border-[var(--border)]"
+      // Extra top padding so the eyebrow + headline clear the fixed nav.
+      // SiteHeader is h-14 / h-16 / h-18 (56 / 64 / 72px) by breakpoint;
+      // this adds at least one header-height beyond SectionContainer's
+      // default py-12 / py-20 / py-24 at each breakpoint.
+      className="border-b border-[var(--border)] pt-[calc(var(--spacing)*22)] md:pt-[calc(var(--spacing)*32)] lg:pt-[calc(var(--spacing)*36)]"
     >
       <div
         className={cn(

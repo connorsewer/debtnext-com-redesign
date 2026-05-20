@@ -179,20 +179,15 @@ export function HomepageHero() {
           </div>
         )}
 
-        {/* Toned global vignette. */}
+        {/* Single soft vignette covering the whole hero — no banded
+            mid-section scrim. Slightly stronger at the very top/bottom
+            edges so the navbar and disclaimer pill stay legible against
+            bright sky and bright lower-foreground; transparent through
+            the middle band where the headline lives. Headline + subhead
+            carry their own text-shadow for contrast. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40"
-        />
-
-        {/* Localized radial scrim behind the text block. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-1/4 bottom-1/4"
-          style={{
-            background:
-              "radial-gradient(ellipse 60% 80% at 50% 50%, rgba(0,0,0,0.55), rgba(0,0,0,0.25) 60%, transparent 100%)",
-          }}
+          className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/40"
         />
 
         {/* Overlay — headline, subhead, form, disclaimer. */}
