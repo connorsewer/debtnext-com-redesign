@@ -1235,6 +1235,7 @@ Every GSAP/Framer/CSS transition has a quiet fallback under `prefers-reduced-mot
 | `BenefitSplit` | Vertical (text → media) below 768px container width. `mediaPosition` prop ignored at narrow widths; takes effect at `@md/section` and above. |
 | `ComparisonTable` | Desktop table at ≥1024px container. Sticky first column with horizontal scroll at 768–1023. Card stack with paired `<dt>`/`<dd>` label+value below 768. |
 | `ProcessStrip` | Horizontal numbered strip at ≥768px container. Vertical timeline with thin left rule + number bubbles below. Step content (title + body) stacks under each numbered marker on narrow. |
+| `AttachedForm` | Pill-attached input+button at ≥384px container width. Stacked input top / full-width button below at narrower. Each surface keeps pill radius (`--radius-xl`). |
 
 ## 10. Content and tone standards
 
