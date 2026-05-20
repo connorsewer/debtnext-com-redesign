@@ -72,6 +72,10 @@
   --input: #e4e4e7;
   --ring: #5266EB;
   --focus: #9CB4E8;
+  /* Accent text on dark surfaces (eyebrows, inline link CTAs). Lifted from --primary so it clears WCAG AA on #171721, #1e1e2a, and #20212d. Do not use on filled CTAs; that's --primary. */
+  --accent-text-dark: #7280F4;
+  /* Accent text on light surfaces (light-card highlight columns, light eyebrows). Deepened from --primary so it clears WCAG AA on #FFFFFF and #f4f4f5. Do not use on filled CTAs; that's --primary. */
+  --accent-text-light: #4354C8;
   --text-tertiary: #535461;
   --chart-1: #5266EB;
   --chart-2: #323649;
@@ -119,6 +123,10 @@
   --input: #323649;
   --ring: #5266EB;
   --focus: #9CB4E8;
+  /* Accent text on dark surfaces (eyebrows, inline link CTAs). Lifted from --primary so it clears WCAG AA on #171721, #1e1e2a, and #20212d. Do not use on filled CTAs; that's --primary. */
+  --accent-text-dark: #7280F4;
+  /* Accent text on light surfaces (light-card highlight columns, light eyebrows). Deepened from --primary so it clears WCAG AA on #FFFFFF and #f4f4f5. Do not use on filled CTAs; that's --primary. */
+  --accent-text-light: #4354C8;
   --text-tertiary: #C3C3CC;
   --chart-1: #5266EB;
   --chart-2: #323649;
@@ -178,6 +186,8 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-focus: var(--focus);
+  --color-accent-text-dark: var(--accent-text-dark);
+  --color-accent-text-light: var(--accent-text-light);
   --color-text-tertiary: var(--text-tertiary);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
@@ -193,45 +203,52 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Type scale — DESIGN.md §4.2 (clamp for fluid responsive) */
-  --text-display-xl: clamp(2.5rem, 3.5vw + 1rem, 4rem);          /* 40 → 64 */
+  /* Type scale — DESIGN.md §9.1 (Utopia fluid, anchored 360→1440) */
+  --text-display-xl: clamp(2.5rem, calc(2rem + 2.2222vw), 4rem);             /* 40 → 64 */
   --text-display-xl--line-height: 1.1;
   --text-display-xl--font-weight: 400;
-  --text-display-lg: clamp(2.25rem, 2.8vw + 1rem, 3.0625rem);    /* 36 → 49 */
+  --text-display-lg: clamp(2.25rem, calc(1.9792rem + 1.2037vw), 3.0625rem);  /* 36 → 49 */
   --text-display-lg--line-height: 1.1;
   --text-display-lg--font-weight: 480;
-  --text-h1: clamp(2.25rem, 2.8vw + 1rem, 3.0625rem);            /* 36 → 49 */
+  --text-h1: clamp(2.25rem, calc(1.9792rem + 1.2037vw), 3.0625rem);          /* 36 → 49 */
   --text-h1--line-height: 1.1;
   --text-h1--font-weight: 480;
-  --text-h2: clamp(1.875rem, 2.2vw + 1rem, 2.625rem);            /* 30 → 42 */
+  --text-h2: clamp(1.875rem, calc(1.625rem + 1.1111vw), 2.625rem);           /* 30 → 42 */
   --text-h2--line-height: 1.14;
   --text-h2--font-weight: 480;
-  --text-h3: clamp(1.5rem, 0.85vw + 1.2rem, 1.75rem);            /* 24 → 28 */
+  --text-h3: clamp(1.5rem, calc(1.4167rem + 0.3704vw), 1.75rem);             /* 24 → 28 */
   --text-h3--line-height: 1.21;
   --text-h3--font-weight: 480;
-  --text-h4: 1.3125rem;                                          /* 21 */
+  --text-h4: clamp(1.125rem, calc(1.0625rem + 0.2778vw), 1.3125rem);         /* 18 → 21 */
   --text-h4--line-height: 1.19;
   --text-h4--font-weight: 480;
-  --text-body-lg: 1.3125rem;                                     /* 21 */
+  --text-body-lg: clamp(1.125rem, calc(1.0625rem + 0.2778vw), 1.3125rem);    /* 18 → 21 */
   --text-body-lg--line-height: 1.42;
   --text-body-lg--font-weight: 400;
-  --text-body-md: 1rem;                                          /* 16 */
+  --text-body-md: clamp(0.9375rem, calc(0.9167rem + 0.0926vw), 1rem);        /* 15 → 16 */
   --text-body-md--line-height: 1.5;
   --text-body-md--font-weight: 400;
-  --text-body-strong: 1rem;                                      /* 16 / 420 */
+  --text-body-strong: clamp(0.9375rem, calc(0.9167rem + 0.0926vw), 1rem);    /* 15 → 16 */
   --text-body-strong--line-height: 1.5;
   --text-body-strong--font-weight: 480;
-  --text-body-sm: 0.875rem;                                      /* 14 */
+  --text-body-sm: clamp(0.8125rem, calc(0.7917rem + 0.0926vw), 0.875rem);    /* 13 → 14 */
   --text-body-sm--line-height: 1.43;
   --text-body-sm--font-weight: 420;
-  --text-caption: 0.75rem;                                       /* 12 */
+  --text-caption: 0.75rem;                                                    /* 12 (static — too small to scale) */
   --text-caption--line-height: 1.42;
   --text-caption--font-weight: 480;
 
-  /* Spacing scale — DESIGN.md §4.3 */
+  /* Spacing scale — DESIGN.md §4.3 + §9.5 */
   --spacing: 0.25rem; /* 4px base */
   --spacing-18: 4.5rem;  /* 72 */
   --spacing-24: 6rem;    /* 96 */
+  --space-section-mobile: 3rem;   /* 48 */
+  --space-section-tablet: 3.5rem; /* 56 */
+  --space-section-desktop: 4.5rem; /* 72 */
+
+  /* Touch targets — DESIGN.md §9.3 (iOS HIG 44px floor) */
+  --size-touch: 2.75rem;        /* 44 */
+  --size-touch-comfortable: 3rem; /* 48 (Material) */
 
   /* Containers — DESIGN.md §4.4 */
   --container-narrow: 40rem;     /* 640 */
@@ -270,6 +287,29 @@
   /* Fonts — Inter via next/font (CSS var set in layout.tsx) */
   --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --font-heading: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+@utility container-section {
+  container-type: inline-size;
+  container-name: section;
+}
+@utility container-card {
+  container-type: inline-size;
+  container-name: card;
+}
+@utility container-form {
+  container-type: inline-size;
+  container-name: form;
+}
+@utility min-h-touch {
+  min-height: var(--size-touch);
+}
+@utility min-w-touch {
+  min-width: var(--size-touch);
+}
+@utility min-size-touch {
+  min-height: var(--size-touch);
+  min-width: var(--size-touch);
 }
 
 @layer base {
@@ -351,6 +391,7 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
     scroll-behavior: auto !important;
   }
 }

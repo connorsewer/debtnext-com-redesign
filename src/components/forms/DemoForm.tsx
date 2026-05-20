@@ -310,7 +310,7 @@ export function DemoForm() {
         </p>
       ) : null}
 
-      <div className="space-y-3">
+      <div className="space-y-3 [margin-bottom:env(safe-area-inset-bottom)]">
         <Button
           type="submit"
           variant="primary"

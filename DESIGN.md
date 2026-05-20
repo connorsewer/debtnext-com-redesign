@@ -285,9 +285,11 @@ Design and build with semantic tokens. Component guidance must reference tokens 
 | `--card` | `#20212d` | Elevated dark cards and product panels |
 | `--card-alt` | `#1e1e2a` | Alternative elevated dark surface |
 | `--secondary` | `#323649` | Muted interactive and secondary dark surfaces |
-| `--primary` | `#5266EB` | Primary action, selected states, charts, focus anchor |
+| `--primary` | `#5266EB` | Filled CTA surfaces only (pill buttons, selected tabs, focus anchor, primary chart series). Do not use as text on the dark canvas; it fails WCAG AA there. |
 | `--primary-hover` | `#4354c8` | Primary CTA hover |
 | `--primary-active` | `#3442a6` | Primary CTA pressed/active |
+| `--accent-text-dark` | `#7280F4` | Accent text on dark surfaces (eyebrows, inline link CTAs like "See how it works"). Lifted from `--primary` so it clears 4.5:1 on `#171721`, `#1e1e2a`, and `#20212d`. |
+| `--accent-text-light` | `#4354C8` | Accent text on light surfaces (light-card highlight columns, light eyebrows). Deepened from `--primary` so it clears 4.5:1 on `#FFFFFF` and `#f4f4f5`. |
 | `--focus` | `#9CB4E8` | Focus rings and soft interactive highlights |
 | `--muted-foreground` | `#a1a1aa` | Secondary dark-canvas text |
 | `--text-tertiary` | `#C3C3CC` | Captions, metadata, disabled copy on dark |
@@ -300,7 +302,9 @@ Design and build with semantic tokens. Component guidance must reference tokens 
 
 ### Color role rules
 
-- `--primary` must be reserved for primary CTAs, active states, selected tabs, meaningful highlights, focus anchors, and the most important chart series.
+- `--primary` (`#5266EB`) is the primary action color exclusively on filled CTA surfaces (pill buttons, selected tabs, primary chart series, focus anchors). It must not be used as text on the dark canvas; the contrast ratio there is 3.77:1, below the WCAG 2.2 AA floor.
+- `--accent-text-dark` (`#7280F4`) is the accent text color for eyebrows and inline link CTAs on dark surfaces. It's a brand-blue family member lifted from `--primary` to clear 4.5:1 on `#171721`, `#1e1e2a`, and `#20212d`. Do not use it on filled CTA surfaces; that's `--primary`.
+- `--accent-text-light` (`#4354C8`) is the accent text color for highlight columns and eyebrows on light surfaces. It's a brand-blue family member deepened from `--primary` to clear 4.5:1 on `#FFFFFF` and `#f4f4f5`. Do not use it on filled CTA surfaces; that's `--primary`.
 - `--focus` may be used for focus rings, soft hover overlays, and secondary highlights. It must not become the primary CTA fill.
 - `--background` and `--card` must carry the dark-first identity.
 - Light surfaces must be used intentionally for contrast or complex content, not as the default page background.
@@ -1173,41 +1177,73 @@ Mercury-like marketing pages should avoid dense tables unless they are product p
 - Provide sorting states and keyboard-accessible controls.
 - On mobile, convert dense tables into stacked cards or horizontal scroll with clear affordance.
 
-## 9. Responsive behavior
+## 9. Responsive system
 
-### Breakpoints
+Anchored to 360px (one notch below iPhone SE) and 1440px viewports. Components use container queries to react to their container, not the viewport, so a primitive composes correctly when nested.
 
-| Breakpoint | Width | Behavior |
-|---|---:|---|
-| Mobile | `<640px` | Single column, 16px horizontal padding, nav collapses, smaller hero typography |
-| Tablet | `640px-1023px` | 2-column layouts allowed, 24px horizontal padding, nav may collapse |
-| Desktop | `1024px-1439px` | 12-column grid, max content width 1200px, standard typography |
-| Wide | `>=1440px` | max site shell 1440px, full atmospheric sections allowed |
+### 9.1 Fluid type scale (Utopia)
 
-### Mobile rules
+Formula: `clamp(min_rem, calc(intercept_rem + slope_vw), max_rem)` where `slope = (max_px - min_px) / 10.8` and `intercept_rem = (min_px - slope * 3.6) / 16`.
 
-- Header height: 56px-64px.
-- Section padding: 32px-48px.
-- Hero H1: 36px-40px.
-- Body text: 16px minimum.
-- All interactive targets: 44px by 44px minimum.
-- Cards stack vertically.
-- Split hero becomes stacked hero.
-- Attached form may remain one row if width allows; otherwise stack with full-width input and button.
+Anchors: 360px / 1440px viewport.
 
-### Tablet rules
+| Token | min → max (px) | clamp |
+|---|---|---|
+| --text-display-xl | 40 → 64 | clamp(2.5rem, calc(2rem + 2.2222vw), 4rem) |
+| --text-display-lg | 36 → 49 | clamp(2.25rem, calc(1.9792rem + 1.2037vw), 3.0625rem) |
+| --text-h1 | 36 → 49 | same as display-lg |
+| --text-h2 | 30 → 42 | clamp(1.875rem, calc(1.625rem + 1.1111vw), 2.625rem) |
+| --text-h3 | 24 → 28 | clamp(1.5rem, calc(1.4167rem + 0.3704vw), 1.75rem) |
+| --text-h4 / --text-body-lg | 18 → 21 | clamp(1.125rem, calc(1.0625rem + 0.2778vw), 1.3125rem) |
+| --text-body-md / --text-body-strong | 15 → 16 | clamp(0.9375rem, calc(0.9167rem + 0.0926vw), 1rem) |
+| --text-body-sm | 13 → 14 | clamp(0.8125rem, calc(0.7917rem + 0.0926vw), 0.875rem) |
+| --text-caption | 12 (static) | 0.75rem |
 
-- Use 24px horizontal gutters.
-- Product media should not be cropped in a way that hides meaning.
-- Feature cards can use 2-column grids.
-- Nav may collapse if link density causes crowding.
+The atmospheric hero `clamp(2.75rem, 8vw, 7rem)` is a documented one-off escalation; do not extend that ramp to other tokens.
 
-### Desktop rules
+### 9.2 Container queries
 
-- Use 72px-96px section padding.
-- Preserve whitespace around product media.
-- Keep body copy line length under 70 characters.
-- Use 12-column grid for alignment.
+Three named containers are available globally:
+
+- `container-section` — top-level sections
+- `container-card` — card grids and BenefitSplit
+- `container-form` — AttachedForm and DemoForm
+
+Children use Tailwind v4 variants: `@md/section:flex-row`, `@sm/card:grid-cols-2`, etc.
+
+### 9.3 Touch targets
+
+44px floor (iOS HIG). Apply via `min-h-touch min-w-touch` or `min-size-touch` on all `<a>` and `<button>` in interactive surfaces.
+
+### 9.4 Safe-area-insets
+
+Fixed nav uses `env(safe-area-inset-top)`. FinalCTA and bottom sticky CTAs use `env(safe-area-inset-bottom)`. DemoForm submit row honors `env(safe-area-inset-bottom)`.
+
+### 9.5 Section padding
+
+- `--space-section-mobile: 48px`
+- `--space-section-tablet: 56px`
+- `--space-section-desktop: 72px`
+
+`SectionContainer` pipes these through automatically.
+
+### 9.6 Reduced motion
+
+Every GSAP/Framer/CSS transition has a quiet fallback under `prefers-reduced-motion: reduce`. No exceptions.
+
+### 9.7 Primitive responsive contracts
+
+| Primitive | Behavior |
+|---|---|
+| `FeatureAccordion` | Single column below 1024px container width. Visual pane renders as `order-2` (below the accordion list) at narrow widths; side-by-side `[1fr_1.1fr]` grid at ≥1024px container width. Triggers ≥44px (`min-h-touch`). |
+| `BenefitSplit` | Vertical (text → media) below 768px container width. `mediaPosition` prop ignored at narrow widths; takes effect at `@md/section` and above. |
+| `ComparisonTable` | Desktop table at ≥1024px container. Sticky first column with horizontal scroll at 768–1023. Card stack with paired `<dt>`/`<dd>` label+value below 768. |
+| `ProcessStrip` | Horizontal numbered strip at ≥768px container. Vertical timeline with thin left rule + number bubbles below. Step content (title + body) stacks under each numbered marker on narrow. |
+| `AttachedForm` | Pill-attached input+button at ≥384px container width. Stacked input top / full-width button below at narrower. Each surface keeps pill radius (`--radius-xl`). |
+| `CardGrid` | 1 column below 384px container, 2 at ≥384, 3 at ≥1024, 4 at ≥1280. Driven by container width via `@<size>/card:` variants — nests correctly inside other sections. |
+| `Hero` / `PageHero` | Eyebrow/H1/body use fluid clamp tokens. Split variant flips to stacked at narrow widths (container-section). AttachedForm-in-hero follows its own contract. |
+| `TrustBand` / `ProofBand` / `IntegrationStrip` | Logo rows wrap cleanly without crushing logos. `prefers-reduced-motion` honored on ProofBand reveal. |
+| `FinalCTA` | Single primary CTA, ≥44px tall (`min-h-touch`), `env(safe-area-inset-bottom)` padding. |
 
 ## 10. Content and tone standards
 

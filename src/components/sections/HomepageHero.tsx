@@ -46,7 +46,7 @@ export function HomepageHero() {
 
   const [isMobile, setIsMobile] = React.useState(false);
   React.useEffect(() => {
-    const mq = window.matchMedia("(max-width: 768px)");
+    const mq = window.matchMedia("(max-width: 767px)");
     const handler = () => setIsMobile(mq.matches);
     handler();
     mq.addEventListener("change", handler);
@@ -55,7 +55,11 @@ export function HomepageHero() {
 
   useGSAP(
     () => {
+      // Early bail when React state has settled mobile. The synchronous wire()
+      // path relies on this; the deferred (loadedmetadata) path also re-checks
+      // matchMedia live inside wire() to catch the state-flip race.
       if (isMobile) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       const video = videoRef.current;
       const section = sectionRef.current;
       const sticky = stickyRef.current;
@@ -68,6 +72,14 @@ export function HomepageHero() {
       const ease = (a: number, b: number, p: number) => clamp01((p - a) / (b - a));
 
       const wire = () => {
+        // Re-check live: if we deferred wire via `loadedmetadata`, isMobile or
+        // prefers-reduced-motion may have flipped between useGSAP setup and the
+        // event firing. Bail before creating a ScrollTrigger that would inject
+        // a .pin-spacer wrapping the sticky div on a layout that no longer
+        // wants the cinematic.
+        if (window.matchMedia("(max-width: 767px)").matches) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
         const duration = video.duration || 1;
 
         ScrollTrigger.create({
@@ -122,8 +134,12 @@ export function HomepageHero() {
         });
       };
 
-      if (video.readyState >= 1) wire();
-      else video.addEventListener("loadedmetadata", wire, { once: true });
+      if (video.readyState >= 1) {
+        wire();
+      } else {
+        video.addEventListener("loadedmetadata", wire, { once: true });
+        return () => video.removeEventListener("loadedmetadata", wire);
+      }
     },
     { scope: sectionRef, dependencies: [isMobile] }
   );

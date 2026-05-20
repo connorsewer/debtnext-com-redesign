@@ -24,7 +24,7 @@ export function FramedDashboard({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] shadow-[var(--shadow-deep)]",
+        "container-section relative overflow-hidden rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] shadow-[var(--shadow-deep)]",
         className
       )}
     >
@@ -38,7 +38,7 @@ export function FramedDashboard({
           </span>
         ) : null}
       </div>
-      <div className="p-4 md:p-5">{children}</div>
+      <div className="p-3 @sm/section:p-4 @md/section:p-5">{children}</div>
     </div>
   );
 }

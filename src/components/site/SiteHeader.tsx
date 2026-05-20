@@ -50,11 +50,11 @@ export function SiteHeader() {
           : "bg-transparent"
       )}
     >
-      <div className="mx-auto flex h-14 max-w-[var(--container-page)] items-center justify-between px-4 md:h-16 md:px-6 lg:h-18 lg:px-8">
+      <div className="mx-auto flex h-14 max-w-[var(--container-page)] items-center justify-between px-4 [padding-top:env(safe-area-inset-top)] [padding-left:max(env(safe-area-inset-left),1rem)] [padding-right:max(env(safe-area-inset-right),1rem)] md:h-16 md:px-6 lg:h-18 lg:px-8">
         <div className="flex items-center gap-2">
           <Link
             href="/"
-            className="text-[var(--text-h4)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+            className="inline-flex min-h-touch min-w-touch items-center text-[var(--text-h4)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
             aria-label="DebtNext home"
           >
             <Wordmark />

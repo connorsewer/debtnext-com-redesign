@@ -27,7 +27,11 @@ export function FinalCTA({
   location = "final_cta",
 }: FinalCTAProps) {
   return (
-    <SectionContainer surface="dark" containerSize="readable">
+    <SectionContainer
+      surface="dark"
+      containerSize="readable"
+      className="[padding-bottom:max(env(safe-area-inset-bottom),6rem)]"
+    >
       <div className="flex flex-col items-center text-center">
         <h2 className="text-h2 font-[480] text-[var(--foreground)]">
           {heading}
@@ -42,6 +46,7 @@ export function FinalCTA({
             asChild
             variant="primary"
             size="md"
+            className="min-h-touch"
             onClick={() =>
               track({
                 event: "cta_primary_click",

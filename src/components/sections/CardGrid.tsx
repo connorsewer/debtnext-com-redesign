@@ -45,9 +45,9 @@ export function CardGrid({
   id,
 }: CardGridProps) {
   const colClass = {
-    2: "md:grid-cols-2",
-    3: "md:grid-cols-2 lg:grid-cols-3",
-    4: "md:grid-cols-2 lg:grid-cols-4",
+    2: "@sm/card:grid-cols-2",
+    3: "@sm/card:grid-cols-2 @5xl/card:grid-cols-3",
+    4: "@sm/card:grid-cols-2 @5xl/card:grid-cols-3 @7xl/card:grid-cols-4",
   }[columns];
 
   return (
@@ -68,7 +68,7 @@ export function CardGrid({
         ) : null}
       </div>
 
-      <ul className={cn("mt-10 grid gap-4 md:mt-14", colClass)}>
+      <ul className={cn("container-card mt-10 grid gap-4 md:mt-14", colClass)}>
         {cards.map((card) => (
           <li
             key={card.title}
@@ -83,7 +83,7 @@ export function CardGrid({
               </span>
             ) : null}
             {card.eyebrow ? (
-              <p className="text-caption font-[480] uppercase tracking-wider text-[var(--primary)]">
+              <p className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
                 {card.eyebrow}
               </p>
             ) : null}
@@ -98,7 +98,7 @@ export function CardGrid({
             {card.link ? (
               <Link
                 href={card.link.href}
-                className="inline-flex items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+                className="inline-flex min-h-touch items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
               >
                 {card.link.label} <span aria-hidden="true">→</span>
               </Link>

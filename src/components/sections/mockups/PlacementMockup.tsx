@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { useInView } from "@/hooks/use-in-view";
 
 export const placementMockupTitle = "Placement run · 12:04 PM";
 
@@ -18,13 +19,15 @@ const pools = [
  * - "Engine running" indicator dot has an always-running pulse
  */
 export function PlacementMockup() {
+  const shouldReduce = useReducedMotion();
+  const [containerRef, inView] = useInView<HTMLDivElement>();
   return (
-    <>
+    <div ref={containerRef}>
       <motion.div
         className="flex items-center justify-between border-b border-[var(--border)] pb-4"
-        initial={{ opacity: 0, y: -6 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, ease: [0.2, 0.7, 0.2, 1] }}
+        initial={shouldReduce ? false : { opacity: 0, y: -6 }}
+        animate={shouldReduce ? false : (inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 })}
+        transition={shouldReduce ? { duration: 0 } : { duration: 0.35, ease: [0.2, 0.7, 0.2, 1] }}
       >
         <div>
           <p className="text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
@@ -56,9 +59,9 @@ export function PlacementMockup() {
           <li key={pool.tier} className="flex items-center gap-4">
             <motion.div
               className="w-28 shrink-0"
-              initial={{ opacity: 0, x: -8 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 + i * 0.06 }}
+              initial={shouldReduce ? false : { opacity: 0, x: -8 }}
+              animate={shouldReduce ? false : (inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 })}
+              transition={shouldReduce ? { duration: 0 } : { duration: 0.3, delay: 0.1 + i * 0.06 }}
             >
               <p className="text-body-strong font-[480] text-[var(--foreground)]">
                 {pool.tier}
@@ -70,21 +73,25 @@ export function PlacementMockup() {
             <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-[var(--secondary)]">
               <motion.div
                 className={`absolute inset-y-0 left-0 rounded-full bg-gradient-to-r ${pool.bar}`}
-                initial={{ width: 0 }}
-                animate={{ width: `${pool.pct * 2.4}%` }}
-                transition={{
-                  duration: 0.7,
-                  delay: 0.15 + i * 0.08,
-                  ease: [0.2, 0.7, 0.2, 1],
-                }}
+                initial={shouldReduce ? { width: `${pool.pct * 2.4}%` } : { width: 0 }}
+                animate={shouldReduce || inView ? { width: `${pool.pct * 2.4}%` } : { width: 0 }}
+                transition={
+                  shouldReduce
+                    ? { duration: 0 }
+                    : {
+                        duration: 0.7,
+                        delay: 0.15 + i * 0.08,
+                        ease: [0.2, 0.7, 0.2, 1],
+                      }
+                }
               />
             </div>
             <motion.span
               className="w-10 shrink-0 text-right text-body-strong font-[480] text-[var(--foreground)]"
               style={{ fontVariantNumeric: "tabular-nums" }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.5 + i * 0.08 }}
+              initial={shouldReduce ? false : { opacity: 0 }}
+              animate={shouldReduce ? false : (inView ? { opacity: 1 } : { opacity: 0 })}
+              transition={shouldReduce ? { duration: 0 } : { duration: 0.3, delay: 0.5 + i * 0.08 }}
             >
               {pool.pct}%
             </motion.span>
@@ -92,6 +99,6 @@ export function PlacementMockup() {
         ))}
       </ul>
 
-    </>
+    </div>
   );
 }

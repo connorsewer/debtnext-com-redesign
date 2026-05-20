@@ -50,14 +50,14 @@ export function BenefitSplit({
     <SectionContainer surface={surface} id={id}>
       <div
         className={cn(
-          "grid items-center gap-12 lg:gap-16",
-          "lg:grid-cols-2"
+          "container-section grid items-center gap-12 @md/section:gap-16",
+          "@md/section:grid-cols-2"
         )}
       >
         <div
           className={cn(
             "max-w-xl",
-            mediaPosition === "left" ? "lg:order-2" : ""
+            mediaPosition === "left" ? "@md/section:order-2" : ""
           )}
         >
           {eyebrow ? (
@@ -112,7 +112,7 @@ export function BenefitSplit({
         <div
           className={cn(
             "relative overflow-hidden rounded-[var(--radius-sm)] bg-[var(--card)] shadow-[var(--shadow-nav)] ring-1 ring-[var(--border)]",
-            mediaPosition === "left" ? "lg:order-1" : ""
+            mediaPosition === "left" ? "@md/section:order-1" : ""
           )}
         >
           <Image

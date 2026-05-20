@@ -49,3 +49,8 @@ next-env.d.ts
 /handoff-*.jpg
 /tabs-scroll-*.jpg
 /v2-*.jpg
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/

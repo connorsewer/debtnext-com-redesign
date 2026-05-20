@@ -11,6 +11,7 @@ import {
   MockupForTab,
   mockupTitleForTab,
 } from "@/components/sections/mockups";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { heroHandoff, type PlatformTab } from "@/content/homepage-hero";
@@ -41,6 +42,7 @@ const VH_PER_TAB = 0.75;
 export function HomepageHandoffSection() {
   const sectionRef = React.useRef<HTMLElement | null>(null);
   const tabCount = heroHandoff.tabs.length;
+  const isMobile = useIsMobile();
   const [activeId, setActiveId] = React.useState<PlatformTab["id"]>(
     heroHandoff.tabs[0].id
   );
@@ -50,6 +52,7 @@ export function HomepageHandoffSection() {
   /** Scroll-driven tab progression. */
   useGSAP(
     () => {
+      if (isMobile) return;
       if (!sectionRef.current) return;
       const trigger = ScrollTrigger.create({
         trigger: sectionRef.current,
@@ -79,7 +82,7 @@ export function HomepageHandoffSection() {
       ScrollTrigger.refresh();
       return () => trigger.kill();
     },
-    { scope: sectionRef }
+    { scope: sectionRef, dependencies: [isMobile] }
   );
 
   // Mirror ref so the GSAP onUpdate closure can compare against the latest
@@ -120,6 +123,50 @@ export function HomepageHandoffSection() {
     }
     scrollToTab(tab.id);
   };
+
+  if (isMobile) {
+    return (
+      <section
+        ref={sectionRef}
+        data-handoff-section
+        className="container-section bg-[var(--background)] py-[var(--space-section-mobile)]"
+      >
+        <div className="mx-auto max-w-[var(--container-page)] px-4">
+          <p className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
+            {heroHandoff.eyebrow}
+          </p>
+          <h2 className="mt-2 text-h2 text-[var(--foreground)]">
+            {heroHandoff.heading}
+          </h2>
+
+          <div className="mt-10 flex flex-col gap-16">
+            {heroHandoff.tabs.map((tab) => (
+              <div key={tab.id} className="flex flex-col gap-4">
+                <h3 className="text-h3 text-[var(--foreground)]">
+                  {tab.label}
+                </h3>
+                <p className="text-body-md text-[var(--text-tertiary)]">
+                  {tab.body}
+                </p>
+                <FramedDashboard title={mockupTitleForTab(tab.id)}>
+                  <MockupForTab id={tab.id} />
+                </FramedDashboard>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12">
+            <Link
+              href={heroHandoff.link.href}
+              className="min-h-touch inline-flex items-center gap-1 text-body-strong text-[var(--accent-text-dark)]"
+            >
+              {heroHandoff.link.label} <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

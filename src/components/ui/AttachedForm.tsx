@@ -36,7 +36,10 @@ export function AttachedForm({
         e.preventDefault();
         onSubmitEmail?.(email);
       }}
-      className={cn("flex w-full max-w-md items-stretch gap-0", className)}
+      className={cn(
+        "container-form flex w-full max-w-md flex-col gap-2 @sm/form:flex-row @sm/form:items-stretch @sm/form:gap-0 @sm/form:rounded-[var(--radius-xl)] @sm/form:bg-[var(--card)] @sm/form:p-1",
+        className,
+      )}
     >
       <label htmlFor={id} className="sr-only">
         {inputLabel}
@@ -49,12 +52,12 @@ export function AttachedForm({
         onChange={(e) => setEmail(e.target.value)}
         placeholder={inputPlaceholder}
         required
-        className="h-[46px] min-w-0 flex-1 rounded-l-[var(--radius-md)] border border-[var(--foreground)] bg-transparent pl-5 pr-3 text-[var(--text-body-strong)] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)] focus:outline-none"
+        className="min-h-touch w-full min-w-0 rounded-[var(--radius-xl)] border border-[var(--foreground)] bg-transparent px-5 text-[var(--text-body-strong)] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)] focus:outline-none @sm/form:h-[46px] @sm/form:min-h-0 @sm/form:flex-1 @sm/form:rounded-[var(--radius-xl)] @sm/form:border-0 @sm/form:bg-transparent @sm/form:pl-5 @sm/form:pr-3"
       />
       <button
         type="submit"
         aria-label={buttonAriaLabel ?? buttonLabel}
-        className="inline-flex h-[46px] items-center justify-center rounded-r-[var(--radius-md)] bg-[var(--primary)] px-5 text-[var(--text-body-strong)] font-[420] text-white transition-colors duration-[var(--duration-instant)] hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]"
+        className="min-h-touch inline-flex w-full items-center justify-center rounded-[var(--radius-xl)] bg-[var(--primary)] px-5 text-[var(--text-body-strong)] font-[420] text-white transition-colors duration-[var(--duration-instant)] hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)] @sm/form:h-[46px] @sm/form:min-h-0 @sm/form:w-auto @sm/form:rounded-[var(--radius-xl)]"
       >
         {buttonLabel}
       </button>

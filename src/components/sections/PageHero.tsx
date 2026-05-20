@@ -83,6 +83,7 @@ export function PageHero({
               asChild
               variant="primary"
               size="md"
+              className="min-h-touch"
               onClick={() =>
                 track({
                   event: "cta_primary_click",

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { useInView } from "@/hooks/use-in-view";
 
 export const reportingMockupTitle = "Liquidation trend · 8 weeks";
 
@@ -34,8 +35,10 @@ const ptLiq = (v: number, i: number) => {
  * - The "scheduled · weekly" indicator stays static (no need for noise)
  */
 export function ReportingMockup() {
+  const shouldReduce = useReducedMotion();
+  const [containerRef, inView] = useInView<HTMLDivElement>();
   return (
-    <>
+    <div ref={containerRef}>
       <div className="grid grid-cols-3 gap-3 border-b border-[var(--border)] pb-4">
         {[
           { label: "Inventory", value: "$2.48B", tone: "fg" },
@@ -44,9 +47,9 @@ export function ReportingMockup() {
         ].map((tile, i) => (
           <motion.div
             key={tile.label}
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, delay: i * 0.08 }}
+            initial={shouldReduce ? false : { opacity: 0, y: -6 }}
+            animate={shouldReduce ? false : (inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 })}
+            transition={shouldReduce ? { duration: 0 } : { duration: 0.35, delay: i * 0.08 }}
           >
             <p className="text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
               {tile.label}
@@ -101,9 +104,9 @@ export function ReportingMockup() {
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 1.1, delay: 0.25, ease: "easeOut" }}
+            initial={shouldReduce ? false : { pathLength: 0, opacity: 0 }}
+            animate={shouldReduce ? false : (inView ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 })}
+            transition={shouldReduce ? { duration: 0 } : { duration: 1.1, delay: 0.25, ease: "easeOut" }}
           />
           <motion.polyline
             points={liquidation.map(ptLiq).join(" ")}
@@ -112,9 +115,9 @@ export function ReportingMockup() {
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 1.1, delay: 0.45, ease: "easeOut" }}
+            initial={shouldReduce ? false : { pathLength: 0, opacity: 0 }}
+            animate={shouldReduce ? false : (inView ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 })}
+            transition={shouldReduce ? { duration: 0 } : { duration: 1.1, delay: 0.45, ease: "easeOut" }}
           />
         </svg>
         <div className="mt-1 flex justify-between text-caption text-[var(--text-tertiary)]">
@@ -126,13 +129,13 @@ export function ReportingMockup() {
 
       <motion.div
         className="mt-4 flex items-center justify-between border-t border-[var(--border)] pt-3 text-body-sm text-[var(--text-tertiary)]"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4, delay: 1.2 }}
+        initial={shouldReduce ? false : { opacity: 0 }}
+        animate={shouldReduce ? false : (inView ? { opacity: 1 } : { opacity: 0 })}
+        transition={shouldReduce ? { duration: 0 } : { duration: 0.4, delay: 1.2 }}
       >
         <span>Scheduled · weekly</span>
         <span className="text-[var(--foreground)]">Power BI · Snowflake</span>
       </motion.div>
-    </>
+    </div>
   );
 }
