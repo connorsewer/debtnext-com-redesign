@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -123,11 +122,11 @@ export function HomepageHandoffSection() {
         <div className="relative mx-auto h-full max-w-[var(--container-page)] px-4 md:px-6 lg:px-8">
           {/* Eyebrow + heading, anchored in the top portion of the viewport
               with enough offset to clear the fixed site header. */}
-          <div className="absolute left-1/2 top-[96px] w-full max-w-3xl -translate-x-1/2 px-4 text-center md:top-[104px]">
+          <div className="absolute left-1/2 top-[88px] w-full max-w-4xl -translate-x-1/2 px-4 text-center md:top-[96px]">
             <p className="text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
               {heroHandoff.eyebrow}
             </p>
-            <h2 className="mt-2 text-balance text-h3 font-[480] leading-tight text-[var(--foreground)]">
+            <h2 className="mt-2 text-h3 font-[480] leading-tight text-[var(--foreground)]">
               {heroHandoff.heading}
             </h2>
           </div>
@@ -141,17 +140,11 @@ export function HomepageHandoffSection() {
           >
             <div className="mx-auto w-full max-w-5xl">
               <FramedDashboard title={mockupTitleForTab(activeId)}>
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={activeId}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.25, ease: [0.2, 0.7, 0.2, 1] }}
-                  >
-                    <MockupForTab id={activeId} />
-                  </motion.div>
-                </AnimatePresence>
+                {/* key={activeId} forces a clean re-mount, so the chrome
+                    title and inner content always change in sync. Each
+                    mockup's own internal motion-entrance animations replay
+                    on every mount. */}
+                <MockupForTab key={activeId} id={activeId} />
               </FramedDashboard>
             </div>
           </div>
@@ -206,21 +199,15 @@ export function HomepageHandoffSection() {
             </div>
 
             <div className="mx-auto mt-4 max-w-2xl">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.p
-                  key={activeId}
-                  id={`platform-panel-${active.id}`}
-                  role="tabpanel"
-                  aria-labelledby={`platform-tab-${active.id}`}
-                  initial={{ opacity: 0, y: 4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  transition={{ duration: 0.2, ease: [0.2, 0.7, 0.2, 1] }}
-                  className="text-body-sm text-[var(--text-tertiary)]"
-                >
-                  {active.body}
-                </motion.p>
-              </AnimatePresence>
+              <p
+                key={activeId}
+                id={`platform-panel-${active.id}`}
+                role="tabpanel"
+                aria-labelledby={`platform-tab-${active.id}`}
+                className="text-body-sm text-[var(--text-tertiary)]"
+              >
+                {active.body}
+              </p>
             </div>
 
             <div className="mt-4">

@@ -5,10 +5,9 @@ import { motion } from "framer-motion";
 export const issuesMockupTitle = "Issues queue · all vendors";
 
 const issues = [
+  { type: "SCRA", account: "Account 7715-009", desc: "Active-duty verification", vendor: "Best Resolution", sla: "Overdue 1h", slaTone: "danger", status: "Escalated" },
   { type: "Dispute", account: "Account 1042-887", desc: "Balance contested by consumer", vendor: "Global Collect", sla: "Due 22h", slaTone: "warn", status: "Investigating" },
   { type: "Decedent", account: "Account 9821-204", desc: "Probate confirmation pending", vendor: "ABC Recovery", sla: "Due 3d", slaTone: "ok", status: "Auto-handled" },
-  { type: "SCRA", account: "Account 7715-009", desc: "Active-duty verification", vendor: "Best Resolution", sla: "Overdue 1h", slaTone: "danger", status: "Escalated" },
-  { type: "Balance", account: "Account 4198-661", desc: "Payment not matched", vendor: "Summit Recovery", sla: "Due 5d", slaTone: "ok", status: "Open" },
 ];
 
 const slaClass = (tone: string) => {

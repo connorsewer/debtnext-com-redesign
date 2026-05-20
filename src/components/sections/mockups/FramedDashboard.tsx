@@ -38,7 +38,7 @@ export function FramedDashboard({
           </span>
         ) : null}
       </div>
-      <div className="p-5">{children}</div>
+      <div className="p-4 md:p-5">{children}</div>
     </div>
   );
 }
