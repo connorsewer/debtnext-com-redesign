@@ -1,24 +1,32 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 import { FramedDashboard } from "./FramedDashboard";
 
+const pools = [
+  { tier: "Pre-collect", pct: 35, vendors: 2, bar: "from-[var(--primary)] to-[var(--primary-hover)]" },
+  { tier: "Primary", pct: 28, vendors: 3, bar: "from-[var(--chart-3)] to-[#22c55e]" },
+  { tier: "Secondary", pct: 18, vendors: 2, bar: "from-[var(--chart-4)] to-[#d97706]" },
+  { tier: "Tertiary", pct: 12, vendors: 4, bar: "from-[var(--chart-5)] to-[#0891b2]" },
+  { tier: "Specialty", pct: 7, vendors: 1, bar: "from-[var(--text-tertiary)] to-[var(--text-tertiary)]/60" },
+];
+
 /**
- * Placement and routing mockup. Shows the decision engine routing a
- * batch of inbound accounts across vendor pools by tier with allocation
- * percentages. Conveys: configurable rules, automatic routing, vendor
- * pools as the primary structural unit.
+ * Placement and routing mockup with entrance animations:
+ * - Header strip fades in from above
+ * - Allocation bars grow from 0% → target width with stagger
+ * - "Engine running" indicator dot has an always-running pulse
  */
 export function PlacementMockup() {
-  const pools = [
-    { tier: "Pre-collect", pct: 35, vendors: 2, bar: "from-[var(--primary)] to-[var(--primary-hover)]" },
-    { tier: "Primary", pct: 28, vendors: 3, bar: "from-[var(--chart-3)] to-[#22c55e]" },
-    { tier: "Secondary", pct: 18, vendors: 2, bar: "from-[var(--chart-4)] to-[#d97706]" },
-    { tier: "Tertiary", pct: 12, vendors: 4, bar: "from-[var(--chart-5)] to-[#0891b2]" },
-    { tier: "Specialty", pct: 7, vendors: 1, bar: "from-[var(--text-tertiary)] to-[var(--text-tertiary)]/60" },
-  ];
-
   return (
     <FramedDashboard title="Placement run · 12:04 PM">
-      {/* Header strip */}
-      <div className="flex items-center justify-between border-b border-[var(--border)] pb-4">
+      <motion.div
+        className="flex items-center justify-between border-b border-[var(--border)] pb-4"
+        initial={{ opacity: 0, y: -6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, ease: [0.2, 0.7, 0.2, 1] }}
+      >
         <div>
           <p className="text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
             Inbound batch
@@ -34,45 +42,66 @@ export function PlacementMockup() {
           </p>
         </div>
         <div className="flex items-center gap-2 rounded-[var(--radius-xl)] border border-[var(--chart-3)]/30 bg-[var(--chart-3)]/10 px-3 py-1.5">
-          <span className="h-2 w-2 rounded-full bg-[var(--chart-3)]" />
+          <span className="relative h-2 w-2">
+            <span className="absolute inset-0 rounded-full bg-[var(--chart-3)]" />
+            <span className="absolute inset-0 animate-ping rounded-full bg-[var(--chart-3)]/60" />
+          </span>
           <span className="text-body-sm font-[480] text-[var(--foreground)]">
             Engine running
           </span>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Allocation rows */}
       <ul className="mt-4 space-y-3">
-        {pools.map((pool) => (
+        {pools.map((pool, i) => (
           <li key={pool.tier} className="flex items-center gap-4">
-            <div className="w-28 shrink-0">
+            <motion.div
+              className="w-28 shrink-0"
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 + i * 0.06 }}
+            >
               <p className="text-body-strong font-[480] text-[var(--foreground)]">
                 {pool.tier}
               </p>
               <p className="text-body-sm text-[var(--text-tertiary)]">
                 {pool.vendors} vendor{pool.vendors === 1 ? "" : "s"}
               </p>
-            </div>
+            </motion.div>
             <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-[var(--secondary)]">
-              <div
+              <motion.div
                 className={`absolute inset-y-0 left-0 rounded-full bg-gradient-to-r ${pool.bar}`}
-                style={{ width: `${pool.pct * 2.4}%` }}
+                initial={{ width: 0 }}
+                animate={{ width: `${pool.pct * 2.4}%` }}
+                transition={{
+                  duration: 0.7,
+                  delay: 0.15 + i * 0.08,
+                  ease: [0.2, 0.7, 0.2, 1],
+                }}
               />
             </div>
-            <span
+            <motion.span
               className="w-10 shrink-0 text-right text-body-strong font-[480] text-[var(--foreground)]"
               style={{ fontVariantNumeric: "tabular-nums" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.5 + i * 0.08 }}
             >
               {pool.pct}%
-            </span>
+            </motion.span>
           </li>
         ))}
       </ul>
 
-      <div className="mt-5 flex items-center justify-between border-t border-[var(--border)] pt-4 text-body-sm text-[var(--text-tertiary)]">
+      <motion.div
+        className="mt-5 flex items-center justify-between border-t border-[var(--border)] pt-4 text-body-sm text-[var(--text-tertiary)]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 0.9 }}
+      >
         <span>Daily reconciliation</span>
         <span className="text-[var(--chart-3)]">All vendors current</span>
-      </div>
+      </motion.div>
     </FramedDashboard>
   );
 }

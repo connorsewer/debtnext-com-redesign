@@ -1,57 +1,33 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 import { FramedDashboard } from "./FramedDashboard";
 
+const vendors = [
+  { name: "ABC Recovery", grade: "A", liq: 18.7, delta: "+2.1", trend: [4, 6, 5, 8, 9, 11, 13, 15], gradeColor: "var(--chart-3)" },
+  { name: "Global Collect", grade: "A-", liq: 16.3, delta: "+0.8", trend: [6, 7, 7, 9, 8, 10, 11, 12], gradeColor: "var(--chart-3)" },
+  { name: "Best Resolution", grade: "B+", liq: 15.2, delta: "+0.3", trend: [10, 9, 11, 10, 12, 11, 12, 13], gradeColor: "var(--chart-4)" },
+  { name: "Summit Recovery", grade: "B", liq: 13.5, delta: "-0.4", trend: [12, 13, 14, 11, 12, 10, 11, 10], gradeColor: "var(--chart-4)" },
+  { name: "GDW Recovery", grade: "C", liq: 9.6, delta: "-1.7", trend: [11, 10, 11, 9, 9, 8, 7, 6], gradeColor: "var(--destructive)" },
+];
+
 /**
- * Vendor performance mockup. A focused scorecard view ranking vendors
- * by liquidation rate with grade badges + mini sparklines. Conveys:
- * comparative performance, automated scoring, optimization signal.
+ * Vendor performance with motion:
+ * - Header liquidation number fades in
+ * - Each vendor row staggers in from below
+ * - Grade badges pop with a small scale
+ * - Sparklines draw left → right via pathLength
  */
 export function VendorPerformanceMockup() {
-  const vendors = [
-    {
-      name: "ABC Recovery",
-      grade: "A",
-      liq: 18.7,
-      delta: "+2.1",
-      trend: [4, 6, 5, 8, 9, 11, 13, 15],
-      gradeColor: "var(--chart-3)",
-    },
-    {
-      name: "Global Collect",
-      grade: "A-",
-      liq: 16.3,
-      delta: "+0.8",
-      trend: [6, 7, 7, 9, 8, 10, 11, 12],
-      gradeColor: "var(--chart-3)",
-    },
-    {
-      name: "Best Resolution",
-      grade: "B+",
-      liq: 15.2,
-      delta: "+0.3",
-      trend: [10, 9, 11, 10, 12, 11, 12, 13],
-      gradeColor: "var(--chart-4)",
-    },
-    {
-      name: "Summit Recovery",
-      grade: "B",
-      liq: 13.5,
-      delta: "-0.4",
-      trend: [12, 13, 14, 11, 12, 10, 11, 10],
-      gradeColor: "var(--chart-4)",
-    },
-    {
-      name: "GDW Recovery",
-      grade: "C",
-      liq: 9.6,
-      delta: "-1.7",
-      trend: [11, 10, 11, 9, 9, 8, 7, 6],
-      gradeColor: "var(--destructive)",
-    },
-  ];
-
   return (
     <FramedDashboard title="Vendor scorecard · YTD">
-      <div className="flex items-baseline justify-between border-b border-[var(--border)] pb-3">
+      <motion.div
+        className="flex items-baseline justify-between border-b border-[var(--border)] pb-3"
+        initial={{ opacity: 0, y: -6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35 }}
+      >
         <div>
           <p className="text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
             Liquidation, all pools
@@ -64,17 +40,30 @@ export function VendorPerformanceMockup() {
           </p>
         </div>
         <p className="text-body-sm text-[var(--chart-3)]">+1.3% vs prior 30d</p>
-      </div>
+      </motion.div>
 
       <ul className="mt-4 space-y-3">
-        {vendors.map((v) => (
-          <li key={v.name} className="flex items-center gap-4">
-            <span
+        {vendors.map((v, i) => (
+          <motion.li
+            key={v.name}
+            className="flex items-center gap-4"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.08 + i * 0.08 }}
+          >
+            <motion.span
               className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-caption font-[480] text-[var(--card)]"
               style={{ backgroundColor: v.gradeColor }}
+              initial={{ scale: 0.6, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{
+                duration: 0.4,
+                delay: 0.12 + i * 0.08,
+                ease: [0.2, 0.7, 0.2, 1],
+              }}
             >
               {v.grade}
-            </span>
+            </motion.span>
             <div className="min-w-0 flex-1">
               <p className="text-body-strong font-[480] text-[var(--foreground)]">
                 {v.name}
@@ -103,18 +92,27 @@ export function VendorPerformanceMockup() {
               aria-hidden="true"
               className="shrink-0"
             >
-              <polyline
+              <motion.polyline
                 points={v.trend
-                  .map((y, i) => `${(i / (v.trend.length - 1)) * 72},${22 - (y / 16) * 18}`)
+                  .map(
+                    (y, idx) => `${(idx / (v.trend.length - 1)) * 72},${22 - (y / 16) * 18}`
+                  )
                   .join(" ")}
                 stroke={v.gradeColor}
                 strokeWidth="1.5"
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.2 + i * 0.08,
+                  ease: "easeOut",
+                }}
               />
             </svg>
-          </li>
+          </motion.li>
         ))}
       </ul>
     </FramedDashboard>

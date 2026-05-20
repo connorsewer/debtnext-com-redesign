@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import { MockupForTab } from "@/components/sections/mockups";
@@ -130,29 +131,23 @@ export function HomepageHandoffSection() {
           </div>
         </div>
 
-        {/* Right column: tab-specific mockup. Each mockup is absolutely
-            positioned in a stack and cross-faded by active state so the
-            swap is smooth instead of snapping. */}
+        {/* Right column: tab-specific mockup. AnimatePresence remounts the
+            active mockup on each tab switch so its internal entrance
+            animations (bars growing, sparklines drawing, etc.) replay
+            every time the user activates a tab. */}
         <div className="relative" data-handoff-mockup-frame>
-          <div className="relative aspect-[3/2] w-full">
-            {heroHandoff.tabs.map((tab) => {
-              const isActive = tab.id === activeId;
-              return (
-                <div
-                  key={tab.id}
-                  aria-hidden={!isActive}
-                  className={cn(
-                    "absolute inset-0 transition-all duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
-                    isActive
-                      ? "opacity-100 translate-y-0"
-                      : "pointer-events-none opacity-0 translate-y-2"
-                  )}
-                >
-                  <MockupForTab id={tab.id} />
-                </div>
-              );
-            })}
-          </div>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={activeId}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25, ease: [0.2, 0.7, 0.2, 1] }}
+              className="w-full"
+            >
+              <MockupForTab id={activeId} />
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </SectionContainer>
