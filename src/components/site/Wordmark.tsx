@@ -21,7 +21,13 @@ export function Wordmark({ className }: WordmarkProps) {
         className
       )}
       style={{
-        fontFamily: '"General Sans", Inter, system-ui, sans-serif',
+        // HERO-02: lead with the CSS variable next/font/local generates.
+        // The variable points at the hashed family name that the @font-face
+        // injection produces, so we resolve to the local woff2 even if
+        // next/font hashes "General Sans" to something like "__General_Sans_abc123".
+        // The literal "General Sans" + Inter + system-ui chain remains as a
+        // safety net for environments where next/font hasn't hydrated yet.
+        fontFamily: 'var(--font-general-sans), "General Sans", Inter, system-ui, sans-serif',
         fontWeight: 600,
       }}
     >
