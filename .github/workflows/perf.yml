@@ -19,6 +19,8 @@ jobs:
       - run: npm ci
       - name: Build
         run: npm run build
+      - name: Verify hero asset budgets
+        run: bash scripts/check-hero-assets.sh
       - name: Run Lighthouse CI
         run: npx --no-install lhci autorun
       - if: failure()
