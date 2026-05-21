@@ -7,10 +7,19 @@ import { SiteHeader } from "@/components/site/SiteHeader";
 
 import "./globals.css";
 
+// Phase 5.2 follow-up: `display: "optional"` to keep Inter off the LCP
+// path. With "swap" the H1 painted in the metrics-matched fallback at
+// FCP (~1.6s) and then re-painted to Inter when the font arrived,
+// triggering a second LCP candidate around 3.8s. "optional" gives the
+// browser ~100ms to fetch Inter; if it does not arrive in that window
+// the fallback is locked in for the session (no swap, no layout shift,
+// no re-paint), so LCP fires at the first paint. Next/font's auto
+// metrics-adjusted fallback means there is no visible size jump either
+// way; the user only notices Inter on warm/cached loads.
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
 });
 
 export const metadata: Metadata = {
