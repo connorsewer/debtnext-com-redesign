@@ -1,8 +1,8 @@
 # DebtNext.com session handoff
 
-This document captures the full state of the rebuild after the M1–M3.6 work so a fresh Claude Code session can resume without context rot.
+This document captures the full state of the rebuild after M1–M4 shipped and M5 was opened via `/gsd-new-milestone`, so a fresh Claude Code session can resume without context rot.
 
-Last session ended: 2026-05-20 (post-M3.6 — homepage refactor + scroll-driven tab progression + DebtNext wordmark). Author: Connor + Claude Opus 4.7.
+Last session ended: 2026-05-20 (post-M4 ship + GSD `.planning/` apparatus bootstrapped + M5 milestone opened with 5 phases). Author: Connor + Claude Opus 4.7.
 
 ---
 
@@ -10,9 +10,9 @@ Last session ended: 2026-05-20 (post-M3.6 — homepage refactor + scroll-driven 
 
 You are continuing a **production rebuild of debtnext.com** modeled on Mercury.com. The site is live in production at **https://debtnext-website.vercel.app**.
 
-**M1, M2, M3, M3.5, and M3.6 are complete and deployed.** All 11 v1 routes ship. The hero → "THE PLATFORM" handoff is now seamless: a single framed dashboard appears at the end of the cinematic, never moves, and morphs through Placement → Vendor performance → Issues and disputes → Reporting and compliance as the user scrolls. The DebtNext wordmark (with a live indigo node) has replaced the dPlat wordmark in nav chrome.
+**M1, M2, M3, M3.5, M3.6, and M4 are complete and deployed.** All 11 v1 routes ship. The hero → "THE PLATFORM" handoff is seamless. The DebtNext wordmark (with a live indigo node) is in nav chrome. M4 added the mobile responsive system (Utopia type scale, container queries, 44px touch targets, axe-core CI) with 164 Playwright specs green; `/` LCP is the only outstanding gap at 2.86s due to an 11 MB hero MP4.
 
-The next milestone is **M4** (responsive QA at 6 breakpoints, axe-core in CI, perf budget verification, GA4/GTM wiring, OG images per route, walk the CLAUDE.md §14 DoD per page).
+The next milestone is **M5 — Launch readiness + motion pass** (5 phases, 21 requirements). Roadmap in `.planning/ROADMAP.md`. Connor chose option (b) on the post-M4 framing: bundle launch-critical items + motion into a single longer M5. Phase 5 (Hero performance) is critical-path and is the next thing to start.
 
 **Read these first, in this order:**
 
@@ -20,8 +20,10 @@ The next milestone is **M4** (responsive QA at 6 breakpoints, axe-core in CI, pe
 2. `.impeccable.md` — design brief (brand personality, anti-references, 5 design principles)
 3. `DESIGN.md` — visual token spec
 4. `docs/content-map.md` — IA and approval gates
-5. `/Users/connorlaughlin/.claude/plans/i-need-your-help-elegant-anchor.md` — the full M1→M4 plan
-6. This document
+5. `.planning/PROJECT.md` — project context + M1–M4 validated set + M5 active scope
+6. `.planning/ROADMAP.md` — M5 phase structure (Phase 5–9, dependency graph, parallelization map)
+7. `.planning/REQUIREMENTS.md` — 21 M5 requirements with REQ-IDs and phase traceability
+8. This document
 
 ---
 
@@ -257,26 +259,30 @@ Full system rebuild against the approved spec at `docs/superpowers/specs/2026-05
 
 **Tooling (2026-05-20, PR #3 `bd2d7ce`):** GreenSock's official gsap-skills pack installed at `.claude/skills/`. 8 skills covering core, timeline, ScrollTrigger, plugins, utils, React, performance, frameworks. Auto-loads on next session start. All formerly Club GSAP plugins (SplitText, MorphSVG, Flip, Draggable, Inertia, Observer, ScrollSmoother, etc.) are free post-Webflow acquisition, so the full plugin surface is available.
 
-## Post-M4 follow-ups
+## M5 — Launch readiness + motion pass (opened 2026-05-20)
 
-These were originally bundled into M4 but are deferred so the mobile responsive milestone could ship.
+The post-M4 follow-ups listed here were folded into M5 when Connor chose framing (b) — bundle launch-critical items + motion into a single longer milestone. Roadmap lives in `.planning/ROADMAP.md` (Phases 5–9, 21 requirements, 100% coverage). REQ-IDs and traceability in `.planning/REQUIREMENTS.md`.
 
-**Launch-critical (likely M5 candidates):**
+**M5 phase map:**
 
-1. **Hero MP4 byte budget** — `/` misses LCP at 2.86s. Move the 11 MB hero MP4 to Mux or add a multi-resolution source ladder. Until then, `/` is the only route above the 2.5s LCP target.
-2. **Analytics**: GA4/GTM IDs (placeholders in `.env.example`). Verify `cta_primary_click`, `cta_secondary_click`, `form_*`, `accordion_toggle` (also fired by Platform tab clicks via `track`), `scroll_depth`, `video_play` events fire in GTM Preview.
-3. **SEO**: per-route OG images via `app/<route>/opengraph-image.tsx` using `@vercel/og`. `Organization` + `SoftwareApplication` JSON-LD on `/`. `ContactPage` JSON-LD on `/demo`.
-4. **DoD walkthrough**: `CLAUDE.md §14` checklist per page.
+| # | Phase | What ships | REQ-IDs | Depends on |
+|---|---|---|---|---|
+| 5 | **Hero performance** (critical-path) | Multi-res MP4 ladder (480p/720p/1080p + WebM), self-host General Sans via `next/font/local`, sub-200KB AVIF poster, regression spec | HERO-01..04 | Nothing |
+| 6 | **Analytics wiring** | GA4 + GTM script tags via `NEXT_PUBLIC_GA4_ID` / `NEXT_PUBLIC_GTM_ID`; `track()` continues no-op when unset; `.env.example` + this doc updated | ANALYTICS-01..03 | Nothing (parallel with 5, 7) |
+| 7 | **SEO baseline** | Per-route OG images via `@vercel/og`, `Organization` + `SoftwareApplication` JSON-LD on `/`, `ContactPage` JSON-LD on `/demo`, Twitter cards, canonical URLs | SEO-01..06 | Nothing (parallel with 5, 6) |
+| 8 | **Motion pass** | Framer `useInView` section reveals on 10 non-home pages + `ProofBand` number counters; reduced-motion gated; `/` LCP stays under 2.5s with ≤+20KB bundle delta | MOTION-01..04 | Phase 5 (LCP headroom) |
+| 9 | **DoD walkthrough + launch readiness** | CLAUDE.md §14 walked on every v1 route (evidence in `docs/m5-dod-walkthrough.md`), all open `[COI REVIEW]` cleared by Andrew, all `[CLAIMS REVIEW]` cleared, "Why dPlat" nav label decision applied | DOD-01..04 | Phases 5, 6, 7, 8 |
 
-**Polish (anytime):**
+**Parallelization graph:** Phases 5/6/7 are mutually independent — three branches could ship concurrently. Phase 8 waits on Phase 5 because MOTION-04 measures `/` LCP against the headroom Phase 5 establishes. Phase 9 is the launch gate.
 
-5. **Fontshare General Sans CDN call** — currently a third-party request (~30 KB, one weight). Doesn't appear as render-blocking in Lighthouse, but consider downloading and serving via `next/font/local` to remove the cross-origin hop.
-6. **Breakpoint constant extraction**: `useIsMobile` and `HomepageHero` now both use `(max-width: 767px)` (Task 25.1). Could extract to a shared constant if more callers emerge.
-7. **CI single-build optimization**: the a11y workflow runs `npm run build` explicitly and then `npm run test:e2e`, which re-runs `npm run build && npm run start` via Playwright's `webServer` block. CI builds twice per run (~3-5 min wasted). Worth fixing only if CI runtime becomes an issue.
+**Explicitly out of scope in M5** (captured with reasoning in `.planning/REQUIREMENTS.md`): ScrollSmoother global lerp/inertia, Mux video hosting (chose local ladder instead), poster-only-on-mobile, live CLAUDE.md §13 event verification (the wiring ships in Phase 6; verifying against an unprovisioned GA4 ID is wasted effort — deferred to M6), GDPR cookie consent banner.
 
-**Open decision — animation strategy (M5 or M6):**
+**Deferred to M6 or later:** Vercel Speed Insights RUM, live GTM Preview event verification, marquee/auto-scroll on `IntegrationStrip`, stagger entrances on `CardGrid` / `ComparisonTable` / `ProcessStrip`, SplitText heading reveals on `PageHero`, Flip transitions on `FeatureAccordion` / Platform tabs, source-material relocation (move PowerPoint + Excel from Connor's Downloads into `source-materials/`).
 
-8. **Motion pass across all pages.** Today only `HomepageHero` (cinematic) and `HomepageHandoffSection` (scroll-driven tab progression) use GSAP (572 LOC across 2 files). 10 other pages have no scroll-driven motion. With gsap-skills now installed, opportunities span section reveals (every page), number counters (ProofBand stats), marquee/auto-scroll (IntegrationStrip logos), SplitText heading reveals (PageHero across all pages), Flip transitions (accordion/tabs), ScrollSmoother (global feel), and stagger entrances (CardGrid, ComparisonTable, ProcessStrip). Risks: perf on `/` (already at 2.86s LCP), reduced-motion discipline per animation, mobile battery/jank, distraction from launch-critical items 1-4. Connor to decide M5 framing: (a) launch-critical first, motion as M6 after launch; (b) bundle both in a longer M5; (c) brainstorm fresh before scoping.
+**Polish items still anytime (carried from post-M4):**
+
+- **Breakpoint constant extraction**: `useIsMobile` and `HomepageHero` both use `(max-width: 767px)` (Task 25.1). Extract to a shared constant if more callers emerge.
+- **CI single-build optimization**: the a11y workflow runs `npm run build` explicitly and then `npm run test:e2e`, which re-runs `npm run build && npm run start` via Playwright's `webServer` block. CI builds twice per run (~3-5 min wasted). Worth fixing only if CI runtime becomes an issue.
 
 ---
 
@@ -371,6 +377,15 @@ ls hero-snapshots/
 ## Recent commits (most recent first)
 
 ```
+d671bea docs: create M5 roadmap (5 phases, Phase 5-9, 21 reqs mapped)
+474eebf docs: define M5 requirements (21 reqs, 5 categories)
+d2afb74 docs: start milestone M5 launch readiness + motion pass
+f51beff docs: bootstrap GSD .planning/ apparatus with M1–M4 history
+dc71fab chore: commit skills-lock.json from gsap-skills install (#5)
+01ac299 docs: update HANDOFF with post-M4 hotfix, gsap-skills install, and M5 framing decision (#4)
+bd2d7ce chore: install gsap-skills for animation guidance (#3)
+8854da7 fix(m4): repair Phase 2 container-query self-reference so desktop 2-column layouts activate (#2)
+b155b13 M4: Mobile responsive rebuild (#1)
 c671c39 fix(platform): scroll-driven tabs were initializing with stale layout
 033be70 fix(platform): trim Placement + Vendor mockups so bezel fits on laptops
 071ceb2 feat(brand): replace dPlat wordmark with DebtNext + live indigo node
