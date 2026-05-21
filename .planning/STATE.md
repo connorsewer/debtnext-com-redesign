@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-05-21T18:51:17Z"
+last_updated: "2026-05-21T20:00:00Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 8
-  completed_plans: 5
-  percent: 56
+  completed_plans: 6
+  percent: 63
 ---
 
 # STATE.md
@@ -25,18 +25,19 @@ See: `.planning/PROJECT.md` (updated 2026-05-20)
 ## Current Position
 
 Phase: 05.1 (hero-04-gap-closure-webm-encoder-re-tune-and-mobile-video-ga) — EXECUTING
-Plan: 2 of 3 (next)
+Plan: 3 of 3 (next)
 
 - **Phase:** Phase 5 (Hero performance) — PARTIAL. Plans 01-04 shipped; Plan 05 HERO-04 LHCI gate FAILED. Gap closure required before Phase 5 closes.
 - **Plan:** 05-01 (Wave 0) ✓ → {05-02, 05-03} (Wave 1) ✓ → 05-04 (Wave 2) ✓ → 05-05 (Wave 3) ✗ gate failed at Task 1.
-- **Status:** Executing Phase 05.1 — Plan 01 ✓ (47cdc5b, 56fc69d). Next: Plan 02 (mobile-video-free Playwright spec + asset size budget guard).
-- **Last activity:** 2026-05-21 — Plan 05.1-01 shipped: dropped WebM ladder (3 binaries deleted, build script + verify script narrowed to MP4 only), tightened source-array media queries with (min-width: 768px) prefix on 360p/540p, updated source-ladder spec to assert the new 3-source contract. Phones now match zero <source> children at the browser source-selection step. 169 Playwright specs still count. verify-hero-keyframes.sh passes 240/240 keyframes across 3 MP4s.
-- **Resume from:** `/gsd-execute-plan 05.1 02` (mobile network watcher + size budget guard, per D-06 + D-07).
+- **Status:** Executing Phase 05.1 — Plan 01 ✓ (47cdc5b, 56fc69d), Plan 02 ✓ (084de36, 10c562c, fc4712d). Next: Plan 03 (LHCI Case C re-run + close-out).
+- **Last activity:** 2026-05-21 — Plan 05.1-02 shipped: new tests/responsive/hero-mobile-video-free.spec.ts (412x823 network watcher, zero video requests asserted), new scripts/check-hero-assets.sh (3 MP4 size budgets, 10/6/3 MB; AVIF/PNG intentionally excluded per RESEARCH §F), .github/workflows/perf.yml runs the budget guard before LHCI. The new mobile spec caught a Plan 01 carry-over defect (720p `<source>` left unbounded; HTML source-selection algorithm picks it at 412px) — sealed by bounding 720p with media=(min-width: 1440px). Total Playwright spec count now 170 (was 169).
+- **Resume from:** `/gsd-execute-plan 05.1 03` (LHCI Case C re-run on Vercel preview; docs/m5-phase-5-lhci-run.md writeup; visual walkthrough at 1440/1024/768/412; close-out commit flipping HERO-01..04 to Done).
 
 ## Roadmap Evolution
 
 - 2026-05-21: Phase 5.1 inserted after Phase 5 (URGENT). HERO-04 gap closure — WebM encoder re-tune + mobile video gate. Triggered by Phase 5 Plan 05 LHCI gate failing at Case C (representative-run `/` LCP 16,219 ms vs 2,300 ms gate). Two real defects: (A) D-04 violation, mobile downloads 8.88 MB WebM; (B) WebM ladder larger than MP4 ladder at every tier.
 - 2026-05-21: Phase 05.1 Plan 01 shipped (47cdc5b, 56fc69d). Defect B fixed (WebM ladder removed; 41.26 MB of binaries purged from public/hero/). Defect A's structural half landed (bounded media queries on 360p/540p exclude <768px viewports). Plan 02 (regression nets: mobile-video-free Playwright spec + per-file size budget guard) is the next move.
+- 2026-05-21: Phase 05.1 Plan 02 shipped (084de36, 10c562c, fc4712d). Regression nets landed: mobile-video-free Playwright spec at 412x823 (zero video requests asserted) and per-file MP4 size budget guard (10/6/3 MB) wired into CI before LHCI. The new spec caught a Plan 01 carry-over defect on first run — the 720p `<source>` had been left unbounded with a wrong-reading comment claiming the bounded predecessors would shield it; in reality the HTML source-selection algorithm picks any source with no media attribute at any viewport, so 412px was fetching the 720p MP4. Fixed by bounding 720p with media=(min-width: 1440px). D-04 mobile-video-free contract now structurally sealed. Total Playwright spec count: 170 (was 169). Plan 03 (LHCI Case C re-run + close-out) is the next move.
 
 ## Accumulated Context
 
@@ -86,10 +87,10 @@ Coverage: 21/21 M5 requirements mapped. No orphans.
 - Verify doc structure (`grep -n "^## " HANDOFF.md`) before editing existing sections
 - GPG signing off: every commit uses `git -c commit.gpgsign=false commit ...`
 - Co-Authored-By footer required: `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>`
-- All 164 existing Playwright specs must stay green; new behavior gets new specs
+- All 170 existing Playwright specs must stay green; new behavior gets new specs
 - Perf budget: LCP < 2.5s on 4G, CLS < 0.1, INP < 200ms (CLAUDE.md §12)
 - A11y floor: WCAG 2.2 AA, axe-core CI on every PR (CLAUDE.md §11)
 - Reduced motion gated everywhere (DESIGN.md §10)
 
 ---
-*Last updated: 2026-05-21 by `/gsd-execute-plan 05.1 01`. Plan 01 of Phase 05.1 shipped: WebM ladder removed (build script + verify script + 3 binaries deleted, sources array shrunk to 3 MP4 entries), mobile video gate hardened with (min-width: 768px) bounded media queries, source-ladder spec updated to assert the new 3-source contract. Stopped at Plan 02 boundary; Plan 02 adds the regression nets (mobile-video-free spec + size budget guard).*
+*Last updated: 2026-05-21 by `/gsd-execute-plan 05.1 02`. Plan 02 of Phase 05.1 shipped: tests/responsive/hero-mobile-video-free.spec.ts (412x823 network-watcher, zero video requests asserted) + scripts/check-hero-assets.sh (3 MP4 size budgets, 10/6/3 MB, AVIF/PNG excluded per RESEARCH §F) + .github/workflows/perf.yml budget step before LHCI. Plan 01 carry-over defect (720p `<source>` unbounded → fetched at 412x823) sealed by adding media=(min-width: 1440px). Total Playwright spec count now 170 (was 169 + 1 new). Stopped at Plan 03 boundary; Plan 03 is the LHCI Case C re-run + close-out commit flipping HERO-01..04 to Done.*
