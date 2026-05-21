@@ -9,7 +9,7 @@ import { test, expect } from "@playwright/test";
  * Filled by 05-04-PLAN.md (HERO-03 AVIF poster). Stubbed for now.
  */
 test.describe("HERO-03: hero poster AVIF negotiation", () => {
-  test.skip("AVIF served on Accept: image/avif and content-length < 200000", async ({ page }) => {
+  test.skip("AVIF served on Accept: image/avif and content-length < 200000", async () => {
     // TODO (Plan 04):
     //   await page.setExtraHTTPHeaders({ Accept: "image/avif,image/webp,*/*" });
     //   const responsePromise = page.waitForResponse((res) =>

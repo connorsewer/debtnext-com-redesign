@@ -10,7 +10,7 @@ import { test, expect } from "@playwright/test";
  * the spec file discoverable without failing the suite.
  */
 test.describe("HERO-02: wordmark self-host", () => {
-  test.skip("no Fontshare network requests + computed font-family resolves to General Sans", async ({ page }) => {
+  test.skip("no Fontshare network requests + computed font-family resolves to General Sans", async () => {
     // TODO (Plan 03): wire the network-log assertion and computed-style check.
     //
     // Implementation hint:
