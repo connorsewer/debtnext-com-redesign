@@ -22,13 +22,28 @@ export const heroCinematic = {
   disclaimer:
     "Recovery management software for credit originators. In production since 2003.",
   media: {
-    video: "/hero/homepage-hero.mp4",
+    // HERO-01: multi-resolution ladder. WebM (VP9) variants come FIRST so
+    // Chrome/Firefox/Edge pick them; Safari falls through to MP4 cleanly.
+    // Within each codec, narrowest-viewport `media` query comes first
+    // (first-match-wins per MDN <source>): iPad-portrait (≤1023) gets 360p,
+    // narrow-laptop (≤1439) gets 540p, anything wider gets the unbounded
+    // 720p anchor. Mobile (≤767) never renders this <video> (D-04).
+    // Source asset is 1280×720 (verified via ffprobe; see
+    // .planning/phases/05-hero-performance/05-RESEARCH.md Key Finding #1).
+    video: [
+      { src: "/hero/homepage-hero-360p.webm", type: 'video/webm; codecs="vp9"', media: "(max-width: 1023px)" },
+      { src: "/hero/homepage-hero-540p.webm", type: 'video/webm; codecs="vp9"', media: "(max-width: 1439px)" },
+      { src: "/hero/homepage-hero-720p.webm", type: 'video/webm; codecs="vp9"' },
+      { src: "/hero/homepage-hero-360p.mp4",  type: 'video/mp4; codecs="avc1.640028"', media: "(max-width: 1023px)" },
+      { src: "/hero/homepage-hero-540p.mp4",  type: 'video/mp4; codecs="avc1.640028"', media: "(max-width: 1439px)" },
+      { src: "/hero/homepage-hero-720p.mp4",  type: 'video/mp4; codecs="avc1.640028"' },
+    ] as Array<{ src: string; type: string; media?: string }>,
     // Extracted from the mp4 (first frame); used as the LCP target and
     // as the video element's poster while it loads.
     startFrame: "/hero/homepage-hero-start.png",
-    // Extracted from the mp4 (last frame); fades in alongside the video
-    // fade-out during the 90-100% handoff window.
-    endFrame: "/hero/homepage-hero-end.png",
+    // endFrame removed: PNG was unreferenced and is deleted in this plan
+    // alongside the ladder build (M3.6's hero crossfade uses framedDashRef,
+    // not a separate end-frame image).
   },
 } as const;
 

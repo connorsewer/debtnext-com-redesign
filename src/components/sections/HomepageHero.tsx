@@ -179,11 +179,16 @@ export function HomepageHero() {
           />
         </div>
 
-        {/* Layer 2: video — scrubbed by scroll progress. */}
+        {/* Layer 2: video — scrubbed by scroll progress. <source> children mapped
+            from the multi-resolution ladder (HERO-01). Browser walks them
+            top-down: WebM-VP9 first for Chrome/Firefox/Edge, MP4-H.264 fallback
+            for Safari; within each codec, narrowest-viewport `media` query first
+            so iPad-portrait (≤1023px) gets 360p and narrow-laptop (≤1439px) gets
+            540p. GSAP scrub binding below is unchanged: video.duration and
+            video.currentTime work identically with mapped sources. */}
         {!isMobile && (
           <video
             ref={videoRef}
-            src={heroCinematic.media.video}
             poster={heroCinematic.media.startFrame}
             muted
             playsInline
@@ -191,7 +196,16 @@ export function HomepageHero() {
             aria-hidden="true"
             style={{ opacity: 0 }}
             className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
-          />
+          >
+            {heroCinematic.media.video.map((source) => (
+              <source
+                key={source.src}
+                src={source.src}
+                type={source.type}
+                media={source.media}
+              />
+            ))}
+          </video>
         )}
 
         {/* Single soft vignette — handles nav and disclaimer legibility
