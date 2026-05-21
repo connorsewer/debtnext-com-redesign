@@ -9,10 +9,11 @@ See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 ## Current Position
 
-- **Phase:** Not started (M5 has 5 phases ready to discuss/plan: Phase 5 Hero perf → Phase 6 Analytics → Phase 7 SEO → Phase 8 Motion → Phase 9 DoD walkthrough)
+- **Phase:** Phase 5 (Hero performance) — context gathered, ready for research + planning
 - **Plan:** —
-- **Status:** Roadmap drafted. Phase 5 (Hero performance) is critical-path and next.
-- **Last activity:** 2026-05-20 — M5 roadmap created. 21/21 M5 requirements mapped across Phases 5–9. Phases 5, 6, 7 are mutually independent and safely parallel; Phase 8 waits on Phase 5; Phase 9 waits on all four prior phases.
+- **Status:** `05-CONTEXT.md` captures 9 locked implementation decisions across asset pipeline + regression spec design; ladder shape and AVIF mechanics deferred to researcher. `/gsd-plan-phase 5` is the next step.
+- **Last activity:** 2026-05-20 — Phase 5 discuss-phase complete. CONTEXT.md + DISCUSSION-LOG.md committed (2154379). 10 questions answered across 2 user-selected gray areas; 2 gray areas deferred to Claude's discretion / researcher.
+- **Resume from:** `.planning/phases/05-hero-performance/05-CONTEXT.md`
 
 ## Accumulated Context
 
@@ -68,4 +69,4 @@ Coverage: 21/21 M5 requirements mapped. No orphans.
 - Reduced motion gated everywhere (DESIGN.md §10)
 
 ---
-*Last updated: 2026-05-20 by GSD roadmapper. M5 roadmap drafted; next step is `/gsd-plan-phase 5` (Hero performance, critical-path).*
+*Last updated: 2026-05-20 by `/gsd-discuss-phase 5`. CONTEXT.md captured for Phase 5; next step is `/gsd-plan-phase 5`.*
