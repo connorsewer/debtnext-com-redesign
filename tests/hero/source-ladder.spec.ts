@@ -1,33 +1,33 @@
 import { test, expect } from "@playwright/test";
 
 /**
- * HERO-01 regression: the homepage hero <video> renders exactly 6 <source>
- * children (3 WebM VP9 + 3 MP4 H.264) with the correct codec and media-query
- * ordering. VP9 first so Chrome/Firefox/Edge pick WebM; narrowest viewport
- * first within each codec so first-match-wins lands on the smallest variant.
+ * HERO-01 (re-shaped in Phase 5.1 per D-01): the homepage hero <video>
+ * renders exactly 3 <source> children, all MP4, with bounded media
+ * queries that exclude viewports under 768px. WebM was dropped because
+ * the VP9 ladder was structurally bloated.
+ *
+ * Phase 5.1 D-04: phones (412x823) match zero sources via the
+ * (min-width: 768px) prefix on the 360p and 540p entries.
  *
  * Asserts the exact ordering documented in:
- *   .planning/phases/05-hero-performance/05-RESEARCH.md §"Code Examples" Example 3
+ *   .planning/phases/05.1-hero-04-gap-closure-webm-encoder-re-tune-and-mobile-video-ga/05.1-RESEARCH.md §B
  */
 test.describe("HERO-01: hero video source ladder", () => {
-  test("renders 6 source children in correct codec + media order at desktop", async ({ page }) => {
+  test("renders 3 source children in correct MP4 order at desktop", async ({ page }) => {
     // Desktop viewport so the !isMobile branch renders the <video>.
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/");
     await page.waitForLoadState("networkidle");
 
     const sources = page.locator("section[data-slot=homepage-hero] video source");
-    await expect(sources, "expected 6 <source> children (3 WebM + 3 MP4)").toHaveCount(6);
+    await expect(sources, "expected 3 <source> children (all MP4, bounded media queries)").toHaveCount(3);
 
-    // The exact 6-entry ladder, in the exact order. WebM-VP9 first, MP4-H.264 second.
-    // Within each codec: 360p (max-width: 1023px) → 540p (max-width: 1439px) → 720p (unbounded).
+    // The exact 3-entry MP4-only ladder, in the exact order. Browser walks
+    // top-to-bottom: 360p (768-1023px), 540p (768-1439px), 720p (unbounded).
     const expected = [
-      { src: "homepage-hero-360p.webm", type: 'video/webm; codecs="vp9"',         media: "(max-width: 1023px)" },
-      { src: "homepage-hero-540p.webm", type: 'video/webm; codecs="vp9"',         media: "(max-width: 1439px)" },
-      { src: "homepage-hero-720p.webm", type: 'video/webm; codecs="vp9"',         media: null },
-      { src: "homepage-hero-360p.mp4",  type: 'video/mp4; codecs="avc1.640028"',  media: "(max-width: 1023px)" },
-      { src: "homepage-hero-540p.mp4",  type: 'video/mp4; codecs="avc1.640028"',  media: "(max-width: 1439px)" },
-      { src: "homepage-hero-720p.mp4",  type: 'video/mp4; codecs="avc1.640028"',  media: null },
+      { src: "homepage-hero-360p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1023px)" },
+      { src: "homepage-hero-540p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1439px)" },
+      { src: "homepage-hero-720p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: null },
     ];
 
     for (let i = 0; i < expected.length; i++) {
