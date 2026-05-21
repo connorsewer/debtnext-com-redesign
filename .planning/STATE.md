@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-last_updated: "2026-05-21T20:00:00Z"
+status: blocked
+last_updated: "2026-05-21T19:45:00Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 6
@@ -24,14 +24,15 @@ See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 ## Current Position
 
-Phase: 05.1 (hero-04-gap-closure-webm-encoder-re-tune-and-mobile-video-ga) — EXECUTING
-Plan: 3 of 3 (next)
+Phase: 05.1 (hero-04-gap-closure-webm-encoder-re-tune-and-mobile-video-ga) — PAUSED at Plan 03 Task 1 (LHCI gate FAILED again on Vercel preview; A5 risk realized)
+Plan: Plan 01 ✓, Plan 02 ✓, Plan 03 stopped at Task 1 per its own contingency clause
 
-- **Phase:** Phase 5 (Hero performance) — PARTIAL. Plans 01-04 shipped; Plan 05 HERO-04 LHCI gate FAILED. Gap closure required before Phase 5 closes.
-- **Plan:** 05-01 (Wave 0) ✓ → {05-02, 05-03} (Wave 1) ✓ → 05-04 (Wave 2) ✓ → 05-05 (Wave 3) ✗ gate failed at Task 1.
-- **Status:** Executing Phase 05.1 — Plan 01 ✓ (47cdc5b, 56fc69d), Plan 02 ✓ (084de36, 10c562c, fc4712d). Next: Plan 03 (LHCI Case C re-run + close-out).
-- **Last activity:** 2026-05-21 — Plan 05.1-02 shipped: new tests/responsive/hero-mobile-video-free.spec.ts (412x823 network watcher, zero video requests asserted), new scripts/check-hero-assets.sh (3 MP4 size budgets, 10/6/3 MB; AVIF/PNG intentionally excluded per RESEARCH §F), .github/workflows/perf.yml runs the budget guard before LHCI. The new mobile spec caught a Plan 01 carry-over defect (720p `<source>` left unbounded; HTML source-selection algorithm picks it at 412px) — sealed by bounding 720p with media=(min-width: 1440px). Total Playwright spec count now 170 (was 169).
-- **Resume from:** `/gsd-execute-plan 05.1 03` (LHCI Case C re-run on Vercel preview; docs/m5-phase-5-lhci-run.md writeup; visual walkthrough at 1440/1024/768/412; close-out commit flipping HERO-01..04 to Done).
+- **Phase:** Phase 5 (Hero performance) — STILL PARTIAL. Phase 5.1 closed the WebM ladder and put regression nets in place, but did NOT close HERO-04. Phase 5.2 (AVIF poster swap) inserted to close the remaining gap.
+- **Plan progression:** Phase 5 plans 05-01..05-04 ✓ → 05-05 ✗ (parked; absorbed by 5.1 per D-08) → Phase 5.1 Plans 01 ✓ (47cdc5b, 56fc69d), 02 ✓ (084de36, 10c562c, fc4712d), 03 ✗ stopped at Task 1.
+- **Status:** Phase 5.1 Plan 03 Task 1 ran LHCI Case C against Vercel preview `https://debtnext-website-l8jzto8ss-connor-laughlins-projects.vercel.app/` (3 runs at 412x823, simulate throttling, cpuSlowdownMultiplier 4, x-vercel-protection-bypass header). Result: median LCP 16,411 ms vs 2,300 ms gate (failed). Per-run LCP 16,411 / 16,365 / 15,479 ms. Per Plan 03 Task 1 pitfalls, STOPPED and surfaced — did not write a passing doc against a failing run.
+- **Root cause:** Lighthouse network waterfall identified the LCP element as the H1 ("Recovery operations, unified."), blocked by a 2.55 MB raw PNG fetch (`/hero/homepage-hero-start.png`) triggered by the `<video poster={...}>` attribute at HomepageHero.tsx:193. SSR ships the `<video>` element with the PNG poster URL, so browser starts the 2.55 MB fetch BEFORE the `!isMobile` React gate removes the element post-hydration. At 1.6 Mbps throttled bandwidth that PNG takes ~13s to download, blocking the H1 paint. This is exactly the A5 risk recorded in 05.1-CONTEXT.md and called out in Plan 03 Task 1's pitfalls section.
+- **Last activity:** 2026-05-21 — Plan 05.1-03 Task 1 stopped at LHCI failure. Phase 5.1 paused. Plans 01 + 02 stand as shipped (mobile-zero-video invariant + regression nets are real wins). Routing to Phase 5.2 for AVIF poster swap.
+- **Resume from:** `/gsd-insert-phase 5.2` (AVIF poster swap to close HERO-04 LCP gate). After 5.2 ships, re-run `/gsd-execute-phase 05.1` — phase-plan-index will still see Plan 03 incomplete and resume Task 1 (re-run LHCI on the post-5.2 Vercel preview), then continue to Task 2 (visual walkthrough) and Task 3 (close-out commit flipping HERO-01..04 to Done; both phases ship together).
 
 ## Roadmap Evolution
 
@@ -93,4 +94,4 @@ Coverage: 21/21 M5 requirements mapped. No orphans.
 - Reduced motion gated everywhere (DESIGN.md §10)
 
 ---
-*Last updated: 2026-05-21 by `/gsd-execute-plan 05.1 02`. Plan 02 of Phase 05.1 shipped: tests/responsive/hero-mobile-video-free.spec.ts (412x823 network-watcher, zero video requests asserted) + scripts/check-hero-assets.sh (3 MP4 size budgets, 10/6/3 MB, AVIF/PNG excluded per RESEARCH §F) + .github/workflows/perf.yml budget step before LHCI. Plan 01 carry-over defect (720p `<source>` unbounded → fetched at 412x823) sealed by adding media=(min-width: 1440px). Total Playwright spec count now 170 (was 169 + 1 new). Stopped at Plan 03 boundary; Plan 03 is the LHCI Case C re-run + close-out commit flipping HERO-01..04 to Done.*
+*Last updated: 2026-05-21 by `/gsd-execute-phase 05.1`. Phase 05.1 paused at Plan 03 Task 1 after LHCI Case C re-run on the Vercel preview measured median LCP 16,411 ms (gate 2,300 ms). Per-run 16,411 / 16,365 / 15,479. Root cause: the SSR-rendered `<video poster="/hero/homepage-hero-start.png">` triggers a 2.55 MB raw PNG download on mobile before the `!isMobile` React gate removes the element post-hydration. At 1.6 Mbps throttled bandwidth the PNG alone takes ~13s, blocking H1 paint. This is the A5 risk documented in 05.1-CONTEXT.md and called out in Plan 03 Task 1's pitfalls. WebM ladder removal (Plan 01) and regression nets (Plan 02) are real but insufficient to close HERO-04 on their own. Routing to Phase 5.2 (AVIF poster swap) for the gap. Plan 03 stays incomplete and resumes after 5.2 closes the gate.*
