@@ -18,7 +18,7 @@ Granularity: `standard` (5–8 phases per milestone). 21 active requirements acr
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 5. Hero performance | 0/5 | Planning complete | — |
+| 5. Hero performance | 1/5 | In Progress|  |
 | 6. Analytics wiring | 0/0 | Not started | — |
 | 7. SEO baseline | 0/0 | Not started | — |
 | 8. Motion pass | 0/0 | Not started | — |
@@ -36,7 +36,7 @@ Granularity: `standard` (5–8 phases per milestone). 21 active requirements acr
   3. The DebtNext wordmark in nav chrome continues to render with the indigo `.dn-node` pulse, but General Sans 600 loads from the site's own origin instead of Fontshare's CDN
   4. A Playwright regression spec fails if a future change pushes `/` back over the 2.5s LCP line on the standard CI throttling profile
 **Plans**: 5 plans
-- [ ] 05-01-PLAN.md — Wave 0 scaffolding: REQUIREMENTS.md HERO-01 amendment + encoder scripts + woff2 + fonts.ts + next.config.ts + lighthouserc.json + perf.yml + 3 Playwright spec stubs
+- [x] 05-01-PLAN.md — Wave 0 scaffolding: REQUIREMENTS.md HERO-01 amendment + encoder scripts + woff2 + fonts.ts + next.config.ts + lighthouserc.json + perf.yml + 3 Playwright spec stubs
 - [ ] 05-02-PLAN.md — Wave 1 HERO-01 wiring: build ladder binaries + extend heroCinematic.media.video to sources array + map 6 <source> children + activate source-ladder.spec.ts
 - [ ] 05-03-PLAN.md — Wave 1 HERO-02 self-host: remove Fontshare @import + wire generalSans in layout.tsx + Wordmark.tsx var(--font-general-sans) lead + activate wordmark-self-host.spec.ts
 - [ ] 05-04-PLAN.md — Wave 1 HERO-03 AVIF poster: migrate <Image priority> to preload + fetchPriority="high" + activate poster-avif-negotiation.spec.ts
