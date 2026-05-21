@@ -8,7 +8,7 @@ REQ-IDs are stable across the project. Categories continue from M5's scoping. It
 
 ### Hero performance (HERO)
 
-- [ ] **HERO-01** — Hero MP4 ships as a multi-resolution ladder (`480p` / `720p` / `1080p` MP4 plus a `WebM` fallback) wired via a `<source>` media-query set so 4G mobile clients pull the smallest variant
+- [ ] **HERO-01** — Hero MP4 ships as a multi-resolution ladder (`720p` / `540p` / `360p` MP4 plus a VP9 `WebM` fallback at each tier) wired via a `<source>` media-query set so narrow-viewport / iPad-portrait clients pull the smallest variant. Mobile (≤767px) remains video-free per D-04. Source asset is 1280×720 (verified via ffprobe); 720p is the anchor, no upscaling.
 - [ ] **HERO-02** — General Sans 600 is self-hosted via `next/font/local`; Fontshare CDN call removed from `globals.css`; `Wordmark` still renders with `.dn-node` pulse intact
 - [ ] **HERO-03** — Hero poster image re-encoded to sub-200KB AVIF (with WebP fallback) and owns the LCP target on every viewport
 - [ ] **HERO-04** — Lighthouse mobile run shows `/` LCP under 2.5s on 4G throttling; regression spec added to the test suite so future changes can't push `/` back over the line
@@ -91,4 +91,4 @@ Explicitly excluded during M5 scoping with reasoning:
 | MOTION-04 | Phase 8 | — | Open |
 
 ---
-*Last updated: 2026-05-20 after M5 roadmap was drafted. 21 active requirements across 5 categories, all mapped to Phases 5–9. Coverage: 21/21.*
+*Last updated: 2026-05-21 after researcher-side ladder correction was user-ratified during /gsd-plan-phase 5. 21 active requirements across 5 categories, all mapped to Phases 5–9. Coverage: 21/21.*
