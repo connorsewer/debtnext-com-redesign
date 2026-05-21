@@ -26,8 +26,11 @@ for f in "${VARIANTS[@]}"; do
   fi
   TOTAL=$(ffprobe -v error -select_streams v:0 -count_packets \
     -show_entries stream=nb_read_packets -of csv=p=0 "$f")
+  # See note in build-hero-ladder.sh: ffprobe csv=p=0 prints the first row
+  # with a trailing field separator ("1," instead of "1"), so we anchor
+  # only the leading character to count every keyframe-flagged frame.
   KEY=$(ffprobe -v error -select_streams v:0 \
-    -show_entries frame=key_frame -of csv=p=0 "$f" | grep -c "^1$" || true)
+    -show_entries frame=key_frame -of csv=p=0 "$f" | grep -c "^1" || true)
   if [ "$TOTAL" != "$KEY" ]; then
     echo "FAIL  $f: $KEY/$TOTAL keyframes (need all-keyframe per D-05)" >&2
     FAIL=1
