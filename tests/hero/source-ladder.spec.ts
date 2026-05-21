@@ -23,11 +23,13 @@ test.describe("HERO-01: hero video source ladder", () => {
     await expect(sources, "expected 3 <source> children (all MP4, bounded media queries)").toHaveCount(3);
 
     // The exact 3-entry MP4-only ladder, in the exact order. Browser walks
-    // top-to-bottom: 360p (768-1023px), 540p (768-1439px), 720p (unbounded).
+    // top-to-bottom: 360p (768-1023px), 540p (768-1439px), 720p (≥1440px).
+    // Every source is bounded so phones (<768px) match nothing; verified at
+    // the network layer by tests/responsive/hero-mobile-video-free.spec.ts.
     const expected = [
       { src: "homepage-hero-360p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1023px)" },
       { src: "homepage-hero-540p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1439px)" },
-      { src: "homepage-hero-720p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: null },
+      { src: "homepage-hero-720p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 1440px)" },
     ];
 
     for (let i = 0; i < expected.length; i++) {
@@ -38,11 +40,7 @@ test.describe("HERO-01: hero video source ladder", () => {
 
       expect(src, `source[${i}].src`).toContain(expected[i].src);
       expect(type, `source[${i}].type`).toBe(expected[i].type);
-      if (expected[i].media === null) {
-        expect(media, `source[${i}].media (unbounded variant should have no media attribute)`).toBeNull();
-      } else {
-        expect(media, `source[${i}].media`).toBe(expected[i].media);
-      }
+      expect(media, `source[${i}].media`).toBe(expected[i].media);
     }
   });
 

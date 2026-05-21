@@ -27,20 +27,28 @@ export const heroCinematic = {
     // hit bitrate targets, producing files 1.85x to 4.46x their MP4
     // counterparts. Every browser plays MP4 cleanly.
     //
-    // Phase 5.1 D-04: media queries are bounded at (min-width: 768px) so
+    // Phase 5.1 D-04: every <source> is bounded with (min-width: 768px) so
     // phones match zero sources. The browser's source-selection algorithm
     // walks top-to-bottom: iPad-portrait (768-1023px) gets 360p,
     // narrow-laptop (1024-1439px) gets 540p, anything 1440px or wider gets
-    // the unbounded 720p anchor. Phones below 768px match nothing and the
-    // browser starts zero downloads, even during the SSR-to-hydration
-    // window where the <video> element still exists in the DOM.
+    // 720p. Phones below 768px match nothing and the browser starts zero
+    // downloads, even during the SSR-to-hydration window where the <video>
+    // element still exists in the DOM.
+    //
+    // NOTE: Plan 05.1-01 originally left 720p unbounded with a comment
+    // claiming it "applies only above 1440px implicitly because narrower
+    // viewports match the bounded sources first." Plan 02 verified at the
+    // network layer that an unbounded source DOES match at 412px (the HTML
+    // source-selection algorithm picks the first source whose media check
+    // passes; no media attribute = passes). Bounding the 720p with
+    // (min-width: 1440px) closes the gap.
     //
     // Source asset is 1280x720 (verified via ffprobe; see
     // .planning/phases/05-hero-performance/05-RESEARCH.md Key Finding #1).
     video: [
       { src: "/hero/homepage-hero-360p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1023px)" },
       { src: "/hero/homepage-hero-540p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1439px)" },
-      { src: "/hero/homepage-hero-720p.mp4", type: 'video/mp4; codecs="avc1.640028"' },
+      { src: "/hero/homepage-hero-720p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 1440px)" },
     ] as Array<{ src: string; type: string; media?: string }>,
     // Extracted from the mp4 (first frame); used as the LCP target and
     // as the video element's poster while it loads.
