@@ -1,0 +1,46 @@
+{
+  "ci": {
+    "collect": {
+      "startServerCommand": "npm run start -- --port 3200",
+      "url": ["http://localhost:3200/"],
+      "numberOfRuns": 3,
+      "settings": {
+        "preset": "mobile",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "cpuSlowdownMultiplier": 4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.56,
+          "uploadThroughputKbps": 675
+        },
+        "formFactor": "mobile",
+        "chromeFlags": "--headless=new --no-sandbox"
+      }
+    },
+    "assert": {
+      "assertMatrix": [
+        {
+          "matchingUrlPattern": "http://localhost:3200/$",
+          "assertions": {
+            "largest-contentful-paint": [
+              "error",
+              { "maxNumericValue": 2300, "aggregationMethod": "median-run" }
+            ]
+          }
+        }
+      ]
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}
