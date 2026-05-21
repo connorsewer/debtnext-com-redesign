@@ -48,10 +48,10 @@ Granularity: `standard` (5–8 phases per milestone). 21 active requirements acr
 **Goal:** Close HERO-04 by dropping the structurally broken WebM ladder and tightening `<source media>` algebra so phones (<768px) fire zero video requests; absorb Phase 5 plan 05-05 closing tasks so Phase 5 + 5.1 ship together.
 **Depends on:** Phase 5
 **Requirements**: HERO-04 (gap closure); HERO-01..03 close via D-08
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
-- [ ] 05.1-01-PLAN.md: strip WebM ladder (build script, verify script, 3 binary deletions) and tighten <source media> queries (3 MP4 entries with (min-width: 768px) bounds); update tests/hero/source-ladder.spec.ts to 3-source MP4-only
+- [x] 05.1-01-PLAN.md: strip WebM ladder (build script, verify script, 3 binary deletions) and tighten <source media> queries (3 MP4 entries with (min-width: 768px) bounds); update tests/hero/source-ladder.spec.ts to 3-source MP4-only
 - [ ] 05.1-02-PLAN.md: add tests/responsive/hero-mobile-video-free.spec.ts (412x823 network watcher per D-06) and scripts/check-hero-assets.sh (3 MP4 size budgets per D-07); wire into .github/workflows/perf.yml before the lhci step
 - [ ] 05.1-03-PLAN.md: LHCI Case C re-run on Vercel preview (per D-08); docs/m5-phase-5-lhci-run.md writeup; visual walkthrough at 1440/1024/768/412; close-out commit flipping HERO-01..04 to Done in HANDOFF.md, PROJECT.md, STATE.md, REQUIREMENTS.md, ROADMAP.md
 

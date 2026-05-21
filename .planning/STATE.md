@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-05-21T18:10:13.179Z"
+last_updated: "2026-05-21T18:51:17Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 8
-  completed_plans: 4
-  percent: 50
+  completed_plans: 5
+  percent: 56
 ---
 
 # STATE.md
@@ -20,19 +20,23 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 **Core value:** Convert qualified enterprise buyers into demo requests. The single conversion action is "Request a demo".
-**Current focus:** M5 — Launch readiness + motion pass. Roadmap drafted, 5 phases ready.
+**Current focus:** Phase 05.1 — hero-04-gap-closure-webm-encoder-re-tune-and-mobile-video-ga
 
 ## Current Position
 
+Phase: 05.1 (hero-04-gap-closure-webm-encoder-re-tune-and-mobile-video-ga) — EXECUTING
+Plan: 2 of 3 (next)
+
 - **Phase:** Phase 5 (Hero performance) — PARTIAL. Plans 01-04 shipped; Plan 05 HERO-04 LHCI gate FAILED. Gap closure required before Phase 5 closes.
 - **Plan:** 05-01 (Wave 0) ✓ → {05-02, 05-03} (Wave 1) ✓ → 05-04 (Wave 2) ✓ → 05-05 (Wave 3) ✗ gate failed at Task 1.
-- **Status:** Phase 5.1 PLANNED (3 plans / 3 waves) — verification passed first pass, no revisions needed. Ready to execute. Phase 5 remains PARTIAL; closes simultaneously with 5.1 via D-08 fold-in (plan 05.1-03 absorbs the parked 05-05 closing tasks).
-- **Last activity:** 2026-05-21 — `/gsd-plan-phase 05.1` produced 3 plans (01: strip WebM ladder + bound media queries; 02: mobile network watcher + MP4 size budget + CI; 03: LHCI Case C re-run + Phase 5/5.1 close-out). All 8 CONTEXT decisions D-01..D-08 covered. Plan-checker PASS across 11 dimensions.
-- **Resume from:** `/gsd-plan-phase 05.1` (Phase 5.1 inserted 2026-05-21 — fixes Defects A + B then re-runs lhci autorun). Phase 8 (Motion) stays blocked on Phase 5.1 LCP headroom; Phases 6 (Analytics) and 7 (SEO) are still parallel-safe to anything else.
+- **Status:** Executing Phase 05.1 — Plan 01 ✓ (47cdc5b, 56fc69d). Next: Plan 02 (mobile-video-free Playwright spec + asset size budget guard).
+- **Last activity:** 2026-05-21 — Plan 05.1-01 shipped: dropped WebM ladder (3 binaries deleted, build script + verify script narrowed to MP4 only), tightened source-array media queries with (min-width: 768px) prefix on 360p/540p, updated source-ladder spec to assert the new 3-source contract. Phones now match zero <source> children at the browser source-selection step. 169 Playwright specs still count. verify-hero-keyframes.sh passes 240/240 keyframes across 3 MP4s.
+- **Resume from:** `/gsd-execute-plan 05.1 02` (mobile network watcher + size budget guard, per D-06 + D-07).
 
 ## Roadmap Evolution
 
 - 2026-05-21: Phase 5.1 inserted after Phase 5 (URGENT). HERO-04 gap closure — WebM encoder re-tune + mobile video gate. Triggered by Phase 5 Plan 05 LHCI gate failing at Case C (representative-run `/` LCP 16,219 ms vs 2,300 ms gate). Two real defects: (A) D-04 violation, mobile downloads 8.88 MB WebM; (B) WebM ladder larger than MP4 ladder at every tier.
+- 2026-05-21: Phase 05.1 Plan 01 shipped (47cdc5b, 56fc69d). Defect B fixed (WebM ladder removed; 41.26 MB of binaries purged from public/hero/). Defect A's structural half landed (bounded media queries on 360p/540p exclude <768px viewports). Plan 02 (regression nets: mobile-video-free Playwright spec + per-file size budget guard) is the next move.
 
 ## Accumulated Context
 
@@ -88,4 +92,4 @@ Coverage: 21/21 M5 requirements mapped. No orphans.
 - Reduced motion gated everywhere (DESIGN.md §10)
 
 ---
-*Last updated: 2026-05-21 by `/gsd-execute-phase 5 --auto --no-transition`. Plans 01-04 shipped; Plan 05 HERO-04 gate failed at 16,219 ms (gate 2,300 ms). Two defects + one env fix surfaced. Auto-chain stopped. Awaiting user direction on gap-closure path.*
+*Last updated: 2026-05-21 by `/gsd-execute-plan 05.1 01`. Plan 01 of Phase 05.1 shipped: WebM ladder removed (build script + verify script + 3 binaries deleted, sources array shrunk to 3 MP4 entries), mobile video gate hardened with (min-width: 768px) bounded media queries, source-ladder spec updated to assert the new 3-source contract. Stopped at Plan 02 boundary; Plan 02 adds the regression nets (mobile-video-free spec + size budget guard).*
