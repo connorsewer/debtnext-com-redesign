@@ -43,6 +43,16 @@ Granularity: `standard` (5–8 phases per milestone). 21 active requirements acr
 - [ ] 05-05-PLAN.md — Wave 2 HERO-04 perf gate trip + ship: run lhci autorun locally, capture docs/m5-phase-5-lhci-run.md, flip HANDOFF.md / PROJECT.md / STATE.md / REQUIREMENTS.md to shipped
 **Notes**: Critical-path for Phase 8 (Motion). MOTION-04 verifies the LCP budget holds after motion ships, which means Phase 5 must land first. Safe to run in parallel with Phase 6 (Analytics) and Phase 7 (SEO) since those don't touch hero assets. Inherits standing constraints: brand rules (CLAUDE.md §3), voice rules (§5), single primary CTA per band (§4), per-commit docs rule, GPG signing off + Co-Authored-By footer, all 164 Playwright specs stay green, WCAG 2.2 AA + axe-core CI, reduced motion gated.
 
+### Phase 05.2: Swap hero poster to AVIF (INSERTED)
+
+**Goal:** Replace the 2.55 MB raw PNG hero poster with a sub-200 KB AVIF so the SSR-rendered `<video poster>` stops blocking the mobile LCP gate.
+**Requirements**: HERO-04 (gap closure carry-over from Phase 5; closed jointly with Phase 5.1 Plan 03 Task 1 LHCI re-verification)
+**Depends on:** Phase 5, Phase 5.1 (Plans 01 + 02 sealed mobile-video-free and added regression nets)
+**Plans:** 1/1 plans executed
+
+Plans:
+- [x] 05.2-01-PLAN.md: encode `public/hero/homepage-hero-start.avif` (112 KB libsvtav1 CRF 30), repoint `startFrame` in `src/content/homepage-hero.ts:55`, delete the 2.55 MB raw PNG, land `scripts/encode-hero-poster.sh` (regenerates AVIF from the 720p MP4 first frame, refuses to overwrite above 200 KB), refresh `scripts/check-hero-assets.sh` comment, add `/.lighthouseci/` to `.gitignore`, update HANDOFF/ROADMAP/STATE
+
 ### Phase 05.1: HERO-04 gap closure: WebM encoder re-tune and mobile video gate (INSERTED)
 
 **Goal:** Close HERO-04 by dropping the structurally broken WebM ladder and tightening `<source media>` algebra so phones (<768px) fire zero video requests; absorb Phase 5 plan 05-05 closing tasks so Phase 5 + 5.1 ship together.

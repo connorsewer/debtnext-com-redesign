@@ -50,12 +50,16 @@ export const heroCinematic = {
       { src: "/hero/homepage-hero-540p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1439px)" },
       { src: "/hero/homepage-hero-720p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 1440px)" },
     ] as Array<{ src: string; type: string; media?: string }>,
-    // Extracted from the mp4 (first frame); used as the LCP target and
-    // as the video element's poster while it loads.
-    startFrame: "/hero/homepage-hero-start.png",
-    // endFrame removed: PNG was unreferenced and is deleted in this plan
-    // alongside the ladder build (M3.6's hero crossfade uses framedDashRef,
-    // not a separate end-frame image).
+    // Hero LCP poster. AVIF since Phase 5.2: 2.55 MB PNG → 112 KB AVIF
+    // (23x reduction at libsvtav1 CRF 30). Two consumers in HomepageHero.tsx:
+    //   1. <Image src={startFrame} preload fetchPriority="high">  Next/Image
+    //      transcodes per viewport (poster-avif-negotiation.spec.ts asserts
+    //      <200 KB AVIF on Accept: image/avif).
+    //   2. <video poster={startFrame}>  raw fetch on SSR; this is the path
+    //      that the PNG was blocking on mobile.
+    // The static .avif covers both. Regenerate with scripts/encode-hero-poster.sh
+    // when the cinematic source MP4 changes.
+    startFrame: "/hero/homepage-hero-start.avif",
   },
 } as const;
 

@@ -151,9 +151,11 @@ scripts/
 
 public/
 ├── hero/
-│   ├── homepage-hero.mp4               re-encoded, 11 MB, per-frame keyframes
-│   ├── homepage-hero-start.png         1536×1024 cinematic start frame (LCP)
-│   └── homepage-hero-end.png           [LEGACY — no longer referenced; layer removed in M3.6]
+│   ├── homepage-hero.mp4               legacy single-tier source, retained for ladder regen
+│   ├── homepage-hero-720p.mp4          ladder tier (Phase 5.1, gates ≥1440px viewports)
+│   ├── homepage-hero-540p.mp4          ladder tier (Phase 5.1, gates 1024-1439px viewports)
+│   ├── homepage-hero-360p.mp4          ladder tier (Phase 5.1, gates 768-1023px viewports)
+│   └── homepage-hero-start.avif        112 KB AVIF poster (Phase 5.2, drives <Image> + <video poster>)
 └── product/
     └── dashboard-dark.png              1536×1024 standalone dashboard
 ```
@@ -290,6 +292,10 @@ The post-M4 follow-ups listed here were folded into M5 when Connor chose framing
 
 Phase 5 is NOT shipped. HERO-01..03 are correct and stay. HERO-04 needs a gap-closure phase (likely Phase 5.1) that: fixes the `<source media>` algebra in `src/content/homepage-hero.ts` to keep mobile video-free, re-tunes `scripts/build-hero-ladder.sh` so each WebM tier is smaller than its MP4 counterpart, re-encodes the ladder, then re-runs `lhci autorun`. Phase 8 (Motion) stays blocked on Phase 5 until then. The lighthouserc.json env fix landed on `main` in this commit.
 
+**Phase 5.1 closed the WebM gap (2026-05-21, plans 05.1-01 + 05.1-02).** WebM ladder dropped entirely (D-01); MP4-only at 720p / 540p / 360p, every `<source>` bounded at `(min-width: 768px)` or higher so phones below 768px match nothing and the browser starts zero downloads. Regression nets landed: `tests/responsive/hero-mobile-video-free.spec.ts` watches the network at 412×823 and asserts zero `mp4/webm/m4v/mov` requests; `scripts/check-hero-assets.sh` enforces per-file MP4 size budgets (10/6/3 MB) wired into `.github/workflows/perf.yml` before LHCI. Playwright total: 170 (was 169). Plan 05.1-03 Task 1 then re-ran LHCI Case C on the Vercel preview and FAILED: median LCP 16,411 ms vs 2,300 ms gate. Root cause: the SSR-rendered `<video poster="/hero/homepage-hero-start.png">` triggered a 2.55 MB raw PNG fetch before the `!isMobile` React gate could remove the `<video>` post-hydration, bypassing `/_next/image`'s 49 KB AVIF entirely. Routed to Phase 5.2.
+
+**Phase 5.2 ships AVIF poster (2026-05-21, plan 05.2-01).** Raw PNG (2.55 MB) replaced with `public/hero/homepage-hero-start.avif` (112 KB, libsvtav1 CRF 30, ~23x reduction). `src/content/homepage-hero.ts:55` repointed; both consumers (`<Image>` via `/_next/image` and `<video poster>` direct fetch) now feed off the AVIF. PNG deleted; `scripts/encode-hero-poster.sh` regenerates from the 720p MP4's first frame when needed. `tests/hero/poster-avif-negotiation.spec.ts` already covers the `<Image>` path and remains green (substring match on `homepage-hero-start` works for both extensions). Phase 5.1 Plan 03 Task 1 resumes against the post-5.2 preview to re-verify the 2,300 ms gate. HERO-04 close-out gate (Phase 5.1 Plan 03 Task 3) flips HERO-01..04 to Done and ships Phases 5 + 5.1 + 5.2 together via a single atomic doc-sync commit (D-08).
+
 **Explicitly out of scope in M5** (captured with reasoning in `.planning/REQUIREMENTS.md`): ScrollSmoother global lerp/inertia, Mux video hosting (chose local ladder instead), poster-only-on-mobile, live CLAUDE.md §13 event verification (the wiring ships in Phase 6; verifying against an unprovisioned GA4 ID is wasted effort — deferred to M6), GDPR cookie consent banner.
 
 **Deferred to M6 or later:** Vercel Speed Insights RUM, live GTM Preview event verification, marquee/auto-scroll on `IntegrationStrip`, stagger entrances on `CardGrid` / `ComparisonTable` / `ProcessStrip`, SplitText heading reveals on `PageHero`, Flip transitions on `FeatureAccordion` / Platform tabs, source-material relocation (move PowerPoint + Excel from Connor's Downloads into `source-materials/`).
@@ -309,8 +315,7 @@ These are not bugs — they're things flagged for follow-up.
 
 - **Mobile + tablet layout for Platform centered-stack** is untested. The absolute-positioned eyebrow/heading + tabs/body/link may not fit cleanly under 1024×680. The framed dashboard might overflow viewport sides since it's `max-w-5xl` (1024) — fine at lg+ but worth checking at md.
 - **Brief moment of two dashboards visible during the crossfade** (`scrollY ≈ pinEnd-117 → pinEnd`). Hero's bezel and Platform's bezel are at the same position but Platform's rises 70px on the way to viewport center. Reads as a soft crossfade rather than a position jump but could be tuned tighter.
-- **`homepage-hero-end.png`** in `public/hero/` is now unreferenced. Safe to delete, but kept for now in case we want it back.
-- **Cinematic mp4 size** (11 MB). Not the LCP target, but worth optimizing for slower connections in M4.
+- **Cinematic mp4 size** (`homepage-hero.mp4`, 11 MB legacy single-tier). Not on the LCP path (the ladder serves the actual playback); kept as the regen source for the ladder. Worth pruning if disk weight matters.
 
 ### Content (require approver signoff before launch)
 

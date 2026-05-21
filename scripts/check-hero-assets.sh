@@ -5,10 +5,11 @@
 #
 # Budgets are derived from Phase 5.1 D-07 (CONTEXT.md) with the
 # researcher recommendation in 05.1-RESEARCH.md Implementation Approach
-# section F: 3 MP4 budgets only. AVIF is enforced by
-# tests/hero/poster-avif-negotiation.spec.ts; the raw PNG is the AVIF
-# source (not on the LCP path) so a raw-file size budget would force
-# AVIF degradation.
+# section F: 3 MP4 budgets only. The hero AVIF poster is enforced
+# separately by tests/hero/poster-avif-negotiation.spec.ts (<200 KB
+# from /_next/image). Phase 5.2 removed the raw PNG source; the poster
+# is regenerated from public/hero/homepage-hero-720p.mp4 via
+# scripts/encode-hero-poster.sh, so no PNG byte budget is needed.
 
 set -euo pipefail
 

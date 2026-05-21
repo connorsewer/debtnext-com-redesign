@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: blocked
-last_updated: "2026-05-21T19:45:00Z"
+status: in_progress
+last_updated: "2026-05-21T20:30:00Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 6
   completed_phases: 0
-  total_plans: 8
-  completed_plans: 6
-  percent: 63
+  total_plans: 9
+  completed_plans: 7
+  percent: 70
 ---
 
 # STATE.md
@@ -24,8 +24,9 @@ See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 ## Current Position
 
-Phase: 05.1 (hero-04-gap-closure-webm-encoder-re-tune-and-mobile-video-ga) — PAUSED at Plan 03 Task 1 (LHCI gate FAILED again on Vercel preview; A5 risk realized)
-Plan: Plan 01 ✓, Plan 02 ✓, Plan 03 stopped at Task 1 per its own contingency clause
+Phase: 05.2 (swap-hero-poster-to-avif) — Plan 01 ✓ shipped; LHCI re-verification owned by Phase 05.1 Plan 03 Task 1.
+Phase: 05.1 (hero-04-gap-closure-webm-encoder-re-tune-and-mobile-video-ga) — STILL PAUSED at Plan 03 Task 1; resumes against post-5.2 Vercel preview to confirm the 2,300 ms LCP gate closes.
+Plan: 05.1 Plan 01 ✓, 05.1 Plan 02 ✓, 05.2 Plan 01 ✓, 05.1 Plan 03 incomplete.
 
 - **Phase:** Phase 5 (Hero performance) — STILL PARTIAL. Phase 5.1 closed the WebM ladder and put regression nets in place, but did NOT close HERO-04. Phase 5.2 (AVIF poster swap) inserted to close the remaining gap.
 - **Plan progression:** Phase 5 plans 05-01..05-04 ✓ → 05-05 ✗ (parked; absorbed by 5.1 per D-08) → Phase 5.1 Plans 01 ✓ (47cdc5b, 56fc69d), 02 ✓ (084de36, 10c562c, fc4712d), 03 ✗ stopped at Task 1.
@@ -39,6 +40,8 @@ Plan: Plan 01 ✓, Plan 02 ✓, Plan 03 stopped at Task 1 per its own contingenc
 - 2026-05-21: Phase 5.1 inserted after Phase 5 (URGENT). HERO-04 gap closure — WebM encoder re-tune + mobile video gate. Triggered by Phase 5 Plan 05 LHCI gate failing at Case C (representative-run `/` LCP 16,219 ms vs 2,300 ms gate). Two real defects: (A) D-04 violation, mobile downloads 8.88 MB WebM; (B) WebM ladder larger than MP4 ladder at every tier.
 - 2026-05-21: Phase 05.1 Plan 01 shipped (47cdc5b, 56fc69d). Defect B fixed (WebM ladder removed; 41.26 MB of binaries purged from public/hero/). Defect A's structural half landed (bounded media queries on 360p/540p exclude <768px viewports). Plan 02 (regression nets: mobile-video-free Playwright spec + per-file size budget guard) is the next move.
 - 2026-05-21: Phase 05.1 Plan 02 shipped (084de36, 10c562c, fc4712d). Regression nets landed: mobile-video-free Playwright spec at 412x823 (zero video requests asserted) and per-file MP4 size budget guard (10/6/3 MB) wired into CI before LHCI. The new spec caught a Plan 01 carry-over defect on first run — the 720p `<source>` had been left unbounded with a wrong-reading comment claiming the bounded predecessors would shield it; in reality the HTML source-selection algorithm picks any source with no media attribute at any viewport, so 412px was fetching the 720p MP4. Fixed by bounding 720p with media=(min-width: 1440px). D-04 mobile-video-free contract now structurally sealed. Total Playwright spec count: 170 (was 169). Plan 03 (LHCI Case C re-run + close-out) is the next move.
+- 2026-05-21: Phase 5.2 inserted after Phase 5 (URGENT). Swap hero poster to AVIF. Triggered by Phase 05.1 Plan 03 LHCI Case C re-run failing with LCP 16,411 ms vs 2,300 ms gate. Root cause: SSR-rendered `<video poster="/hero/homepage-hero-start.png">` triggers a 2.55 MB PNG fetch before React's `!isMobile` gate removes the `<video>` after hydration; bypasses next/image's optimized 49 KB AVIF entirely. The poster string in `src/content/homepage-hero.ts:55` is the actual mobile LCP blocker. Phase 05.1 paused at Plan 03 Task 1 (frontmatter status: blocked); Plan 03 will resume against the post-5.2 preview, then Phases 5 + 5.1 + 5.2 close out together via the D-08 single-commit doc-sync.
+- 2026-05-21: Phase 5.2 Plan 01 shipped. Raw PNG hero poster (2.55 MB) encoded to AVIF (112 KB at libsvtav1 CRF 30, ~23x reduction) and dropped at `public/hero/homepage-hero-start.avif`. `src/content/homepage-hero.ts:55` `startFrame` repointed; both `<Image>` (via `/_next/image` AVIF transcoding) and `<video poster>` (raw fetch) feed off the single static AVIF. The 2.55 MB PNG was deleted; `scripts/encode-hero-poster.sh` regenerates the AVIF from `homepage-hero-720p.mp4`'s first frame and refuses to overwrite above the HERO-03 200 KB budget enforced by `tests/hero/poster-avif-negotiation.spec.ts`. `scripts/check-hero-assets.sh` comment refreshed to drop the obsolete PNG-source note. `.lighthouseci/` added to `.gitignore`. One atomic commit. Phase 05.1 Plan 03 Task 1 is the next move: re-run LHCI Case C against the post-5.2 Vercel preview to verify the gate closes.
 
 ## Accumulated Context
 
