@@ -190,7 +190,6 @@ export function HomepageHero() {
         {!isMobile && (
           <video
             ref={videoRef}
-            poster={heroCinematic.media.startFrame}
             muted
             playsInline
             preload="auto"
@@ -198,6 +197,16 @@ export function HomepageHero() {
             style={{ opacity: 0 }}
             className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
           >
+            {/* Phase 05.2 follow-up: no `poster=` attribute. Layer 1
+                <Image src={startFrame} preload fetchPriority="high">
+                above already paints the start frame full-cover under the
+                video. The video element starts at opacity 0 and GSAP
+                fades it in only once scroll progresses, so a separate
+                poster fetch shows nothing the underlying <Image> isn't
+                already painting. Keeping `poster` here would re-fetch
+                the AVIF on mobile during the SSR-to-hydration window
+                (the `<video>` lives in the initial HTML before
+                `isMobile` flips), wasting bandwidth that LCP needs. */}
             {heroCinematic.media.video.map((source) => (
               <source
                 key={source.src}
