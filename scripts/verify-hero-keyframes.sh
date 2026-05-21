@@ -12,9 +12,6 @@ VARIANTS=(
   "$OUTDIR/homepage-hero-720p.mp4"
   "$OUTDIR/homepage-hero-540p.mp4"
   "$OUTDIR/homepage-hero-360p.mp4"
-  "$OUTDIR/homepage-hero-720p.webm"
-  "$OUTDIR/homepage-hero-540p.webm"
-  "$OUTDIR/homepage-hero-360p.webm"
 )
 
 FAIL=0
