@@ -1,3 +1,18 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: executing
+last_updated: "2026-05-21T14:54:24.354Z"
+last_activity: 2026-05-21
+progress:
+  total_phases: 5
+  completed_phases: 0
+  total_plans: 5
+  completed_plans: 0
+  percent: 0
+---
+
 # STATE.md
 
 ## Project Reference
@@ -9,11 +24,11 @@ See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 ## Current Position
 
-- **Phase:** Phase 5 (Hero performance) — context gathered, ready for research + planning
-- **Plan:** —
-- **Status:** `05-CONTEXT.md` captures 9 locked implementation decisions across asset pipeline + regression spec design; ladder shape and AVIF mechanics deferred to researcher. `/gsd-plan-phase 5` is the next step.
-- **Last activity:** 2026-05-20 — Phase 5 discuss-phase complete. CONTEXT.md + DISCUSSION-LOG.md committed (2154379). 10 questions answered across 2 user-selected gray areas; 2 gray areas deferred to Claude's discretion / researcher.
-- **Resume from:** `.planning/phases/05-hero-performance/05-CONTEXT.md`
+- **Phase:** Phase 5 (Hero performance) — planning complete, 5 plans across 4 waves
+- **Plan:** 05-01 → {05-02, 05-03} → 05-04 → 05-05. Wave 0 scaffolding (01), Wave 1 parallel (02 ladder + 03 fonts), Wave 2 (04 AVIF poster, depends on 02), Wave 3 (05 LHCI gate trip + docs flip; 1 human-verify checkpoint)
+- **Status:** Ready to execute (verifier passed all 11 dimensions; VALIDATION.md `nyquist_compliant: true`; chain mode auto-advancing)
+- **Last activity:** 2026-05-21 — Phase 5 plan-phase complete. RESEARCH.md + VALIDATION.md + 5 PLAN.md files committed across `a91c44f`, `cbd6e35`, `9692700`. Researcher caught ladder-shape mismatch (source is 720p, not 1080p); user ratified 720p / 540p / 360p ladder and amendment to REQUIREMENTS.md HERO-01.
+- **Resume from:** `.planning/phases/05-hero-performance/05-01-PLAN.md` (Wave 0 entry point)
 
 ## Accumulated Context
 
@@ -69,4 +84,4 @@ Coverage: 21/21 M5 requirements mapped. No orphans.
 - Reduced motion gated everywhere (DESIGN.md §10)
 
 ---
-*Last updated: 2026-05-20 by `/gsd-discuss-phase 5`. CONTEXT.md captured for Phase 5; next step is `/gsd-plan-phase 5`.*
+*Last updated: 2026-05-21 by `/gsd-plan-phase 5 --chain`. 5 plans committed (9692700) and verified; chain auto-advances to `/gsd-execute-phase 5 --auto`.*

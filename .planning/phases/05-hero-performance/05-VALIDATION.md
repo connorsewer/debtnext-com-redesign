@@ -1,10 +1,11 @@
 ---
 phase: 5
 slug: hero-performance
-status: draft
-nyquist_compliant: false
+status: plan-check-passed
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-05-21
+plan_check_approved: 2026-05-21
 ---
 
 # Phase 5 — Validation Strategy
