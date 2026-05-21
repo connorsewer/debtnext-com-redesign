@@ -173,7 +173,8 @@ export function HomepageHero() {
             alt=""
             fill
             sizes="100vw"
-            priority
+            preload
+            fetchPriority="high"
             aria-hidden="true"
             className="object-cover"
           />
