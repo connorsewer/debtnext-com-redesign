@@ -43,6 +43,16 @@ Granularity: `standard` (5–8 phases per milestone). 21 active requirements acr
 - [ ] 05-05-PLAN.md — Wave 2 HERO-04 perf gate trip + ship: run lhci autorun locally, capture docs/m5-phase-5-lhci-run.md, flip HANDOFF.md / PROJECT.md / STATE.md / REQUIREMENTS.md to shipped
 **Notes**: Critical-path for Phase 8 (Motion). MOTION-04 verifies the LCP budget holds after motion ships, which means Phase 5 must land first. Safe to run in parallel with Phase 6 (Analytics) and Phase 7 (SEO) since those don't touch hero assets. Inherits standing constraints: brand rules (CLAUDE.md §3), voice rules (§5), single primary CTA per band (§4), per-commit docs rule, GPG signing off + Co-Authored-By footer, all 164 Playwright specs stay green, WCAG 2.2 AA + axe-core CI, reduced motion gated.
 
+### Phase 05.1: HERO-04 gap closure: WebM encoder re-tune and mobile video gate (INSERTED)
+
+**Goal:** [Urgent work - to be planned]
+**Requirements**: TBD
+**Depends on:** Phase 5
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 05.1 to break down)
+
 ### Phase 6: Analytics wiring
 **Goal**: Wire GA4 + GTM dataLayer so launch traffic produces measurable signal as soon as Jeremiah Benes provisions the IDs, with no failures when the IDs are still placeholders.
 **Depends on**: Nothing (independent of Phase 5; safely parallel with Phase 5 and Phase 7)

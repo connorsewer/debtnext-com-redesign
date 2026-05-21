@@ -28,7 +28,11 @@ See: `.planning/PROJECT.md` (updated 2026-05-20)
 - **Plan:** 05-01 (Wave 0) ✓ → {05-02, 05-03} (Wave 1) ✓ → 05-04 (Wave 2) ✓ → 05-05 (Wave 3) ✗ gate failed at Task 1.
 - **Status:** Phase 5 NOT shipped. HERO-04 LHCI representative-run `/` LCP = 16,219 ms vs 2,300 ms gate (Case C — clearly over budget, not flake). Two real defects discovered: (A) D-04 violation — mobile (412×823) downloads `homepage-hero-360p.webm` 8.88 MB; the `<source media>` algebra in `src/content/homepage-hero.ts` lets mobile match a video source. (B) WebM ladder encoder regression — every WebM tier is larger than its MP4 counterpart (worst: 360p WebM is 4.47x its MP4); `scripts/build-hero-ladder.sh` needs re-tuning. Plus one env fix already applied to `lighthouserc.json` (Lighthouse 12.x dropped the `"mobile"` preset string).
 - **Last activity:** 2026-05-21 — Phase 5 Wave 3 plan 05-05 Task 1 (lhci autorun) exercised the gate. 5 plans shipped + 1 plan halted at Case C. HANDOFF.md / lighthouserc.json fix committed in same go.
-- **Resume from:** Decide gap-closure path. Options: (a) `/gsd-insert-phase 5.1` for a dedicated gap-closure phase that fixes Defects A + B then re-runs `lhci autorun`; (b) `/gsd-plan-phase 5 --gaps` to plan gap closure inside Phase 5; (c) manual investigation first. Phase 8 (Motion) stays blocked on Phase 5 LCP headroom; Phases 6 (Analytics) and 7 (SEO) are still parallel-safe to anything else.
+- **Resume from:** `/gsd-plan-phase 05.1` (Phase 5.1 inserted 2026-05-21 — fixes Defects A + B then re-runs lhci autorun). Phase 8 (Motion) stays blocked on Phase 5.1 LCP headroom; Phases 6 (Analytics) and 7 (SEO) are still parallel-safe to anything else.
+
+## Roadmap Evolution
+
+- 2026-05-21: Phase 5.1 inserted after Phase 5 (URGENT). HERO-04 gap closure — WebM encoder re-tune + mobile video gate. Triggered by Phase 5 Plan 05 LHCI gate failing at Case C (representative-run `/` LCP 16,219 ms vs 2,300 ms gate). Two real defects: (A) D-04 violation, mobile downloads 8.88 MB WebM; (B) WebM ladder larger than MP4 ladder at every tier.
 
 ## Accumulated Context
 
