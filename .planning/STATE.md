@@ -24,11 +24,11 @@ See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 ## Current Position
 
-- **Phase:** Phase 5 (Hero performance) — planning complete, 5 plans across 4 waves
-- **Plan:** 05-01 → {05-02, 05-03} → 05-04 → 05-05. Wave 0 scaffolding (01), Wave 1 parallel (02 ladder + 03 fonts), Wave 2 (04 AVIF poster, depends on 02), Wave 3 (05 LHCI gate trip + docs flip; 1 human-verify checkpoint)
-- **Status:** Ready to execute (verifier passed all 11 dimensions; VALIDATION.md `nyquist_compliant: true`; chain mode auto-advancing)
-- **Last activity:** 2026-05-21 — Phase 5 plan-phase complete. RESEARCH.md + VALIDATION.md + 5 PLAN.md files committed across `a91c44f`, `cbd6e35`, `9692700`. Researcher caught ladder-shape mismatch (source is 720p, not 1080p); user ratified 720p / 540p / 360p ladder and amendment to REQUIREMENTS.md HERO-01.
-- **Resume from:** `.planning/phases/05-hero-performance/05-01-PLAN.md` (Wave 0 entry point)
+- **Phase:** Phase 5 (Hero performance) — PARTIAL. Plans 01-04 shipped; Plan 05 HERO-04 LHCI gate FAILED. Gap closure required before Phase 5 closes.
+- **Plan:** 05-01 (Wave 0) ✓ → {05-02, 05-03} (Wave 1) ✓ → 05-04 (Wave 2) ✓ → 05-05 (Wave 3) ✗ gate failed at Task 1.
+- **Status:** Phase 5 NOT shipped. HERO-04 LHCI representative-run `/` LCP = 16,219 ms vs 2,300 ms gate (Case C — clearly over budget, not flake). Two real defects discovered: (A) D-04 violation — mobile (412×823) downloads `homepage-hero-360p.webm` 8.88 MB; the `<source media>` algebra in `src/content/homepage-hero.ts` lets mobile match a video source. (B) WebM ladder encoder regression — every WebM tier is larger than its MP4 counterpart (worst: 360p WebM is 4.47x its MP4); `scripts/build-hero-ladder.sh` needs re-tuning. Plus one env fix already applied to `lighthouserc.json` (Lighthouse 12.x dropped the `"mobile"` preset string).
+- **Last activity:** 2026-05-21 — Phase 5 Wave 3 plan 05-05 Task 1 (lhci autorun) exercised the gate. 5 plans shipped + 1 plan halted at Case C. HANDOFF.md / lighthouserc.json fix committed in same go.
+- **Resume from:** Decide gap-closure path. Options: (a) `/gsd-insert-phase 5.1` for a dedicated gap-closure phase that fixes Defects A + B then re-runs `lhci autorun`; (b) `/gsd-plan-phase 5 --gaps` to plan gap closure inside Phase 5; (c) manual investigation first. Phase 8 (Motion) stays blocked on Phase 5 LCP headroom; Phases 6 (Analytics) and 7 (SEO) are still parallel-safe to anything else.
 
 ## Accumulated Context
 
@@ -84,4 +84,4 @@ Coverage: 21/21 M5 requirements mapped. No orphans.
 - Reduced motion gated everywhere (DESIGN.md §10)
 
 ---
-*Last updated: 2026-05-21 by `/gsd-plan-phase 5 --chain`. 5 plans committed (9692700) and verified; chain auto-advances to `/gsd-execute-phase 5 --auto`.*
+*Last updated: 2026-05-21 by `/gsd-execute-phase 5 --auto --no-transition`. Plans 01-04 shipped; Plan 05 HERO-04 gate failed at 16,219 ms (gate 2,300 ms). Two defects + one env fix surfaced. Auto-chain stopped. Awaiting user direction on gap-closure path.*

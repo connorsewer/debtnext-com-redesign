@@ -37,9 +37,9 @@ Granularity: `standard` (5–8 phases per milestone). 21 active requirements acr
   4. A Playwright regression spec fails if a future change pushes `/` back over the 2.5s LCP line on the standard CI throttling profile
 **Plans**: 5 plans
 - [x] 05-01-PLAN.md — Wave 0 scaffolding: REQUIREMENTS.md HERO-01 amendment + encoder scripts + woff2 + fonts.ts + next.config.ts + lighthouserc.json + perf.yml + 3 Playwright spec stubs
-- [ ] 05-02-PLAN.md — Wave 1 HERO-01 wiring: build ladder binaries + extend heroCinematic.media.video to sources array + map 6 <source> children + activate source-ladder.spec.ts
-- [ ] 05-03-PLAN.md — Wave 1 HERO-02 self-host: remove Fontshare @import + wire generalSans in layout.tsx + Wordmark.tsx var(--font-general-sans) lead + activate wordmark-self-host.spec.ts
-- [ ] 05-04-PLAN.md — Wave 1 HERO-03 AVIF poster: migrate <Image priority> to preload + fetchPriority="high" + activate poster-avif-negotiation.spec.ts
+- [x] 05-02-PLAN.md — Wave 1 HERO-01 wiring: build ladder binaries + extend heroCinematic.media.video to sources array + map 6 <source> children + activate source-ladder.spec.ts
+- [x] 05-03-PLAN.md — Wave 1 HERO-02 self-host: remove Fontshare @import + wire generalSans in layout.tsx + Wordmark.tsx var(--font-general-sans) lead + activate wordmark-self-host.spec.ts
+- [x] 05-04-PLAN.md — Wave 1 HERO-03 AVIF poster: migrate <Image priority> to preload + fetchPriority="high" + activate poster-avif-negotiation.spec.ts
 - [ ] 05-05-PLAN.md — Wave 2 HERO-04 perf gate trip + ship: run lhci autorun locally, capture docs/m5-phase-5-lhci-run.md, flip HANDOFF.md / PROJECT.md / STATE.md / REQUIREMENTS.md to shipped
 **Notes**: Critical-path for Phase 8 (Motion). MOTION-04 verifies the LCP budget holds after motion ships, which means Phase 5 must land first. Safe to run in parallel with Phase 6 (Analytics) and Phase 7 (SEO) since those don't touch hero assets. Inherits standing constraints: brand rules (CLAUDE.md §3), voice rules (§5), single primary CTA per band (§4), per-commit docs rule, GPG signing off + Co-Authored-By footer, all 164 Playwright specs stay green, WCAG 2.2 AA + axe-core CI, reduced motion gated.
 
