@@ -66,31 +66,29 @@ Explicitly excluded during M5 scoping with reasoning:
 
 ## Traceability
 
-REQ-ID → Phase mapping is populated by the roadmapper in the next step.
-
 | REQ-ID | Phase | Plan | Status |
 |--------|-------|------|--------|
-| HERO-01 | TBD | — | Open |
-| HERO-02 | TBD | — | Open |
-| HERO-03 | TBD | — | Open |
-| HERO-04 | TBD | — | Open |
-| ANALYTICS-01 | TBD | — | Open |
-| ANALYTICS-02 | TBD | — | Open |
-| ANALYTICS-03 | TBD | — | Open |
-| SEO-01 | TBD | — | Open |
-| SEO-02 | TBD | — | Open |
-| SEO-03 | TBD | — | Open |
-| SEO-04 | TBD | — | Open |
-| SEO-05 | TBD | — | Open |
-| SEO-06 | TBD | — | Open |
-| DOD-01 | TBD | — | Open |
-| DOD-02 | TBD | — | Open |
-| DOD-03 | TBD | — | Open |
-| DOD-04 | TBD | — | Open |
-| MOTION-01 | TBD | — | Open |
-| MOTION-02 | TBD | — | Open |
-| MOTION-03 | TBD | — | Open |
-| MOTION-04 | TBD | — | Open |
+| HERO-01 | Phase 5 | — | Open |
+| HERO-02 | Phase 5 | — | Open |
+| HERO-03 | Phase 5 | — | Open |
+| HERO-04 | Phase 5 | — | Open |
+| ANALYTICS-01 | Phase 6 | — | Open |
+| ANALYTICS-02 | Phase 6 | — | Open |
+| ANALYTICS-03 | Phase 6 | — | Open |
+| SEO-01 | Phase 7 | — | Open |
+| SEO-02 | Phase 7 | — | Open |
+| SEO-03 | Phase 7 | — | Open |
+| SEO-04 | Phase 7 | — | Open |
+| SEO-05 | Phase 7 | — | Open |
+| SEO-06 | Phase 7 | — | Open |
+| DOD-01 | Phase 9 | — | Open |
+| DOD-02 | Phase 9 | — | Open |
+| DOD-03 | Phase 9 | — | Open |
+| DOD-04 | Phase 9 | — | Open |
+| MOTION-01 | Phase 8 | — | Open |
+| MOTION-02 | Phase 8 | — | Open |
+| MOTION-03 | Phase 8 | — | Open |
+| MOTION-04 | Phase 8 | — | Open |
 
 ---
-*Last updated: 2026-05-20 after M5 scope was set (option b: bundle launch-critical + motion). 21 active requirements across 5 categories. Will be updated with phase mappings after the roadmapper runs.*
+*Last updated: 2026-05-20 after M5 roadmap was drafted. 21 active requirements across 5 categories, all mapped to Phases 5–9. Coverage: 21/21.*
