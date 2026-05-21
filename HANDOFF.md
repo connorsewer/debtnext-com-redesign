@@ -267,13 +267,15 @@ The post-M4 follow-ups listed here were folded into M5 when Connor chose framing
 
 | # | Phase | What ships | REQ-IDs | Depends on |
 |---|---|---|---|---|
-| 5 | **Hero performance** (critical-path) | Multi-res MP4 ladder (480p/720p/1080p + WebM), self-host General Sans via `next/font/local`, sub-200KB AVIF poster, regression spec | HERO-01..04 | Nothing |
+| 5 | **Hero performance** (critical-path) | Multi-res MP4 ladder (720p/540p/360p + WebM at each tier), self-host General Sans via `next/font/local`, sub-200KB AVIF poster, regression spec | HERO-01..04 | Nothing |
 | 6 | **Analytics wiring** | GA4 + GTM script tags via `NEXT_PUBLIC_GA4_ID` / `NEXT_PUBLIC_GTM_ID`; `track()` continues no-op when unset; `.env.example` + this doc updated | ANALYTICS-01..03 | Nothing (parallel with 5, 7) |
 | 7 | **SEO baseline** | Per-route OG images via `@vercel/og`, `Organization` + `SoftwareApplication` JSON-LD on `/`, `ContactPage` JSON-LD on `/demo`, Twitter cards, canonical URLs | SEO-01..06 | Nothing (parallel with 5, 6) |
 | 8 | **Motion pass** | Framer `useInView` section reveals on 10 non-home pages + `ProofBand` number counters; reduced-motion gated; `/` LCP stays under 2.5s with ≤+20KB bundle delta | MOTION-01..04 | Phase 5 (LCP headroom) |
 | 9 | **DoD walkthrough + launch readiness** | CLAUDE.md §14 walked on every v1 route (evidence in `docs/m5-dod-walkthrough.md`), all open `[COI REVIEW]` cleared by Andrew, all `[CLAIMS REVIEW]` cleared, "Why dPlat" nav label decision applied | DOD-01..04 | Phases 5, 6, 7, 8 |
 
 **Parallelization graph:** Phases 5/6/7 are mutually independent — three branches could ship concurrently. Phase 8 waits on Phase 5 because MOTION-04 measures `/` LCP against the headroom Phase 5 establishes. Phase 9 is the launch gate.
+
+**Phase 5 Wave 0 progress (2026-05-21):** scaffolding landed. `scripts/build-hero-ladder.sh` + `scripts/verify-hero-keyframes.sh` ready to encode 720p/540p/360p × {MP4, WebM}; `src/app/fonts.ts` + `src/app/fonts/GeneralSans-Semibold.woff2` (sha256 in the commit body); `next.config.ts` AVIF/WebP `images.formats`; `lighthouserc.json` + `.github/workflows/perf.yml` (2300ms LCP gate, median-of-3 on `/`); 3 Playwright spec stubs under `tests/hero/`. REQUIREMENTS.md HERO-01 amended to the actual 720p/540p/360p ladder shape (researcher-verified, user-ratified). Wave 1 (HERO-01 wiring, HERO-02 self-host, HERO-03 AVIF poster) can now run parallel.
 
 **Explicitly out of scope in M5** (captured with reasoning in `.planning/REQUIREMENTS.md`): ScrollSmoother global lerp/inertia, Mux video hosting (chose local ladder instead), poster-only-on-mobile, live CLAUDE.md §13 event verification (the wiring ships in Phase 6; verifying against an unprovisioned GA4 ID is wasted effort — deferred to M6), GDPR cookie consent banner.
 
@@ -371,6 +373,7 @@ ls hero-snapshots/
 - **Platform handoff section uses a structurally different mobile architecture below 768px** (calm static stack, no pin, no GSAP). Same content, normal-flow scroll.
 - **Wordmark is "DebtNext" (company name)** in nav chrome. Product name "dPlat" stays in metadata, voice copy, and the "Why dPlat" nav link (until Connor decides otherwise).
 - **General Sans SemiBold via Fontshare CDN.** One weight only. Move to `next/font/local` if perf becomes a concern.
+- **Phase 5 Wave 0 (2026-05-21):** hero ladder shape is 720p / 540p / 360p (not 480p / 720p / 1080p, source asset is 1280×720 ffprobe-verified); LHCI gate fails at median LCP ≥ 2300ms on `/` only; General Sans 600 woff2 self-hosted at `src/app/fonts/GeneralSans-Semibold.woff2` (sha256 in the Wave 0 commit body per T-V10-01).
 
 ---
 

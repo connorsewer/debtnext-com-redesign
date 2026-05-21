@@ -163,7 +163,7 @@ Any copy touching the dPlat-to-vendor-network relationship needs `[COI REVIEW]` 
 | Two new accent text tokens (`--accent-text-dark`, `--accent-text-light`) for eyebrows and inline links | `--primary` `#5266EB` fails WCAG 2.2 AA contrast for body-weight text on light surfaces. Splitting accent into surface-specific tokens preserves `--primary`'s role as the filled CTA color. | ✓ Good (M4 Phase 4) |
 | GPG signing off + explicit Co-Authored-By footer required | Connor's local GPG signing fails in this repo's commit environment. Explicit Co-Authored-By keeps attribution auditable. | ✓ Good (locked, applied per-commit) |
 | Per-commit docs rule: HANDOFF.md/DESIGN.md/.impeccable.md updated in the same commit as the code | Prevents doc rot. Drift between code and docs is the #1 source of bad agent assumptions. | ✓ Good (saved as feedback memory) |
-| Defer hero MP4 perf fix to M5 | Phase 4 of M4 was already overloaded. The 11 MB hero MP4 lands `/` at 2.86s LCP (vs 2.5s target). Mux or a multi-resolution local source ladder is the right fix and warrants its own phase. | — Pending (M5 scope) |
+| Defer hero MP4 perf fix to M5 | Phase 4 of M4 was already overloaded. The 11 MB hero MP4 lands `/` at 2.86s LCP (vs 2.5s target). Mux or a multi-resolution local source ladder is the right fix and warrants its own phase. | — In flight (Phase 5 Wave 0 scaffolding shipped 2026-05-21) |
 | GSD .planning/ bootstrapped retroactively after M1–M4 shipped | M1–M4 ran outside GSD. The brand/voice/COI constraints in CLAUDE.md were already authoritative. Bootstrap captures shipped state as Validated, then opens M5 via /gsd-new-milestone. | — Pending (this commit) |
 
 ## Evolution
