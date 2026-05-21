@@ -54,6 +54,26 @@ Granularity: `standard` (5–8 phases per milestone). 21 active requirements acr
 Plans:
 - [x] 05.2-01-PLAN.md: encode `public/hero/homepage-hero-start.avif` (112 KB libsvtav1 CRF 30), repoint `startFrame` in `src/content/homepage-hero.ts:55`, delete the 2.55 MB raw PNG, land `scripts/encode-hero-poster.sh`, refresh `scripts/check-hero-assets.sh` comment, add `/.lighthouseci/` to `.gitignore`, update HANDOFF/ROADMAP/STATE. Plus two follow-up commits motivated by post-AVIF LHCI re-runs: drop redundant `<video poster>` (84f20dd) and switch Inter to `display: optional` (8920088).
 
+### Phase 05.3: Close LHCI gate via lazy-loaded GSAP (INSERTED)
+
+**Goal:** Close the HERO-04 LHCI Case C gate (median LCP under 2,300 ms on the Vercel preview) by removing GSAP + ScrollTrigger from the mobile JS critical path. Recommended approach: dynamic-import the GSAP modules inside the `!isMobile && !prefersReducedMotion` branch of `HomepageHero.tsx`, so mobile clients never download the ~80-120 KB GSAP bundle the LHCI simulator is modeling against.
+**Requirements**: HERO-04 (still open; carries from Phases 5 + 5.1 + 5.2)
+**Depends on:** Phase 5, Phase 5.1, Phase 5.2 (closed the asset-level cause; remaining gap is JS critical path per `docs/m5-phase-5-lhci-run.md`)
+**Plans:** TBD (run `/gsd-discuss-phase 5.3` to confirm approach, or `/gsd-plan-phase 5.3` if jumping straight to plan)
+
+**Locked diagnosis (from `docs/m5-phase-5-lhci-run.md`):** Three Phase 5.2 commits cut simulated mobile LCP from 16,411 ms to 3,869 ms (4.2x improvement); H1 paints at FCP unthrottled (1,254 ms, well under spec). The 1,569 ms residual gap is the LHCI "simulate" throttling model projecting the resource graph + CPU graph onto Case C bandwidth + CPU multipliers. Asset-level changes are exhausted.
+
+**Candidate approaches (discuss should pick one):**
+1. Dynamic-import GSAP + ScrollTrigger + `@gsap/react` inside the `!isMobile` branch of `HomepageHero.tsx` (smallest change, biggest expected simulator-LCP win)
+2. Conditional `<link rel=preload>` for General Sans (drops 47 KB woff2 from the mobile critical path; Wordmark is desktop-only)
+3. Switch LHCI `throttlingMethod` from `"simulate"` to `"devtools"` in `lighthouserc.json` (real Chrome throttling; closer to RUM than the simulator)
+4. Relax the gate from 2,300 ms to the 2,500 ms CLAUDE.md §12 spec floor (Phase 8 motion headroom moves to post-launch RUM instead of being shielded by the gate)
+
+**On gate close (D-08 carryover from Phase 5.1 Plan 03 Task 3):** fire the atomic close-out commit that flips HERO-01..04 to Done across HANDOFF.md / .planning/PROJECT.md / .planning/STATE.md / .planning/REQUIREMENTS.md / .planning/ROADMAP.md, marks Phases 5 + 5.1 + 5.2 + 5.3 complete in one commit per `feedback_docs_in_sync.md`. Phase 8 (Motion) unblocks.
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 5.3 to break down)
+
 ### Phase 05.1: HERO-04 gap closure: WebM encoder re-tune and mobile video gate (INSERTED)
 
 **Goal:** Close HERO-04 by dropping the structurally broken WebM ladder and tightening `<source media>` algebra so phones (<768px) fire zero video requests; absorb Phase 5 plan 05-05 closing tasks so Phase 5 + 5.1 ship together.
