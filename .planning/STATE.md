@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-05-21T14:54:24.354Z"
+last_updated: "2026-05-21T18:10:13.179Z"
 last_activity: 2026-05-21
 progress:
-  total_phases: 5
+  total_phases: 6
   completed_phases: 0
-  total_plans: 5
-  completed_plans: 0
-  percent: 0
+  total_plans: 8
+  completed_plans: 4
+  percent: 50
 ---
 
 # STATE.md
@@ -26,8 +26,8 @@ See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 - **Phase:** Phase 5 (Hero performance) — PARTIAL. Plans 01-04 shipped; Plan 05 HERO-04 LHCI gate FAILED. Gap closure required before Phase 5 closes.
 - **Plan:** 05-01 (Wave 0) ✓ → {05-02, 05-03} (Wave 1) ✓ → 05-04 (Wave 2) ✓ → 05-05 (Wave 3) ✗ gate failed at Task 1.
-- **Status:** Phase 5 NOT shipped. HERO-04 LHCI representative-run `/` LCP = 16,219 ms vs 2,300 ms gate (Case C — clearly over budget, not flake). Two real defects discovered: (A) D-04 violation — mobile (412×823) downloads `homepage-hero-360p.webm` 8.88 MB; the `<source media>` algebra in `src/content/homepage-hero.ts` lets mobile match a video source. (B) WebM ladder encoder regression — every WebM tier is larger than its MP4 counterpart (worst: 360p WebM is 4.47x its MP4); `scripts/build-hero-ladder.sh` needs re-tuning. Plus one env fix already applied to `lighthouserc.json` (Lighthouse 12.x dropped the `"mobile"` preset string).
-- **Last activity:** 2026-05-21 — Phase 5 Wave 3 plan 05-05 Task 1 (lhci autorun) exercised the gate. 5 plans shipped + 1 plan halted at Case C. HANDOFF.md / lighthouserc.json fix committed in same go.
+- **Status:** Phase 5.1 PLANNED (3 plans / 3 waves) — verification passed first pass, no revisions needed. Ready to execute. Phase 5 remains PARTIAL; closes simultaneously with 5.1 via D-08 fold-in (plan 05.1-03 absorbs the parked 05-05 closing tasks).
+- **Last activity:** 2026-05-21 — `/gsd-plan-phase 05.1` produced 3 plans (01: strip WebM ladder + bound media queries; 02: mobile network watcher + MP4 size budget + CI; 03: LHCI Case C re-run + Phase 5/5.1 close-out). All 8 CONTEXT decisions D-01..D-08 covered. Plan-checker PASS across 11 dimensions.
 - **Resume from:** `/gsd-plan-phase 05.1` (Phase 5.1 inserted 2026-05-21 — fixes Defects A + B then re-runs lhci autorun). Phase 8 (Motion) stays blocked on Phase 5.1 LCP headroom; Phases 6 (Analytics) and 7 (SEO) are still parallel-safe to anything else.
 
 ## Roadmap Evolution
