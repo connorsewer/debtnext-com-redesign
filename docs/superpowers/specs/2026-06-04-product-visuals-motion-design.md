@@ -15,7 +15,7 @@ Goal: give all five visuals a **calm, choreographed entrance plus quiet ambient 
 ## 2. Scope
 
 **In scope:**
-- A shared motion layer (`src/components/product/motion.ts`) with reusable variants + timing tokens.
+- A shared motion layer (`src/components/product/motion.tsx`) with reusable variants + timing tokens.
 - Animating the shared chart parts (`parts.tsx`): `SegmentedBar`, `ValueBar`, `Sparkline`, `AreaLine`.
 - An `AnimatedNumber` helper for count-ups, and a `MetricCell` numeric-animation path.
 - Per-visual entrance choreography for all 5 visuals.
@@ -37,7 +37,7 @@ When a visual scrolls into view (or re-mounts on tab switch), it plays a stagger
 
 **Trigger:** Framer Motion `whileInView` with `viewport={{ once: true, amount: 0.3 }}`. On initial page load the below-fold visual waits until scrolled into view; on tab switch the remounted visual is already in view and plays immediately. `useReducedMotion()` short-circuits to the final state.
 
-## 4. Timing and easing tokens (`motion.ts`)
+## 4. Timing and easing tokens (`motion.tsx`)
 
 From `docs/product-visuals-system.md` motion vocabulary + `DESIGN.md`:
 
@@ -67,7 +67,7 @@ Reduced motion: all parts render at final state (`scaleX/Y: 1`, `pathLength: 1`,
 
 ## 6. Numbers
 
-New `AnimatedNumber` (`motion.ts` or a small component): props `{ value: number, prefix?, suffix?, decimals? }`. Counts from 0 → `value` over `DUR_COUNT` using a Framer motion value + `useReducedMotion`; writes the formatted string to a ref/`motion` text node, never per-frame React state. `tabular-nums` keeps width stable.
+New `AnimatedNumber` (`motion.tsx` or a small component): props `{ value: number, prefix?, suffix?, decimals? }`. Counts from 0 → `value` over `DUR_COUNT` using a Framer motion value + `useReducedMotion`; writes the formatted string to a ref/`motion` text node, never per-frame React state. `tabular-nums` keeps width stable.
 
 - **Clean numerics** (`97.4%`, `18.4%`, `64%`, account counts like `12,847`) use `AnimatedNumber` (count from zero).
 - **Composite strings** (`$847.2M`, `$148.62`, `42% → 47%`) keep their static string but use the **number-shift**: on entrance the text briefly tints to `TINT` then resolves to default over `DUR_COUNT` with `EASE_STATE`. (Counting a formatted-currency or `a → b` string reads awkwardly.)
@@ -98,7 +98,7 @@ The 3 currently-static visuals (`PlacementMatrix`, `OptimizationEngine`, `Report
 
 | File | Change |
 |---|---|
-| `src/components/product/motion.ts` | Create: timing tokens, `staggerContainer`/`fadeUpItem` variants, `AnimatedNumber`, reduced-motion helper |
+| `src/components/product/motion.tsx` | Create: timing tokens, `staggerContainer`/`fadeUpItem` variants, `AnimatedNumber`, reduced-motion helper |
 | `src/components/product/visuals/parts.tsx` | Add `animate` prop + entrance motion to SegmentedBar/ValueBar/Sparkline/AreaLine |
 | `src/components/product/primitives/MetricCell.tsx` | Optional numeric-animation path |
 | `src/components/product/visuals/PlacementMatrix.tsx` | `"use client"` + choreography |

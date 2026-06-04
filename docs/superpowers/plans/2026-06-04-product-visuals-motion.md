@@ -4,7 +4,7 @@
 
 **Goal:** Give all 5 homepage product visuals a calm, choreographed entrance (bars grow, charts draw, numbers count, rows cascade) that plays on scroll-into-view and settles to quiet ambient pulses.
 
-**Architecture:** A shared `src/components/product/motion.ts` defines timing tokens, Framer Motion variants, and number helpers. The shared chart `parts.tsx` and the 5 visuals consume them. Entrance is triggered by Framer `whileInView` (`once: true`); reduced-motion renders final state.
+**Architecture:** A shared `src/components/product/motion.tsx` defines timing tokens, Framer Motion variants, and number helpers. The shared chart `parts.tsx` and the 5 visuals consume them. Entrance is triggered by Framer `whileInView` (`once: true`); reduced-motion renders final state.
 
 **Tech Stack:** React 19, framer-motion 12 (`import { motion, useReducedMotion, useInView, animate } from "framer-motion"`), Tailwind v4.
 
@@ -23,7 +23,7 @@ Do NOT attempt `npm run dev`/`build` locally to verify.
 
 | File | Responsibility |
 |---|---|
-| `src/components/product/motion.ts` (create) | Timing tokens, `staggerContainer`/`fadeUpItem` variants, `inViewProps`, `AnimatedNumber`, `NumberShift` |
+| `src/components/product/motion.tsx` (create) | Timing tokens, `staggerContainer`/`fadeUpItem` variants, `inViewProps`, `AnimatedNumber`, `NumberShift` |
 | `src/components/product/visuals/parts.tsx` (modify) | `"use client"` + entrance motion on SegmentedBar/ValueBar/Sparkline/AreaLine |
 | `src/components/product/primitives/MetricCell.tsx` (modify) | Optional numeric-animation path |
 | `src/components/product/visuals/PlacementMatrix.tsx` (modify) | `"use client"` + choreography |
@@ -34,10 +34,10 @@ Do NOT attempt `npm run dev`/`build` locally to verify.
 
 ---
 
-## Task 1: Shared motion layer (`motion.ts`)
+## Task 1: Shared motion layer (`motion.tsx`)
 
 **Files:**
-- Create: `src/components/product/motion.ts`
+- Create: `src/components/product/motion.tsx`
 
 - [ ] **Step 1: Create the file with the complete code below**
 
@@ -191,7 +191,7 @@ export function NumberShift({
 - [ ] **Step 3: Commit**
 
 ```bash
-git add src/components/product/motion.ts
+git add src/components/product/motion.tsxx
 git commit -m "feat(product-visuals): shared motion layer (tokens, variants, AnimatedNumber, NumberShift)"
 ```
 
@@ -726,7 +726,7 @@ If anything in `DESIGN.md` motion notes needs updating to reflect the shipped ch
 
 ## Self-Review (completed by plan author)
 
-- **Spec coverage:** §3 motion model + trigger → `inViewProps` (Task 1) applied in Tasks 4-8. §4 timing tokens → Task 1 `motion.ts`. §5 parts animation → Task 2 (all four). §6 numbers → `AnimatedNumber`/`NumberShift` (Task 1) used in Tasks 4-8 with the count-vs-shift split matching the spec (clean numerics count; `$847.2M`/`42% → 47%` shift). §7 per-visual choreography → Tasks 4-8, one per visual, matching the table. §8 perf/a11y → transforms + `pathLength` only, `useReducedMotion` in every motion component, `inView` count gating. §9 files → exactly the 8 files. §10 verify → Task 9 (deploy + Chrome MCP + reduced-motion).
+- **Spec coverage:** §3 motion model + trigger → `inViewProps` (Task 1) applied in Tasks 4-8. §4 timing tokens → Task 1 `motion.tsx`. §5 parts animation → Task 2 (all four). §6 numbers → `AnimatedNumber`/`NumberShift` (Task 1) used in Tasks 4-8 with the count-vs-shift split matching the spec (clean numerics count; `$847.2M`/`42% → 47%` shift). §7 per-visual choreography → Tasks 4-8, one per visual, matching the table. §8 perf/a11y → transforms + `pathLength` only, `useReducedMotion` in every motion component, `inView` count gating. §9 files → exactly the 8 files. §10 verify → Task 9 (deploy + Chrome MCP + reduced-motion).
 - **Placeholder scan:** No TBD/TODO. Every code step shows the actual code. Verification steps name exact MCP tools + IDs.
 - **Type consistency:** `AnimatedNumber({value, prefix?, suffix?, decimals?})`, `NumberShift({children, color?})`, variant names `staggerContainer`/`fadeUpItem`/`popItem`, `inViewProps`, and MetricCell's `numericValue`/`numericDecimals`/`numericSuffix` are used identically across all tasks. Tokens `DUR_BAR`/`EASE_ENTRANCE` imported where used.
 - **Note for executor:** `$847.2M`, `$148.62`, and `42% → 47%` are not in the homepage visuals' current data (the hero Command Center spec has them); within these 5 visuals the only composite needing `NumberShift` is OptimizationEngine's `42% → 47%` shift (Task 5). Everything else is a clean numeric (count-up) or stays static.
