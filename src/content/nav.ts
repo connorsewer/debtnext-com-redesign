@@ -30,6 +30,18 @@ export const platformSubNav: NavLink[] = [
 ];
 
 /**
+ * Industry solution subpages exposed in the desktop nav dropdown.
+ * Mobile nav still shows just the top-level routes.
+ */
+export const solutionsSubNav: NavLink[] = [
+  { label: "Utilities", href: "/solutions/utilities" },
+  { label: "Financial Services", href: "/solutions/financial-services" },
+  { label: "Telecom", href: "/solutions/telecom" },
+  { label: "Fintech", href: "/solutions/fintech" },
+  { label: "All solutions", href: "/solutions" },
+];
+
+/**
  * "Why dPlat" rollup dropdown. The proof-and-differentiation pages live here:
  * the overview, the named-platform comparison, and the integration footprint.
  */
@@ -60,10 +72,11 @@ export const footerGroups: { title: string; links: NavLink[] }[] = [
   {
     title: "Solutions",
     links: [
-      { label: "Utilities", href: "/solutions" },
-      { label: "Financial Services", href: "/solutions" },
-      { label: "Telecom", href: "/solutions" },
-      { label: "Fintech", href: "/solutions" },
+      { label: "Utilities", href: "/solutions/utilities" },
+      { label: "Financial Services", href: "/solutions/financial-services" },
+      { label: "Telecom", href: "/solutions/telecom" },
+      { label: "Fintech", href: "/solutions/fintech" },
+      { label: "All solutions", href: "/solutions" },
     ],
   },
   {

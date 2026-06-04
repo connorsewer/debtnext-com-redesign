@@ -13,6 +13,10 @@ This document maps every page in the v1 site to its purpose, content sources, pr
 │   ├── /platform/reporting            Reporting & Dashboards
 │   └── /platform/integrations         Integration footprint (ERP, CIS, recovery)
 ├── /solutions                         Industries served
+│   ├── /solutions/utilities           Utility recovery
+│   ├── /solutions/financial-services  Financial services recovery
+│   ├── /solutions/telecom             Telecom recovery
+│   └── /solutions/fintech             Fintech recovery
 ├── /why-dplat                         Differentiation
 ├── /compare                           Named-platform comparison (rolls up under Why dPlat)
 ├── /resources                         Content hub (placeholder for v1)
@@ -25,7 +29,6 @@ v2 routes (out of scope for initial launch):
 - `/platform/media`
 - `/platform/debt-sales`
 - `/platform/legal-affidavit`
-- `/solutions/utilities`, `/solutions/financial-services`, `/solutions/telecom`, `/solutions/fintech`
 - `/resources/blog`, `/resources/case-studies`, `/resources/glossary`
 - `/company/leadership`, `/company/careers`, `/company/press`
 
@@ -34,7 +37,7 @@ v2 routes (out of scope for initial launch):
 | Label | Destination | Type |
 |---|---|---|
 | Platform | `/platform` | Dropdown (Placement, Optimization, Issues, Reporting, Integrations, All capabilities) |
-| Solutions | `/solutions` | Direct link |
+| Solutions | `/solutions` | Dropdown (Utilities, Financial Services, Telecom, Fintech, All solutions) |
 | Why dPlat | `/why-dplat` | Dropdown (Why dPlat, How dPlat compares → `/compare`, Integrations) |
 | Resources | `/resources` | Direct link |
 | Company | `/company` | Direct link |
@@ -46,12 +49,17 @@ because its URL lives under `/platform`. On mobile, the nav shows top-level
 routes only; both pages are reachable from the footer and from the homepage
 (proof band → compare, integration strip → integrations).
 
+The four `/solutions/<industry>` pages roll up under the Solutions dropdown.
+They are also reachable from the footer Solutions group, the `/solutions`
+parent industry cards, and the homepage industry trust band (each industry
+label links to its solution page).
+
 ## Footer structure
 
 | Group | Links |
 |---|---|
 | Platform | Placement, Optimization Engine, Issues, Reporting, Integrations, Compare platforms, All capabilities |
-| Solutions | Utilities, Financial Services, Telecom, Fintech |
+| Solutions | Utilities, Financial Services, Telecom, Fintech, All solutions |
 | Company | About, Leadership, Careers, Contact |
 | Resources | Blog, Case studies, Security, Compliance |
 | Legal | Privacy, Terms, Cookies, Accessibility |
@@ -126,6 +134,17 @@ Footer bottom row: TSI ownership disclosure, copyright, social links (LinkedIn o
 - **Content source**: dPlat deck slide 2 (industries proof), RFP entries by industry tag
 - **Sections**: Hero, 4 industry cards (utilities, financial services, telecom, fintech), proof band, final CTA
 - **Approvers**: Connor, Andrew Budish (no named clients without consent)
+- **Child pages**: each industry card links to its `/solutions/<industry>` page.
+
+### `/solutions/utilities`, `/solutions/financial-services`, `/solutions/telecom`, `/solutions/fintech` (Industry pages)
+
+- **Purpose**: Industry-specific positioning for each vertical dPlat serves.
+- **Primary CTA**: Request a demo. **Secondary**: See the platform (`/platform`).
+- **Content source**: `DebtNext_Solutions_Pages_Copy.docx`. Authored as typed modules in `src/content/solutions-<industry>.ts`.
+- **Sections**: Hero, 3 "what's different" cards, "how dPlat runs it" feature accordion (animated product visuals), proof (editorial prose band), regulatory framework list, final CTA.
+- **Navigation**: reachable from the Solutions nav dropdown, the footer Solutions group, the `/solutions` parent cards, and the homepage industry trust band.
+- **Excluded copy**: internal review/governance callouts, the named utility client (Philadelphia Gas Works) and its unverified 250% paydown figure, and any hard BNPL delinquency figure. Fintech BNPL framing stays directional.
+- **Approvers**: Connor, Andrew Budish (compliance language and any client references).
 
 ### `/why-dplat` (Differentiation)
 

@@ -26,10 +26,13 @@ export const homepageMeta = {
 export const homepageTrust = {
   eyebrow: "Trusted across regulated industries",
   industries: [
-    "Major US utility providers",
-    "Fortune 100 financial institutions",
-    "Telecom carriers",
-    "Fintech lenders",
+    { label: "Major US utility providers", href: "/solutions/utilities" },
+    {
+      label: "Fortune 100 financial institutions",
+      href: "/solutions/financial-services",
+    },
+    { label: "Telecom carriers", href: "/solutions/telecom" },
+    { label: "Fintech lenders", href: "/solutions/fintech" },
     "Publicly traded debt purchasers",
   ],
 } as const;

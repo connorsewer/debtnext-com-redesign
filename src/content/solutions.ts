@@ -34,21 +34,28 @@ export const solutionsIndustries: {
       title: "Utility providers",
       body:
         "Residential and commercial portfolios, final-bill recovery, write-off management, and dispute handling. Configurable for state-by-state regulatory requirements and the utility-specific account attributes (disconnect reason, service address, deposit balance) that drive placement strategy.",
+      link: { label: "Explore utilities", href: "/solutions/utilities" },
     },
     {
       title: "Financial services",
       body:
         "Bank card, installment loan, line of credit, and overdraft recovery. Built to support FDCPA, Reg F, FCRA, and TCPA workflows. Decedent, bankruptcy, and SCRA conditions handled as platform-level exceptions.",
+      link: {
+        label: "Explore financial services",
+        href: "/solutions/financial-services",
+      },
     },
     {
       title: "Telecom",
       body:
         "Post-disconnect recovery for wireless, wireline, and broadband carriers. High-volume placement, short treatment windows, and aggressive write-off cycles. Configurable for industry-specific data exchange formats and the prepaid/postpaid distinction.",
+      link: { label: "Explore telecom", href: "/solutions/telecom" },
     },
     {
       title: "Fintech",
       body:
         "Direct lender, BNPL, and digital banking portfolios. API-first integration with modern billing and origination systems. Configurable workflows for the rapid product iteration fintech operations require.",
+      link: { label: "Explore fintech", href: "/solutions/fintech" },
     },
   ],
 };

@@ -134,6 +134,10 @@ The site is intentionally compact for v1. Pages live as MDX in `content/pages/`.
 | `/platform/reporting` | `content/pages/reporting.md` |
 | `/platform/integrations` | `src/content/integrations.ts` (source copy: `DebtNext_Integrations_Page_Copy.docx`) |
 | `/solutions` | `content/pages/solutions.md` |
+| `/solutions/utilities` | `src/content/solutions-utilities.ts` (source copy: `DebtNext_Solutions_Pages_Copy.docx`) |
+| `/solutions/financial-services` | `src/content/solutions-financial-services.ts` (source copy: `DebtNext_Solutions_Pages_Copy.docx`) |
+| `/solutions/telecom` | `src/content/solutions-telecom.ts` (source copy: `DebtNext_Solutions_Pages_Copy.docx`) |
+| `/solutions/fintech` | `src/content/solutions-fintech.ts` (source copy: `DebtNext_Solutions_Pages_Copy.docx`) |
 | `/why-dplat` | `content/pages/why-dplat.md` |
 | `/compare` | `src/content/compare.ts` (source copy: `DebtNext_Comparison_Page_Copy.docx`) |
 | `/company` | `content/pages/company.md` |

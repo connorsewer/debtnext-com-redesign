@@ -1,0 +1,87 @@
+import type { Metadata } from "next";
+
+import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
+import { BulletList } from "@/components/sections/BulletList";
+import { CardGrid } from "@/components/sections/CardGrid";
+import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
+import { FinalCTA } from "@/components/sections/FinalCTA";
+import { PageHero } from "@/components/sections/PageHero";
+import { ProseSection } from "@/components/sections/ProseSection";
+import { RevealSection } from "@/components/sections/RevealSection";
+import {
+  fintechChallenges,
+  fintechFinalCta,
+  fintechHero,
+  fintechHowItRuns,
+  fintechMeta,
+  fintechProof,
+  fintechRegulatory,
+} from "@/content/solutions-fintech";
+
+export const metadata: Metadata = {
+  title: fintechMeta.title,
+  description: fintechMeta.description,
+  alternates: { canonical: fintechMeta.canonical },
+};
+
+export default function FintechSolutionPage() {
+  return (
+    <>
+      <ScrollDepthTracker />
+
+      <PageHero
+        eyebrow={fintechHero.eyebrow}
+        h1={fintechHero.h1}
+        body={fintechHero.body}
+        primaryCta={fintechHero.primaryCta}
+        secondaryCta={fintechHero.secondaryCta}
+        variant="centered"
+        location="fintech_hero"
+      />
+
+      <RevealSection>
+        <CardGrid
+          eyebrow={fintechChallenges.eyebrow}
+          heading={fintechChallenges.heading}
+          cards={fintechChallenges.cards}
+          columns={3}
+          surface="elevated-dark"
+        />
+      </RevealSection>
+
+      <RevealSection>
+        <FeatureAccordion
+          eyebrow={fintechHowItRuns.eyebrow}
+          heading={fintechHowItRuns.heading}
+          intro={fintechHowItRuns.intro}
+          items={fintechHowItRuns.items}
+          section="fintech_how_it_runs"
+        />
+      </RevealSection>
+
+      <ProseSection
+        eyebrow={fintechProof.eyebrow}
+        heading={fintechProof.heading}
+        paragraphs={fintechProof.paragraphs}
+        surface="light"
+      />
+
+      <RevealSection>
+        <BulletList
+          eyebrow={fintechRegulatory.eyebrow}
+          heading={fintechRegulatory.heading}
+          bullets={fintechRegulatory.bullets}
+          surface="elevated-dark"
+        />
+      </RevealSection>
+
+      <FinalCTA
+        heading={fintechFinalCta.heading}
+        body={fintechFinalCta.body}
+        primaryCta={fintechFinalCta.primaryCta}
+        reassurance={fintechFinalCta.reassurance}
+        location="fintech_final_cta"
+      />
+    </>
+  );
+}

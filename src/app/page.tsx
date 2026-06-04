@@ -40,7 +40,7 @@ export default function HomePage() {
 
       <TrustBand
         eyebrow={homepageTrust.eyebrow}
-        industries={[...homepageTrust.industries]}
+        industries={homepageTrust.industries}
       />
 
       <FeatureAccordion

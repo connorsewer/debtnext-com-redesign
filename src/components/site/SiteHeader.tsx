@@ -14,6 +14,7 @@ import {
   platformSubNav,
   primaryCta,
   primaryNav,
+  solutionsSubNav,
   whyDplatSubNav,
 } from "@/content/nav";
 
@@ -25,6 +26,7 @@ function isCurrentRoute(linkHref: string, pathname: string): boolean {
 /** Top-level routes that open a hover/focus dropdown of related pages. */
 const DROPDOWNS: Record<string, { items: NavLink[]; label: string }> = {
   "/platform": { items: platformSubNav, label: "Platform capabilities" },
+  "/solutions": { items: solutionsSubNav, label: "Industry solutions" },
   "/why-dplat": { items: whyDplatSubNav, label: "Why dPlat" },
 };
 
