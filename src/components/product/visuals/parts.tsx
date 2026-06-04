@@ -18,32 +18,39 @@ export const SegmentedBar = React.memo(function SegmentedBar({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  // Observe the un-clipped outer wrapper, not the clipped inner element:
+  // clip-path zeroes the inner element's intersectionRatio, which would
+  // deadlock useInView({ amount }) and leave the bar permanently hidden.
   const ref = React.useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
   const shown = reduce || inView;
   return (
-    <motion.div
+    <div
       ref={ref}
-      className={cn("flex h-5 w-full overflow-hidden rounded-[5px]", className)}
+      className={cn("h-5 w-full overflow-hidden rounded-[5px]", className)}
       role="img"
       aria-label={`Allocation: ${segments.map((s) => `${s}%`).join(", ")}`}
-      initial={reduce ? false : { clipPath: "inset(0 100% 0 0)" }}
-      animate={{ clipPath: shown ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)" }}
-      transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE }}
     >
-      {segments.map((pct, i) => (
-        <div
-          key={i}
-          className="flex items-center justify-center text-[9.5px] font-[500] tabular-nums text-white/90"
-          style={{
-            width: `${pct}%`,
-            backgroundColor: INDIGO_SHADES[i % INDIGO_SHADES.length],
-          }}
-        >
-          {pct}%
-        </div>
-      ))}
-    </motion.div>
+      <motion.div
+        className="flex h-full w-full"
+        initial={reduce ? false : { clipPath: "inset(0 100% 0 0)" }}
+        animate={{ clipPath: shown ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)" }}
+        transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE }}
+      >
+        {segments.map((pct, i) => (
+          <div
+            key={i}
+            className="flex items-center justify-center text-[9.5px] font-[500] tabular-nums text-white/90"
+            style={{
+              width: `${pct}%`,
+              backgroundColor: INDIGO_SHADES[i % INDIGO_SHADES.length],
+            }}
+          >
+            {pct}%
+          </div>
+        ))}
+      </motion.div>
+    </div>
   );
 });
 
