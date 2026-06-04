@@ -37,6 +37,16 @@ export const homepageTrust = {
   ],
 } as const;
 
+// Recovery OS positioning. Introduces the category concept additively;
+// dPlat stays the product name everywhere. Stated positively per
+// CLAUDE.md §5 (no "not X, it's Y" construction).
+export const homepagePositioning = {
+  eyebrow: "What dPlat is",
+  heading: "The operating system for enterprise recovery management.",
+  body:
+    "DebtNext runs the whole recovery operation in one system: placement, vendor performance, disputes, promises, media, and compliance. dPlat is the platform underneath it, configured to your portfolio and your vendor network.",
+} as const;
+
 export const homepageFeatureAccordion = {
   eyebrow: "How it works",
   heading: "One platform across the recovery lifecycle.",
@@ -147,6 +157,34 @@ export const homepageIntegration = {
       title: "BI platforms",
       body: "Direct extracts to your warehouse plus built-in dashboards.",
       iconKey: "bi" as const,
+    },
+  ],
+} as const;
+
+// Service + speed. Supporting narrative (Ryan's "we sell support and
+// partnership"; Andy's "we move as fast as you need"). Kept compact and
+// placed late so the platform story stays primary.
+// [CLAIMS REVIEW] Andrew to confirm the "under a month" launch timing before launch.
+export const homepageService = {
+  eyebrow: "Software and the team behind it",
+  heading: "Software, plus the team that runs recovery with you.",
+  body:
+    "dPlat is configured and supported by an onshore team that has spent careers in recovery operations. The platform does the heavy work; the people make sure it fits your portfolio and keeps fitting as the program changes.",
+  cards: [
+    {
+      title: "Onshore platform and portfolio teams",
+      body:
+        "A dedicated project manager, a product specialist, and a performance analyst who knows your program. Same time zone, same language, same numbers.",
+    },
+    {
+      title: "A named implementation method",
+      body:
+        "Define, Develop, Integrate, Deploy, Support. Each phase has deliverables and joint sign-off, so you always know where the work stands.",
+    },
+    {
+      title: "As fast as you need to move",
+      body:
+        "When the integrations line up, programs go live in weeks. One recent multi-tenant launch went live in under a month. If you ever need to move off a platform fast, we can do that too.",
     },
   ],
 } as const;

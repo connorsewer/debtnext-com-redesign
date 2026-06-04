@@ -20,7 +20,7 @@ export const heroCinematic = {
   // with the hero. Per CLAUDE.md §6, no TSI ownership disclosure here;
   // that lives in the footer only.
   disclaimer:
-    "Recovery management software for credit originators. In production since 2003.",
+    "The operating system for enterprise recovery management. In production since 2003.",
   media: {
     // HERO-01 (re-shaped in Phase 5.1 per D-01): MP4-only ladder.
     // WebM was dropped because VP9 with per-frame keyframes (D-05) cannot

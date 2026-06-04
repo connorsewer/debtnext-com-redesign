@@ -7,8 +7,10 @@ import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { HomepageHandoffSection } from "@/components/sections/HomepageHandoffSection";
 import { HomepageHero } from "@/components/sections/HomepageHero";
+import { CardGrid } from "@/components/sections/CardGrid";
 import { IntegrationStrip } from "@/components/sections/IntegrationStrip";
 import { ProofBand } from "@/components/sections/ProofBand";
+import { ProseIntro } from "@/components/sections/ProseIntro";
 import { TrustBand } from "@/components/sections/TrustBand";
 import {
   homepageBenefitSplit,
@@ -16,7 +18,9 @@ import {
   homepageFinalCta,
   homepageIntegration,
   homepageMeta,
+  homepagePositioning,
   homepageProof,
+  homepageService,
   homepageTrust,
 } from "@/content/homepage";
 
@@ -41,6 +45,12 @@ export default function HomePage() {
       <TrustBand
         eyebrow={homepageTrust.eyebrow}
         industries={homepageTrust.industries}
+      />
+
+      <ProseIntro
+        eyebrow={homepagePositioning.eyebrow}
+        heading={homepagePositioning.heading}
+        body={homepagePositioning.body}
       />
 
       <FeatureAccordion
@@ -79,6 +89,14 @@ export default function HomePage() {
           icon: <IntegrationIcon name={card.iconKey} />,
         }))}
         link={homepageIntegration.link}
+      />
+
+      <CardGrid
+        eyebrow={homepageService.eyebrow}
+        heading={homepageService.heading}
+        body={homepageService.body}
+        cards={[...homepageService.cards]}
+        columns={3}
       />
 
       <FinalCTA
