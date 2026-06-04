@@ -160,13 +160,13 @@ export const integrationsProof: {
   heading: "In production, at scale, since 2003.",
   stats: [
     {
-      number: "60M+",
+      number: "116.8M+",
       label: "Active accounts under management",
       caption: "Across client portfolios",
     },
     {
-      number: "$1.5B+",
-      label: "In payments annually",
+      number: "$1.9B+",
+      label: "Transactional dollars managed annually",
       caption: "Processed through the platform on behalf of clients",
     },
     {

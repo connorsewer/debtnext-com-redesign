@@ -18,9 +18,9 @@ import type { LeaderRow } from "@/components/sections/LeadershipTable";
 import type { ProofStat } from "@/components/sections/ProofBand";
 
 export const compareMeta = {
-  title: "Comparing dPlat to NeuAnalytics, Convoke, C&R, and Finvi",
+  title: "Comparing dPlat to NeuAnalytics, Convoke, Symend, and HighRadius",
   description:
-    "How dPlat compares to NeuAnalytics, Convoke, C&R Software, Finvi, Symend, and HighRadius. Where each platform was built for, and where it stops.",
+    "How dPlat compares to NeuAnalytics, Convoke, Symend, and HighRadius. Where each platform was built for, and where it stops.",
   canonical: "https://debtnext.com/compare",
 };
 
@@ -37,7 +37,7 @@ export const compareMarket = {
   heading: "The recovery software market in 2026.",
   paragraphs: [
     "The category is sharded. No single platform covers the full enterprise recovery lifecycle (from charge-off through legal placement) with first-party engagement, third-party vendor oversight, and consumer-facing digital channels all in one architecture.",
-    "Buyers usually pick a platform for the part of the problem that's burning hottest. A risk officer who's been told to fix vendor compliance buys NeuAnalytics or Convoke. A bank with a deep internal collections operation buys C&R Software. A telecom that needs to keep subscribers from churning buys Symend. A CFO who's been told to fix DSO buys HighRadius.",
+    "Buyers usually pick a platform for the part of the problem that's burning hottest. A risk officer who's been told to fix vendor compliance buys NeuAnalytics or Convoke. A telecom that needs to keep subscribers from churning buys Symend. A CFO who's been told to fix DSO buys HighRadius.",
     "Each of those is a defensible choice in isolation. The structural problem shows up later, when the recovery operation needs a capability the chosen platform wasn't built for, and the integration cost back to a fragmented stack starts climbing.",
     "dPlat was built to be the platform underneath all of those operations: the system of record for the placement lifecycle, the vendor management layer, and the data substrate the rest of the recovery ecosystem plugs into.",
   ],
@@ -84,26 +84,6 @@ export const compareMatrix: {
         "Heavily focused on banking debt sales. A reporting-and-oversight architecture rather than full lifecycle orchestration.",
     },
     {
-      name: "C&R Software",
-      note: "Debt Manager",
-      builtFor:
-        "Internal collections workflow at scale. Configurable agent tooling and decisioning.",
-      chosen:
-        "Global banks running large internal first-party operations with deep agent-workflow needs.",
-      stops:
-        "Heavier IT lift to deploy and configure. Built for internal operations, not third-party vendor orchestration.",
-    },
-    {
-      name: "Finvi",
-      note: "Artiva, Katabat, Velosidy",
-      builtFor:
-        "Multi-vertical ARM software. Separate purpose-built platforms per buyer type.",
-      chosen:
-        "Healthcare RCM EBOs (Artiva), first-party lenders (Katabat), third-party collection agencies (Velosidy).",
-      stops:
-        "Each product is purpose-built for a different vertical. No single command center spans them.",
-    },
-    {
       name: "Symend",
       builtFor:
         "Consumer engagement and self-cure. Behavioral-science driven digital journeys.",
@@ -135,7 +115,7 @@ export const compareDifferentiators: { heading: string; cards: GridCard[] } = {
     {
       title: "Open multi-vendor architecture",
       body:
-        "dPlat is the system of record for the placement lifecycle, not a vendor portal. It connects to any collection agency, law firm, debt purchaser, or specialty vendor in your network. NeuAnalytics and Convoke share this orientation. C&R Software and Finvi do not, by design.",
+        "dPlat is the system of record for the placement lifecycle, not a vendor portal. It connects to any collection agency, law firm, debt purchaser, or specialty vendor in your network. NeuAnalytics and Convoke share this orientation.",
     },
     {
       title: "Twenty years against real enterprise data",
@@ -213,13 +193,13 @@ export const compareProof: {
   heading: "In production, at scale, since 2003.",
   stats: [
     {
-      number: "60M+",
+      number: "116.8M+",
       label: "Active accounts under management",
       caption: "Across client portfolios",
     },
     {
-      number: "$1.5B+",
-      label: "In payments annually",
+      number: "$1.9B+",
+      label: "Transactional dollars managed annually",
       caption: "Processed through the platform on behalf of clients",
     },
     {
