@@ -1,6 +1,10 @@
+"use client";
+
 import * as React from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { cn } from "@/lib/utils";
+import { DUR_BAR, EASE_ENTRANCE } from "@/components/product/motion";
 
 const INDIGO_SHADES = ["#5266EB", "#4456C8", "#3949B5", "#2E3A93"];
 
@@ -13,11 +17,16 @@ export const SegmentedBar = React.memo(function SegmentedBar({
   segments: number[];
   className?: string;
 }) {
+  const reduce = useReducedMotion();
   return (
-    <div
+    <motion.div
       className={cn("flex h-5 w-full overflow-hidden rounded-[5px]", className)}
       role="img"
       aria-label={`Allocation: ${segments.map((s) => `${s}%`).join(", ")}`}
+      initial={reduce ? false : { clipPath: "inset(0 100% 0 0)" }}
+      whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+      viewport={{ once: true, amount: 0.6 }}
+      transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE }}
     >
       {segments.map((pct, i) => (
         <div
@@ -31,7 +40,7 @@ export const SegmentedBar = React.memo(function SegmentedBar({
           {pct}%
         </div>
       ))}
-    </div>
+    </motion.div>
   );
 });
 
@@ -45,6 +54,7 @@ export const ValueBar = React.memo(function ValueBar({
   tone?: "indigo" | "success" | "warning";
   className?: string;
 }) {
+  const reduce = useReducedMotion();
   const color =
     tone === "success"
       ? "var(--status-success)"
@@ -57,9 +67,13 @@ export const ValueBar = React.memo(function ValueBar({
       role="img"
       aria-label={`${value}%`}
     >
-      <div
-        className="h-full rounded-full"
+      <motion.div
+        className="h-full origin-left rounded-full"
         style={{ width: `${value}%`, backgroundColor: color }}
+        initial={reduce ? false : { scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE }}
       />
     </div>
   );
@@ -73,17 +87,22 @@ export const Sparkline = React.memo(function Sparkline({
   bars: number[];
   className?: string;
 }) {
+  const reduce = useReducedMotion();
   return (
     <div className={cn("flex h-8 items-end gap-1", className)} aria-hidden="true">
       {bars.map((h, i) => (
-        <div
+        <motion.div
           key={i}
-          className="w-1.5 rounded-sm"
+          className="w-1.5 origin-bottom rounded-sm"
           style={{
             height: `${Math.max(8, h * 100)}%`,
             backgroundColor:
               i === bars.length - 1 ? "var(--primary)" : "rgba(255,255,255,0.18)",
           }}
+          initial={reduce ? false : { scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.45, ease: EASE_ENTRANCE, delay: i * 0.05 }}
         />
       ))}
     </div>
@@ -98,6 +117,7 @@ export const AreaLine = React.memo(function AreaLine({
   points: number[];
   className?: string;
 }) {
+  const reduce = useReducedMotion();
   const w = 100;
   const h = 40;
   const step = points.length > 1 ? w / (points.length - 1) : w;
@@ -123,21 +143,37 @@ export const AreaLine = React.memo(function AreaLine({
           <stop offset="100%" stopColor="rgba(82,102,235,0)" />
         </linearGradient>
       </defs>
-      <path d={area} fill="url(#al-fill)" />
-      <path
+      <motion.path
+        d={area}
+        fill="url(#al-fill)"
+        initial={reduce ? false : { opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: 0.2 }}
+      />
+      <motion.path
         d={line}
         fill="none"
         stroke="var(--primary)"
         strokeWidth="1.5"
         vectorEffect="non-scaling-stroke"
+        initial={reduce ? false : { pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE }}
       />
-      <circle
+      <motion.circle
         cx={last[0]}
         cy={last[1]}
         r="2.2"
         fill="#fff"
         stroke="var(--primary)"
         strokeWidth="1.5"
+        initial={reduce ? false : { scale: 0, opacity: 0 }}
+        whileInView={reduce ? undefined : { scale: [0, 1, 1], opacity: 1 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE }}
+        style={{ transformOrigin: `${last[0]}px ${last[1]}px` }}
       />
     </svg>
   );
