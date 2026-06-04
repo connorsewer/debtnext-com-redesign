@@ -129,40 +129,32 @@ export function FeatureAccordion({
           })}
         </ul>
 
-        <div className="relative order-2 min-h-[22rem] overflow-hidden rounded-[var(--radius-sm)] bg-[var(--product-canvas)] shadow-[var(--shadow-nav)] ring-1 ring-[var(--border)] @lg/section:order-none @lg/section:min-h-[28rem]">
-          {items.map((item) => {
-            const isActive = activeId === item.id;
+        <div className="relative order-2 min-h-[22rem] overflow-hidden rounded-[var(--radius-sm)] bg-[var(--product-canvas)] shadow-[var(--shadow-nav)] ring-1 ring-[var(--border)] @lg/section:order-none @lg/section:min-h-[24rem]">
+          {(() => {
+            // Render ONLY the active item, in normal flow, so the panel grows
+            // to the active visual's height (the dense Issues/Reporting visuals
+            // would clip against a fixed height). Product visual for the 5
+            // homepage capability ids; every other page that reuses
+            // FeatureAccordion keeps the original placeholder.
+            const item = items.find((i) => i.id === activeId) ?? items[0];
+            if (!item) return null;
             return (
-              <div
-                key={item.id}
-                aria-hidden={!isActive}
-                aria-label={item.visualLabel}
-                className={cn(
-                  "absolute inset-0 transition-opacity duration-[var(--duration-fast)] ease-[var(--ease-in-out)]",
-                  isActive ? "opacity-100" : "pointer-events-none opacity-0"
+              <div key={item.id} aria-label={item.visualLabel}>
+                {isAccordionVisualId(item.id) ? (
+                  <AccordionVisual id={item.id} />
+                ) : (
+                  <div className="flex min-h-[22rem] w-full flex-col items-center justify-center gap-4 p-8 text-center">
+                    <span className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
+                      Visual
+                    </span>
+                    <p className="text-h3 font-[480] text-[var(--foreground)]">
+                      {item.visualLabel}
+                    </p>
+                  </div>
                 )}
-              >
-                {/* Real product visual (src/components/product) for the 5
-                    homepage capability ids; every other page that reuses
-                    FeatureAccordion keeps the original placeholder. Only the
-                    active item mounts, so a single animated visual runs. */}
-                {isActive ? (
-                  isAccordionVisualId(item.id) ? (
-                    <AccordionVisual id={item.id} />
-                  ) : (
-                    <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-8 text-center">
-                      <span className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
-                        Visual
-                      </span>
-                      <p className="text-h3 font-[480] text-[var(--foreground)]">
-                        {item.visualLabel}
-                      </p>
-                    </div>
-                  )
-                ) : null}
               </div>
             );
-          })}
+          })()}
         </div>
       </div>
     </SectionContainer>
