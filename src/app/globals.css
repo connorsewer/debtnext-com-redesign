@@ -99,39 +99,78 @@
 }
 
 /* ------------------------------------------------------------
-   Partner-map dots — illustrative network points "pop in" as the
-   section enters view. One shared keyframe; each dot offsets via a
-   per-index animation-delay set inline, so ~600 dots animate with
-   pure CSS (no per-node JS). Reduced-motion shows every dot at rest.
+   Coast-to-coast partner map. A field of low-opacity dots draws the
+   US silhouette; highlighted pins carry a breathing halo and a few
+   arcs route traveling pulses. All motion is declarative and stilled
+   under prefers-reduced-motion.
    ------------------------------------------------------------ */
-@keyframes dn-pin-in {
-  0% {
-    opacity: 0;
-    transform: scale(0);
-  }
-  70% {
-    opacity: 1;
-    transform: scale(1.35);
-  }
+.dn-c2c {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(82, 102, 235, 0.13) 0%, transparent 58%),
+    var(--background);
+}
+
+.dn-c2c-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 45%, black 25%, transparent 80%);
+  mask-image: radial-gradient(ellipse at 50% 45%, black 25%, transparent 80%);
+  pointer-events: none;
+}
+
+.dn-c2c-dot {
+  fill: rgba(156, 180, 232, 0.16);
+}
+
+.dn-c2c-pin-halo {
+  fill: rgba(82, 102, 235, 0.14);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.dn-c2c-pin-core {
+  fill: var(--primary);
+}
+
+.dn-c2c-pin-active .dn-c2c-pin-halo {
+  animation: dn-c2c-halo 3s ease-in-out infinite;
+}
+
+@keyframes dn-c2c-halo {
+  0%,
   100% {
-    opacity: 1;
+    opacity: 0.5;
     transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
   }
 }
 
-.dn-pin {
-  transform-box: fill-box;
-  transform-origin: center;
-  opacity: 0;
-  animation: dn-pin-in 600ms var(--ease-standard) forwards;
-  animation-delay: var(--dn-pin-delay, 0ms);
+.dn-c2c-arc {
+  fill: none;
+  stroke: rgba(82, 102, 235, 0.45);
+  stroke-width: 1;
+  stroke-dasharray: 2 5;
+}
+
+.dn-c2c-pulse {
+  fill: #fff;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dn-pin {
-    opacity: 1;
-    transform: none;
+  .dn-c2c-pin-active .dn-c2c-pin-halo {
     animation: none;
+  }
+  .dn-c2c-pulse {
+    display: none;
   }
 }
 

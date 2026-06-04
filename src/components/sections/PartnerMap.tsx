@@ -1,188 +1,172 @@
 import * as React from "react";
 
-import { SectionContainer } from "@/components/sections/SectionContainer";
+import { CountUp } from "@/components/sections/CountUp";
+import {
+  MAP_ARCS_RAW,
+  MAP_DOTS_RAW,
+  MAP_PINS_RAW,
+} from "@/components/sections/partnerMapData";
+import { cn } from "@/lib/utils";
 
 export interface PartnerMapProps {
   eyebrow?: string;
   heading?: string;
   body?: string;
+  /** Small honest framing line below the stats. */
   caption?: string;
+  className?: string;
 }
 
-/**
- * Illustrative US partner-reach map. A simplified continental-US outline
- * (used as a clipPath) holds ~600 glowing dots that "pop in" on scroll.
- * Two colors separate agency partners from client portfolios.
- *
- * This is a concept visual, not real geocoded data. The honest caption
- * carries that meaning; the SVG itself is decorative (aria-hidden), so the
- * heading + body + caption do the communicating for assistive tech.
- *
- * Server component by design: no "use client", no hooks. Dot positions come
- * from a module-scope seeded PRNG so server and client render identically,
- * and all motion is CSS (one shared keyframe + per-dot animation-delay).
- */
+const VIEWBOX = "0 0 1000 629";
 
-const VIEWBOX_WIDTH = 960;
-const VIEWBOX_HEIGHT = 600;
-const DOT_COUNT = 600;
-
-// Simplified continental-US silhouette. Coarse on purpose: it only needs to
-// read as "the US" and act as a clip region for the scattered dots.
-const US_PATH =
-  "M 110 150 L 250 140 L 360 120 L 470 108 L 590 104 L 700 120 L 760 150 " +
-  "L 800 138 L 845 150 L 855 185 L 880 200 L 905 235 L 900 270 L 870 300 " +
-  "L 845 330 L 835 372 L 810 400 L 770 432 L 740 470 L 700 500 L 660 520 " +
-  "L 615 528 L 580 510 L 545 500 L 520 470 L 500 452 L 470 458 L 440 470 " +
-  "L 410 460 L 388 430 L 360 412 L 330 405 L 300 388 L 270 372 L 245 345 " +
-  "L 222 320 L 198 300 L 175 272 L 150 245 L 130 210 L 116 180 Z";
-
-// mulberry32: tiny deterministic PRNG. Fixed seed => identical output on
-// every server/client render, so dot coordinates are SSR-stable.
-function mulberry32(seed: number): () => number {
-  let a = seed >>> 0;
-  return function next() {
-    a |= 0;
-    a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-interface Dot {
-  cx: number;
-  cy: number;
-  r: number;
-  /** true = agency partner, false = client portfolio */
-  isAgency: boolean;
-  delayMs: number;
-}
-
-// Built once at module load, never re-randomized at render.
-const DOTS: Dot[] = (() => {
-  const rng = mulberry32(0x5266eb);
-  const dots: Dot[] = [];
-
-  for (let i = 0; i < DOT_COUNT; i += 1) {
-    // Weight the horizontal distribution toward the eastern half so the
-    // scatter reads as the US population spread. Squaring a [0,1] sample and
-    // mixing with a uniform sample biases left-of-center (east) without
-    // emptying the west.
-    const eastBias = rng();
-    const x =
-      (0.35 * eastBias + 0.65 * eastBias * eastBias) * VIEWBOX_WIDTH * 0.92 +
-      VIEWBOX_WIDTH * 0.04;
-    const y = rng() * VIEWBOX_HEIGHT;
-
-    dots.push({
-      cx: Math.round(x * 100) / 100,
-      cy: Math.round(y * 100) / 100,
-      r: 1.6 + rng() * 1.8,
-      // ~38% agencies, the rest clients, so both colors are clearly present.
-      isAgency: rng() < 0.38,
-      // Stagger the pop-in across ~1.6s for a wave that fills the map.
-      delayMs: Math.round(rng() * 1600),
-    });
-  }
-
-  return dots;
+// Background dots: flat "x,y,x,y,..." pairs forming the US silhouette.
+const DOTS: Array<[number, number]> = (() => {
+  const nums = MAP_DOTS_RAW.split(",").map(Number);
+  const out: Array<[number, number]> = [];
+  for (let i = 0; i < nums.length; i += 2) out.push([nums[i], nums[i + 1]]);
+  return out;
 })();
 
+// Pins: "x,y,size;..." — size/10 is the core radius.
+const PINS: Array<[number, number, number]> = MAP_PINS_RAW.split(";").map(
+  (s) => s.split(",").map(Number) as [number, number, number]
+);
+
+// Arcs: "x1,y1,x2,y2;..." rendered as a quadratic curve bowed upward.
+const ARCS: string[] = MAP_ARCS_RAW.split(";").map((s) => {
+  const [x1, y1, x2, y2] = s.split(",").map(Number);
+  const mx = (x1 + x2) / 2;
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  const cy = Math.min(y1, y2) - dist * 0.32;
+  return `M ${x1} ${y1} Q ${mx} ${cy} ${x2} ${y2}`;
+});
+
+// [CLAIMS REVIEW] The stat row is illustrative. 538 is the canonical partner
+// count; "placements routed today" is a representative figure, not a live feed.
+const STATS: Array<{ value: number | string; label: string; count?: boolean }> = [
+  { value: 538, label: "Agency and legal partners", count: true },
+  { value: "50", label: "States covered" },
+  { value: 2847, label: "Placements routed today", count: true },
+];
+
+/**
+ * Coast-to-coast partner-reach map. The US silhouette is drawn from a field of
+ * low-opacity dots; highlighted pins mark network points, with a few arcs and
+ * traveling pulses suggesting placement routing. All motion is declarative
+ * (CSS halo + SVG pulses) and disabled under prefers-reduced-motion via CSS,
+ * so this stays a server component. The SVG is decorative (aria-hidden); the
+ * heading, body, stats, and caption carry the meaning.
+ */
 export function PartnerMap({
   eyebrow,
   heading,
   body,
   caption,
+  className,
 }: PartnerMapProps) {
   return (
-    <SectionContainer surface="dark" containerSize="content">
-      {eyebrow ? (
-        <p className="text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
-          {eyebrow}
-        </p>
-      ) : null}
-      {heading ? (
-        <h2 className="mt-3 max-w-3xl text-h2 font-[480] text-[var(--foreground)]">
-          {heading}
-        </h2>
-      ) : null}
-      {body ? (
-        <p className="mt-5 max-w-[var(--container-readable)] text-body-lg text-[var(--text-tertiary)]">
-          {body}
-        </p>
-      ) : null}
+    <section
+      className={cn(
+        "dn-c2c py-[var(--space-section-mobile)] text-[var(--foreground)] md:py-[var(--space-section-tablet)] lg:py-[var(--space-section-desktop)]",
+        className
+      )}
+    >
+      <div className="dn-c2c-grid" aria-hidden="true" />
 
-      {/* Legend: the only on-screen key to the two dot colors. */}
-      <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
-        <span className="flex items-center gap-2.5 text-body-sm text-[var(--text-tertiary)]">
-          <span
+      <div className="relative z-[2] mx-auto max-w-[var(--container-content)] px-4 md:px-6 lg:px-8">
+        <div className="max-w-2xl">
+          {eyebrow ? (
+            <p className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
+              {eyebrow}
+            </p>
+          ) : null}
+          {heading ? (
+            <h2 className="mt-3 text-h2 font-[480] text-[var(--foreground)]">
+              {heading}
+            </h2>
+          ) : null}
+          {body ? (
+            <p className="mt-4 text-body-lg text-[var(--text-tertiary)]">{body}</p>
+          ) : null}
+        </div>
+
+        <div className="relative z-[1] mx-auto mt-2 w-full max-w-[1100px]">
+          <svg
+            viewBox={VIEWBOX}
+            preserveAspectRatio="xMidYMid meet"
+            className="block h-auto w-full overflow-visible"
             aria-hidden="true"
-            className="inline-block size-2.5 rounded-full bg-[var(--primary)]"
-          />
-          Agencies
-        </span>
-        <span className="flex items-center gap-2.5 text-body-sm text-[var(--text-tertiary)]">
-          <span
-            aria-hidden="true"
-            className="inline-block size-2.5 rounded-full bg-[var(--accent-text-dark)]"
-          />
-          Clients
-        </span>
-      </div>
-
-      <div className="mt-8 overflow-hidden rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)]">
-        <svg
-          aria-hidden="true"
-          focusable="false"
-          viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}
-          className="h-auto w-full"
-          role="presentation"
-        >
-          <defs>
-            <clipPath id="dn-us-clip">
-              <path d={US_PATH} />
-            </clipPath>
-          </defs>
-
-          {/* Faint outline so the silhouette reads even where dots are sparse. */}
-          <path
-            d={US_PATH}
-            fill="none"
-            stroke="var(--border)"
-            strokeWidth={1.25}
-          />
-
-          {/* All dots clipped to the US shape; only in-shape dots show. */}
-          <g clipPath="url(#dn-us-clip)">
-            {DOTS.map((dot, i) => (
-              <circle
-                key={i}
-                className="dn-pin"
-                cx={dot.cx}
-                cy={dot.cy}
-                r={dot.r}
-                fill={
-                  dot.isAgency
-                    ? "var(--primary)"
-                    : "var(--accent-text-dark)"
-                }
-                style={
-                  {
-                    "--dn-pin-delay": `${dot.delayMs}ms`,
-                  } as React.CSSProperties
-                }
-              />
+            role="presentation"
+          >
+            {DOTS.map(([cx, cy], i) => (
+              <circle key={`d${i}`} cx={cx} cy={cy} r={2} className="dn-c2c-dot" />
             ))}
-          </g>
-        </svg>
-      </div>
 
-      {caption ? (
-        <p className="mt-4 text-caption text-[var(--text-tertiary)]">
-          {caption}
-        </p>
-      ) : null}
-    </SectionContainer>
+            {ARCS.map((d, i) => (
+              <path key={`a${i}`} d={d} className="dn-c2c-arc" />
+            ))}
+
+            {PINS.map(([cx, cy, size], i) => {
+              const core = size / 10;
+              return (
+                <g
+                  key={`p${i}`}
+                  className={i % 5 === 0 ? "dn-c2c-pin-active" : undefined}
+                >
+                  <circle
+                    cx={cx}
+                    cy={cy}
+                    r={core * 2.4}
+                    className="dn-c2c-pin-halo"
+                  />
+                  <circle cx={cx} cy={cy} r={core} className="dn-c2c-pin-core" />
+                </g>
+              );
+            })}
+
+            {ARCS.map((d, i) => (
+              <circle key={`pulse${i}`} r={3.2} className="dn-c2c-pulse">
+                <animateMotion
+                  dur="3s"
+                  repeatCount="indefinite"
+                  path={d}
+                  begin={`${i * 0.6}s`}
+                  rotate="0"
+                />
+                <animate
+                  attributeName="opacity"
+                  values="0;1;1;0"
+                  keyTimes="0;0.1;0.85;1"
+                  dur="3s"
+                  repeatCount="indefinite"
+                  begin={`${i * 0.6}s`}
+                />
+              </circle>
+            ))}
+          </svg>
+        </div>
+
+        <dl className="relative z-[2] mt-7 flex flex-wrap justify-center gap-x-12 gap-y-6 border-t border-[var(--border)] pt-7">
+          {STATS.map((stat) => (
+            <div key={stat.label} className="text-center">
+              <dt className="text-h3 font-[480] tabular-nums text-[var(--foreground)]">
+                {stat.count ? <CountUp to={stat.value as number} /> : stat.value}
+              </dt>
+              <dd className="mt-1 text-body-sm text-[var(--text-tertiary)]">
+                {stat.label}
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        {caption ? (
+          <p className="relative z-[2] mt-5 text-center text-body-sm text-[var(--text-tertiary)]">
+            {caption}
+          </p>
+        ) : null}
+      </div>
+    </section>
   );
 }
