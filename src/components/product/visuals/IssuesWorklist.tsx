@@ -7,6 +7,12 @@ import { EyebrowLabel } from "@/components/product/primitives/EyebrowLabel";
 import { MetricCell } from "@/components/product/primitives/MetricCell";
 import { ProductCanvas } from "@/components/product/primitives/ProductCanvas";
 import { TypeChip, type ToneKey } from "@/components/product/visuals/parts";
+import {
+  AnimatedNumber,
+  fadeUpItem,
+  inViewProps,
+  staggerContainer,
+} from "@/components/product/motion";
 import { cn } from "@/lib/utils";
 
 // [CLAIMS REVIEW] placeholder values — Andrew sign-off required.
@@ -60,12 +66,16 @@ export const IssuesWorklist = React.memo(function IssuesWorklist() {
         ))}
       </div>
 
-      <div className="mt-3 flex flex-col divide-y divide-white/[0.06]">
+      <motion.div
+        className="mt-3 flex flex-col divide-y divide-white/[0.06]"
+        variants={staggerContainer}
+        {...inViewProps}
+      >
         {ISSUES.map((it) => {
           const breaching = it.status === "Breaching";
           const dotColor = DOT[it.statusTone];
           return (
-            <div key={it.id} className="grid grid-cols-[auto_1fr_auto] items-center gap-3 py-2.5">
+            <motion.div key={it.id} variants={fadeUpItem} className="grid grid-cols-[auto_1fr_auto] items-center gap-3 py-2.5">
               <TypeChip label={it.chip} tone={it.chipTone as ToneKey} />
               <div className="min-w-0">
                 <p className="font-mono text-[10.5px] text-[var(--product-text-2)]">{it.id}</p>
@@ -92,15 +102,15 @@ export const IssuesWorklist = React.memo(function IssuesWorklist() {
                   {it.status}
                 </span>
               </div>
-            </div>
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
 
       <div className="mt-4 grid grid-cols-3 gap-4">
-        <MetricCell label="SLA ADHERENCE · 30D" value="97.4%" delta="▲ 1.8pt" deltaTone="success" />
+        <MetricCell label="SLA ADHERENCE · 30D" value="97.4%" numericValue={97.4} numericDecimals={1} numericSuffix="%" delta="▲ 1.8pt" deltaTone="success" />
         <MetricCell label="AVG RESOLUTION" value="3.2h" delta="▼ 0.4h" deltaTone="success" />
-        <MetricCell label="AUTO-RESOLVED" value="64%" delta="8,247 / 12,891" deltaTone="neutral" />
+        <MetricCell label="AUTO-RESOLVED" value="64%" numericValue={64} numericSuffix="%" delta="8,247 / 12,891" deltaTone="neutral" />
       </div>
     </ProductCanvas>
   );
