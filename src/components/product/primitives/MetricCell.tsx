@@ -1,5 +1,8 @@
+"use client";
+
 import * as React from "react";
 
+import { AnimatedNumber } from "@/components/product/motion";
 import { cn } from "@/lib/utils";
 
 const DELTA_TONE = {
@@ -17,6 +20,11 @@ export interface MetricCellProps {
   deltaTone?: keyof typeof DELTA_TONE;
   className?: string;
   ref?: React.Ref<HTMLDivElement>;
+  /** When set, the value animates by counting up to `numericValue`,
+   *  formatted with these options. Falls back to the static `value` string. */
+  numericValue?: number;
+  numericDecimals?: number;
+  numericSuffix?: string;
 }
 
 /** KPI cell: label, value (with optional unit suffix), colored delta. Static. */
@@ -28,6 +36,9 @@ export const MetricCell = React.memo(function MetricCell({
   deltaTone = "neutral",
   className,
   ref,
+  numericValue,
+  numericDecimals,
+  numericSuffix,
 }: MetricCellProps) {
   return (
     <div ref={ref} className={cn("flex flex-col gap-1", className)}>
@@ -35,7 +46,15 @@ export const MetricCell = React.memo(function MetricCell({
         {label}
       </span>
       <span className="text-[18px] font-[500] leading-none tracking-[-0.022em] tabular-nums text-[var(--product-text)]">
-        {value}
+        {numericValue != null ? (
+          <AnimatedNumber
+            value={numericValue}
+            decimals={numericDecimals ?? 0}
+            suffix={numericSuffix ?? ""}
+          />
+        ) : (
+          value
+        )}
         {unit ? (
           <span className="ml-0.5 text-[12px] text-[var(--product-text-2)]">
             {unit}
