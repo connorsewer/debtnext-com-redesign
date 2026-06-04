@@ -3,12 +3,22 @@
 import * as React from "react";
 import dynamic from "next/dynamic";
 
-export type AccordionVisualId =
-  | "placement"
-  | "optimization"
-  | "issues"
-  | "reporting"
-  | "compliance";
+export const ACCORDION_VISUAL_IDS = [
+  "placement",
+  "optimization",
+  "issues",
+  "reporting",
+  "compliance",
+] as const;
+
+export type AccordionVisualId = (typeof ACCORDION_VISUAL_IDS)[number];
+
+/** Type guard: only the homepage feature accordion uses these ids. Other
+ *  pages share FeatureAccordion with different ids and must NOT render a
+ *  product visual (they keep the original placeholder). */
+export function isAccordionVisualId(id: string): id is AccordionVisualId {
+  return (ACCORDION_VISUAL_IDS as readonly string[]).includes(id);
+}
 
 function Fallback() {
   return (

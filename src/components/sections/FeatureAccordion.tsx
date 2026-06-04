@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { AccordionVisual, type AccordionVisualId } from "@/components/product/visuals";
+import { AccordionVisual, isAccordionVisualId } from "@/components/product/visuals";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
@@ -142,11 +142,23 @@ export function FeatureAccordion({
                   isActive ? "opacity-100" : "pointer-events-none opacity-0"
                 )}
               >
-                {/* Real product visual (src/components/product). Only the active
-                    item mounts its visual; inactive slots stay empty so a single
-                    animated visual runs at a time. */}
+                {/* Real product visual (src/components/product) for the 5
+                    homepage capability ids; every other page that reuses
+                    FeatureAccordion keeps the original placeholder. Only the
+                    active item mounts, so a single animated visual runs. */}
                 {isActive ? (
-                  <AccordionVisual id={item.id as AccordionVisualId} />
+                  isAccordionVisualId(item.id) ? (
+                    <AccordionVisual id={item.id} />
+                  ) : (
+                    <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-8 text-center">
+                      <span className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
+                        Visual
+                      </span>
+                      <p className="text-h3 font-[480] text-[var(--foreground)]">
+                        {item.visualLabel}
+                      </p>
+                    </div>
+                  )
                 ) : null}
               </div>
             );
