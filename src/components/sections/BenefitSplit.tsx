@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -24,6 +25,10 @@ export interface BenefitSplitProps {
     width: number;
     height: number;
   };
+  /** Optional live product visual rendered in place of the static media image
+   *  (e.g. a lazy-loaded DecisionEnginePreview). Falls back to `media` when
+   *  not provided. */
+  visual?: React.ReactNode;
   surface?: SectionSurface;
   /** Swap copy + media columns */
   mediaPosition?: "left" | "right";
@@ -42,6 +47,7 @@ export function BenefitSplit({
   link,
   linkLocation,
   media,
+  visual,
   surface = "dark",
   mediaPosition = "right",
   id,
@@ -115,14 +121,16 @@ export function BenefitSplit({
             mediaPosition === "left" ? "@md/section:order-1" : ""
           )}
         >
-          <Image
-            src={media.src}
-            alt={media.alt}
-            width={media.width}
-            height={media.height}
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="h-auto w-full object-cover"
-          />
+          {visual ?? (
+            <Image
+              src={media.src}
+              alt={media.alt}
+              width={media.width}
+              height={media.height}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="h-auto w-full object-cover"
+            />
+          )}
         </div>
       </div>
     </SectionContainer>

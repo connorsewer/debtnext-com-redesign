@@ -7,6 +7,7 @@ import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProseIntro } from "@/components/sections/ProseIntro";
+import { LazyReportingDashboard } from "@/components/product/visuals/lazy";
 import {
   reportingAccordion,
   reportingBenefit,
@@ -58,6 +59,7 @@ export default function ReportingPage() {
         body={reportingBenefit.body}
         bullets={reportingBenefit.bullets}
         media={reportingBenefit.media}
+        visual={<LazyReportingDashboard />}
         surface="light"
       />
 

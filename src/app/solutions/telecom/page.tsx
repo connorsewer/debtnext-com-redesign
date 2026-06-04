@@ -6,6 +6,8 @@ import { CardGrid } from "@/components/sections/CardGrid";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
+import { ProductVisualBand } from "@/components/sections/ProductVisualBand";
+import { LazySolutionsIndustryCards } from "@/components/product/visuals/lazy";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
 import {
@@ -38,6 +40,10 @@ export default function TelecomSolutionPage() {
         variant="centered"
         location="telecom_hero"
       />
+
+      <ProductVisualBand>
+        <LazySolutionsIndustryCards />
+      </ProductVisualBand>
 
       <RevealSection>
         <CardGrid

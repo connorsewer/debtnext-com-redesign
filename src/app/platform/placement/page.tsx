@@ -7,6 +7,10 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProcessStrip } from "@/components/sections/ProcessStrip";
 import {
+  LazyDecisionEnginePreview,
+  LazyPlacementMatrix,
+} from "@/components/product/visuals/lazy";
+import {
   placementAccordion,
   placementBenefit,
   placementFinalCta,
@@ -46,6 +50,7 @@ export default function PlacementPage() {
         eyebrow={placementAccordion.eyebrow}
         heading={placementAccordion.heading}
         items={placementAccordion.items}
+        visuals={{ "decision-engine": <LazyPlacementMatrix /> }}
       />
 
       <BenefitSplit
@@ -53,6 +58,7 @@ export default function PlacementPage() {
         body={placementBenefit.body}
         bullets={placementBenefit.bullets}
         media={placementBenefit.media}
+        visual={<LazyDecisionEnginePreview />}
         surface="light"
       />
 

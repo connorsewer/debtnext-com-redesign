@@ -6,6 +6,8 @@ import { CardGrid } from "@/components/sections/CardGrid";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProcessStrip } from "@/components/sections/ProcessStrip";
+import { ProductVisualBand } from "@/components/sections/ProductVisualBand";
+import { LazyPlatformSystemMap } from "@/components/product/visuals/lazy";
 import {
   platformCapabilities,
   platformFinalCta,
@@ -35,6 +37,10 @@ export default function PlatformPage() {
         variant="centered"
         location="platform_hero"
       />
+
+      <ProductVisualBand>
+        <LazyPlatformSystemMap />
+      </ProductVisualBand>
 
       <CardGrid
         heading={platformCapabilities.heading}

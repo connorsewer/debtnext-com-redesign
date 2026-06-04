@@ -6,6 +6,7 @@ import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
+import { LazySolutionsIndustryCards } from "@/components/product/visuals/lazy";
 import {
   solutionsCompliance,
   solutionsCrossIndustry,
@@ -47,6 +48,7 @@ export default function SolutionsPage() {
         body={solutionsCrossIndustry.body}
         bullets={solutionsCrossIndustry.bullets}
         media={solutionsCrossIndustry.media}
+        visual={<LazySolutionsIndustryCards />}
         surface="light"
       />
 

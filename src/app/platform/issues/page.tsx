@@ -7,6 +7,7 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProcessStrip } from "@/components/sections/ProcessStrip";
 import { ProseIntro } from "@/components/sections/ProseIntro";
+import { LazyIssuesWorklist } from "@/components/product/visuals/lazy";
 import {
   issuesAccordion,
   issuesBenefit,
@@ -53,6 +54,7 @@ export default function IssuesPage() {
         body={issuesBenefit.body}
         bullets={issuesBenefit.bullets}
         media={issuesBenefit.media}
+        visual={<LazyIssuesWorklist />}
         surface="light"
       />
 

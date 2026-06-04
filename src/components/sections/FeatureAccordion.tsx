@@ -27,6 +27,10 @@ export interface FeatureAccordionProps {
   section: string;
   /** Anchor target id (used by hero "See how it works" link) */
   id?: string;
+  /** Optional live product visuals keyed by item id. Takes precedence over the
+   *  homepage AccordionVisual registry and the text placeholder, so any page
+   *  can pair a specific accordion item with a live visual. */
+  visuals?: Record<string, React.ReactNode>;
 }
 
 /**
@@ -47,6 +51,7 @@ export function FeatureAccordion({
   items,
   section,
   id,
+  visuals,
 }: FeatureAccordionProps) {
   const [activeId, setActiveId] = React.useState(items[0]?.id);
   const reduceMotion = useReducedMotion();
@@ -151,7 +156,9 @@ export function FeatureAccordion({
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               >
-                {isAccordionVisualId(item.id) ? (
+                {visuals?.[item.id] ? (
+                  visuals[item.id]
+                ) : isAccordionVisualId(item.id) ? (
                   <AccordionVisual id={item.id} />
                 ) : (
                   <div className="flex min-h-[22rem] w-full flex-col items-center justify-center gap-4 p-8 text-center">
