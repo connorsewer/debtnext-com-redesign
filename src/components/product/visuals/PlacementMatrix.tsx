@@ -1,4 +1,7 @@
+"use client";
+
 import * as React from "react";
+import { motion } from "framer-motion";
 
 import { EyebrowLabel } from "@/components/product/primitives/EyebrowLabel";
 import { LiveStatus } from "@/components/product/primitives/LiveStatus";
@@ -6,6 +9,12 @@ import { ProductCanvas } from "@/components/product/primitives/ProductCanvas";
 import { ProductCard } from "@/components/product/primitives/ProductCard";
 import { StatPill } from "@/components/product/primitives/StatPill";
 import { SegmentedBar } from "@/components/product/visuals/parts";
+import {
+  AnimatedNumber,
+  fadeUpItem,
+  inViewProps,
+  staggerContainer,
+} from "@/components/product/motion";
 
 // [CLAIMS REVIEW] placeholder values — Andrew sign-off required before production.
 const ROWS = [
@@ -57,21 +66,27 @@ export const PlacementMatrix = React.memo(function PlacementMatrix() {
         </span>
       </ProductCard>
 
-      <div className="mt-4 grid grid-cols-[1.1fr_2fr_0.6fr] gap-x-4 gap-y-3">
+      <motion.div
+        className="mt-4 grid grid-cols-[1.1fr_2fr_0.6fr] gap-x-4 gap-y-3"
+        variants={staggerContainer}
+        {...inViewProps}
+      >
         <span className="text-[10px] uppercase tracking-[0.08em] text-[var(--product-text-3)]">Treatment tier</span>
         <span className="text-[10px] uppercase tracking-[0.08em] text-[var(--product-text-3)]">Vendor allocation</span>
         <span className="text-right text-[10px] uppercase tracking-[0.08em] text-[var(--product-text-3)]">Accounts</span>
         {ROWS.map((r) => (
           <React.Fragment key={r.tier}>
-            <div>
+            <motion.div variants={fadeUpItem}>
               <p className="text-[12.5px] font-[500]">{r.tier}</p>
               <p className="text-[10.5px] text-[var(--product-text-3)]">{r.sub}</p>
-            </div>
+            </motion.div>
             <SegmentedBar segments={[...r.segments]} className="self-center" />
-            <span className="self-center text-right text-[12.5px] tabular-nums">{r.accounts}</span>
+            <span className="self-center text-right text-[12.5px] tabular-nums">
+              <AnimatedNumber value={Number(r.accounts.replace(/,/g, ""))} />
+            </span>
           </React.Fragment>
         ))}
-      </div>
+      </motion.div>
 
       <div className="mt-5 flex flex-wrap gap-2">
         <StatPill label="Reconciliation 04:00 today" />
