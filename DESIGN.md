@@ -327,6 +327,26 @@ Charts should feel integrated into the UI rather than like a separate analytics 
 
 Charts must use labels, tooltips, legends, or data tables. Do not rely on color alone.
 
+### Product-visual tokens
+
+Used only by the product-visual system in `src/components/product/` (the dashboard mockups that fill the homepage feature accordion and platform pages). These are **always dark and theme-independent** because each visual renders its own dark canvas regardless of page theme. Defined once in `:root` in `globals.css`.
+
+| Token | Value | Use |
+|---|---:|---|
+| `--product-canvas` | `#171721` | Visual canvas background |
+| `--product-card` | `#1B1B27` | Glass card base |
+| `--product-text` | `#EDEDF3` | Primary text in visuals |
+| `--product-text-2` | `#C8C8D0` | Secondary text |
+| `--product-text-3` | `#87878E` | Tertiary / labels |
+| `--product-text-muted` | `#6B6B7B` | Muted |
+| `--status-success` | `#5BCB89` | Positive delta, compliant, on-time |
+| `--status-warning` | `#FFB86C` | Warning, review, mid band |
+| `--status-breach` | `#E27676` | Breach, negative delta, recall |
+| `--status-special` | `#BB86FC` | SCRA / special regulated status |
+| `--status-focus` | `#9CB4E8` | Live indicators, eyebrow text |
+
+Status colors must always pair with a label or icon, never color alone (WCAG 2.2 AA). Primary action / glow uses the existing `--primary` (`#5266EB`).
+
 ## 4.2 Typography
 
 The visual target is Mercury-like typography: proprietary Arcadia/Arcadia Display where licensed, with Inter as the implementation fallback. The supplied CSS imports Inter, so Inter is the practical default unless licensed Mercury-like typefaces are available.

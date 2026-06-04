@@ -82,6 +82,21 @@
   --chart-4: #f59e0b;
   --chart-5: #06b6d4;
 
+  /* ---- Product-visual tokens (always dark; theme-independent) ----
+     Used only by src/components/product/ visuals. Constant across light/dark
+     because product visuals render their own dark surface. */
+  --status-success: #5BCB89;
+  --status-warning: #FFB86C;
+  --status-breach: #E27676;
+  --status-special: #BB86FC; /* SCRA */
+  --status-focus: #9CB4E8;
+  --product-canvas: #171721;
+  --product-card: #1B1B27;
+  --product-text: #EDEDF3;
+  --product-text-2: #C8C8D0;
+  --product-text-3: #87878E;
+  --product-text-muted: #6B6B7B;
+
   /* shadcn radius scale (used by primitives like accordion, dialog) */
   --radius: 0.625rem;
 

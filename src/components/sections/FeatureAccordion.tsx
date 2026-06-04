@@ -2,6 +2,7 @@
 
 import * as React from "react";
 
+import { AccordionVisual, type AccordionVisualId } from "@/components/product/visuals";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
@@ -128,28 +129,28 @@ export function FeatureAccordion({
           })}
         </ul>
 
-        <div className="relative order-2 min-h-[14rem] overflow-hidden rounded-[var(--radius-sm)] bg-[var(--card)] shadow-[var(--shadow-nav)] ring-1 ring-[var(--border)] @lg/section:order-none @lg/section:min-h-[28rem]">
-          {items.map((item) => (
-            <div
-              key={item.id}
-              aria-hidden={activeId !== item.id}
-              className={cn(
-                "absolute inset-0 flex items-center justify-center p-8 transition-opacity duration-[var(--duration-fast)] ease-[var(--ease-in-out)]",
-                activeId === item.id ? "opacity-100" : "opacity-0"
-              )}
-            >
-              {/* M2 placeholder visual — replaced with real product
-                  screenshots in M3 per content-map.md. */}
-              <div className="flex h-full w-full flex-col items-center justify-center gap-4 rounded-[var(--radius-xs)] bg-[var(--card-alt)] p-8 text-center">
-                <span className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
-                  Visual
-                </span>
-                <p className="text-h3 font-[480] text-[var(--foreground)]">
-                  {item.visualLabel}
-                </p>
+        <div className="relative order-2 min-h-[22rem] overflow-hidden rounded-[var(--radius-sm)] bg-[var(--product-canvas)] shadow-[var(--shadow-nav)] ring-1 ring-[var(--border)] @lg/section:order-none @lg/section:min-h-[28rem]">
+          {items.map((item) => {
+            const isActive = activeId === item.id;
+            return (
+              <div
+                key={item.id}
+                aria-hidden={!isActive}
+                aria-label={item.visualLabel}
+                className={cn(
+                  "absolute inset-0 transition-opacity duration-[var(--duration-fast)] ease-[var(--ease-in-out)]",
+                  isActive ? "opacity-100" : "pointer-events-none opacity-0"
+                )}
+              >
+                {/* Real product visual (src/components/product). Only the active
+                    item mounts its visual; inactive slots stay empty so a single
+                    animated visual runs at a time. */}
+                {isActive ? (
+                  <AccordionVisual id={item.id as AccordionVisualId} />
+                ) : null}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </SectionContainer>
