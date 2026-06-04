@@ -158,12 +158,12 @@ export const compareLeadership: {
   body: string;
   leaders: LeaderRow[];
 } = {
-  heading: "More than 130 combined years inside recovery.",
+  heading: "More than 125 combined years inside recovery.",
   body:
     "The DebtNext leadership team has spent careers in collections and receivables management. The people who configure your platform are the same people who designed it.",
   leaders: [
-    { name: "Marc Lanni", role: "Vice President, Strategic Accounts", years: 30 },
-    { name: "Paul Goske", role: "President", years: 25 },
+    { name: "Paul Goske", role: "Co-founder & President", years: 25 },
+    { name: "Rob Novosel", role: "Co-founder & CTO", years: 25 },
     { name: "Jeremy Gaffney", role: "Operations Manager", years: 24 },
     { name: "Andrew Hannan", role: "Director of Product Innovation", years: 20 },
     { name: "Eric Port", role: "Operations Director", years: 17 },

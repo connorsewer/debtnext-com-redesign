@@ -48,12 +48,17 @@ export const companyLeadership: {
   cards: GridCard[];
 } = {
   heading: "Who runs dPlat.",
-  body: "dPlat is led by a team with 130+ combined years of recovery operations experience.",
+  body: "dPlat is led by a team with 125+ combined years of recovery operations experience.",
   cards: [
     {
-      eyebrow: "President",
+      eyebrow: "Co-founder & President",
       title: "Paul Goske",
-      body: "25 years in recovery operations and platform leadership.",
+      body: "Co-founded dPlat in 2003. 25 years in recovery operations and platform leadership.",
+    },
+    {
+      eyebrow: "Co-founder & CTO",
+      title: "Rob Novosel",
+      body: "Co-founded dPlat in 2003. Owns product, operations, and technology, from middleware and implementation to support.",
     },
     {
       eyebrow: "Director of Strategic Initiatives",
@@ -69,11 +74,6 @@ export const companyLeadership: {
       eyebrow: "Operations Manager",
       title: "Jeremy Gaffney",
       body: "24 years in recovery operations.",
-    },
-    {
-      eyebrow: "VP, Strategic Accounts",
-      title: "Marc Lanni",
-      body: "30 years in recovery operations and client management.",
     },
     {
       eyebrow: "Director, Product Innovation",
