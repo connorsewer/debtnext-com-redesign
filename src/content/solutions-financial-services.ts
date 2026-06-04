@@ -10,7 +10,7 @@ import type { GridCard } from "@/components/sections/CardGrid";
 import type { FeatureAccordionItem } from "@/components/sections/FeatureAccordion";
 
 export const financialServicesMeta = {
-  title: "Financial services recovery software | dPlat",
+  title: "Financial services recovery software",
   description:
     "dPlat runs recovery for bank card, installment, line of credit, and overdraft portfolios. FDCPA, Reg F, FCRA, and TCPA workflows built in.",
   canonical: "https://debtnext.com/solutions/financial-services",

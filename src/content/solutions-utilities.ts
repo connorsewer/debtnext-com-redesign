@@ -12,7 +12,7 @@ import type { GridCard } from "@/components/sections/CardGrid";
 import type { FeatureAccordionItem } from "@/components/sections/FeatureAccordion";
 
 export const utilitiesMeta = {
-  title: "Utility recovery management software | dPlat",
+  title: "Utility recovery management software",
   description:
     "dPlat runs recovery for regulated and deregulated utilities. Final-bill placement, deposit handling, write-off disputes, and PUC-ready compliance.",
   canonical: "https://debtnext.com/solutions/utilities",

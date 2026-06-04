@@ -11,7 +11,7 @@ import type { GridCard } from "@/components/sections/CardGrid";
 import type { FeatureAccordionItem } from "@/components/sections/FeatureAccordion";
 
 export const fintechMeta = {
-  title: "Fintech recovery management software | dPlat",
+  title: "Fintech recovery management software",
   description:
     "dPlat runs recovery for direct lenders, BNPL, and digital banking. API-first integration, configurable workflows, compliance across 50-state lending.",
   canonical: "https://debtnext.com/solutions/fintech",

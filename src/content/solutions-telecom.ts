@@ -10,7 +10,7 @@ import type { GridCard } from "@/components/sections/CardGrid";
 import type { FeatureAccordionItem } from "@/components/sections/FeatureAccordion";
 
 export const telecomMeta = {
-  title: "Telecom recovery management software | dPlat",
+  title: "Telecom recovery management software",
   description:
     "dPlat runs high-volume post-disconnect recovery for wireless, wireline, and broadband carriers. Short treatment windows, configurable write-off cycles.",
   canonical: "https://debtnext.com/solutions/telecom",
