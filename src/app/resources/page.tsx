@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { CardGrid } from "@/components/sections/CardGrid";
+import { CaseStudyBand } from "@/components/sections/CaseStudyBand";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import { AttachedForm } from "@/components/ui/AttachedForm";
 import {
+  resourcesCaseStudies,
   resourcesCategories,
   resourcesFinalCta,
   resourcesHero,
@@ -38,6 +40,15 @@ export default function ResourcesPage() {
         heading={resourcesCategories.heading}
         cards={resourcesCategories.cards}
         columns={3}
+      />
+
+      <CaseStudyBand
+        eyebrow={resourcesCaseStudies.eyebrow}
+        heading={resourcesCaseStudies.heading}
+        body={resourcesCaseStudies.body}
+        studies={resourcesCaseStudies.studies}
+        disclaimer={resourcesCaseStudies.disclaimer}
+        surface="elevated-dark"
       />
 
       <SectionContainer surface="light" containerSize="readable">
