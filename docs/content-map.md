@@ -16,7 +16,9 @@ This document maps every page in the v1 site to its purpose, content sources, pr
 │   ├── /solutions/utilities           Utility recovery
 │   ├── /solutions/financial-services  Financial services recovery
 │   ├── /solutions/telecom             Telecom recovery
-│   └── /solutions/fintech             Fintech recovery
+│   ├── /solutions/fintech             Fintech recovery
+│   ├── /solutions/insurance           Insurance recovery (subrogation, deductible, salvage)
+│   └── /solutions/healthcare          Healthcare and RCM recovery
 ├── /why-dplat                         Differentiation
 ├── /compare                           Named-platform comparison (rolls up under Why dPlat)
 ├── /resources                         Content hub (placeholder for v1)
@@ -41,7 +43,7 @@ v2 routes (out of scope for initial launch):
 | Label | Destination | Type |
 |---|---|---|
 | Platform | `/platform` | Dropdown (Placement, Optimization, Issues, Reporting, Integrations, All capabilities) |
-| Solutions | `/solutions` | Dropdown (Utilities, Financial Services, Telecom, Fintech, All solutions) |
+| Solutions | `/solutions` | Dropdown (Utilities, Financial Services, Telecom, Fintech, Insurance, Healthcare and RCM, All solutions) |
 | Why dPlat | `/why-dplat` | Dropdown (Why dPlat, How dPlat compares → `/compare`, Integrations) |
 | Resources | `/resources` | Direct link |
 | Company | `/company` | Dropdown (About, Leadership, Careers, Contact, Company overview) |
@@ -145,11 +147,11 @@ Footer bottom row: TSI ownership disclosure, copyright, social links (LinkedIn o
 - **Approvers**: Connor, Andrew Budish (no named clients without consent)
 - **Child pages**: each industry card links to its `/solutions/<industry>` page.
 
-### `/solutions/utilities`, `/solutions/financial-services`, `/solutions/telecom`, `/solutions/fintech` (Industry pages)
+### `/solutions/utilities`, `/solutions/financial-services`, `/solutions/telecom`, `/solutions/fintech`, `/solutions/insurance`, `/solutions/healthcare` (Industry pages)
 
 - **Purpose**: Industry-specific positioning for each vertical dPlat serves.
 - **Primary CTA**: Request a demo. **Secondary**: See the platform (`/platform`).
-- **Content source**: `DebtNext_Solutions_Pages_Copy.docx`. Authored as typed modules in `src/content/solutions-<industry>.ts`.
+- **Content source**: `DebtNext_Solutions_Pages_Copy.docx` for the original four. Insurance and Healthcare/RCM were added from the 2026-06-04 alpha-review plan (broaden scope, B2B/B2C), authored as typed modules in `src/content/solutions-<industry>.ts`.
 - **Sections**: Hero, 3 "what's different" cards, "how dPlat runs it" feature accordion (animated product visuals), proof (editorial prose band), regulatory framework list, final CTA.
 - **Navigation**: reachable from the Solutions nav dropdown, the footer Solutions group, the `/solutions` parent cards, and the homepage industry trust band.
 - **Excluded copy**: internal review/governance callouts, the named utility client (Philadelphia Gas Works) and its unverified 250% paydown figure, and any hard BNPL delinquency figure. Fintech BNPL framing stays directional.
@@ -168,18 +170,19 @@ Footer bottom row: TSI ownership disclosure, copyright, social links (LinkedIn o
 
 - **Purpose**: High commercial intent. Help buyers actively evaluating named alternatives see where dPlat fits and where each competitor was built for and stops. Rolls up under the Why dPlat narrative.
 - **Primary CTA**: Request a demo
-- **Content source**: `DebtNext_Comparison_Page_Copy.docx` (Strategic Marketing landscape analysis). Names six competitors (NeuAnalytics, Convoke, C&R Software, Finvi, Symend, HighRadius) by their own public positioning. The Phase-2 `/compare/[competitor]` subpages are not built; that section is omitted from the live page.
+- **Content source**: `DebtNext_Comparison_Page_Copy.docx` (Strategic Marketing landscape analysis). Per the 2026-06-04 alpha review, C&R Software/Debt Manager (complementary, not a competitor) and Finvi (collections-focused) were removed, and Imagine Cloud / OutSourcer (vendor-compliance, oversight class) was added. Current matrix: NeuAnalytics, Convoke, Imagine Cloud, Symend, HighRadius, by their own public positioning. The Phase-2 `/compare/[competitor]` subpages are not built; that section is omitted from the live page.
 - **Sections**: Hero, 2026 market context, comparison matrix (platforms as rows, dPlat highlighted, staggered reveal), differentiators, team behind the platform (leadership table with tenure count-up + service pillars), where dPlat works best, scale proof band, final CTA
 - **Approvers**: Andrew Budish (competitive comparison language), Michael Orefice, Joe Laughlin (platform thesis)
 - **Status flags**: `[CLAIMS REVIEW]` on competitive scope, leadership tenure, and scale metrics
 
-### `/resources` (Content hub, v1 placeholder)
+### `/resources` (Content hub)
 
-- **Purpose**: Hold the place for the future content engine. Light page in v1.
+- **Purpose**: Hold the place for the future content engine, plus the first live case studies.
 - **Primary CTA**: Request a demo
-- **Content source**: Connor's editorial plan (TBD)
-- **Sections**: Hero, 3 placeholder content cards (blog, case studies, security center), newsletter signup (or "coming soon"), final CTA
-- **Approvers**: Connor
+- **Content source**: Connor's editorial plan (TBD). Case studies sourced from the team's anonymized utility mockups (2026-06-04).
+- **Sections**: Hero, 3 category cards, two anonymized utility case studies (CaseStudyBand: agency consolidation +24% / $8.7M; 3-yr West Coast +45% / -23% cost-to-collect), newsletter signup, final CTA
+- **Status flags**: `[CLAIMS REVIEW]` on the case-study metrics. Anonymized; Andrew Budish + Paul Goske sign-off plus written client approval before a client is named or a study is distributed externally. Keep PG&E and California out of headlines.
+- **Approvers**: Connor, Andrew Budish, Paul Goske
 
 ### `/company` (About, TSI relationship, leadership)
 
