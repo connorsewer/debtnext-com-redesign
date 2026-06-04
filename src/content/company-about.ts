@@ -95,13 +95,13 @@ export const aboutStats: {
       caption: "Across financial services, fintech, utilities, telecom, and more",
     },
     {
-      number: "60M+",
+      number: "116.8M+",
       label: "Active accounts",
       caption: "Across client deployments",
     },
     {
-      number: "$1.5B+",
-      label: "In payments annually",
+      number: "$1.9B+",
+      label: "Transactional dollars managed annually",
       caption: "Processed through the platform on behalf of clients",
     },
   ],

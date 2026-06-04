@@ -59,46 +59,40 @@ export const whyDplatComparison: {
 } = {
   heading: "How dPlat compares to the alternatives.",
   body:
-    "Recovery operations teams typically evaluate dPlat against three other options: building it in-house, extending an existing system (CRM, ERP, billing platform), or using a single-vendor portal. Each option has a fit. Here's where dPlat lands.",
+    "Recovery operations teams typically evaluate dPlat against two other options: building it in-house or extending an existing system (CRM, ERP, billing platform). Each option has a fit. Here's where dPlat lands.",
   columns: [
     { label: "Custom build" },
     { label: "Extended CRM/ERP" },
-    { label: "Single-vendor portal" },
     { label: "dPlat", isPrimary: true },
   ],
   rows: [
     {
       capability: "Recovery-specific data model",
-      values: ["Build it yourself", "Map and customize", "Vendor-defined", "Configured"],
+      values: ["Build it yourself", "Map and customize", "Configured"],
     },
     {
       capability: "Multi-vendor network",
-      values: [
-        "Build the integrations",
-        "Build the integrations",
-        "One vendor only",
-        "Standard",
-      ],
+      values: ["Build the integrations", "Build the integrations", "Standard"],
     },
     {
       capability: "Daily reconciliation",
-      values: ["Build it", "Build it", "Vendor-defined", "Standard"],
+      values: ["Build it", "Build it", "Standard"],
     },
     {
       capability: "Configurable placement rules",
-      values: ["Build it", "Build it", "Limited", "Standard"],
+      values: ["Build it", "Build it", "Standard"],
     },
     {
       capability: "Audit trail",
-      values: ["Build it", "Build the patterns", "Vendor-defined", "Standard"],
+      values: ["Build it", "Build the patterns", "Standard"],
     },
     {
       capability: "Regulatory exception handling",
-      values: ["Build it", "Build the patterns", "Vendor-defined", "Standard"],
+      values: ["Build it", "Build the patterns", "Standard"],
     },
     {
       capability: "Time to production",
-      values: ["12-24 months", "6-18 months", "1-3 months", "4-12 months"],
+      values: ["12-24 months", "6-18 months", "4-12 months"],
     },
   ],
 };
@@ -108,13 +102,13 @@ export const whyDplatProof: { eyebrow: string; stats: ProofStat[] } = {
   eyebrow: "In production, at scale, for two decades",
   stats: [
     {
-      number: "60M+",
+      number: "116.8M+",
       label: "Active accounts under management",
       caption: "Across client deployments",
     },
     {
-      number: "$1.5B+",
-      label: "In payments annually",
+      number: "$1.9B+",
+      label: "Transactional dollars managed annually",
       caption: "Processed through the platform on behalf of clients",
     },
     {
