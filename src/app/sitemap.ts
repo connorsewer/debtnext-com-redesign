@@ -12,10 +12,18 @@ const STATIC_ROUTES = [
   "/platform/reporting",
   "/platform/integrations",
   "/solutions",
+  "/solutions/utilities",
+  "/solutions/financial-services",
+  "/solutions/telecom",
+  "/solutions/fintech",
   "/why-dplat",
   "/compare",
   "/resources",
   "/company",
+  "/company/about",
+  "/company/leadership",
+  "/company/careers",
+  "/company/contact",
   "/demo",
 ];
 

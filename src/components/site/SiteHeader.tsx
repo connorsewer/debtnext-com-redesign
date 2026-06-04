@@ -11,6 +11,7 @@ import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import type { NavLink } from "@/content/nav";
 import {
+  companySubNav,
   platformSubNav,
   primaryCta,
   primaryNav,
@@ -28,6 +29,7 @@ const DROPDOWNS: Record<string, { items: NavLink[]; label: string }> = {
   "/platform": { items: platformSubNav, label: "Platform capabilities" },
   "/solutions": { items: solutionsSubNav, label: "Industry solutions" },
   "/why-dplat": { items: whyDplatSubNav, label: "Why dPlat" },
+  "/company": { items: companySubNav, label: "Company" },
 };
 
 /**

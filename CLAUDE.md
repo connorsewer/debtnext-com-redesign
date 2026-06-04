@@ -141,13 +141,18 @@ The site is intentionally compact for v1. Pages live as MDX in `content/pages/`.
 | `/why-dplat` | `content/pages/why-dplat.md` |
 | `/compare` | `src/content/compare.ts` (source copy: `DebtNext_Comparison_Page_Copy.docx`) |
 | `/company` | `content/pages/company.md` |
+| `/company/about` | `src/content/company-about.ts` (source copy: `DebtNext_Company_Pages_Copy.docx`) |
+| `/company/leadership` | `src/content/company-leadership.ts` (source copy: `DebtNext_Company_Pages_Copy.docx`) |
+| `/company/careers` | `src/content/company-careers.ts` (source copy: `DebtNext_Company_Pages_Copy.docx`) |
+| `/company/contact` | `src/content/company-contact.ts` (source copy: `DebtNext_Company_Pages_Copy.docx`) |
 | `/resources` | `content/pages/resources.md` |
 | `/demo` | `content/pages/demo.md` |
 
 Page content is authored as typed modules in `src/content/*.ts` (consumed by
 the route components in `src/app/`). The `content/pages/*.md` briefs remain the
-editorial source for the original v1 routes; `/compare` and
-`/platform/integrations` were authored directly from their approved `.docx`
+editorial source for the original v1 routes; `/compare`,
+`/platform/integrations`, the `/solutions/<industry>` pages, and the
+`/company/<page>` pages were authored directly from their approved `.docx`
 copy decks.
 
 Additional capability pages (`/platform/oversight`, `/platform/media`, `/platform/debt-sales`, `/platform/legal-affidavit`) get built in v2.

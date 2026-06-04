@@ -20,7 +20,11 @@ This document maps every page in the v1 site to its purpose, content sources, pr
 ├── /why-dplat                         Differentiation
 ├── /compare                           Named-platform comparison (rolls up under Why dPlat)
 ├── /resources                         Content hub (placeholder for v1)
-├── /company                           About, TSI relationship, leadership
+├── /company                           Company overview
+│   ├── /company/about                 Company story and TSI ownership
+│   ├── /company/leadership            Leadership roster
+│   ├── /company/careers               Careers
+│   └── /company/contact               Contact and locations
 └── /demo                              Demo request form
 ```
 
@@ -30,7 +34,7 @@ v2 routes (out of scope for initial launch):
 - `/platform/debt-sales`
 - `/platform/legal-affidavit`
 - `/resources/blog`, `/resources/case-studies`, `/resources/glossary`
-- `/company/leadership`, `/company/careers`, `/company/press`
+- `/company/press`
 
 ## Primary nav
 
@@ -40,7 +44,7 @@ v2 routes (out of scope for initial launch):
 | Solutions | `/solutions` | Dropdown (Utilities, Financial Services, Telecom, Fintech, All solutions) |
 | Why dPlat | `/why-dplat` | Dropdown (Why dPlat, How dPlat compares → `/compare`, Integrations) |
 | Resources | `/resources` | Direct link |
-| Company | `/company` | Direct link |
+| Company | `/company` | Dropdown (About, Leadership, Careers, Contact, Company overview) |
 | Request a demo | `/demo` | Primary CTA (filled pill) |
 
 The `/compare` and `/platform/integrations` pages roll up under the Why dPlat
@@ -53,6 +57,11 @@ The four `/solutions/<industry>` pages roll up under the Solutions dropdown.
 They are also reachable from the footer Solutions group, the `/solutions`
 parent industry cards, and the homepage industry trust band (each industry
 label links to its solution page).
+
+The four `/company/<page>` pages (About, Leadership, Careers, Contact) roll up
+under the Company dropdown and the footer Company group. The `/company` parent
+remains the overview. On mobile, the nav shows top-level routes only; the
+child pages are reachable from the footer.
 
 ## Footer structure
 
@@ -180,6 +189,43 @@ Footer bottom row: TSI ownership disclosure, copyright, social links (LinkedIn o
 - **Sections**: Hero (who we are), founding story, TSI ownership section, leadership team, locations, final CTA
 - **Approvers**: Connor, Andrew Budish (TSI disclosure language), Joe Laughlin (corporate framing)
 - **Status flags**: `[COI REVIEW]` on the TSI section
+- **Child pages**: About, Leadership, Careers, Contact (below) go deeper than the parent's summary sections.
+
+### `/company/about` (Company story and ownership)
+
+- **Purpose**: The "we do one thing" narrative, the origin story, the one-product focus, and the TSI ownership disclosure.
+- **Primary CTA**: Request a demo (secondary: See the platform)
+- **Content source**: `DebtNext_Company_Pages_Copy.docx` (page 1). Ownership language mirrors the approved `/company` parent framing.
+- **Sections**: Hero, origin, one-product focus, TSI ownership (intro + two "what that means" cards + TSI link), by-the-numbers proof, final CTA
+- **Approvers**: Michael Orefice, Joe Laughlin, Andrew Budish (TSI relationship language)
+- **Status flags**: `[COI REVIEW]` on the ownership section; `[CLAIMS REVIEW]` on the metrics
+
+### `/company/leadership` (Leadership roster)
+
+- **Purpose**: Show recovery-native leadership. The people who build dPlat have run recovery operations.
+- **Primary CTA**: Request a demo (secondary: See the platform)
+- **Content source**: `DebtNext_Company_Pages_Copy.docx` (page 2). Kept in sync with the `/company` parent and `/compare` rosters (Rob Novosel added, Marc Lanni removed).
+- **Sections**: Hero, recovery-native approach, team cards (6, tenure + role + bio), how the team works, final CTA
+- **Approvers**: Andrew Budish (clear names and titles); needs an owner to keep roles current
+- **Status flags**: `[CLAIMS REVIEW]` on named individuals and tenure
+
+### `/company/careers` (Careers)
+
+- **Purpose**: Recruit for an onshore, single-product team. Convey real ownership and scale.
+- **Primary CTA**: Get in touch (routes to `/company/contact` until an ATS/jobs URL is confirmed)
+- **Content source**: `DebtNext_Company_Pages_Copy.docx` (page 3). No dead "View openings" link ships; no fabricated benefits/salary/perks.
+- **Sections**: Hero, what you'd work on, how we work, open roles, final CTA
+- **Approvers**: HR to confirm careers destination and any benefits before publish
+- **Status flags**: `[VERIFY]` careers destination (ATS or jobs inbox)
+
+### `/company/contact` (Contact and locations)
+
+- **Purpose**: Route visitors to the right channel: demo, client support, or general inquiry. Show where the company operates.
+- **Primary CTA**: Request a demo
+- **Content source**: `DebtNext_Company_Pages_Copy.docx` (page 4). No email/phone/address is fabricated; the demo path uses `/demo`.
+- **Sections**: Hero, three channel cards (evaluating → demo, client support, general inquiries), where we are, final CTA
+- **Approvers**: Confirm contact details and the Copley, Ohio office reference before publish
+- **Status flags**: `[VERIFY]` contact specifics and office location
 
 ### `/demo` (Demo request)
 

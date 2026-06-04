@@ -51,6 +51,18 @@ export const whyDplatSubNav: NavLink[] = [
   { label: "Integrations", href: "/platform/integrations" },
 ];
 
+/**
+ * Company child pages exposed in the desktop nav dropdown.
+ * Mobile nav still shows just the top-level routes.
+ */
+export const companySubNav: NavLink[] = [
+  { label: "About", href: "/company/about" },
+  { label: "Leadership", href: "/company/leadership" },
+  { label: "Careers", href: "/company/careers" },
+  { label: "Contact", href: "/company/contact" },
+  { label: "Company overview", href: "/company" },
+];
+
 export const primaryCta: NavLink = {
   label: "Request a demo",
   href: "/demo",
@@ -82,10 +94,10 @@ export const footerGroups: { title: string; links: NavLink[] }[] = [
   {
     title: "Company",
     links: [
-      { label: "About", href: "/company" },
-      { label: "Leadership", href: "/company" },
-      { label: "Careers", href: "/company" },
-      { label: "Contact", href: "/demo" },
+      { label: "About", href: "/company/about" },
+      { label: "Leadership", href: "/company/leadership" },
+      { label: "Careers", href: "/company/careers" },
+      { label: "Contact", href: "/company/contact" },
     ],
   },
   {
