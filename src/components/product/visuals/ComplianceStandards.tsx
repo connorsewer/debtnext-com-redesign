@@ -8,6 +8,13 @@ import { LiveStatus } from "@/components/product/primitives/LiveStatus";
 import { ProductCanvas } from "@/components/product/primitives/ProductCanvas";
 import { StatPill } from "@/components/product/primitives/StatPill";
 import { Tag, TypeChip, ValueBar, type ToneKey } from "@/components/product/visuals/parts";
+import {
+  AnimatedNumber,
+  fadeUpItem,
+  inViewProps,
+  popItem,
+  staggerContainer,
+} from "@/components/product/motion";
 
 // [CLAIMS REVIEW] placeholder values — Andrew sign-off required.
 // [COI REVIEW] compliance / regulated-status language below.
@@ -40,19 +47,27 @@ export const ComplianceStandards = React.memo(function ComplianceStandards() {
       <p className="mt-4 text-[10px] uppercase tracking-[0.08em] text-[var(--product-text-3)]">
         Work standard adherence · 30 days
       </p>
-      <div className="mt-2 flex flex-col gap-2.5">
+      <motion.div
+        className="mt-2 flex flex-col gap-2.5"
+        variants={staggerContainer}
+        {...inViewProps}
+      >
         {VENDORS.map((v) => (
-          <div key={v.name} className="grid grid-cols-[1.4fr_2fr_auto_auto] items-center gap-3">
+          <motion.div key={v.name} variants={fadeUpItem} className="grid grid-cols-[1.4fr_2fr_auto_auto] items-center gap-3">
             <div className="flex items-center gap-2">
               <span aria-hidden="true" className="h-5 w-5 shrink-0 rounded-[5px] bg-gradient-to-br from-[#5266EB] to-[#3949B5]" />
               <span className="text-[12px]">{v.name}</span>
             </div>
             <ValueBar value={v.value} tone={v.tone} />
-            <span className="text-[12px] tabular-nums">{v.value}%</span>
-            <Tag label={v.status} tone={v.statusTone as ToneKey} />
-          </div>
+            <span className="text-[12px] tabular-nums">
+              <AnimatedNumber value={v.value} decimals={1} suffix="%" />
+            </span>
+            <motion.span variants={popItem} className="inline-flex">
+              <Tag label={v.status} tone={v.statusTone as ToneKey} />
+            </motion.span>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       <div className="mt-5 flex items-center justify-between">
         <p className="flex items-center gap-2 text-[11px] uppercase tracking-[0.08em] text-[var(--product-text-3)]">
@@ -67,17 +82,21 @@ export const ComplianceStandards = React.memo(function ComplianceStandards() {
         </p>
         <span className="text-[11px] tabular-nums text-[var(--product-text-3)]">1,284 today</span>
       </div>
-      <div className="mt-2 flex flex-col divide-y divide-white/[0.06]">
+      <motion.div
+        className="mt-2 flex flex-col divide-y divide-white/[0.06]"
+        variants={staggerContainer}
+        {...inViewProps}
+      >
         {EXCEPTIONS.map((e) => (
-          <div key={e.desc} className="flex items-center justify-between gap-3 py-2">
+          <motion.div key={e.desc} variants={fadeUpItem} className="flex items-center justify-between gap-3 py-2">
             <div className="flex min-w-0 items-center gap-2">
               <TypeChip label={e.chip} tone={e.chipTone as ToneKey} />
               <span className="truncate text-[11.5px]">{e.desc}</span>
             </div>
             <span className="shrink-0 text-[11px]" style={{ color: "var(--status-success)" }}>{e.action}</span>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       <div className="mt-5 flex flex-wrap gap-2">
         <StatPill label="Audit trail complete" tone="success" />
