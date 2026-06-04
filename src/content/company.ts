@@ -10,7 +10,7 @@ import type { ProofStat } from "@/components/sections/ProofBand";
 export const companyMeta = {
   title: "Company",
   description:
-    "DebtNext has been building recovery management software for credit originators since 2003. A Transworld Systems Inc. company.",
+    "DebtNext has been building recovery management software for credit originators since 2003. A TSI company.",
   canonical: "https://debtnext.com/company",
 };
 
@@ -33,12 +33,12 @@ export const companyFoundingStory = {
 // [COI REVIEW] Andrew, Joe, and Michael to review framing of this section.
 export const companyTsi = {
   eyebrow: "Ownership",
-  heading: "A Transworld Systems Inc. company.",
+  heading: "A TSI company.",
   paragraphs: [
     "DebtNext is wholly owned by Transworld Systems Inc. (TSI), a portfolio company of Clearlake Capital Group. TSI is a revenue recovery platform with operations across accounts receivable management, healthcare revenue cycle, customer experience operations, and loan servicing.",
     "dPlat operates as TSI's recovery management software business. The platform connects credit originators to their recovery vendor networks, which can include TSI's own collection operations or any third-party vendor the client chooses. Clients configure their own vendor network inside the platform.",
   ],
-  link: { label: "Visit transworldsystems.com", href: "https://www.transworldsystems.com" },
+  link: { label: "Visit tsico.com", href: "https://www.tsico.com" },
 };
 
 // [CLAIMS REVIEW] Verify titles and tenure with Paul before publication.
@@ -48,7 +48,7 @@ export const companyLeadership: {
   cards: GridCard[];
 } = {
   heading: "Who runs dPlat.",
-  body: "dPlat is led by a team with 125+ combined years of recovery operations experience.",
+  body: "dPlat is led by a team with 100+ combined years of recovery operations experience.",
   cards: [
     {
       eyebrow: "Co-founder & President",
@@ -69,11 +69,6 @@ export const companyLeadership: {
       eyebrow: "Operations Director",
       title: "Eric Port",
       body: "17 years in recovery operations leadership.",
-    },
-    {
-      eyebrow: "Operations Manager",
-      title: "Jeremy Gaffney",
-      body: "24 years in recovery operations.",
     },
     {
       eyebrow: "Director, Product Innovation",

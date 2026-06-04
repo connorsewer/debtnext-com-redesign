@@ -43,7 +43,7 @@ export const careersHow = {
     "Onshore team. All development is performed by badged employees in the United States.",
     "One product. Engineering attention goes to dPlat, not a portfolio of competing roadmaps.",
     "Real ownership. The people who design the platform stay close to how clients use it.",
-    "A Transworld Systems Inc. company, backed by Clearlake Capital.",
+    "A TSI company, backed by Clearlake Capital.",
   ],
 };
 

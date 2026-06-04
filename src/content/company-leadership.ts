@@ -58,12 +58,6 @@ export const leadershipTeam: {
         "Co-founder & CTO. Co-founded DebtNext in 2003. Oversees product, operations, and technology, including platform development, implementation success, and support.",
     },
     {
-      eyebrow: "24 years",
-      title: "Jeremy Gaffney",
-      body:
-        "Operations Manager. Oversees day-to-day platform operations and delivery.",
-    },
-    {
       eyebrow: "20 years",
       title: "Andrew Hannan",
       body:

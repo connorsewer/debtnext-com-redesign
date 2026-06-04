@@ -38,7 +38,7 @@ These need a designer, not a generator.
 - Deliverables: SVG horizontal lockup, SVG mark only, favicon at 32px and 16px
 
 **Leadership headshots**:
-- Six leadership cards on the company page (Paul, Frank, Eric, Jeremy, Marc, Andrew)
+- Five leadership cards on the company page (Paul, Rob, Andrew, Eric, Frank)
 - Photography direction: studio portraits, neutral dark or mid-gray backgrounds, no smiling-at-camera energy, no corporate "arms crossed" pose
 - Reference: how Stripe, Mercury, and Linear photograph their leadership pages
 - If new photos aren't possible, the alternative is no photos. Plain text cards beat bad headshots.

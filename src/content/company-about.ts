@@ -18,7 +18,7 @@ import type { ProofStat } from "@/components/sections/ProofBand";
 export const aboutMeta = {
   title: "About DebtNext: recovery software since 2003",
   description:
-    "DebtNext builds one thing: recovery management software for credit originators. In production since 2003. A Transworld Systems Inc. company.",
+    "DebtNext builds one thing: recovery management software for credit originators. In production since 2003. A TSI company.",
   canonical: "https://debtnext.com/company/about",
 };
 
@@ -58,12 +58,12 @@ export const aboutOwnership: {
   cards: GridCard[];
 } = {
   eyebrow: "Ownership",
-  heading: "A Transworld Systems Inc. company.",
+  heading: "A TSI company.",
   intro:
     "DebtNext is wholly owned by Transworld Systems Inc. (TSI), a portfolio company of Clearlake Capital Group. TSI is a revenue recovery platform with operations across accounts receivable management, healthcare revenue cycle, customer experience operations, and loan servicing.",
   link: {
-    label: "Visit transworldsystems.com",
-    href: "https://www.transworldsystems.com",
+    label: "Visit tsico.com",
+    href: "https://www.tsico.com",
   },
   cards: [
     {

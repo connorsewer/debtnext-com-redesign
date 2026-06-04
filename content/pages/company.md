@@ -2,7 +2,7 @@
 slug: /company
 title: Company
 meta_title: "Company | DebtNext"
-meta_description: "DebtNext has been building recovery management software for credit originators since 2003. A Transworld Systems Inc. company."
+meta_description: "DebtNext has been building recovery management software for credit originators since 2003. A TSI company."
 primary_cta: "Request a demo"
 primary_cta_href: "/demo"
 secondary_cta: null
@@ -35,13 +35,13 @@ DebtNext was founded to fix that. dPlat is the platform we built and have contin
 
 ## TSI ownership section
 
-**H2**: A Transworld Systems Inc. company.
+**H2**: A TSI company.
 
 **Body**: DebtNext is wholly owned by Transworld Systems Inc. (TSI), a portfolio company of Clearlake Capital Group. TSI is a revenue recovery platform with operations across accounts receivable management, healthcare revenue cycle, customer experience operations, and loan servicing.
 
 dPlat operates as TSI's recovery management software business. The platform connects credit originators to their recovery vendor networks, which can include TSI's own collection operations or any third-party vendor the client chooses. Clients configure their own vendor network inside the platform.
 
-**Link**: Visit transworldsystems.com →
+**Link**: Visit tsico.com →
 
 `[COI REVIEW]` Andrew, Joe, and Michael to review the framing of this section before publication. Specifically:
 - Is "wholly owned" the right ownership descriptor?
@@ -54,7 +54,7 @@ dPlat operates as TSI's recovery management software business. The platform conn
 
 **H2**: Who runs dPlat.
 
-**Body**: dPlat is led by a team with 125+ combined years of recovery operations experience.
+**Body**: dPlat is led by a team with 100+ combined years of recovery operations experience.
 
 **Leadership cards** (placeholder for headshots and titles; verify with Paul Goske before publication):
 
@@ -69,9 +69,6 @@ Co-founded dPlat in 2003. Owns product, operations, and technology, from middlew
 
 **Eric Port**, Operations Director
 17 years in recovery operations leadership.
-
-**Jeremy Gaffney**, Operations Manager
-24 years in recovery operations.
 
 **Andrew Hannan**, Director of Product Innovation
 20 years in recovery platform product management.
@@ -140,6 +137,6 @@ In continuous production with credit originators.
 ## SEO
 
 **Meta title**: Company | DebtNext
-**Meta description**: DebtNext has been building recovery management software for credit originators since 2003. A Transworld Systems Inc. company.
+**Meta description**: DebtNext has been building recovery management software for credit originators since 2003. A TSI company.
 **Canonical**: `https://debtnext.com/company`
 **Schema**: `Organization`, `Corporation`

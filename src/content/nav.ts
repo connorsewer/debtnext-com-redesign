@@ -121,4 +121,4 @@ export const footerGroups: { title: string; links: NavLink[] }[] = [
 ];
 
 export const tsiOwnershipLine =
-  "DebtNext is a Transworld Systems Inc. company.";
+  "DebtNext is a TSI company.";

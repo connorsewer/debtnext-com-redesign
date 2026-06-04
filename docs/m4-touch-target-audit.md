@@ -52,7 +52,7 @@ The first run flagged the same set of offenders across every route (the global h
 | Route | Component | Element | Measured |
 |---|---|---|---|
 | `/platform` | `CardGrid` card footer link | "Explore placement →" etc. ×4 | 293×23 |
-| `/company` | inline link on TSI ownership section | "Visit transworldsystems.com →" | width × 23 |
+| `/company` | inline link on TSI ownership section | "Visit tsico.com →" | width × 23 |
 
 ## Fixes applied
 
