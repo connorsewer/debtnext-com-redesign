@@ -30,6 +30,26 @@ export const integrationsHero = {
   primaryCta: { label: "Request a demo", href: "/demo" },
 };
 
+// Logo wall (typographic chips, no image assets). Andy wanted recognizable
+// systems scrolling under the hero CTA to credentialize the page.
+export const integrationsLogos = {
+  eyebrow: "Connected to the systems you already run",
+  logos: [
+    "SAP",
+    "Oracle CC&B",
+    "Oracle Utilities C2M",
+    "Pega",
+    "CSG",
+    "ICOMS",
+    "CACS",
+    "Artiva",
+    "CIS+",
+    "CRS",
+    "PCC",
+    "dPlat-to-dPlat",
+  ],
+};
+
 export const integrationsFootprint: {
   eyebrow: string;
   heading: string;
@@ -41,10 +61,12 @@ export const integrationsFootprint: {
   stats: [
     { number: "60+", label: "Production integrations" },
     { number: "16", label: "Platform types" },
+    { number: "538", label: "Agency and legal partners integrated" },
     { number: "Since 2003", label: "In continuous production" },
   ],
   notes: [
     "The concentration sits in the systems large credit originators actually use to bill, service, and manage customer accounts. SAP and Oracle utility environments alone account for 34 active integrations. Add proprietary servicing platforms and dPlat already covers most of the footprint an enterprise originator needs.",
+    "Past the enterprise systems, dPlat is integrated on the back end with 538 collection agencies, law firms, and recovery vendors. Placement files, status updates, payments, and reconciliation move between dPlat and your network directly, with no vendor portal in between.",
     "For your engineering team, that means most of the integration work has already been done. The patterns, the field mappings, the reconciliation logic, and the exception handling are built, tested, and deployed against production volumes.",
   ],
 };

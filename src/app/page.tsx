@@ -7,16 +7,23 @@ import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { HomepageHandoffSection } from "@/components/sections/HomepageHandoffSection";
 import { HomepageHero } from "@/components/sections/HomepageHero";
+import { CardGrid } from "@/components/sections/CardGrid";
 import { IntegrationStrip } from "@/components/sections/IntegrationStrip";
 import { ProofBand } from "@/components/sections/ProofBand";
+import { PartnerMap } from "@/components/sections/PartnerMap";
+import { ProseIntro } from "@/components/sections/ProseIntro";
+import { StatMarquee } from "@/components/sections/StatMarquee";
 import { TrustBand } from "@/components/sections/TrustBand";
+import { annualActivity } from "@/content/stats";
 import {
   homepageBenefitSplit,
   homepageFeatureAccordion,
   homepageFinalCta,
   homepageIntegration,
   homepageMeta,
+  homepagePositioning,
   homepageProof,
+  homepageService,
   homepageTrust,
 } from "@/content/homepage";
 
@@ -43,6 +50,12 @@ export default function HomePage() {
         industries={homepageTrust.industries}
       />
 
+      <ProseIntro
+        eyebrow={homepagePositioning.eyebrow}
+        heading={homepagePositioning.heading}
+        body={homepagePositioning.body}
+      />
+
       <FeatureAccordion
         id="how-it-works"
         section="homepage_feature_accordion"
@@ -58,6 +71,19 @@ export default function HomePage() {
         link={homepageProof.link}
         linkLocation="homepage_proof"
         surface="elevated-dark"
+      />
+
+      <StatMarquee
+        eyebrow="Every year on dPlat"
+        heading="What the platform handles in a year."
+        items={annualActivity}
+      />
+
+      <PartnerMap
+        eyebrow="Coast to coast"
+        heading="A recovery network that spans the country."
+        body="538 agency and legal partners plus client portfolios, connected on one platform. Placements route to the right vendor wherever the account sits."
+        caption="Representative of the agency and client network across the United States."
       />
 
       <BenefitSplit
@@ -79,6 +105,14 @@ export default function HomePage() {
           icon: <IntegrationIcon name={card.iconKey} />,
         }))}
         link={homepageIntegration.link}
+      />
+
+      <CardGrid
+        eyebrow={homepageService.eyebrow}
+        heading={homepageService.heading}
+        body={homepageService.body}
+        cards={[...homepageService.cards]}
+        columns={3}
       />
 
       <FinalCTA

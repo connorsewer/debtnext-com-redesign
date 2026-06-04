@@ -6,17 +6,17 @@
 import type { GridCard } from "@/components/sections/CardGrid";
 
 export const solutionsMeta = {
-  title: "Solutions: recovery management for regulated industries",
+  title: "Solutions: recovery management across regulated industries",
   description:
-    "dPlat is in production with utility providers, financial institutions, telecom carriers, and fintech lenders. Industry-specific configuration, one platform.",
+    "dPlat is in production with utilities, financial services, telecom, fintech, insurance, and healthcare recovery teams. If your business manages receivables, B2B or B2C, the platform fits. One configurable system.",
   canonical: "https://debtnext.com/solutions",
 };
 
 export const solutionsHero = {
   eyebrow: "Solutions",
-  h1: "Built for regulated industries that recover at scale.",
+  h1: "Built for any business that recovers at scale.",
   body:
-    "dPlat is in production across utilities, financial services, telecom, and fintech. Each industry has its own regulatory environment, account characteristics, and vendor mix. The platform's configuration model handles all of them.",
+    "dPlat runs across utilities, financial services, telecom, fintech, insurance, and healthcare. If your business manages receivables, B2B or B2C, you can place accounts, manage vendors, and prove compliance in one system. Each sector has its own rules, account characteristics, and vendor mix, and the configuration model handles all of them.",
   primaryCta: { label: "Request a demo", href: "/demo" },
 };
 
@@ -56,6 +56,18 @@ export const solutionsIndustries: {
       body:
         "Direct lender, BNPL, and digital banking portfolios. API-first integration with modern billing and origination systems. Configurable workflows for the rapid product iteration fintech operations require.",
       link: { label: "Explore fintech", href: "/solutions/fintech" },
+    },
+    {
+      title: "Insurance",
+      body:
+        "Subrogation, deductible recovery, salvage, and premium or policy receivables for B2B and B2C carriers. Configurable for state insurance rules and for FDCPA where the obligor is a consumer.",
+      link: { label: "Explore insurance", href: "/solutions/insurance" },
+    },
+    {
+      title: "Healthcare and RCM",
+      body:
+        "Patient-responsibility balances and bad-debt recovery for hospital systems, physician groups, and revenue cycle management providers. The agency network, placement, and audit trail work the same as every other portfolio.",
+      link: { label: "Explore healthcare", href: "/solutions/healthcare" },
     },
   ],
 };

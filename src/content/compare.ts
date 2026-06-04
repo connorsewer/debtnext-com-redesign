@@ -20,7 +20,7 @@ import type { ProofStat } from "@/components/sections/ProofBand";
 export const compareMeta = {
   title: "Comparing dPlat to NeuAnalytics, Convoke, Symend, and HighRadius",
   description:
-    "How dPlat compares to NeuAnalytics, Convoke, Symend, and HighRadius. Where each platform was built for, and where it stops.",
+    "How dPlat compares to NeuAnalytics, Convoke, Imagine Cloud, Symend, and HighRadius. Where each platform was built for, and where it stops.",
   canonical: "https://debtnext.com/compare",
 };
 
@@ -37,7 +37,7 @@ export const compareMarket = {
   heading: "The recovery software market in 2026.",
   paragraphs: [
     "The category is sharded. No single platform covers the full enterprise recovery lifecycle (from charge-off through legal placement) with first-party engagement, third-party vendor oversight, and consumer-facing digital channels all in one architecture.",
-    "Buyers usually pick a platform for the part of the problem that's burning hottest. A risk officer who's been told to fix vendor compliance buys NeuAnalytics or Convoke. A telecom that needs to keep subscribers from churning buys Symend. A CFO who's been told to fix DSO buys HighRadius.",
+    "Buyers usually pick a platform for the part of the problem that's burning hottest. A risk officer who's been told to fix vendor compliance buys NeuAnalytics, Convoke, or Imagine Cloud. A telecom that needs to keep subscribers from churning buys Symend. A CFO who's been told to fix DSO buys HighRadius.",
     "Each of those is a defensible choice in isolation. The structural problem shows up later, when the recovery operation needs a capability the chosen platform wasn't built for, and the integration cost back to a fragmented stack starts climbing.",
     "dPlat was built to be the platform underneath all of those operations: the system of record for the placement lifecycle, the vendor management layer, and the data substrate the rest of the recovery ecosystem plugs into.",
   ],
@@ -82,6 +82,16 @@ export const compareMatrix: {
         "Top-tier US banks with strict risk and compliance reporting needs across their third-party network.",
       stops:
         "Heavily focused on banking debt sales. A reporting-and-oversight architecture rather than full lifecycle orchestration.",
+    },
+    {
+      name: "Imagine Cloud",
+      note: "OutSourcer",
+      builtFor:
+        "Vendor compliance automation. Runs your compliance rules against every vendor account event and flags violations as they surface.",
+      chosen:
+        "Banks and lenders that want automated compliance monitoring and visibility across their agency network.",
+      stops:
+        "Oriented to compliance oversight and visibility. The placement and orchestration layer still runs elsewhere.",
     },
     {
       name: "Symend",

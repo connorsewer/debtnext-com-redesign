@@ -4,6 +4,7 @@ import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { IntegrationTable } from "@/components/sections/IntegrationTable";
+import { LogoMarquee } from "@/components/sections/LogoMarquee";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProofBand } from "@/components/sections/ProofBand";
 import { ProseSection } from "@/components/sections/ProseSection";
@@ -13,6 +14,7 @@ import {
   integrationsFinalCta,
   integrationsFootprint,
   integrationsHero,
+  integrationsLogos,
   integrationsMeta,
   integrationsPatterns,
   integrationsProof,
@@ -39,6 +41,11 @@ export default function IntegrationsPage() {
         primaryCta={integrationsHero.primaryCta}
         variant="centered"
         location="integrations_hero"
+      />
+
+      <LogoMarquee
+        eyebrow={integrationsLogos.eyebrow}
+        logos={integrationsLogos.logos}
       />
 
       <ProofBand
