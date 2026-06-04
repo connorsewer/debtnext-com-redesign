@@ -123,13 +123,15 @@ export function NumberShift({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  const ref = React.useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.6 });
   if (reduce) return <span className={className}>{children}</span>;
   return (
     <motion.span
+      ref={ref}
       className={className}
       initial={{ color: TINT }}
-      whileInView={{ color }}
-      viewport={{ once: true, amount: 0.6 }}
+      animate={{ color: inView ? color : TINT }}
       transition={{ duration: DUR_COUNT, ease: EASE_STATE }}
     >
       {children}

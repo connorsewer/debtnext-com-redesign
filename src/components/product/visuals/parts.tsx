@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 import { DUR_BAR, EASE_ENTRANCE } from "@/components/product/motion";
@@ -18,14 +18,17 @@ export const SegmentedBar = React.memo(function SegmentedBar({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  const ref = React.useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.6 });
+  const shown = reduce || inView;
   return (
     <motion.div
+      ref={ref}
       className={cn("flex h-5 w-full overflow-hidden rounded-[5px]", className)}
       role="img"
       aria-label={`Allocation: ${segments.map((s) => `${s}%`).join(", ")}`}
       initial={reduce ? false : { clipPath: "inset(0 100% 0 0)" }}
-      whileInView={{ clipPath: "inset(0 0% 0 0)" }}
-      viewport={{ once: true, amount: 0.6 }}
+      animate={{ clipPath: shown ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)" }}
       transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE }}
     >
       {segments.map((pct, i) => (
@@ -55,6 +58,9 @@ export const ValueBar = React.memo(function ValueBar({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  const ref = React.useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.6 });
+  const shown = reduce || inView;
   const color =
     tone === "success"
       ? "var(--status-success)"
@@ -63,6 +69,7 @@ export const ValueBar = React.memo(function ValueBar({
         : "var(--primary)";
   return (
     <div
+      ref={ref}
       className={cn("h-1.5 w-full rounded-full bg-white/10", className)}
       role="img"
       aria-label={`${value}%`}
@@ -71,8 +78,7 @@ export const ValueBar = React.memo(function ValueBar({
         className="h-full origin-left rounded-full"
         style={{ width: `${value}%`, backgroundColor: color }}
         initial={reduce ? false : { scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
+        animate={{ scaleX: shown ? 1 : 0 }}
         transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE }}
       />
     </div>
@@ -88,8 +94,11 @@ export const Sparkline = React.memo(function Sparkline({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  const ref = React.useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.6 });
+  const shown = reduce || inView;
   return (
-    <div className={cn("flex h-8 items-end gap-1", className)} aria-hidden="true">
+    <div ref={ref} className={cn("flex h-8 items-end gap-1", className)} aria-hidden="true">
       {bars.map((h, i) => (
         <motion.div
           key={i}
@@ -100,8 +109,7 @@ export const Sparkline = React.memo(function Sparkline({
               i === bars.length - 1 ? "var(--primary)" : "rgba(255,255,255,0.18)",
           }}
           initial={reduce ? false : { scaleY: 0 }}
-          whileInView={{ scaleY: 1 }}
-          viewport={{ once: true, amount: 0.6 }}
+          animate={{ scaleY: shown ? 1 : 0 }}
           transition={{ duration: 0.45, ease: EASE_ENTRANCE, delay: i * 0.05 }}
         />
       ))}
@@ -118,6 +126,9 @@ export const AreaLine = React.memo(function AreaLine({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  const ref = React.useRef<SVGSVGElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.6 });
+  const shown = reduce || inView;
   const w = 100;
   const h = 40;
   const step = points.length > 1 ? w / (points.length - 1) : w;
@@ -132,6 +143,7 @@ export const AreaLine = React.memo(function AreaLine({
   const last = coords[coords.length - 1] ?? [w, h];
   return (
     <svg
+      ref={ref}
       viewBox={`0 0 ${w} ${h}`}
       preserveAspectRatio="none"
       className={cn("h-12 w-full", className)}
@@ -147,8 +159,7 @@ export const AreaLine = React.memo(function AreaLine({
         d={area}
         fill="url(#al-fill)"
         initial={reduce ? false : { opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
+        animate={{ opacity: shown ? 1 : 0 }}
         transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: 0.2 }}
       />
       <motion.path
@@ -158,8 +169,7 @@ export const AreaLine = React.memo(function AreaLine({
         strokeWidth="1.5"
         vectorEffect="non-scaling-stroke"
         initial={reduce ? false : { pathLength: 0 }}
-        whileInView={{ pathLength: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
+        animate={{ pathLength: shown ? 1 : 0 }}
         transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE }}
       />
       <motion.circle
@@ -170,8 +180,7 @@ export const AreaLine = React.memo(function AreaLine({
         stroke="var(--primary)"
         strokeWidth="1.5"
         initial={reduce ? false : { scale: 0, opacity: 0 }}
-        whileInView={reduce ? undefined : { scale: [0, 1, 1], opacity: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
+        animate={reduce ? { scale: 1, opacity: 1 } : { scale: shown ? 1 : 0, opacity: shown ? 1 : 0 }}
         transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE }}
         style={{ transformOrigin: `${last[0]}px ${last[1]}px` }}
       />
