@@ -98,6 +98,43 @@
   }
 }
 
+/* ------------------------------------------------------------
+   Partner-map dots — illustrative network points "pop in" as the
+   section enters view. One shared keyframe; each dot offsets via a
+   per-index animation-delay set inline, so ~600 dots animate with
+   pure CSS (no per-node JS). Reduced-motion shows every dot at rest.
+   ------------------------------------------------------------ */
+@keyframes dn-pin-in {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.dn-pin {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: dn-pin-in 600ms var(--ease-standard) forwards;
+  animation-delay: var(--dn-pin-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dn-pin {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
 /* ============================================================
    DebtNext design tokens — Mercury-style, dark-canvas-first
    Source of truth: DESIGN.md §4 + §5

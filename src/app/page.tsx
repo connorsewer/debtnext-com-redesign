@@ -10,6 +10,7 @@ import { HomepageHero } from "@/components/sections/HomepageHero";
 import { CardGrid } from "@/components/sections/CardGrid";
 import { IntegrationStrip } from "@/components/sections/IntegrationStrip";
 import { ProofBand } from "@/components/sections/ProofBand";
+import { PartnerMap } from "@/components/sections/PartnerMap";
 import { ProseIntro } from "@/components/sections/ProseIntro";
 import { StatMarquee } from "@/components/sections/StatMarquee";
 import { TrustBand } from "@/components/sections/TrustBand";
@@ -76,6 +77,13 @@ export default function HomePage() {
         eyebrow="Every year on dPlat"
         heading="What the platform handles in a year."
         items={annualActivity}
+      />
+
+      <PartnerMap
+        eyebrow="Coast to coast"
+        heading="A recovery network that spans the country."
+        body="538 agency and legal partners plus client portfolios, connected on one platform. Placements route to the right vendor wherever the account sits."
+        caption="Representative of the agency and client network across the United States."
       />
 
       <BenefitSplit
