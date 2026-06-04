@@ -38,6 +38,8 @@ export const solutionsSubNav: NavLink[] = [
   { label: "Financial Services", href: "/solutions/financial-services" },
   { label: "Telecom", href: "/solutions/telecom" },
   { label: "Fintech", href: "/solutions/fintech" },
+  { label: "Insurance", href: "/solutions/insurance" },
+  { label: "Healthcare and RCM", href: "/solutions/healthcare" },
   { label: "All solutions", href: "/solutions" },
 ];
 
@@ -88,6 +90,8 @@ export const footerGroups: { title: string; links: NavLink[] }[] = [
       { label: "Financial Services", href: "/solutions/financial-services" },
       { label: "Telecom", href: "/solutions/telecom" },
       { label: "Fintech", href: "/solutions/fintech" },
+      { label: "Insurance", href: "/solutions/insurance" },
+      { label: "Healthcare and RCM", href: "/solutions/healthcare" },
       { label: "All solutions", href: "/solutions" },
     ],
   },
