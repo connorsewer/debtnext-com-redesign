@@ -161,6 +161,10 @@ export const AreaLine = React.memo(function AreaLine({
           <stop offset="0%" stopColor="rgba(82,102,235,0.35)" />
           <stop offset="100%" stopColor="rgba(82,102,235,0)" />
         </linearGradient>
+        <radialGradient id="al-glow">
+          <stop offset="0%" stopColor="rgba(82,102,235,0.6)" />
+          <stop offset="100%" stopColor="rgba(82,102,235,0)" />
+        </radialGradient>
       </defs>
       <motion.path
         d={area}
@@ -178,6 +182,25 @@ export const AreaLine = React.memo(function AreaLine({
         initial={reduce ? false : { pathLength: 0 }}
         animate={{ pathLength: shown ? 1 : 0 }}
         transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE }}
+      />
+      <motion.circle
+        cx={last[0]}
+        cy={last[1]}
+        r="4"
+        fill="url(#al-glow)"
+        initial={reduce ? false : { opacity: 0 }}
+        animate={
+          reduce
+            ? { opacity: 0.45 }
+            : { opacity: shown ? [0.3, 0.65, 0.3] : 0 }
+        }
+        transition={
+          reduce
+            ? undefined
+            : shown
+              ? { duration: 2.4, repeat: Infinity, ease: "easeInOut", delay: DUR_BAR }
+              : { duration: 0.3 }
+        }
       />
       <motion.circle
         cx={last[0]}
