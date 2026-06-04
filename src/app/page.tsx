@@ -55,6 +55,8 @@ export default function HomePage() {
       <ProofBand
         eyebrow={homepageProof.eyebrow}
         stats={[...homepageProof.stats]}
+        link={homepageProof.link}
+        linkLocation="homepage_proof"
         surface="elevated-dark"
       />
 
@@ -76,6 +78,7 @@ export default function HomePage() {
           body: card.body,
           icon: <IntegrationIcon name={card.iconKey} />,
         }))}
+        link={homepageIntegration.link}
       />
 
       <FinalCTA

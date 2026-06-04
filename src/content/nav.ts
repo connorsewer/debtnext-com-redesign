@@ -25,7 +25,18 @@ export const platformSubNav: NavLink[] = [
   { label: "Optimization Engine", href: "/platform/optimization" },
   { label: "Issues Management", href: "/platform/issues" },
   { label: "Reporting and Dashboards", href: "/platform/reporting" },
+  { label: "Integrations", href: "/platform/integrations" },
   { label: "All capabilities", href: "/platform" },
+];
+
+/**
+ * "Why dPlat" rollup dropdown. The proof-and-differentiation pages live here:
+ * the overview, the named-platform comparison, and the integration footprint.
+ */
+export const whyDplatSubNav: NavLink[] = [
+  { label: "Why dPlat", href: "/why-dplat" },
+  { label: "How dPlat compares", href: "/compare" },
+  { label: "Integrations", href: "/platform/integrations" },
 ];
 
 export const primaryCta: NavLink = {
@@ -41,6 +52,8 @@ export const footerGroups: { title: string; links: NavLink[] }[] = [
       { label: "Optimization Engine", href: "/platform/optimization" },
       { label: "Issues", href: "/platform/issues" },
       { label: "Reporting", href: "/platform/reporting" },
+      { label: "Integrations", href: "/platform/integrations" },
+      { label: "Compare platforms", href: "/compare" },
       { label: "All capabilities", href: "/platform" },
     ],
   },

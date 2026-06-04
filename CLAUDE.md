@@ -132,13 +132,21 @@ The site is intentionally compact for v1. Pages live as MDX in `content/pages/`.
 | `/platform/optimization` | `content/pages/optimization.md` |
 | `/platform/issues` | `content/pages/issues.md` |
 | `/platform/reporting` | `content/pages/reporting.md` |
+| `/platform/integrations` | `src/content/integrations.ts` (source copy: `DebtNext_Integrations_Page_Copy.docx`) |
 | `/solutions` | `content/pages/solutions.md` |
 | `/why-dplat` | `content/pages/why-dplat.md` |
+| `/compare` | `src/content/compare.ts` (source copy: `DebtNext_Comparison_Page_Copy.docx`) |
 | `/company` | `content/pages/company.md` |
 | `/resources` | `content/pages/resources.md` |
 | `/demo` | `content/pages/demo.md` |
 
-Additional capability pages (`/platform/oversight`, `/platform/media`, `/platform/integrations`, `/platform/debt-sales`, `/platform/legal-affidavit`) get built in v2.
+Page content is authored as typed modules in `src/content/*.ts` (consumed by
+the route components in `src/app/`). The `content/pages/*.md` briefs remain the
+editorial source for the original v1 routes; `/compare` and
+`/platform/integrations` were authored directly from their approved `.docx`
+copy decks.
+
+Additional capability pages (`/platform/oversight`, `/platform/media`, `/platform/debt-sales`, `/platform/legal-affidavit`) get built in v2.
 
 ## 10. Component library
 

@@ -1,10 +1,13 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 
+import { Button } from "@/components/ui/button";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
+import { track } from "@/lib/analytics";
 
 export interface ProofStat {
   number: string;
@@ -15,8 +18,16 @@ export interface ProofStat {
 
 export interface ProofBandProps {
   eyebrow?: string;
+  /** Optional centered heading above the stat row. */
+  heading?: string;
   stats: ProofStat[];
   surface?: SectionSurface;
+  /** Optional explanatory paragraphs rendered in a readable column below the stats. */
+  notes?: string[];
+  /** Optional centered ghost link below the stats. */
+  link?: { label: string; href: string };
+  /** Analytics location key for the link. */
+  linkLocation?: string;
 }
 
 /**
@@ -27,7 +38,15 @@ export interface ProofBandProps {
  * staggers per MD motion guidance. Respects prefers-reduced-motion via
  * useReducedMotion — animation collapses to instant in that case.
  */
-export function ProofBand({ eyebrow, stats, surface = "dark" }: ProofBandProps) {
+export function ProofBand({
+  eyebrow,
+  heading,
+  stats,
+  surface = "dark",
+  notes,
+  link,
+  linkLocation = "proof_band",
+}: ProofBandProps) {
   const reduceMotion = useReducedMotion();
   const enter = reduceMotion
     ? { initial: false, animate: undefined }
@@ -43,6 +62,11 @@ export function ProofBand({ eyebrow, stats, surface = "dark" }: ProofBandProps) 
         <p className="text-center text-[var(--text-caption)] font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
           {eyebrow}
         </p>
+      ) : null}
+      {heading ? (
+        <h2 className="mt-3 text-center text-h2 font-[480] text-[var(--foreground)]">
+          {heading}
+        </h2>
       ) : null}
       <ul
         className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 md:mt-12 md:[grid-template-columns:repeat(var(--proof-cols),minmax(0,1fr))]"
@@ -80,6 +104,33 @@ export function ProofBand({ eyebrow, stats, surface = "dark" }: ProofBandProps) 
           </motion.li>
         ))}
       </ul>
+      {notes && notes.length ? (
+        <div className="mx-auto mt-10 max-w-2xl space-y-4 text-left text-body-md text-[var(--text-tertiary)] [text-wrap:pretty]">
+          {notes.map((note) => (
+            <p key={note}>{note}</p>
+          ))}
+        </div>
+      ) : null}
+      {link ? (
+        <div className="mt-10 flex justify-center">
+          <Button
+            asChild
+            variant="ghost"
+            size="text"
+            onClick={() =>
+              track({
+                event: "cta_secondary_click",
+                location: linkLocation,
+                label: link.label,
+              })
+            }
+          >
+            <Link href={link.href}>
+              {link.label} <span aria-hidden="true">→</span>
+            </Link>
+          </Button>
+        </div>
+      ) : null}
     </SectionContainer>
   );
 }

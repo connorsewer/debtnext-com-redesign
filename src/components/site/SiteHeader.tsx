@@ -9,12 +9,24 @@ import { MobileNav } from "@/components/site/MobileNav";
 import { Wordmark } from "@/components/site/Wordmark";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
-import { platformSubNav, primaryCta, primaryNav } from "@/content/nav";
+import type { NavLink } from "@/content/nav";
+import {
+  platformSubNav,
+  primaryCta,
+  primaryNav,
+  whyDplatSubNav,
+} from "@/content/nav";
 
 function isCurrentRoute(linkHref: string, pathname: string): boolean {
   if (linkHref === "/") return pathname === "/";
   return pathname === linkHref || pathname.startsWith(`${linkHref}/`);
 }
+
+/** Top-level routes that open a hover/focus dropdown of related pages. */
+const DROPDOWNS: Record<string, { items: NavLink[]; label: string }> = {
+  "/platform": { items: platformSubNav, label: "Platform capabilities" },
+  "/why-dplat": { items: whyDplatSubNav, label: "Why dPlat" },
+};
 
 /**
  * Top navigation. DESIGN.md §7.1:
@@ -67,7 +79,8 @@ export function SiteHeader() {
         >
           {primaryNav.map((link) => {
             const isActive = isCurrentRoute(link.href, pathname);
-            const hasDropdown = link.href === "/platform";
+            const dropdown = DROPDOWNS[link.href];
+            const hasDropdown = Boolean(dropdown);
 
             const linkClass = cn(
               "relative inline-flex items-center gap-1 text-[var(--text-body-strong)] font-[420] transition-colors duration-[var(--duration-instant)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)] aria-[current=page]:text-white",
@@ -123,10 +136,10 @@ export function SiteHeader() {
                 <div className="invisible absolute left-0 top-full z-40 pt-2 opacity-0 -translate-y-1 transition-[opacity,transform] duration-[var(--duration-instant)] group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0">
                   <div
                     role="menu"
-                    aria-label="Platform capabilities"
+                    aria-label={dropdown!.label}
                     className="w-72 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-2 shadow-[var(--shadow-nav)]"
                   >
-                    {platformSubNav.map((sub) => (
+                    {dropdown!.items.map((sub) => (
                       <Link
                         key={sub.href}
                         href={sub.href}

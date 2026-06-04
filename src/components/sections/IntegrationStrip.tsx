@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
@@ -16,6 +17,8 @@ export interface IntegrationStripProps {
   body?: string;
   cards: IntegrationCard[];
   surface?: SectionSurface;
+  /** Optional ghost link below the grid (e.g. "Explore all integrations"). */
+  link?: { label: string; href: string };
 }
 
 /**
@@ -28,6 +31,7 @@ export function IntegrationStrip({
   body,
   cards,
   surface = "dark",
+  link,
 }: IntegrationStripProps) {
   return (
     <SectionContainer surface={surface}>
@@ -70,6 +74,17 @@ export function IntegrationStrip({
           </li>
         ))}
       </ul>
+
+      {link ? (
+        <div className="mt-8">
+          <Link
+            href={link.href}
+            className="inline-flex min-h-touch items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+          >
+            {link.label} <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+      ) : null}
     </SectionContainer>
   );
 }

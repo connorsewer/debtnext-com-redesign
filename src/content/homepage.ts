@@ -81,6 +81,7 @@ export const homepageFeatureAccordion = {
 // [CLAIMS REVIEW] Andrew to confirm exact framing on each metric.
 export const homepageProof = {
   eyebrow: "At scale, in production",
+  link: { label: "See how dPlat compares", href: "/compare" },
   stats: [
     {
       number: "60M+ accounts",
@@ -122,6 +123,7 @@ export const homepageIntegration = {
   heading: "Plug into the systems you already use.",
   body:
     "dPlat connects to your billing system, your existing collection agencies, your law firms, and the data services you rely on for skip tracing, bankruptcy, deceased screening, and credit bureau enrichment. Integration patterns are SFTP, API, and direct file exchange.",
+  link: { label: "Explore all 60+ integrations", href: "/platform/integrations" },
   cards: [
     {
       title: "Billing systems",

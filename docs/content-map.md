@@ -10,9 +10,11 @@ This document maps every page in the v1 site to its purpose, content sources, pr
 │   ├── /platform/placement            Placement Management
 │   ├── /platform/optimization         Optimization Engine
 │   ├── /platform/issues               Issues Management
-│   └── /platform/reporting            Reporting & Dashboards
+│   ├── /platform/reporting            Reporting & Dashboards
+│   └── /platform/integrations         Integration footprint (ERP, CIS, recovery)
 ├── /solutions                         Industries served
 ├── /why-dplat                         Differentiation
+├── /compare                           Named-platform comparison (rolls up under Why dPlat)
 ├── /resources                         Content hub (placeholder for v1)
 ├── /company                           About, TSI relationship, leadership
 └── /demo                              Demo request form
@@ -21,7 +23,6 @@ This document maps every page in the v1 site to its purpose, content sources, pr
 v2 routes (out of scope for initial launch):
 - `/platform/oversight`
 - `/platform/media`
-- `/platform/integrations`
 - `/platform/debt-sales`
 - `/platform/legal-affidavit`
 - `/solutions/utilities`, `/solutions/financial-services`, `/solutions/telecom`, `/solutions/fintech`
@@ -32,18 +33,24 @@ v2 routes (out of scope for initial launch):
 
 | Label | Destination | Type |
 |---|---|---|
-| Platform | `/platform` | Dropdown (later) or direct link (v1) |
+| Platform | `/platform` | Dropdown (Placement, Optimization, Issues, Reporting, Integrations, All capabilities) |
 | Solutions | `/solutions` | Direct link |
-| Why dPlat | `/why-dplat` | Direct link |
+| Why dPlat | `/why-dplat` | Dropdown (Why dPlat, How dPlat compares → `/compare`, Integrations) |
 | Resources | `/resources` | Direct link |
 | Company | `/company` | Direct link |
 | Request a demo | `/demo` | Primary CTA (filled pill) |
+
+The `/compare` and `/platform/integrations` pages roll up under the Why dPlat
+narrative in the nav. Integrations is cross-listed in the Platform dropdown
+because its URL lives under `/platform`. On mobile, the nav shows top-level
+routes only; both pages are reachable from the footer and from the homepage
+(proof band → compare, integration strip → integrations).
 
 ## Footer structure
 
 | Group | Links |
 |---|---|
-| Platform | Placement, Optimization Engine, Issues, Reporting, All capabilities |
+| Platform | Placement, Optimization Engine, Issues, Reporting, Integrations, Compare platforms, All capabilities |
 | Solutions | Utilities, Financial Services, Telecom, Fintech |
 | Company | About, Leadership, Careers, Contact |
 | Resources | Blog, Case studies, Security, Compliance |
@@ -103,6 +110,15 @@ Footer bottom row: TSI ownership disclosure, copyright, social links (LinkedIn o
 - **Sections**: Hero, dashboard gallery, BI integration explainer, custom reporting, final CTA
 - **Approvers**: Paul Goske, Connor
 
+### `/platform/integrations` (Integration footprint)
+
+- **Purpose**: Validate, for IT and engineering evaluators, that dPlat already connects to the systems credit originators run on. Late-funnel reassurance on integration scope and implementation risk.
+- **Primary CTA**: Request a demo
+- **Content source**: `DebtNext_Integrations_Page_Copy.docx` (Andy Hannan integration footprint). Proprietary-systems category described by industry, never by client name, per the source doc's review guidance.
+- **Sections**: Hero, footprint band (60+ / 16 / Since 2003), four integration tables with count-up (ERP, CIS, proprietary, recovery), integration patterns, why-it-matters prose, scale proof band, final CTA
+- **Approvers**: Michael Orefice, Joe Laughlin (platform thesis), Andrew Budish (any third-party client references)
+- **Status flags**: `[CLAIMS REVIEW]` on integration counts and scale metrics; no client names until written permission
+
 ### `/solutions` (Industries served)
 
 - **Purpose**: Show that dPlat is proven across multiple regulated industries.
@@ -119,6 +135,15 @@ Footer bottom row: TSI ownership disclosure, copyright, social links (LinkedIn o
 - **Sections**: Hero, 3 differentiator cards (specialization, configurability, network), comparison table, proof band, final CTA
 - **Approvers**: Connor, Andrew Budish (comparative claims need review)
 - **Status flags**: `[COI REVIEW]` on any claim about vendor neutrality
+
+### `/compare` (Named-platform comparison)
+
+- **Purpose**: High commercial intent. Help buyers actively evaluating named alternatives see where dPlat fits and where each competitor was built for and stops. Rolls up under the Why dPlat narrative.
+- **Primary CTA**: Request a demo
+- **Content source**: `DebtNext_Comparison_Page_Copy.docx` (Strategic Marketing landscape analysis). Names six competitors (NeuAnalytics, Convoke, C&R Software, Finvi, Symend, HighRadius) by their own public positioning. The Phase-2 `/compare/[competitor]` subpages are not built; that section is omitted from the live page.
+- **Sections**: Hero, 2026 market context, comparison matrix (platforms as rows, dPlat highlighted, staggered reveal), differentiators, team behind the platform (leadership table with tenure count-up + service pillars), where dPlat works best, scale proof band, final CTA
+- **Approvers**: Andrew Budish (competitive comparison language), Michael Orefice, Joe Laughlin (platform thesis)
+- **Status flags**: `[CLAIMS REVIEW]` on competitive scope, leadership tenure, and scale metrics
 
 ### `/resources` (Content hub, v1 placeholder)
 
