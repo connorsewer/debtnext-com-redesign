@@ -64,7 +64,16 @@ src/components/product/
     index.tsx             # AccordionVisual({ id }) switch, mirrors mockups/index.tsx
 ```
 
-Conventions mirror the existing `sections/mockups/`: `"use client"` only where motion needs it, `forwardRef`, `className` passthrough, `React.memo` wrap, no `any`, `tabular-nums` on all numerics.
+Conventions mirror the existing `sections/mockups/`: `"use client"` only where motion needs it, `className` passthrough, `React.memo` wrap, no `any`, `tabular-nums` on all numerics.
+
+**React engineering patterns (from `vercel-composition-patterns` + `vercel-react-best-practices`), applied throughout:**
+- **`ref` as a regular prop, not `forwardRef`** (`react19-no-forwardref`). This project is React 19.2; `forwardRef` is the pre-19 idiom. The visuals-doc instruction to "accept forwardRef" is superseded here. Use `use()` over `useContext()` if any shared context is introduced.
+- **Explicit variant components over boolean props** (`architecture-avoid-boolean-props`, `patterns-explicit-variants`). No `interactive?`/`variant?: string` proliferation; if a primitive needs two behaviors, expose two named components or compose via `children`.
+- **`children` over render props** (`patterns-children-over-render-props`).
+- **Refs for transient per-frame animation values** (`rerender-use-ref-transient-values`) — never `setState` in an animation loop. Prefer Framer Motion values; if a raw rAF is ever used, write to a ref.
+- **Animate a wrapper element, not the SVG node itself** (`rendering-animate-svg-wrapper`); reduce SVG coordinate precision (`rendering-svg-precision`).
+- **No components defined inside components** (`rerender-no-inline-components`); ternary, not `&&`, for conditional JSX (`rendering-conditional-render`).
+- **`React.memo`** every primitive and visual (`rerender-memo`); hoist static JSX/defaults (`rendering-hoist-jsx`, `rerender-memo-with-default-value`).
 
 ## 5. Primitive contracts
 
@@ -112,7 +121,8 @@ Each visual is `ProductCanvas > (EyebrowLabel + header row with LiveStatus) > bo
 
 - The visuals render **edge-to-edge inside the slot** (drop the `p-8` wrapper for real visuals; `ProductCanvas` owns its own padding). The slot's `bg-[var(--card)] ring-1 ring-[var(--border)] rounded-[var(--radius-sm)] overflow-hidden` becomes the outer frame; `ProductCanvas` fills it.
 - `FeatureAccordionItem` keeps `visualLabel` as the accessible fallback / alt-style label; no content-map change required.
-- Only the active item animates: inactive (aria-hidden) visuals pause/disable motion to keep CPU flat (only one visual is ever visible). Implementation may gate on the `isActive` prop or render-active-only.
+- Only the active item animates. Wrap each visual in React **`<Activity>`** (`mode={isActive ? "visible" : "hidden"}`, available in React 19.2) so inactive visuals keep their DOM/state but have their effects and animations paused — no animate-while-hidden CPU cost. Falls back to render-active-only if the Activity API shape differs in 19.2.4.
+- The 5 visuals are imported via **`next/dynamic`** (`bundle-dynamic-imports`) so they stay out of the initial homepage JS bundle; `AccordionVisual` is the dynamic boundary. Import primitives directly (not through a barrel) to keep traces tight (`bundle-barrel-imports`).
 
 ## 9. Responsive + performance
 
