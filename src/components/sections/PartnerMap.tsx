@@ -76,96 +76,106 @@ export function PartnerMap({
       <div className="dn-c2c-grid" aria-hidden="true" />
 
       <div className="relative z-[2] mx-auto max-w-[var(--container-content)] px-4 md:px-6 lg:px-8">
-        <div className="max-w-2xl">
-          {eyebrow ? (
-            <p className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
-              {eyebrow}
-            </p>
-          ) : null}
-          {heading ? (
-            <h2 className="mt-3 text-h2 font-[480] text-[var(--foreground)]">
-              {heading}
-            </h2>
-          ) : null}
-          {body ? (
-            <p className="mt-4 text-body-lg text-[var(--text-tertiary)]">{body}</p>
-          ) : null}
-        </div>
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          {/* Left column: copy + stats */}
+          <div>
+            {eyebrow ? (
+              <p className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
+                {eyebrow}
+              </p>
+            ) : null}
+            {heading ? (
+              <h2 className="mt-3 text-h2 font-[480] text-[var(--foreground)]">
+                {heading}
+              </h2>
+            ) : null}
+            {body ? (
+              <p className="mt-4 max-w-xl text-body-lg text-[var(--text-tertiary)]">
+                {body}
+              </p>
+            ) : null}
 
-        <div className="relative z-[1] mx-auto mt-2 w-full max-w-[1100px]">
-          <svg
-            viewBox={VIEWBOX}
-            preserveAspectRatio="xMidYMid meet"
-            className="block h-auto w-full overflow-visible"
-            aria-hidden="true"
-            role="presentation"
-          >
-            {DOTS.map(([cx, cy], i) => (
-              <circle key={`d${i}`} cx={cx} cy={cy} r={2} className="dn-c2c-dot" />
-            ))}
+            <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-6 border-t border-[var(--border)] pt-7">
+              {STATS.map((stat) => (
+                <div key={stat.label}>
+                  <dt className="text-h3 font-[480] tabular-nums text-[var(--foreground)]">
+                    {stat.count ? (
+                      <CountUp to={stat.value as number} />
+                    ) : (
+                      stat.value
+                    )}
+                  </dt>
+                  <dd className="mt-1 text-body-sm text-[var(--text-tertiary)]">
+                    {stat.label}
+                  </dd>
+                </div>
+              ))}
+            </dl>
 
-            {ARCS.map((d, i) => (
-              <path key={`a${i}`} d={d} className="dn-c2c-arc" />
-            ))}
+            {caption ? (
+              <p className="mt-5 text-body-sm text-[var(--text-tertiary)]">
+                {caption}
+              </p>
+            ) : null}
+          </div>
 
-            {PINS.map(([cx, cy, size], i) => {
-              const core = size / 10;
-              return (
-                <g
-                  key={`p${i}`}
-                  className={i % 5 === 0 ? "dn-c2c-pin-active" : undefined}
-                >
-                  <circle
-                    cx={cx}
-                    cy={cy}
-                    r={core * 2.4}
-                    className="dn-c2c-pin-halo"
+          {/* Right column: map */}
+          <div className="relative z-[1] w-full">
+            <svg
+              viewBox={VIEWBOX}
+              preserveAspectRatio="xMidYMid meet"
+              className="block h-auto w-full overflow-visible"
+              aria-hidden="true"
+              role="presentation"
+            >
+              {DOTS.map(([cx, cy], i) => (
+                <circle key={`d${i}`} cx={cx} cy={cy} r={2} className="dn-c2c-dot" />
+              ))}
+
+              {ARCS.map((d, i) => (
+                <path key={`a${i}`} d={d} className="dn-c2c-arc" />
+              ))}
+
+              {PINS.map(([cx, cy, size], i) => {
+                const core = size / 10;
+                return (
+                  <g
+                    key={`p${i}`}
+                    className={i % 5 === 0 ? "dn-c2c-pin-active" : undefined}
+                  >
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={core * 2.4}
+                      className="dn-c2c-pin-halo"
+                    />
+                    <circle cx={cx} cy={cy} r={core} className="dn-c2c-pin-core" />
+                  </g>
+                );
+              })}
+
+              {ARCS.map((d, i) => (
+                <circle key={`pulse${i}`} r={3.2} className="dn-c2c-pulse">
+                  <animateMotion
+                    dur="3s"
+                    repeatCount="indefinite"
+                    path={d}
+                    begin={`${i * 0.6}s`}
+                    rotate="0"
                   />
-                  <circle cx={cx} cy={cy} r={core} className="dn-c2c-pin-core" />
-                </g>
-              );
-            })}
-
-            {ARCS.map((d, i) => (
-              <circle key={`pulse${i}`} r={3.2} className="dn-c2c-pulse">
-                <animateMotion
-                  dur="3s"
-                  repeatCount="indefinite"
-                  path={d}
-                  begin={`${i * 0.6}s`}
-                  rotate="0"
-                />
-                <animate
-                  attributeName="opacity"
-                  values="0;1;1;0"
-                  keyTimes="0;0.1;0.85;1"
-                  dur="3s"
-                  repeatCount="indefinite"
-                  begin={`${i * 0.6}s`}
-                />
-              </circle>
-            ))}
-          </svg>
+                  <animate
+                    attributeName="opacity"
+                    values="0;1;1;0"
+                    keyTimes="0;0.1;0.85;1"
+                    dur="3s"
+                    repeatCount="indefinite"
+                    begin={`${i * 0.6}s`}
+                  />
+                </circle>
+              ))}
+            </svg>
+          </div>
         </div>
-
-        <dl className="relative z-[2] mt-7 flex flex-wrap justify-center gap-x-12 gap-y-6 border-t border-[var(--border)] pt-7">
-          {STATS.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <dt className="text-h3 font-[480] tabular-nums text-[var(--foreground)]">
-                {stat.count ? <CountUp to={stat.value as number} /> : stat.value}
-              </dt>
-              <dd className="mt-1 text-body-sm text-[var(--text-tertiary)]">
-                {stat.label}
-              </dd>
-            </div>
-          ))}
-        </dl>
-
-        {caption ? (
-          <p className="relative z-[2] mt-5 text-center text-body-sm text-[var(--text-tertiary)]">
-            {caption}
-          </p>
-        ) : null}
       </div>
     </section>
   );
