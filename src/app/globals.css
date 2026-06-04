@@ -39,6 +39,65 @@
   }
 }
 
+/* ------------------------------------------------------------
+   Marquee — seamless horizontal auto-scroll. Two identical sets
+   sit side by side; the track translates exactly one set width
+   (-50%) and loops. Pauses on hover. Reduced-motion collapses to
+   a static, manually scrollable row.
+   ------------------------------------------------------------ */
+@keyframes dn-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.dn-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+
+.dn-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: dn-marquee var(--dn-marquee-duration, 40s) linear infinite;
+}
+
+.dn-marquee:hover .dn-marquee__track {
+  animation-play-state: paused;
+}
+
+.dn-marquee__set {
+  display: flex;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dn-marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .dn-marquee__track {
+    animation: none;
+  }
+}
+
 /* ============================================================
    DebtNext design tokens — Mercury-style, dark-canvas-first
    Source of truth: DESIGN.md §4 + §5

@@ -30,6 +30,26 @@ export const integrationsHero = {
   primaryCta: { label: "Request a demo", href: "/demo" },
 };
 
+// Logo wall (typographic chips, no image assets). Andy wanted recognizable
+// systems scrolling under the hero CTA to credentialize the page.
+export const integrationsLogos = {
+  eyebrow: "Connected to the systems you already run",
+  logos: [
+    "SAP",
+    "Oracle CC&B",
+    "Oracle Utilities C2M",
+    "Pega",
+    "CSG",
+    "ICOMS",
+    "CACS",
+    "Artiva",
+    "CIS+",
+    "CRS",
+    "PCC",
+    "dPlat-to-dPlat",
+  ],
+};
+
 export const integrationsFootprint: {
   eyebrow: string;
   heading: string;

@@ -97,18 +97,19 @@ export const homepageProof = {
   link: { label: "See how dPlat compares", href: "/compare" },
   stats: [
     {
-      number: "116.8M+ accounts",
-      label: "Active inventory across client portfolios",
+      number: "116.8M",
+      label: "Accounts managed",
+      caption: "Across client portfolios",
     },
     {
-      number: "$1.9B+",
-      label: "Transactional dollars managed annually",
-      caption: "Processed through the platform on behalf of clients",
+      number: "10B+",
+      label: "Transactions processed",
+      caption: "In continuous production since 2003",
     },
     {
-      number: "20+ years",
-      label: "In production",
-      caption: "Building recovery software since 2003",
+      number: "538",
+      label: "Agency and legal partners",
+      caption: "Integrated across the recovery network",
     },
   ],
 } as const;

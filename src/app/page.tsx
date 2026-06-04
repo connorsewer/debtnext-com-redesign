@@ -11,7 +11,9 @@ import { CardGrid } from "@/components/sections/CardGrid";
 import { IntegrationStrip } from "@/components/sections/IntegrationStrip";
 import { ProofBand } from "@/components/sections/ProofBand";
 import { ProseIntro } from "@/components/sections/ProseIntro";
+import { StatMarquee } from "@/components/sections/StatMarquee";
 import { TrustBand } from "@/components/sections/TrustBand";
+import { annualActivity } from "@/content/stats";
 import {
   homepageBenefitSplit,
   homepageFeatureAccordion,
@@ -68,6 +70,12 @@ export default function HomePage() {
         link={homepageProof.link}
         linkLocation="homepage_proof"
         surface="elevated-dark"
+      />
+
+      <StatMarquee
+        eyebrow="Every year on dPlat"
+        heading="What the platform handles in a year."
+        items={annualActivity}
       />
 
       <BenefitSplit
