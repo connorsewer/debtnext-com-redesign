@@ -19,28 +19,28 @@ function Fallback() {
   );
 }
 
-const opts = { ssr: false, loading: Fallback } as const;
-
+// next/dynamic options must be an inline object literal (Turbopack static
+// analysis requirement), so each call repeats { ssr: false, loading }.
 const VISUALS: Record<AccordionVisualId, React.ComponentType> = {
   placement: dynamic(
     () => import("./PlacementMatrix").then((m) => m.PlacementMatrix),
-    opts,
+    { ssr: false, loading: Fallback },
   ),
   optimization: dynamic(
     () => import("./OptimizationEngine").then((m) => m.OptimizationEngine),
-    opts,
+    { ssr: false, loading: Fallback },
   ),
   issues: dynamic(
     () => import("./IssuesWorklist").then((m) => m.IssuesWorklist),
-    opts,
+    { ssr: false, loading: Fallback },
   ),
   reporting: dynamic(
     () => import("./ReportingDashboard").then((m) => m.ReportingDashboard),
-    opts,
+    { ssr: false, loading: Fallback },
   ),
   compliance: dynamic(
     () => import("./ComplianceStandards").then((m) => m.ComplianceStandards),
-    opts,
+    { ssr: false, loading: Fallback },
   ),
 };
 
