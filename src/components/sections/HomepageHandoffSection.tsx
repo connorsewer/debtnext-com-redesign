@@ -2,9 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import dynamic from "next/dynamic";
 
 import {
   FramedDashboard,
@@ -16,7 +14,15 @@ import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { heroHandoff, type PlatformTab } from "@/content/homepage-hero";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+// Desktop-only, non-reduced-motion owner of ALL GSAP. Loaded via next/dynamic
+// with ssr:false so GSAP never enters the `/` eager client chunk. registerPlugin
+// is idempotent, so this second controller instance (the hero mounts its own) is
+// a harmless no-op — no double-register, no race.
+const HeroCinematicController = dynamic(
+  () =>
+    import("./HeroCinematicController").then((m) => m.HeroCinematicController),
+  { ssr: false }
+);
 
 /** Per-tab vertical scroll allocation (in viewport heights). */
 const VH_PER_TAB = 0.75;
@@ -49,48 +55,35 @@ export function HomepageHandoffSection() {
   const active =
     heroHandoff.tabs.find((t) => t.id === activeId) ?? heroHandoff.tabs[0];
 
-  /** Scroll-driven tab progression. */
-  useGSAP(
-    () => {
-      if (isMobile) return;
-      if (!sectionRef.current) return;
-      const trigger = ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top top",
-        end: () => `+=${window.innerHeight * VH_PER_TAB * tabCount}`,
-        // Recompute start/end on every refresh — important because the
-        // hero's GSAP pin spacer (added in HomepageHero) shifts this
-        // section's document position AFTER this trigger is created.
-        // Without this, the trigger caches a stale start and fires
-        // mid-cinematic, dragging activeId straight to "reporting".
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const idx = Math.min(
-            tabCount - 1,
-            Math.floor(self.progress * tabCount)
-          );
-          const target = heroHandoff.tabs[idx];
-          if (target && target.id !== activeIdRef.current) {
-            activeIdRef.current = target.id;
-            setActiveId(target.id);
-          }
-        },
-      });
-      // Belt-and-suspenders: explicitly refresh after creation so the
-      // hero's pin spacer (which is added in HomepageHero's useGSAP) is
-      // already in place when this trigger snapshots its positions.
-      ScrollTrigger.refresh();
-      return () => trigger.kill();
-    },
-    { scope: sectionRef, dependencies: [isMobile] }
-  );
-
-  // Mirror ref so the GSAP onUpdate closure can compare against the latest
-  // value without re-creating the ScrollTrigger on every state change.
+  // Mirror ref so the controller's onActiveTab callback can compare against the
+  // latest value without re-creating the ScrollTrigger on every state change.
   const activeIdRef = React.useRef(activeId);
   React.useEffect(() => {
     activeIdRef.current = activeId;
   }, [activeId]);
+
+  const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
+  React.useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handler = () => setPrefersReducedMotion(mq.matches);
+    handler();
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  // Scroll-driven tab progression now lives in HeroCinematicController (the
+  // single dynamic-GSAP owner). The controller calls this with the active tab
+  // index; the guarded update is identical to the old GSAP onUpdate body.
+  const onActiveTab = React.useCallback((idx: number) => {
+    const id = heroHandoff.tabs[idx]?.id;
+    if (id && id !== activeIdRef.current) {
+      activeIdRef.current = id;
+      setActiveId(id);
+    }
+  }, []);
+
+  // Desktop + non-reduced-motion only. Mobile renders the static stack below.
+  const cinematicEnabled = !isMobile && !prefersReducedMotion;
 
   /** Smooth-scroll to the middle of a tab's scroll slice when clicked. */
   function scrollToTab(tabId: PlatformTab["id"]) {
@@ -175,6 +168,16 @@ export function HomepageHandoffSection() {
       style={{ opacity: 0 }}
       className="relative -mt-[100vh] h-[400vh] bg-[var(--background)]"
     >
+      {cinematicEnabled && (
+        <HeroCinematicController
+          handoff={{
+            sectionRef,
+            tabCount,
+            vhPerTab: VH_PER_TAB,
+            onActiveTab,
+          }}
+        />
+      )}
       <div className="sticky top-0 h-screen overflow-hidden">
         <div className="relative mx-auto h-full max-w-[var(--container-page)] px-4 md:px-6 lg:px-8">
           {/* Eyebrow + heading, anchored in the top portion of the viewport
@@ -243,7 +246,7 @@ export function HomepageHandoffSection() {
                         ?.focus();
                     }}
                     className={cn(
-                      "inline-flex min-h-[40px] items-center rounded-[var(--radius-xl)] border px-4 py-2 text-body-sm font-[480] transition-colors duration-[var(--duration-instant)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]",
+                      "inline-flex min-h-[44px] items-center rounded-[var(--radius-xl)] border px-4 py-2 text-body-sm font-[480] transition-colors duration-[var(--duration-instant)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]",
                       isActive
                         ? "border-[var(--primary)] bg-[var(--primary)]/15 text-[var(--foreground)]"
                         : "border-[var(--border)] bg-transparent text-[var(--text-tertiary)] hover:border-[var(--text-tertiary)] hover:text-white"
@@ -270,7 +273,7 @@ export function HomepageHandoffSection() {
             <div className="mt-4">
               <Link
                 href={heroHandoff.link.href}
-                className="inline-flex items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+                className="min-h-touch inline-flex items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
               >
                 {heroHandoff.link.label} <span aria-hidden="true">→</span>
               </Link>

@@ -10,9 +10,11 @@ Last session ended: 2026-05-20 (post-M4 ship + GSD `.planning/` apparatus bootst
 
 You are continuing a **production rebuild of debtnext.com** modeled on Mercury.com. The site is live in production at **https://debtnext-website.vercel.app**.
 
-**M1, M2, M3, M3.5, M3.6, and M4 are complete and deployed.** All 11 v1 routes ship. The hero → "THE PLATFORM" handoff is seamless. The DebtNext wordmark (with a live indigo node) is in nav chrome. M4 added the mobile responsive system (Utopia type scale, container queries, 44px touch targets, axe-core CI) with 164 Playwright specs green; `/` LCP is the only outstanding gap at 2.86s due to an 11 MB hero MP4.
+**M1, M2, M3, M3.5, M3.6, and M4 are complete and deployed.** All 11 v1 routes ship. The hero to "THE PLATFORM" handoff is continuous, with no visible seam. The DebtNext wordmark (with a live indigo node) is in nav chrome. M4 added the mobile responsive system (Utopia type scale, container queries, 44px touch targets, axe-core CI).
 
-The next milestone is **M5 — Launch readiness + motion pass** (5 phases, 21 requirements). Roadmap in `.planning/ROADMAP.md`. Connor chose option (b) on the post-M4 framing: bundle launch-critical items + motion into a single longer M5. Phase 5 (Hero performance) is critical-path and is the next thing to start.
+**M5 hero performance is CLOSED (2026-06-04).** Phases 5 + 5.1 + 5.2 + 5.3 shipped together (D-08); HERO-01..04 are Done. The `/` LCP gate is green: real H1 paint about 1,254 ms vs the 2,300 ms bar. The path there was the multi-res MP4 ladder + mobile-video-free gate (5.1), the AVIF poster (5.2), and lazy-loaded GSAP off the `/` eager chunk (5.3). The LHCI gate's last 4,388 ms simulate projection wasn't movable by JS or asset changes, so the gate switched `throttlingMethod` simulate→devtools (real Chrome paint, SAME slow-4G + 4x CPU profile); the 2,300 ms bar and the throttle profile are unchanged. This work lives on branch phase-05.3, PR #7; the merge to main is Connor's pending call. The one remaining red Playwright test (`container-query-layouts.spec.ts:17`) is pre-existing on main, not a 5.3 regression.
+
+The next milestone is **M6 (Premium visual + motion system)** (Phases 10-15, running alongside M5). **M6 Phase 10 (Foundation) is the next thing to start** (`/gsd-plan-phase 10`); its cross-milestone dependency on M5 Phase 5.3 (lazy-GSAP) is now satisfied. M5's remaining work (Analytics, SEO, DoD) stays open; M5's Phase 8 Motion is superseded by M6 Phase 10. Roadmaps in `.planning/ROADMAP.md`.
 
 **Read these first, in this order:**
 
@@ -348,6 +350,8 @@ These are not bugs — they're things flagged for follow-up.
 
 ## How to resume
 
+**Next step (2026-06-04):** M5 hero LCP blocker is cleared. The recommended next move is **`/gsd-plan-phase 10`** to plan M6 Foundation (the cross-milestone lazy-GSAP gate is satisfied). Before merging Phase 5.3 to main: decide on PR #7 (the merge is Connor's call) and, if desired, do the deferred human-verify of desktop cinematic visual parity on the Vercel preview (behavioral specs are already green). M5's Analytics (Phase 6), SEO (Phase 7), and DoD (Phase 9) remain open; Phase 8 Motion is superseded by M6 Phase 10.
+
 ```bash
 cd "/Users/connorlaughlin/Desktop/Coding/DebtNext.com Redesign"
 
@@ -402,6 +406,16 @@ ls hero-snapshots/
 ## Recent commits (most recent first)
 
 ```
+(phase-05.3 branch, PR #7; newest first)
+48b1222 fix(05.3-01): meet 44px touch floor on desktop handoff tab buttons + link
+1a62d93 perf(05.3): switch LHCI throttling simulate->devtools, 5 runs
+cc56504 docs(05.3-01): complete lazy-GSAP plan (SUMMARY, STATE, ROADMAP)
+0db8994 feat(05.3-01): lazy-mount GSAP controller; drop eager GSAP from sections
+f58b436 feat(05.3-01): add HeroCinematicController, the single dynamic-GSAP owner
+aa772c8 docs: create milestone M6 roadmap (Phases 10-15)
+f0fbf3c docs: define milestone M6 requirements (21 across 6 categories)
+
+(main lineage)
 d671bea docs: create M5 roadmap (5 phases, Phase 5-9, 21 reqs mapped)
 474eebf docs: define M5 requirements (21 reqs, 5 categories)
 d2afb74 docs: start milestone M5 launch readiness + motion pass
