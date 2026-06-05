@@ -5,6 +5,9 @@
       "url": [
         "http://localhost:3200/",
         "http://localhost:3200/platform/placement",
+        "http://localhost:3200/platform/optimization",
+        "http://localhost:3200/platform/issues",
+        "http://localhost:3200/platform/reporting",
         "http://localhost:3200/solutions/utilities"
       ],
       "numberOfRuns": 5,
@@ -55,6 +58,33 @@
         },
         {
           "matchingUrlPattern": "http://localhost:3200/platform/placement$",
+          "assertions": {
+            "cumulative-layout-shift": [
+              "error",
+              { "maxNumericValue": 0.1, "aggregationMethod": "median-run" }
+            ]
+          }
+        },
+        {
+          "matchingUrlPattern": "http://localhost:3200/platform/optimization$",
+          "assertions": {
+            "cumulative-layout-shift": [
+              "error",
+              { "maxNumericValue": 0.1, "aggregationMethod": "median-run" }
+            ]
+          }
+        },
+        {
+          "matchingUrlPattern": "http://localhost:3200/platform/issues$",
+          "assertions": {
+            "cumulative-layout-shift": [
+              "error",
+              { "maxNumericValue": 0.1, "aggregationMethod": "median-run" }
+            ]
+          }
+        },
+        {
+          "matchingUrlPattern": "http://localhost:3200/platform/reporting$",
           "assertions": {
             "cumulative-layout-shift": [
               "error",
