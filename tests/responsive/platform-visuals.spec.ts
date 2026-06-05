@@ -20,10 +20,10 @@ import { test, expect, type Page } from "@playwright/test";
  *      (the reveal-fail-open assertion shape, scoped to the route).
  *
  * Structure: every assertion lives in `assertPlatformVisuals(page, cfg)`, keyed
- * off a per-route config. This plan runs it for /platform/placement only; Wave 2
- * (Plans 11-02 / 11-03 / 11-04) appends optimization / issues / reporting configs
- * to PLATFORM_VISUAL_PAGES and inherits every assertion, including the
- * reduced-motion data-parity check, for free.
+ * off a per-route config. All 4 platform deep-dive pages are now covered:
+ * /platform/placement (11-01), /platform/optimization (11-02), /platform/issues
+ * (11-03), and /platform/reporting (11-04). Each route inherits every assertion,
+ * including the reduced-motion data-parity check, from the shared helper.
  *
  * Runs against a Vercel preview via PLAYWRIGHT_BASE_URL (next dev/start hang in
  * this sandbox per project memory). Uses page.goto + waitForLoadState + the
@@ -84,7 +84,17 @@ const PLATFORM_VISUAL_PAGES: PlatformVisualConfig[] = [
       "On time",
     ],
   },
-  // Wave 2 appends: reporting config here.
+  {
+    route: "/platform/reporting",
+    accordionItemIds: ["inventory", "vendor", "cost", "sla", "activity"],
+    // Flagship values rendered by default (reportingFlagshipConsole). The console
+    // title comes from the Console.Header slot; the net-back pill comes from the
+    // Console.Pills slot. Both render on load and must survive reduced motion (D-05).
+    flagshipValues: [
+      "Portfolio performance · liquidation by tier",
+      "Net-back per account $162.40",
+    ],
+  },
 ];
 
 /** Click each accordion trigger in turn and assert the active panel surfaces a
