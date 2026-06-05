@@ -7,9 +7,11 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProcessStrip } from "@/components/sections/ProcessStrip";
 import {
-  LazyDecisionEnginePreview,
-  LazyPlacementMatrix,
-} from "@/components/product/visuals/lazy";
+  ConsoleVisual,
+  DataStoryVisual,
+  SchematicVisual,
+} from "@/components/product/visuals/archetypes";
+import { LazyPlacementFlagship } from "@/components/product/visuals/lazy";
 import {
   placementAccordion,
   placementBenefit,
@@ -18,6 +20,13 @@ import {
   placementMeta,
   placementProcess,
 } from "@/content/placement";
+import {
+  placementBusinessRules,
+  placementConsole,
+  placementReconciliation,
+  placementRecall,
+  placementVendorPools,
+} from "@/content/visuals";
 
 export const metadata: Metadata = {
   title: placementMeta.title,
@@ -50,14 +59,20 @@ export default function PlacementPage() {
         eyebrow={placementAccordion.eyebrow}
         heading={placementAccordion.heading}
         items={placementAccordion.items}
-        visuals={{ "decision-engine": <LazyPlacementMatrix /> }}
+        visuals={{
+          "decision-engine": <ConsoleVisual data={placementConsole} />,
+          "vendor-pools": <SchematicVisual data={placementVendorPools} />,
+          recall: <SchematicVisual data={placementRecall} />,
+          "business-rules": <ConsoleVisual data={placementBusinessRules} />,
+          reconciliation: <DataStoryVisual data={placementReconciliation} />,
+        }}
       />
 
       <BenefitSplit
         heading={placementBenefit.heading}
         body={placementBenefit.body}
         bullets={placementBenefit.bullets}
-        visual={<LazyDecisionEnginePreview />}
+        visual={<LazyPlacementFlagship />}
         surface="light"
       />
 
