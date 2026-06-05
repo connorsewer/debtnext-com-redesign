@@ -58,7 +58,6 @@ export default function ReportingPage() {
         heading={reportingBenefit.heading}
         body={reportingBenefit.body}
         bullets={reportingBenefit.bullets}
-        media={reportingBenefit.media}
         visual={<LazyReportingDashboard />}
         surface="light"
       />

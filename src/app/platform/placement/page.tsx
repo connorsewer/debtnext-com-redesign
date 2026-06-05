@@ -57,7 +57,6 @@ export default function PlacementPage() {
         heading={placementBenefit.heading}
         body={placementBenefit.body}
         bullets={placementBenefit.bullets}
-        media={placementBenefit.media}
         visual={<LazyDecisionEnginePreview />}
         surface="light"
       />

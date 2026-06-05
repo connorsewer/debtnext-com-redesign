@@ -81,13 +81,6 @@ export const solutionsCrossIndustry = {
     "Cross-portfolio reporting with portfolio-level drill-downs",
     "Single audit trail across every portfolio and every vendor",
   ],
-  media: {
-    src: "/product/dashboard-dark.png",
-    alt:
-      "dPlat dashboard showing two portfolios side by side with shared reporting roll-up.",
-    width: 1600,
-    height: 1000,
-  },
 };
 
 // [COI REVIEW] Andrew to verify framing on "regulatory infrastructure" claims.

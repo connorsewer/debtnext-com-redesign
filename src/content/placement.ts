@@ -100,13 +100,6 @@ export const placementBenefit = {
     "Audit history shows who changed what, when, and why",
     "Test rule changes against historical placement data before activating",
   ],
-  media: {
-    src: "/product/dashboard-dark.png",
-    alt:
-      "Configuration screen showing a vendor pool with editable allocation percentages and a preview-impact panel.",
-    width: 1600,
-    height: 1000,
-  },
 };
 
 export const placementFinalCta = {

@@ -104,13 +104,6 @@ export const reportingBenefit = {
     "Configurable extract cadence per data domain",
     "Tableau, Power BI, Looker, and Snowflake patterns supported",
   ],
-  media: {
-    src: "/product/dashboard-dark.png",
-    alt:
-      "A Power BI dashboard view sourced from a dPlat extract, showing portfolio-level liquidation and net-back trends.",
-    width: 1600,
-    height: 1000,
-  },
 };
 
 export const reportingFinalCta = {

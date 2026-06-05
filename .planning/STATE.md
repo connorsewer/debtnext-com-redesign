@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: M6
 milestone_name: Premium visual + motion system
-status: Ready to execute
-last_updated: "2026-06-05T03:16:41.448Z"
+status: Ready to plan
+last_updated: "2026-06-05T13:40:30.694Z"
 progress:
   total_phases: 14
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 17
-  completed_plans: 10
-  percent: 59
+  completed_plans: 16
+  percent: 94
 ---
 
 # STATE.md
@@ -19,13 +19,13 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 **Core value:** Convert qualified enterprise buyers into demo requests. The single conversion action is "Request a demo".
-**Current focus:** Phase 05.3 CLOSED (LHCI gate green; D-08 fired). Next: M6 Phase 10 (Foundation), via `/gsd-plan-phase 10`.
+**Current focus:** Phase 10 (Foundation) COMPLETE 2026-06-05 (6/6 plans; 5/5 must-haves verified, human-UAT pending CI). Next: M6 Phase 11 (Platform deep-dive visuals), via `/gsd-plan-phase 11`.
 
 ## Current Position
 
-Phase: 05.3 (close-lhci-gate-via-lazy-gsap): COMPLETE (Plan 02 D-08 close-out shipped; LHCI Case C gate green)
-Plan: 2 of 2 ✓
-Milestone: **M6 — Premium visual + motion system.** Status: roadmap complete; phases 10-15 defined. **Current phase: Phase 10 — Foundation (not started).** Next step: `/gsd-plan-phase 10`. M6's motion foundation (Phase 10) supersedes M5's planned "Phase 8 Motion pass" — do not double-schedule motion work. Last activity: 2026-06-04 — M6 roadmap created alongside the still-open M5 ("premium now, M5 stays open" sequencing decision). Design source: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-design.md`.
+Phase: 11
+Plan: Not started
+Milestone: **M6 — Premium visual + motion system.** Status: roadmap complete; phases 10-15 defined. **Phase 10 — Foundation COMPLETE 2026-06-05** (motion barrel + 3 archetypes + typed payloads + 4 primitives + CI guardrails; FND-01..06 satisfied; 5 runtime UAT items tracked in 10-HUMAN-UAT.md). **Current phase: Phase 11 — Platform deep-dive visuals (not started).** Next step: `/gsd-plan-phase 11`. M6's motion foundation (Phase 10) supersedes M5's planned "Phase 8 Motion pass" — do not double-schedule motion work. Last activity: 2026-06-04 — M6 roadmap created alongside the still-open M5 ("premium now, M5 stays open" sequencing decision). Design source: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-design.md`.
 
 **Cross-milestone gate (SATISFIED 2026-06-04):** Phase 10's dependency on **M5 Phase 5.3 (lazy-GSAP)** is closed. GSAP is off the `/` eager chunk and the hero LCP gate is green under devtools, so the `/` mobile JS budget is shut (Pitfalls 1 + 6 cleared). Phase 10 can land freely. Phase 15 (homepage capstone) stays double-gated: on Phases 10-14 and on the M5 hero LCP fix being closed (now closed) or renegotiated.
 

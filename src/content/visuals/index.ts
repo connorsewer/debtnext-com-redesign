@@ -1,0 +1,20 @@
+/**
+ * Visual payload home barrel (FND-03). Pages and the lazy archetype registry
+ * import the typed schemas and per-context payloads from one place. Server-safe
+ * (no "use client"); the single [CLAIMS REVIEW]-auditable home for product
+ * numbers rendered inside visuals.
+ */
+
+export type {
+  BarSpec,
+  ConsoleHeader,
+  ConsoleCallout,
+  ConsoleRow,
+  ConsoleData,
+  DataStoryData,
+  SchematicNode,
+  SchematicEdge,
+  SchematicData,
+} from "./types";
+
+export { placementConsole } from "./placement";

@@ -98,13 +98,6 @@ export const optimizationBenefit = {
     "Adjustment cycles run on your defined cadence, not a quarterly review",
     "Caps and floors give your strategy team final control",
   ],
-  media: {
-    src: "/product/dashboard-dark.png",
-    alt:
-      "Optimization audit trail showing three sequential pool-close events with corresponding allocation adjustments.",
-    width: 1600,
-    height: 1000,
-  },
 };
 
 export const optimizationFinalCta = {
