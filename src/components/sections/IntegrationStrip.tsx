@@ -1,8 +1,12 @@
+"use client";
+
 import * as React from "react";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
+import { fadeUpItem, staggerContainer } from "@/components/product/motion";
 
 export interface IntegrationCard {
   title: string;
@@ -33,6 +37,7 @@ export function IntegrationStrip({
   surface = "dark",
   link,
 }: IntegrationStripProps) {
+  const reduce = useReducedMotion();
   return (
     <SectionContainer surface={surface}>
       <div className="max-w-3xl">
@@ -51,10 +56,17 @@ export function IntegrationStrip({
         ) : null}
       </div>
 
-      <ul className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
+      <motion.ul
+        className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-14 lg:grid-cols-4"
+        variants={staggerContainer}
+        initial={reduce ? false : "hidden"}
+        whileInView={reduce ? undefined : "show"}
+        viewport={{ once: true, amount: 0.2 }}
+      >
         {cards.map((card) => (
-          <li
+          <motion.li
             key={card.title}
+            variants={reduce ? undefined : fadeUpItem}
             className="flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6 transition-colors duration-[var(--duration-instant)] hover:border-[var(--focus)]"
           >
             <span
@@ -71,9 +83,9 @@ export function IntegrationStrip({
                 {card.body}
               </p>
             </div>
-          </li>
+          </motion.li>
         ))}
-      </ul>
+      </motion.ul>
 
       {link ? (
         <div className="mt-8">

@@ -1,8 +1,12 @@
+"use client";
+
 import * as React from "react";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
+import { fadeUpItem, staggerContainer } from "@/components/product/motion";
 import { cn } from "@/lib/utils";
 
 export interface GridCard {
@@ -44,6 +48,7 @@ export function CardGrid({
   surface = "dark",
   id,
 }: CardGridProps) {
+  const reduce = useReducedMotion();
   const colClass = {
     2: "@sm/card:grid-cols-2",
     3: "@sm/card:grid-cols-2 @5xl/card:grid-cols-3",
@@ -68,10 +73,17 @@ export function CardGrid({
         ) : null}
       </div>
 
-      <ul className={cn("container-card mt-10 grid gap-4 md:mt-14", colClass)}>
+      <motion.ul
+        className={cn("container-card mt-10 grid gap-4 md:mt-14", colClass)}
+        variants={staggerContainer}
+        initial={reduce ? false : "hidden"}
+        whileInView={reduce ? undefined : "show"}
+        viewport={{ once: true, amount: 0.15 }}
+      >
         {cards.map((card) => (
-          <li
+          <motion.li
             key={card.title}
+            variants={reduce ? undefined : fadeUpItem}
             className="flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6 transition-colors duration-[var(--duration-instant)] hover:border-[var(--focus)] md:p-7"
           >
             {card.icon ? (
@@ -103,9 +115,9 @@ export function CardGrid({
                 {card.link.label} <span aria-hidden="true">→</span>
               </Link>
             ) : null}
-          </li>
+          </motion.li>
         ))}
-      </ul>
+      </motion.ul>
     </SectionContainer>
   );
 }

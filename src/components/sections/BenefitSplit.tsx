@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { RevealSection } from "@/components/sections/RevealSection";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
 import { track } from "@/lib/analytics";
@@ -54,6 +55,7 @@ export function BenefitSplit({
 }: BenefitSplitProps) {
   return (
     <SectionContainer surface={surface} id={id}>
+      <RevealSection>
       <div
         className={cn(
           "grid items-center gap-12 @md/section:gap-16",
@@ -133,6 +135,7 @@ export function BenefitSplit({
           )}
         </div>
       </div>
+      </RevealSection>
     </SectionContainer>
   );
 }

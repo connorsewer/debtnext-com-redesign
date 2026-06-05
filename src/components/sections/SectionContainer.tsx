@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { AmbientField } from "@/components/ambient/AmbientField";
 import { cn } from "@/lib/utils";
 
 /**
@@ -14,12 +15,17 @@ interface SectionContainerProps extends React.HTMLAttributes<HTMLElement> {
   surface?: SectionSurface;
   containerSize?: "content" | "page" | "readable" | "narrow";
   as?: "section" | "div";
+  /** Render a decorative AmbientField behind the content (dark bands only).
+   *  Adds relative/isolate/overflow-hidden to the section and lifts the
+   *  content into a relative z-10 layer so it sits above the field. */
+  ambient?: boolean;
 }
 
 export function SectionContainer({
   surface = "dark",
   containerSize = "content",
   as: As = "section",
+  ambient = false,
   className,
   children,
   ...rest
@@ -38,12 +44,20 @@ export function SectionContainer({
         surface === "light" && "theme-light",
         "bg-[var(--background)] text-[var(--foreground)]",
         surface === "elevated-dark" && "bg-[var(--card)]",
+        ambient && "relative isolate overflow-hidden",
         "py-[var(--space-section-mobile)] md:py-[var(--space-section-tablet)] lg:py-[var(--space-section-desktop)]",
         className
       )}
       {...rest}
     >
-      <div className={cn("container-section mx-auto px-4 md:px-6 lg:px-8", containerClass)}>
+      {ambient ? <AmbientField /> : null}
+      <div
+        className={cn(
+          "container-section mx-auto px-4 md:px-6 lg:px-8",
+          ambient && "relative z-10",
+          containerClass
+        )}
+      >
         {children}
       </div>
     </As>

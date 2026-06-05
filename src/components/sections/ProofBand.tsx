@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
+import { CountUp } from "@/components/sections/CountUp";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
 import { track } from "@/lib/analytics";
@@ -14,6 +15,13 @@ export interface ProofStat {
   label: string;
   /** Optional small caption beneath the label */
   caption?: string;
+  /** When set, the figure counts up to this value on scroll-in, formatted
+   *  with the prefix/suffix/decimals below. Falls back to the `number`
+   *  string when omitted. */
+  value?: number;
+  prefix?: string;
+  suffix?: string;
+  decimals?: number;
 }
 
 export interface ProofBandProps {
@@ -91,7 +99,16 @@ export function ProofBand({
               className="text-h2 font-[480] text-[var(--foreground)]"
               style={{ fontVariantNumeric: "tabular-nums" }}
             >
-              {stat.number}
+              {stat.value != null ? (
+                <CountUp
+                  to={stat.value}
+                  prefix={stat.prefix}
+                  suffix={stat.suffix}
+                  decimals={stat.decimals}
+                />
+              ) : (
+                stat.number
+              )}
             </p>
             <p className="mt-3 text-body-strong text-[var(--foreground)]">
               {stat.label}

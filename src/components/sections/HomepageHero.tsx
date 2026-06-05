@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
+import { CursorGlow } from "@/components/motion/CursorGlow";
 import { FramedDashboard } from "@/components/sections/mockups/FramedDashboard";
 import { track } from "@/lib/analytics";
 import { heroCinematic } from "@/content/homepage-hero";
@@ -258,6 +259,7 @@ export function HomepageHero() {
           ref={overlayRef}
           className="absolute inset-0 flex flex-col items-center justify-center px-4 md:px-6 lg:px-8"
         >
+          <CursorGlow />
           <div className="mx-auto flex w-full max-w-[var(--container-content)] flex-col items-center text-center">
             <h1
               className="text-balance text-[clamp(2.75rem,8vw,7rem)] font-[500] leading-[0.95] tracking-[-0.02em] text-white"
