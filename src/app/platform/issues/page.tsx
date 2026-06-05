@@ -7,7 +7,12 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProcessStrip } from "@/components/sections/ProcessStrip";
 import { ProseIntro } from "@/components/sections/ProseIntro";
-import { LazyIssuesWorklist } from "@/components/product/visuals/lazy";
+import {
+  ConsoleVisual,
+  DataStoryVisual,
+  SchematicVisual,
+} from "@/components/product/visuals/archetypes";
+import { LazyIssuesFlagship } from "@/components/product/visuals/lazy";
 import {
   issuesAccordion,
   issuesBenefit,
@@ -17,6 +22,13 @@ import {
   issuesMeta,
   issuesProcess,
 } from "@/content/issues";
+import {
+  issuesAudit,
+  issuesAutoHandling,
+  issuesSla,
+  issuesVendorPortal,
+  issuesWorkflows,
+} from "@/content/visuals";
 
 export const metadata: Metadata = {
   title: issuesMeta.title,
@@ -47,13 +59,20 @@ export default function IssuesPage() {
         section="issues_accordion"
         heading={issuesAccordion.heading}
         items={issuesAccordion.items}
+        visuals={{
+          "auto-handling": <ConsoleVisual data={issuesAutoHandling} />,
+          workflows: <SchematicVisual data={issuesWorkflows} />,
+          "vendor-portal": <ConsoleVisual data={issuesVendorPortal} />,
+          sla: <ConsoleVisual data={issuesSla} />,
+          audit: <DataStoryVisual data={issuesAudit} />,
+        }}
       />
 
       <BenefitSplit
         heading={issuesBenefit.heading}
         body={issuesBenefit.body}
         bullets={issuesBenefit.bullets}
-        visual={<LazyIssuesWorklist />}
+        visual={<LazyIssuesFlagship />}
         surface="light"
       />
 

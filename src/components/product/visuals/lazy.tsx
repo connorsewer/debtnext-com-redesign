@@ -86,3 +86,13 @@ export const LazyOptimizationFlagship = dynamic(
   () => import("./OptimizationFlagship").then((m) => m.OptimizationFlagship),
   { ssr: false, loading: FlagshipSkeleton },
 );
+
+// Issues explorable flagship (PLATVIS-02, Wave 2). Reuses the SAME FlagshipSkeleton
+// (FLAGSHIP_SKELETON_MIN_H = min-h-[44rem] = 704px) the placement flagship proved
+// against the /platform/placement CLS gate, so the resolved Console + issue-inspect
+// box reserves its height and the lazy swap is CLS-free. Inline-literal options per
+// Turbopack static-analysis.
+export const LazyIssuesFlagship = dynamic(
+  () => import("./IssuesFlagship").then((m) => m.IssuesFlagship),
+  { ssr: false, loading: FlagshipSkeleton },
+);
