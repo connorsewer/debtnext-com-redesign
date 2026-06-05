@@ -122,6 +122,7 @@ export function BenefitSplit({
         </div>
 
         <div
+          data-testid="benefit-split-media"
           className={cn(
             "relative overflow-hidden rounded-[var(--radius-sm)] bg-[var(--card)] shadow-[var(--shadow-nav)] ring-1 ring-[var(--border)]",
             mediaPosition === "left" ? "@md/section:order-1" : ""

@@ -28,8 +28,11 @@ test.describe("Phase 2 primitives activate at desktop", () => {
       .first()
       .boundingBox();
     expect(headingBox).not.toBeNull();
+    // The media column renders either a static <Image> or a live product
+    // visual (a <div>-based component, e.g. DecisionEnginePreview on /), so we
+    // target BenefitSplit's media-column wrapper directly rather than an <img>.
     const mediaBox = await page
-      .locator('img[alt*="placement matrix" i], img[alt*="dashboard" i]')
+      .getByTestId("benefit-split-media")
       .first()
       .boundingBox();
     expect(mediaBox).not.toBeNull();
@@ -61,7 +64,7 @@ test.describe("Phase 2 primitives activate at desktop", () => {
       .first()
       .boundingBox();
     const mMediaBox = await page
-      .locator('img[alt*="placement matrix" i], img[alt*="dashboard" i]')
+      .getByTestId("benefit-split-media")
       .first()
       .boundingBox();
     expect(mHeadingBox).not.toBeNull();
