@@ -2,10 +2,11 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
-import { RevealOnView, revealIndex } from "@/components/motion/css-reveal";
+import { fadeUpItem, staggerContainer } from "@/components/product/motion";
 import { cn } from "@/lib/utils";
 import hover from "@/components/motion/hover.module.css";
 
@@ -48,6 +49,7 @@ export function CardGrid({
   surface = "dark",
   id,
 }: CardGridProps) {
+  const reduce = useReducedMotion();
   const colClass = {
     2: "@sm/card:grid-cols-2",
     3: "@sm/card:grid-cols-2 @5xl/card:grid-cols-3",
@@ -72,16 +74,19 @@ export function CardGrid({
         ) : null}
       </div>
 
-      <RevealOnView
-        as="ul"
+      <motion.ul
         className={cn("container-card mt-10 grid gap-4 md:mt-14", colClass)}
+        variants={staggerContainer}
+        initial={reduce ? false : "hidden"}
+        whileInView={reduce ? undefined : "show"}
+        viewport={{ once: true, amount: 0.15 }}
       >
-        {cards.map((card, i) => (
-          <li
+        {cards.map((card) => (
+          <motion.li
             key={card.title}
-            style={revealIndex(i)}
+            variants={reduce ? undefined : fadeUpItem}
             className={cn(
-              "dn-reveal flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6 md:p-7",
+              "flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6 md:p-7",
               hover.hoverCard
             )}
           >
@@ -120,9 +125,9 @@ export function CardGrid({
                 </span>
               </Link>
             ) : null}
-          </li>
+          </motion.li>
         ))}
-      </RevealOnView>
+      </motion.ul>
     </SectionContainer>
   );
 }

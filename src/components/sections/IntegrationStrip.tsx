@@ -2,10 +2,11 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
-import { RevealOnView, revealIndex } from "@/components/motion/css-reveal";
+import { fadeUpItem, staggerContainer } from "@/components/product/motion";
 import { cn } from "@/lib/utils";
 import hover from "@/components/motion/hover.module.css";
 
@@ -38,6 +39,7 @@ export function IntegrationStrip({
   surface = "dark",
   link,
 }: IntegrationStripProps) {
+  const reduce = useReducedMotion();
   return (
     <SectionContainer surface={surface}>
       <div className="max-w-3xl">
@@ -56,16 +58,19 @@ export function IntegrationStrip({
         ) : null}
       </div>
 
-      <RevealOnView
-        as="ul"
+      <motion.ul
         className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-14 lg:grid-cols-4"
+        variants={staggerContainer}
+        initial={reduce ? false : "hidden"}
+        whileInView={reduce ? undefined : "show"}
+        viewport={{ once: true, amount: 0.2 }}
       >
-        {cards.map((card, i) => (
-          <li
+        {cards.map((card) => (
+          <motion.li
             key={card.title}
-            style={revealIndex(i)}
+            variants={reduce ? undefined : fadeUpItem}
             className={cn(
-              "dn-reveal flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6",
+              "flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6",
               hover.hoverCard
             )}
           >
@@ -83,9 +88,9 @@ export function IntegrationStrip({
                 {card.body}
               </p>
             </div>
-          </li>
+          </motion.li>
         ))}
-      </RevealOnView>
+      </motion.ul>
 
       {link ? (
         <div className="mt-8">

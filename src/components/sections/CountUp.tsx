@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useInView, useReducedMotion } from "framer-motion";
 
 export interface CountUpProps {
   to: number;
@@ -30,31 +30,10 @@ export function CountUp({
   suffix = "",
   decimals = 0,
 }: CountUpProps) {
-  const reduce = usePrefersReducedMotion();
+  const reduce = useReducedMotion();
   const ref = React.useRef<HTMLSpanElement>(null);
-  const [inView, setInView] = React.useState(false);
+  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
   const [value, setValue] = React.useState(to);
-
-  // Framer-free replacement for useInView: trigger once on scroll-into-view.
-  React.useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (typeof IntersectionObserver === "undefined") {
-      setInView(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: "-10% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
 
   React.useEffect(() => {
     if (reduce || !inView) return;

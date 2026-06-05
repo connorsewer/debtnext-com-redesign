@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 
-import { RevealOnView, revealIndex } from "@/components/motion/css-reveal";
 import { Button } from "@/components/ui/button";
 import { CountUp } from "@/components/sections/CountUp";
 import { SectionContainer } from "@/components/sections/SectionContainer";
@@ -43,9 +43,8 @@ export interface ProofBandProps {
  * Numbers render at H2 size with tabular figures so digits don't reflow.
  *
  * Each card fades and rises subtly on first intersection; the sequence
- * staggers per MD motion guidance. Respects prefers-reduced-motion via the
- * CSS `.dn-reveal` rule (FND-06 framer-free reveal), which forces the rested,
- * fully-visible state in that case.
+ * staggers per MD motion guidance. Respects prefers-reduced-motion via
+ * useReducedMotion — animation collapses to instant in that case.
  */
 export function ProofBand({
   eyebrow,
@@ -56,6 +55,15 @@ export function ProofBand({
   link,
   linkLocation = "proof_band",
 }: ProofBandProps) {
+  const reduceMotion = useReducedMotion();
+  const enter = reduceMotion
+    ? { initial: false, animate: undefined }
+    : {
+        initial: { opacity: 0, y: 16 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, margin: "-10% 0px" },
+      };
+
   return (
     <SectionContainer surface={surface}>
       {eyebrow ? (
@@ -68,9 +76,7 @@ export function ProofBand({
           {heading}
         </h2>
       ) : null}
-      <RevealOnView
-        as="ul"
-        margin="-10% 0px"
+      <ul
         className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 md:mt-12 md:[grid-template-columns:repeat(var(--proof-cols),minmax(0,1fr))]"
         style={
           {
@@ -79,10 +85,15 @@ export function ProofBand({
         }
       >
         {stats.map((stat, idx) => (
-          <li
+          <motion.li
             key={stat.number}
-            className="dn-reveal border-t border-[var(--border)] pt-8"
-            style={revealIndex(idx)}
+            {...enter}
+            transition={{
+              duration: 0.4,
+              ease: [0.2, 0.7, 0.2, 1],
+              delay: reduceMotion ? 0 : idx * 0.08,
+            }}
+            className="border-t border-[var(--border)] pt-8"
           >
             <p
               className="text-h2 font-[480] text-[var(--foreground)]"
@@ -107,9 +118,9 @@ export function ProofBand({
                 {stat.caption}
               </p>
             ) : null}
-          </li>
+          </motion.li>
         ))}
-      </RevealOnView>
+      </ul>
       {notes && notes.length ? (
         <div className="mx-auto mt-10 max-w-2xl space-y-4 text-left text-body-md text-[var(--text-tertiary)] [text-wrap:pretty]">
           {notes.map((note) => (
