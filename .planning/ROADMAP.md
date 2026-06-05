@@ -59,7 +59,9 @@ Plans:
 **Goal:** Close the HERO-04 LHCI Case C gate (median LCP under 2,300 ms on the Vercel preview) by removing GSAP + ScrollTrigger from the mobile JS critical path. Recommended approach: dynamic-import the GSAP modules inside the `!isMobile && !prefersReducedMotion` branch of `HomepageHero.tsx`, so mobile clients never download the ~80-120 KB GSAP bundle the LHCI simulator is modeling against.
 **Requirements**: HERO-04 (still open; carries from Phases 5 + 5.1 + 5.2)
 **Depends on:** Phase 5, Phase 5.1, Phase 5.2 (closed the asset-level cause; remaining gap is JS critical path per `docs/m5-phase-5-lhci-run.md`)
-**Plans:** TBD (run `/gsd-discuss-phase 5.3` to confirm approach, or `/gsd-plan-phase 5.3` if jumping straight to plan)
+**Plans:** 2 plans
+- [ ] 05.3-01-PLAN.md — dynamic-import GSAP behind the desktop gate (HeroCinematicController) + mobile-GSAP-free Playwright spec
+- [ ] 05.3-02-PLAN.md — LHCI Case C re-run on Vercel preview; conditional D-08 close-out on pass, escalate fallback menu on miss
 
 **Cross-milestone note:** Phase 5.3 is the hard prerequisite for M6 Phase 10 (Foundation). M6's motion foundation must co-land with or after 5.3's lazy-GSAP fix so the `/` LCP budget is never re-opened by piling Framer Motion onto the same mobile critical path. See M6 Phase 10 details and the Parallelization map below.
 
