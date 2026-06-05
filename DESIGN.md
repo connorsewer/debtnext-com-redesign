@@ -500,6 +500,20 @@ Motion should be calm, precise, and accessible.
 - Do not use bounce, elastic, rotation, aggressive scale, or parallax.
 - Honor `prefers-reduced-motion: reduce` by disabling non-essential motion and keeping state changes immediate.
 
+### Motion engine-per-job
+
+Each motion job has one engine. Pick the engine by the job, not by habit. The split is set once and lives here so no page re-litigates it.
+
+- **GSAP**: scroll-scrub and pin cinematics only. Lazy-loaded via dynamic import, desktop-only, client-only. The single owner is `HeroCinematicController`. GSAP is never imported by the motion barrel, so it stays off the `/` eager chunk.
+- **Framer Motion**: entrances, reveals, `whileInView`, and tab, section, and route transitions.
+- **CSS**: hover, focus, ambient drift, and the 7 component interaction states.
+
+Rule for consumers: import a named primitive from `src/components/motion/`. Never hand-roll Framer or GSAP per page.
+
+Reduced-motion fail-open contract: every reveal and live primitive renders its final visible state under `prefers-reduced-motion`, so content is never stuck at `opacity:0`.
+
+The 7-type motion vocabulary (scroll reveal, live data, hover/cursor, ambient drift, micro-interactions, transitions, explorable) ships from the barrel at `src/components/motion/index.ts`.
+
 ## 5. CSS implementation baseline
 
 The supplied CSS is a good implementation baseline because it maps Tailwind theme tokens to Mercury-like values and uses Inter as the buildable font fallback. Keep the token architecture, but treat the dark theme as the primary visual identity.
