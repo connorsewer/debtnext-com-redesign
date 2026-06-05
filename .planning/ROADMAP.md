@@ -183,7 +183,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 
 ## M6 Phases
 
-- [ ] **Phase 10: Foundation** — Motion barrel + 3 archetypes + typed payloads + shared primitives + CI guardrails; the keystone that unblocks all page work
+- [x] **Phase 10: Foundation** — Motion barrel + 3 archetypes + typed payloads + shared primitives + CI guardrails; the keystone that unblocks all page work (completed 2026-06-05)
 - [ ] **Phase 11: Platform deep-dive visuals** — Battle-test archetypes on the 4 platform pages; one explorable flagship per page; zero accordion placeholders
 - [ ] **Phase 12: Solutions per-industry visuals** — Kill the duplicate widget; per-industry Console + Schematic + Data-story; replace accordion placeholders across 6 industries
 - [ ] **Phase 13: Visual system consolidation** — Merge `sections/mockups` behind unchanged `MockupForTab` signatures (after Console is proven); retire dead PNG fallbacks
@@ -194,7 +194,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 10. Foundation | 0/6 | Planned | — |
+| 10. Foundation | 6/6 | Complete    | 2026-06-05 |
 | 11. Platform deep-dive visuals | 0/0 | Not started | — |
 | 12. Solutions per-industry visuals | 0/0 | Not started | — |
 | 13. Visual system consolidation | 0/0 | Not started | — |
@@ -214,12 +214,12 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
   4. CI guardrails are green: a route-level First-Load-JS budget on `/`, INP/TBT assertions in LHCI on visual-heavy routes, the "no stuck opacity:0" reveal spec, and a mobile-GSAP-free spec; no eager motion code enters the homepage or shared JS chunk; all existing Playwright specs stay green
   5. The 6 dead `dashboard-dark.png` BenefitSplit `media` fallbacks are removed (the hero's use of the asset is deferred to Phase 15)
 **Plans**: 6 plans (4 waves)
-- [ ] 10-01-PLAN.md — Wave 0 validation gaps: reveal-fail-open spec, route-JS-budget script + perf.yml wiring, lighthouserc TBT + visual routes, generalized mobile-GSAP-free spec, VISUAL_ROUTES, reduced-motion opacity===1 (FND-05, FND-06) [wave 1]
-- [ ] 10-02-PLAN.md — Motion barrel (7-type vocabulary) + zero-edit re-export shim (17 consumers) + engine-per-job in DESIGN.md §4.7 (FND-01, FND-06) [wave 2]
-- [ ] 10-03-PLAN.md — Extended primitives: WorklistRow, ChartFrame, FlowNode, FlowEdge (compositor-only, label-paired) (FND-04) [wave 2]
-- [ ] 10-06-PLAN.md — Dead-asset cleanup: remove 6 dashboard-dark.png BenefitSplit fallbacks (PNG + hero untouched) (FND-05) [wave 2]
-- [ ] 10-04-PLAN.md — Typed payload model src/content/visuals/ (3 schemas) + ConsoleData validated against PlacementMatrix (FND-03) [wave 3]
-- [ ] 10-05-PLAN.md — Three explicit lazy archetypes: Console (compound) + DataStory + Schematic from typed payloads (FND-02) [wave 4]
+- [x] 10-01-PLAN.md — Wave 0 validation gaps: reveal-fail-open spec, route-JS-budget script + perf.yml wiring, lighthouserc TBT + visual routes, generalized mobile-GSAP-free spec, VISUAL_ROUTES, reduced-motion opacity===1 (FND-05, FND-06) [wave 1]
+- [x] 10-02-PLAN.md — Motion barrel (7-type vocabulary) + zero-edit re-export shim (17 consumers) + engine-per-job in DESIGN.md §4.7 (FND-01, FND-06) [wave 2]
+- [x] 10-03-PLAN.md — Extended primitives: WorklistRow, ChartFrame, FlowNode, FlowEdge (compositor-only, label-paired) (FND-04) [wave 2]
+- [x] 10-06-PLAN.md — Dead-asset cleanup: remove 6 dashboard-dark.png BenefitSplit fallbacks (PNG + hero untouched) (FND-05) [wave 2]
+- [x] 10-04-PLAN.md — Typed payload model src/content/visuals/ (3 schemas) + ConsoleData validated against PlacementMatrix (FND-03) [wave 3]
+- [x] 10-05-PLAN.md — Three explicit lazy archetypes: Console (compound) + DataStory + Schematic from typed payloads (FND-02) [wave 4]
 **Notes**: KEYSTONE — blocks Phases 11–15. Highest design risk is the three payload schemas (`ConsoleData`/`DataStoryData`/`SchematicData`) covering all real cases; the research recommends prototyping the Console schema against the two existing Placement implementations before committing (consider `/gsd-research-phase 10`). The motion-barrel migration (moving `AnimatedNumber`/variants out of `product/motion.tsx` without breaking current consumers) also warrants a planning pass. Decide payload import location here (`src/content/visuals/` dedicated dir recommended). Engine-per-job rule documented here: GSAP only for scroll-scrub/pin cinematics (lazy, desktop), Framer for entrances/reveals/transitions, CSS for hover/focus/ambient. Inherits standing constraints: DESIGN.md tokens only, one filled CTA per band, WCAG 2.2 AA + axe-core, reduced-motion gated, LCP<2.5s / CLS<0.1 / INP<200ms, all existing Playwright specs green, per-commit docs-in-sync (DESIGN.md §4.7 motion + `.impeccable.md`), COI/CLAIMS review on any new caption copy.
 **UI hint**: yes
 
