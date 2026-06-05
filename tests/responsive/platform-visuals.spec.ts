@@ -53,7 +53,18 @@ const PLATFORM_VISUAL_PAGES: PlatformVisualConfig[] = [
     // Flagship Console headline values rendered by default (placementFlagshipConsole).
     flagshipValues: ["1,847 accounts ready to route", "Placement decision engine"],
   },
-  // Wave 2 appends: optimization / issues / reporting configs here.
+  {
+    route: "/platform/optimization",
+    accordionItemIds: ["bands", "share", "bonus", "history"],
+    // Flagship Console headline values rendered by default (optimizationFlagshipConsole):
+    // the evaluated-pool title and the bonus callout. Both come from the Console
+    // slots, so they are present on load and must survive reduced motion (D-05).
+    flagshipValues: [
+      "Closed pool · Q2 primary evaluated",
+      "Bonus triggered · Recovery partner A cleared its 22% target",
+    ],
+  },
+  // Wave 2 appends: issues / reporting configs here.
 ];
 
 /** Click each accordion trigger in turn and assert the active panel surfaces a
