@@ -21,8 +21,11 @@ test.beforeEach(async ({ page }) => {
 
 for (const route of ROUTES) {
   test(`${route}: no running animations under prefers-reduced-motion`, async ({ page }) => {
+    test.slow();
     await page.goto(route);
-    await page.waitForLoadState("networkidle");
+    // `load`, not `networkidle`: the homepage hero `<video preload="auto">` keeps
+    // the network busy, so networkidle can stall near the test timeout.
+    await page.waitForLoadState("load");
 
     // Force IntersectionObserver-driven entrances (Task 19 mockups, any future IO-gated motion)
     // to actually trigger by scrolling to the bottom and back to the top.
@@ -77,8 +80,9 @@ for (const route of VISUAL_ROUTES) {
   test(`${route}: in-viewport text rests at opacity 1 under reduced motion`, async ({
     page,
   }) => {
+    test.slow();
     await page.goto(route);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
 
     // Surface IO-driven entrances: scroll to the bottom and back to the top.
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
@@ -122,6 +126,15 @@ for (const route of VISUAL_ROUTES) {
         const style = getComputedStyle(el);
         if (style.visibility !== "visible") continue;
         if (el.closest('[aria-hidden="true"]')) continue;
+        // Ignore third-party overlays injected only on deployed Vercel previews
+        // (the Vercel Toolbar's geist skip-nav sits at opacity:0 until focused).
+        // Not part of the app under test; CI's local server never renders them.
+        if (
+          el.closest(
+            'a[href^="#geist"], [data-vercel-toolbar], [data-testid^="geist"]'
+          )
+        )
+          continue;
 
         const opacity = parseFloat(style.opacity);
         // Assert opacity === 1: anything below means the reveal failed closed.

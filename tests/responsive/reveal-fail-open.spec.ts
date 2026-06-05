@@ -31,8 +31,15 @@ for (const route of VISUAL_ROUTES) {
   test(`${route}: no in-viewport text stuck at opacity < 1 (reveal fails open)`, async ({
     page,
   }) => {
+    // This test scrolls, opens every accordion/tab, and full-DOM-scans 23 routes
+    // under 2 CI workers; it legitimately runs long. slow() triples the per-test
+    // timeout (30s -> 90s) so CI load variance can't trip a false timeout.
+    test.slow();
     await page.goto(route);
-    await page.waitForLoadState("networkidle");
+    // `load`, not `networkidle`: the homepage hero `<video preload="auto">`
+    // keeps the network busy, so networkidle can stall near the test timeout.
+    // The scroll + settle waits below are what actually surface IO reveals.
+    await page.waitForLoadState("load");
 
     // Surface IntersectionObserver-driven entrances: scroll to the bottom and
     // back to the top, mirroring reduced-motion.spec.ts (200ms settle waits).
@@ -44,22 +51,26 @@ for (const route of VISUAL_ROUTES) {
     // Open every collapsed accordion trigger and every tab control so reveals
     // sitting behind collapsed UI also settle. Absence of these controls is not
     // a failure (most routes have none); each click is guarded.
+    // Each click carries a short timeout: a `[data-state="closed"]` node that is
+    // covered (sticky header) or mid-animation would otherwise hang the click for
+    // the full test timeout. Bounding it keeps the guarded `.catch` meaningful.
+    // Iterations are capped so a pathological page can't blow the time budget.
     const accordionTriggers = page.locator('[data-state="closed"]');
-    const accordionCount = await accordionTriggers.count();
+    const accordionCount = Math.min(await accordionTriggers.count(), 30);
     for (let i = 0; i < accordionCount; i++) {
       // Re-query each iteration: opening one can re-render siblings.
       const trigger = page.locator('[data-state="closed"]').first();
       if ((await trigger.count()) === 0) break;
-      await trigger.click({ trial: false }).catch(() => {});
+      await trigger.click({ trial: false, timeout: 1000 }).catch(() => {});
       await page.waitForTimeout(50);
     }
 
     const tabs = page.locator('[role="tab"]');
-    const tabCount = await tabs.count();
+    const tabCount = Math.min(await tabs.count(), 30);
     for (let i = 0; i < tabCount; i++) {
       await tabs
         .nth(i)
-        .click({ trial: false })
+        .click({ trial: false, timeout: 1000 })
         .catch(() => {});
       await page.waitForTimeout(50);
     }
@@ -105,6 +116,15 @@ for (const route of VISUAL_ROUTES) {
         const style = getComputedStyle(el);
         if (style.visibility !== "visible") continue;
         if (el.closest('[aria-hidden="true"]')) continue;
+        // Ignore third-party overlays injected only on deployed Vercel previews
+        // (the Vercel Toolbar's geist skip-nav sits at opacity:0 until focused).
+        // Not part of the app under test; CI's local server never renders them.
+        if (
+          el.closest(
+            'a[href^="#geist"], [data-vercel-toolbar], [data-testid^="geist"]'
+          )
+        )
+          continue;
 
         const opacity = parseFloat(style.opacity);
         if (Number.isFinite(opacity) && opacity < 1) {
