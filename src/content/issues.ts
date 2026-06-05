@@ -117,13 +117,6 @@ export const issuesBenefit = {
     "Vendor compliance to your SLAs is measurable and exportable",
     "Regulated conditions surface as exceptions automatically, not when someone notices",
   ],
-  media: {
-    src: "/product/dashboard-dark.png",
-    alt:
-      "Compliance report showing SLA adherence by vendor and issue type over a 90-day window.",
-    width: 1600,
-    height: 1000,
-  },
 };
 
 export const issuesFinalCta = {

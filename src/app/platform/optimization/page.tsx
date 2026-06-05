@@ -59,7 +59,6 @@ export default function OptimizationPage() {
         heading={optimizationBenefit.heading}
         body={optimizationBenefit.body}
         bullets={optimizationBenefit.bullets}
-        media={optimizationBenefit.media}
         visual={<LazyOptimizationEngine />}
         surface="light"
       />

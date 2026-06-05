@@ -130,13 +130,6 @@ export const homepageBenefitSplit = {
     "Allocation changes apply without a release cycle",
   ],
   link: { label: "Explore placement management", href: "/platform/placement" },
-  media: {
-    src: "/product/dashboard-dark.png",
-    alt:
-      "dPlat decision-engine dashboard showing placement allocations adjusting after a pool close.",
-    width: 1600,
-    height: 1000,
-  },
 } as const;
 
 export const homepageIntegration = {
