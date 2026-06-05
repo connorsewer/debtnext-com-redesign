@@ -64,7 +64,27 @@ const PLATFORM_VISUAL_PAGES: PlatformVisualConfig[] = [
       "Bonus triggered · Recovery partner A cleared its 22% target",
     ],
   },
-  // Wave 2 appends: issues / reporting configs here.
+  {
+    route: "/platform/issues",
+    accordionItemIds: [
+      "auto-handling",
+      "workflows",
+      "vendor-portal",
+      "sla",
+      "audit",
+    ],
+    // Flagship values rendered by default (issuesFlagshipConsole + the issue-detail
+    // panels). The worklist title comes from the Console.Header slot; "On time" is
+    // the first issue's STATUS LABEL, rendered by the Explorable.Panel content which
+    // mounts unconditionally (never hover-gated). Including a status label exercises
+    // the D-05 data-parity requirement that status labels (not color alone) survive
+    // reduced motion.
+    flagshipValues: [
+      "Active worklist · sorted by SLA proximity",
+      "On time",
+    ],
+  },
+  // Wave 2 appends: reporting config here.
 ];
 
 /** Click each accordion trigger in turn and assert the active panel surfaces a
