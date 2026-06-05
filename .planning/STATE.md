@@ -1,17 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: M6
-milestone_name: Premium visual + motion system
-status: roadmap-complete
-paused_milestone: "M5 — Launch readiness (blocked on Phase 5 hero LCP gate; resume context preserved below)"
-last_updated: "2026-06-04T00:00:00Z"
-last_activity: 2026-06-04
+milestone: v1.0
+milestone_name: milestone
+status: executing
+last_updated: "2026-06-05T02:11:12.772Z"
+last_activity: 2026-06-05
 progress:
-  total_phases: 6
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_phases: 14
+  completed_phases: 1
+  total_plans: 11
+  completed_plans: 9
+  percent: 82
 ---
 
 # STATE.md
@@ -21,10 +20,12 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 **Core value:** Convert qualified enterprise buyers into demo requests. The single conversion action is "Request a demo".
-**Current focus:** M6 — Premium visual + motion system (defining requirements → roadmap).
+**Current focus:** Phase 05.3 — close-lhci-gate-via-lazy-gsap
 
 ## Current Position
 
+Phase: 05.3 (close-lhci-gate-via-lazy-gsap) — EXECUTING
+Plan: 2 of 2
 Milestone: **M6 — Premium visual + motion system.** Status: roadmap complete; phases 10-15 defined. **Current phase: Phase 10 — Foundation (not started).** Next step: `/gsd-plan-phase 10`. M6's motion foundation (Phase 10) supersedes M5's planned "Phase 8 Motion pass" — do not double-schedule motion work. Last activity: 2026-06-04 — M6 roadmap created alongside the still-open M5 ("premium now, M5 stays open" sequencing decision). Design source: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-design.md`.
 
 **Cross-milestone gate:** Phase 10 must co-land with or after **M5 Phase 5.3 (lazy-GSAP)** so the `/` mobile JS budget is not re-opened (Pitfalls 1 + 6). Phase 15 (homepage capstone) is double-gated: on Phases 10-14 and on the M5 hero LCP fix being closed or renegotiated.
@@ -42,7 +43,6 @@ Milestone: **M6 — Premium visual + motion system.** Status: roadmap complete; 
 
 Coverage: 21/21 M6 requirements mapped. No orphans. Last (Phase 15) gated on M5 perf close.
 
-
 ## M5 (paused) — resume context
 
 Phase: 05.2 (swap-hero-poster-to-avif) — see PARTIAL note below. 3 commits shipped (1ee187b AVIF swap, 84f20dd drop `<video poster>`, 8920088 Inter `display: optional`). LHCI Case C median LCP dropped from 16,411 ms to 3,869 ms (4.2x improvement) but the 2,300 ms gate is still red by 1,569 ms.
@@ -51,9 +51,9 @@ Plan: 05.1 Plan 01 ✓, 05.1 Plan 02 ✓, 05.2 Plan 01 ✓ (PARTIAL outcome), 05
 
 - **Phase:** Phase 5 (Hero performance): STILL PARTIAL. HERO-04 stays open. The dominant asset-level cause was closed (AVIF poster) but the LHCI simulator's gate is not closed by asset changes alone.
 - **Plan progression:** Phase 5 plans 05-01..05-04 ✓ → 05-05 ✗ (absorbed by 5.1 per D-08) → Phase 5.1 Plans 01 ✓ (47cdc5b, 56fc69d), 02 ✓ (084de36, 10c562c, fc4712d), 03 Task 1 EXECUTED FAILED → Phase 5.2 Plan 01 ✓ (1ee187b, 84f20dd, 8920088) PARTIAL.
-- **Status:** Three Phase 5.2 commits cut Case C simulated mobile LCP from 16,411 → 3,488 → 3,648 → 3,869 ms (each follow-up was within run-to-run noise of the prior; the AVIF was the dominant win). Observed unthrottled LCP on the same Vercel preview is 1,254 ms (well under spec); the 3,869 ms number is LHCI's simulated projection. Remaining structural levers (lazy-load GSAP, conditional General Sans preload, switch LHCI throttling method, or relax gate to CLAUDE.md §12 spec floor of 2,500 ms) are out of scope for Phase 5.2.
+- **Status:** Ready to execute
 - **Root cause (closed):** SSR-rendered `<video poster="/hero/homepage-hero-start.png">` triggered a 2.55 MB raw PNG fetch on mobile before hydration removed the `<video>`. AVIF swap dropped this to 110 KB; subsequent poster removal eliminated the fetch entirely on mobile. Both ship.
-- **Last activity:** 2026-05-21. Phase 5.2 partial-close commit landed `docs/m5-phase-5-lhci-run.md`, `05.2-SUMMARY.md`, `05.2-01-SUMMARY.md`, and these STATE/ROADMAP/HANDOFF updates. Plan 03 Task 1 is now formally EXECUTED (with FAILED outcome). Phases 5 + 5.1 + 5.2 stay open; D-08 close-out commit deferred to Phase 5.3 (or gate renegotiation).
+- **Last activity:** 2026-06-05
 - **Resume from:** Phase 5.3 is inserted and queued. Run `/gsd-discuss-phase 5.3` (confirm approach before planning) or `/gsd-plan-phase 5.3` (jump straight to plan if the recommended approach is locked) or `/gsd-execute-phase 5.3` (if the plan already exists). Per `docs/m5-phase-5-lhci-run.md` "Recommended next move", the recommended path is dynamic-importing GSAP + ScrollTrigger inside the `!isMobile && !prefersReducedMotion` branch of `HomepageHero.tsx`; alternatives on the table are conditional General Sans preload, switching LHCI throttling method, or relaxing the gate to the 2,500 ms CLAUDE.md §12 spec floor. Phase 8 (Motion) stays blocked on Phase 5 close, which D-08 fires after Phase 5.3 closes the gate.
 
 ## Roadmap Evolution
@@ -65,6 +65,7 @@ Plan: 05.1 Plan 01 ✓, 05.1 Plan 02 ✓, 05.2 Plan 01 ✓ (PARTIAL outcome), 05
 - 2026-05-21: Phase 5.2 Plan 01 shipped. Raw PNG hero poster (2.55 MB) encoded to AVIF (112 KB at libsvtav1 CRF 30, ~23x reduction) and dropped at `public/hero/homepage-hero-start.avif`. `src/content/homepage-hero.ts:55` `startFrame` repointed; both `<Image>` (via `/_next/image` AVIF transcoding) and `<video poster>` (raw fetch) feed off the single static AVIF. The 2.55 MB PNG was deleted; `scripts/encode-hero-poster.sh` regenerates the AVIF from `homepage-hero-720p.mp4`'s first frame and refuses to overwrite above the HERO-03 200 KB budget enforced by `tests/hero/poster-avif-negotiation.spec.ts`. `scripts/check-hero-assets.sh` comment refreshed to drop the obsolete PNG-source note. `.lighthouseci/` added to `.gitignore`. One atomic commit. Phase 05.1 Plan 03 Task 1 is the next move: re-run LHCI Case C against the post-5.2 Vercel preview to verify the gate closes.
 - 2026-05-21: Phase 5.2 partial-close. LHCI Case C re-run against the post-5.2 Vercel preview measured simulated median LCP 3,488 ms (down from 16,411 ms, a 4.7x improvement) but still over the 2,300 ms gate by 1,188 ms. Two follow-up commits chased post-AVIF diagnostic leads: 84f20dd dropped the redundant `<video poster>` attribute (visually neutral; the `<Image>` underneath always paints the same frame), and 8920088 switched Inter from `display: "swap"` to `display: "optional"` to prevent a font-swap LCP candidate. Neither moved the simulated number outside run-to-run noise (3,488 → 3,648 → 3,869 ms). The H1 LCP element paints at 1,254 ms unthrottled (real network reality); the 3,869 ms is LHCI's simulator projection of the resource graph + CPU graph. Phase 05.1 Plan 03 Task 1 is now EXECUTED with FAILED outcome and the writeup at `docs/m5-phase-5-lhci-run.md`. Tasks 2 + 3 (visual walkthrough + D-08 close-out commit) stay deferred. Phases 5 + 5.1 + 5.2 stay open. Routing the remaining work to Phase 5.3 (lazy-load GSAP, conditional General Sans preload, switch throttling method, or gate renegotiation).
 - 2026-05-21: Phase 5.3 inserted after Phase 5.2 (URGENT). Close LHCI gate via lazy-loaded GSAP. Triggered by Phase 5.2 partial-close failing to close the 2,300 ms gate after asset-level changes were exhausted. Locked diagnosis (in `docs/m5-phase-5-lhci-run.md`): residual gap is the LHCI simulator's projection of the JS critical path + CPU graph; remaining structural levers are dynamic-importing GSAP behind the mobile gate (recommended), conditional General Sans preload, switching `throttlingMethod` from `simulate` to `devtools`, or relaxing the gate to the 2,500 ms CLAUDE.md §12 spec floor. Phase 5.3 will hold the D-08 close-out (HERO-01..04 to Done; Phases 5 + 5.1 + 5.2 + 5.3 ship together) once the gate closes. Phase 8 (Motion) stays blocked until then. Phase directory created (`.planning/phases/05.3-close-lhci-gate-via-lazy-gsap/`) with `.gitkeep` only; discuss/plan ceremony deferred to the resuming session.
+- 2026-06-05: Phase 05.3 Plan 01 shipped (f58b436, 0db8994). Lazy-GSAP refactor complete. GSAP, ScrollTrigger, and @gsap/react now live in one module (`src/components/sections/HeroCinematicController.tsx`), loaded only via dynamic `await import()` inside a `next/dynamic({ssr:false})` desktop-only subcomponent mounted behind `!isMobile && !prefersReducedMotion`. Both `HomepageHero.tsx` and `HomepageHandoffSection.tsx` now have zero top-level GSAP imports; `grep -rn` confirms GSAP is referenced in exactly one module, via dynamic import. registerPlugin is idempotent and called from a single site (per-section controller instances are a harmless no-op). Hero scrub/ease windows + handoff tab-progression math ported verbatim; fail-open on import reject (parents keep the static start-frame + overlay). New `tests/responsive/hero-gsap-free-mobile.spec.ts` (412x823, zero `/gsap/` requests) added. Local verification: all grep acceptance criteria pass, `npx eslint` exit 0, `npx tsc --noEmit` clean for all plan files (one pre-existing out-of-scope error in `tests/responsive/reduced-motion.spec.ts`, logged in the phase `deferred-items.md`). DEFERRED-TO-PREVIEW (local next build/start hangs in this sandbox): the new mobile-GSAP-free spec run, the full Playwright suite, desktop cinematic visual parity (Plan 02 human-verify), and the LHCI Case C re-measure (Plan 02). **HERO-04 stays Open**; D-08 close-out (HERO-01..04 → Done, ship Phases 5+5.1+5.2+5.3) fires only after Plan 02 verifies the gate green against a Vercel preview. Plan 02 is the next move.
 
 ## Accumulated Context
 
