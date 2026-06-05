@@ -1,10 +1,53 @@
 # Requirements
 
-Active milestone: **M5 — Launch readiness + motion pass**.
+Active milestone: **M6 — Premium visual + motion system**. M5 (Launch readiness) remains open/in-flight below ("premium now, M5 stays open" sequencing decision, 2026-06-04).
 
-REQ-IDs are stable across the project. Categories continue from M5's scoping. Items prefixed `[ ]` are open; `[x]` flips when shipped + verified.
+REQ-IDs are stable across the project. Categories continue from M5's scoping. Items prefixed `[ ]` are open; `[x]` flips when shipped + verified. M6's FND-* motion work supersedes M5's MOTION-01..04 (the small fades+counters pass).
 
-## Active (M5)
+## Active (M6)
+
+Source design: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-design.md`. Research: `.planning/research/`.
+
+### Foundation: motion + archetype library (FND)
+
+- [ ] **FND-01** — A shared motion primitive barrel (`src/components/motion/`) exposes the full 7-type vocabulary (scroll-reveal, live-data, hover/cursor, ambient drift, micro-interactions, tab/section/route transition, explorable) so pages never hand-roll Framer/GSAP; each primitive is reduced-motion-aware and fails OPEN (content is never stuck at `opacity:0` when a reveal doesn't fire)
+- [ ] **FND-02** — Three parametrized visual archetypes (Console, Data story, Schematic) exist as components that render from a typed data payload, with no hardcoded per-page numbers
+- [ ] **FND-03** — A typed per-context visual payload model (dedicated content location, `[CLAIMS REVIEW]`-auditable) drives every archetype instance, so a visual = archetype + payload
+- [ ] **FND-04** — Shared product primitives (chart atoms, flow nodes, worklist rows, bars, status) extend the existing `parts.tsx` set under one stroke weight, type scale, and color logic
+- [ ] **FND-05** — CI guardrails land: route-level First-Load-JS budget, INP/TBT in LHCI, a "no stuck opacity:0" reveal spec, and a mobile-GSAP-free spec; all existing Playwright specs stay green
+- [ ] **FND-06** — No eager motion code enters the homepage/shared JS chunk; foundation co-lands with (or after) M5 Phase 5.3 lazy-GSAP so the `/` LCP budget is not re-opened
+
+### Platform capability visuals (PLATVIS)
+
+- [ ] **PLATVIS-01** — Every FeatureAccordion item on the 4 platform deep-dive pages (`/platform/placement`, `/optimization`, `/issues`, `/reporting`) renders a real archetype visual; zero text-on-dark placeholders remain
+- [ ] **PLATVIS-02** — Each platform deep-dive page has one constrained explorable flagship visual (hover-to-inspect / toggle state) that is fully keyboard-accessible and reduced-motion-safe
+- [ ] **PLATVIS-03** — The BenefitSplit live visuals on platform pages are archetype instances fed real payloads (not the shared static image)
+
+### Solutions visuals, per-industry (SOLVIS)
+
+- [ ] **SOLVIS-01** — The duplicate `SolutionsIndustryCards` widget is gone; each of the 6 industries renders its own data, so no two solutions pages show an identical visual
+- [ ] **SOLVIS-02** — Each industry sub-page has a Console hero visual using that industry's real-shaped account types and numbers
+- [ ] **SOLVIS-03** — Each industry sub-page has a Schematic visual ("how dPlat routes <industry> accounts")
+- [ ] **SOLVIS-04** — Each industry sub-page has a Data-story proof visual telling that industry's recovery truth
+- [ ] **SOLVIS-05** — Solutions FeatureAccordion placeholders are replaced with archetype visuals across all 6 industry sub-pages
+
+### Visual system consolidation + cleanup (SYSVIS)
+
+- [ ] **SYSVIS-01** — `src/components/sections/mockups/` is merged into the archetype library; the homepage handoff renders Console-archetype instances behind unchanged `MockupForTab`/`mockupTitleForTab` signatures, with the GSAP pin + `FramedDashboard` bezel behavior unchanged (no handoff regression)
+- [ ] **SYSVIS-02** — The 6 dead `dashboard-dark.png` BenefitSplit `media` fallbacks are removed; the hero's use of the asset is resolved (kept intentionally or replaced with a Console instance)
+
+### Text-only page elevation (PAGEVIS)
+
+- [ ] **PAGEVIS-01** — `/compare` gains archetype visual(s) + motion where they lift the page (not decoration)
+- [ ] **PAGEVIS-02** — `/why-dplat` gains a supporting visual / motion treatment
+- [ ] **PAGEVIS-03** — The `/company` set (`/company`, `/about`, `/leadership`, `/careers`, `/contact`) and `/resources` gain visuals / motion where they lift
+- [ ] **PAGEVIS-04** — `/platform/integrations` and `/demo` are elevated with archetype visuals / motion consistent with the system
+
+### Homepage flagship capstone (HOMEVIS)
+
+- [ ] **HOMEVIS-01** — The homepage receives the matured-system capstone pass; it is sequenced after the M5 hero LCP fix and re-runs LHCI Case C as a hard merge gate (never lands before the M5 perf gate is closed or renegotiated)
+
+## In-flight (M5 — paused)
 
 ### Hero performance (HERO)
 
@@ -91,4 +134,4 @@ Explicitly excluded during M5 scoping with reasoning:
 | MOTION-04 | Phase 8 | — | Open |
 
 ---
-*Last updated: 2026-05-21 after researcher-side ladder correction was user-ratified during /gsd-plan-phase 5. 21 active requirements across 5 categories, all mapped to Phases 5–9. Coverage: 21/21.*
+*Last updated: 2026-06-04 — M6 (Premium visual + motion system) requirements added: 21 across 6 categories (FND, PLATVIS, SOLVIS, SYSVIS, PAGEVIS, HOMEVIS). M5's 21 requirements remain open/in-flight. M6 phases continue from Phase 10; traceability filled by the M6 roadmapper.*
