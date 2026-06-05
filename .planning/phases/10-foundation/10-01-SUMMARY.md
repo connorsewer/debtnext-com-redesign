@@ -131,8 +131,12 @@ re-architecture (logged as known debt for a dedicated perf phase). Both optimiza
 commits were reverted (restoring content routes to 178/180ms).
 
 **Decision:** per-route TBT ceilings in `lighthouserc.json` (mirrors the existing
-LCP-only-on-`/` matrix): `/` gets **360ms** (measured ~318-324ms + ~12% headroom),
-content routes keep the strict **200ms** guard (`matchingUrlPattern`
-`http://localhost:3200/.+`, which excludes the root). T-10-02 closed: budget pinned
-to measured reality with the homepage's cinematic cost acknowledged, content routes
-kept tight.
+LCP-only-on-`/` matrix), sized to absorb GitHub-runner variance. A clean CI run
+measures `/` ~318ms and content routes ~178-180ms; a loaded runner inflated the
+same build to `/` 396ms and content 206ms (~25% across the board, even on the
+median-of-5 — the whole runner was slow, so median doesn't help). Ceilings are set
+above the noisy-run values + margin so the gate tolerates runner noise while still
+catching a gross regression (roughly a doubling): `/` **450ms**, content routes
+**240ms** (`matchingUrlPattern` `http://localhost:3200/.+`, which excludes the
+root). T-10-02 closed: budget pinned to measured reality (homepage cinematic cost
+acknowledged) with enough headroom for shared-runner TBT variance.
