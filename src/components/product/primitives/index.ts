@@ -5,3 +5,7 @@ export { MetricCell } from "./MetricCell";
 export { StatPill } from "./StatPill";
 export { LiveStatus } from "./LiveStatus";
 export { EventBadge } from "./EventBadge";
+export { WorklistRow } from "./WorklistRow";
+export { ChartFrame } from "./ChartFrame";
+export { FlowNode } from "./FlowNode";
+export { FlowEdge } from "./FlowEdge";
