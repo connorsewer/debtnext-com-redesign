@@ -93,7 +93,6 @@ export default function HomePage() {
         bullets={[...homepageBenefitSplit.bullets]}
         link={homepageBenefitSplit.link}
         linkLocation="homepage_decision_engine"
-        media={homepageBenefitSplit.media}
         visual={<LazyDecisionEnginePreview />}
         surface="light"
       />

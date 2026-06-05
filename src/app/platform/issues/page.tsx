@@ -53,7 +53,6 @@ export default function IssuesPage() {
         heading={issuesBenefit.heading}
         body={issuesBenefit.body}
         bullets={issuesBenefit.bullets}
-        media={issuesBenefit.media}
         visual={<LazyIssuesWorklist />}
         surface="light"
       />

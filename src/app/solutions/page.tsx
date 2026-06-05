@@ -47,7 +47,6 @@ export default function SolutionsPage() {
         heading={solutionsCrossIndustry.heading}
         body={solutionsCrossIndustry.body}
         bullets={solutionsCrossIndustry.bullets}
-        media={solutionsCrossIndustry.media}
         visual={<LazySolutionsIndustryCards />}
         surface="light"
       />

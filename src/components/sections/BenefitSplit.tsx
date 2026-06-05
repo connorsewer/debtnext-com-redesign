@@ -21,7 +21,10 @@ export interface BenefitSplitProps {
   link?: { label: string; href: string };
   /** Optional analytics location key for the link */
   linkLocation?: string;
-  media: {
+  /** Optional static fallback image, rendered only when `visual` is not
+   *  supplied. Every current consumer supplies a live `visual`, so this is a
+   *  defensive fallback for callers that lack one. */
+  media?: {
     src: string;
     alt: string;
     width: number;
@@ -128,16 +131,17 @@ export function BenefitSplit({
             mediaPosition === "left" ? "@md/section:order-1" : ""
           )}
         >
-          {visual ?? (
-            <Image
-              src={media.src}
-              alt={media.alt}
-              width={media.width}
-              height={media.height}
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="h-auto w-full object-cover"
-            />
-          )}
+          {visual ??
+            (media ? (
+              <Image
+                src={media.src}
+                alt={media.alt}
+                width={media.width}
+                height={media.height}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="h-auto w-full object-cover"
+              />
+            ) : null)}
         </div>
       </div>
       </RevealSection>
