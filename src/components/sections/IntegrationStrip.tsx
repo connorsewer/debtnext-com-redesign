@@ -7,6 +7,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
 import { fadeUpItem, staggerContainer } from "@/components/product/motion";
+import { cn } from "@/lib/utils";
+import hover from "@/components/motion/hover.module.css";
 
 export interface IntegrationCard {
   title: string;
@@ -67,7 +69,10 @@ export function IntegrationStrip({
           <motion.li
             key={card.title}
             variants={reduce ? undefined : fadeUpItem}
-            className="flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6 transition-colors duration-[var(--duration-instant)] hover:border-[var(--focus)]"
+            className={cn(
+              "flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6",
+              hover.hoverCard
+            )}
           >
             <span
               aria-hidden="true"
@@ -91,9 +96,15 @@ export function IntegrationStrip({
         <div className="mt-8">
           <Link
             href={link.href}
-            className="inline-flex min-h-touch items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+            className={cn(
+              "inline-flex min-h-touch items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]",
+              hover.hoverArrow
+            )}
           >
-            {link.label} <span aria-hidden="true">→</span>
+            {link.label}{" "}
+            <span aria-hidden="true" className={hover.arrow}>
+              →
+            </span>
           </Link>
         </div>
       ) : null}

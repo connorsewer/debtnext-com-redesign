@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import hover from "@/components/motion/hover.module.css";
 import { RevealSection } from "@/components/sections/RevealSection";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
@@ -109,8 +110,11 @@ export function BenefitSplit({
                   })
                 }
               >
-                <Link href={link.href}>
-                  {link.label} <span aria-hidden="true">→</span>
+                <Link href={link.href} className={hover.hoverArrow}>
+                  {link.label}{" "}
+                  <span aria-hidden="true" className={hover.arrow}>
+                    →
+                  </span>
                 </Link>
               </Button>
             </div>

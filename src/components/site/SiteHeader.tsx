@@ -9,6 +9,7 @@ import { MobileNav } from "@/components/site/MobileNav";
 import { Wordmark } from "@/components/site/Wordmark";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import hover from "@/components/motion/hover.module.css";
 import type { NavLink } from "@/content/nav";
 import {
   companySubNav,
@@ -88,6 +89,9 @@ export function SiteHeader() {
 
             const linkClass = cn(
               "relative inline-flex items-center gap-1 text-[var(--text-body-strong)] font-[420] transition-colors duration-[var(--duration-instant)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)] aria-[current=page]:text-white",
+              // Indigo underline wipe-in on hover (skipped for the active link,
+              // which already carries the primary underline).
+              !isActive && hover.hoverUnderline,
               isActive
                 ? "after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-px after:bg-[var(--primary)]"
                 : "text-[var(--text-tertiary)]"

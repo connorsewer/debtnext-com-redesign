@@ -8,6 +8,7 @@ import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
 import { fadeUpItem, staggerContainer } from "@/components/product/motion";
 import { cn } from "@/lib/utils";
+import hover from "@/components/motion/hover.module.css";
 
 export interface GridCard {
   title: string;
@@ -84,7 +85,10 @@ export function CardGrid({
           <motion.li
             key={card.title}
             variants={reduce ? undefined : fadeUpItem}
-            className="flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6 transition-colors duration-[var(--duration-instant)] hover:border-[var(--focus)] md:p-7"
+            className={cn(
+              "flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6 md:p-7",
+              hover.hoverCard
+            )}
           >
             {card.icon ? (
               <span
@@ -110,9 +114,15 @@ export function CardGrid({
             {card.link ? (
               <Link
                 href={card.link.href}
-                className="inline-flex min-h-touch items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+                className={cn(
+                  "inline-flex min-h-touch items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]",
+                  hover.hoverArrow
+                )}
               >
-                {card.link.label} <span aria-hidden="true">→</span>
+                {card.link.label}{" "}
+                <span aria-hidden="true" className={hover.arrow}>
+                  →
+                </span>
               </Link>
             ) : null}
           </motion.li>

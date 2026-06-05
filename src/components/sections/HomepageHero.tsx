@@ -292,7 +292,7 @@ export function HomepageHero() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={heroCinematic.attachedForm.placeholder}
-                className="h-[46px] min-w-0 flex-1 rounded-l-[var(--radius-md)] border border-white/40 bg-black/40 px-5 text-body-strong text-white placeholder:text-white/70 backdrop-blur-xl focus:border-[var(--primary)] focus:outline-none"
+                className="h-[46px] min-w-0 flex-1 rounded-l-[var(--radius-md)] border border-white/40 bg-black/40 px-5 text-body-strong text-white placeholder:text-white/70 backdrop-blur-xl focus:border-[var(--primary)] focus:outline-none focus:ring-3 focus:ring-[var(--focus)]/35"
               />
               <button
                 type="submit"
