@@ -200,9 +200,7 @@ export function HomepageHero() {
           ref={overlayRef}
           className="absolute inset-0 flex flex-col items-center justify-center px-4 md:px-6 lg:px-8"
         >
-          {/* Pointer-follow glow is a desktop affordance only; skip on mobile
-              (touch has no cursor) so it never mounts on the `/` mobile path. */}
-          {!isMobile && <CursorGlow />}
+          <CursorGlow />
           <div className="mx-auto flex w-full max-w-[var(--container-content)] flex-col items-center text-center">
             <h1
               className="text-balance text-[clamp(2.75rem,8vw,7rem)] font-[500] leading-[0.95] tracking-[-0.02em] text-white"
