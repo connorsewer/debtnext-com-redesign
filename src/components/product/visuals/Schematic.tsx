@@ -91,7 +91,14 @@ export function Schematic({ data, className }: SchematicProps) {
           {data.edges.map((edge, i) => {
             const from = pos.get(edge.from);
             const to = pos.get(edge.to);
-            if (!from || !to) return null;
+            if (!from || !to) {
+              if (process.env.NODE_ENV !== "production") {
+                console.warn(
+                  `Schematic edge references unknown node id: ${edge.from} -> ${edge.to}`,
+                );
+              }
+              return null;
+            }
             return (
               <FlowEdge
                 key={`${edge.from}-${edge.to}-${i}`}
