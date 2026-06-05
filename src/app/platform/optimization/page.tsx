@@ -7,6 +7,7 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProcessStrip } from "@/components/sections/ProcessStrip";
 import { ProseIntro } from "@/components/sections/ProseIntro";
+import { LazyOptimizationEngine } from "@/components/product/visuals/lazy";
 import {
   optimizationAccordion,
   optimizationBenefit,
@@ -59,6 +60,7 @@ export default function OptimizationPage() {
         body={optimizationBenefit.body}
         bullets={optimizationBenefit.bullets}
         media={optimizationBenefit.media}
+        visual={<LazyOptimizationEngine />}
         surface="light"
       />
 

@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
+import { CursorGlow } from "@/components/motion/CursorGlow";
 import { FramedDashboard } from "@/components/sections/mockups/FramedDashboard";
 import { track } from "@/lib/analytics";
 import { heroCinematic } from "@/content/homepage-hero";
@@ -258,6 +259,7 @@ export function HomepageHero() {
           ref={overlayRef}
           className="absolute inset-0 flex flex-col items-center justify-center px-4 md:px-6 lg:px-8"
         >
+          <CursorGlow />
           <div className="mx-auto flex w-full max-w-[var(--container-content)] flex-col items-center text-center">
             <h1
               className="text-balance text-[clamp(2.75rem,8vw,7rem)] font-[500] leading-[0.95] tracking-[-0.02em] text-white"
@@ -290,7 +292,7 @@ export function HomepageHero() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={heroCinematic.attachedForm.placeholder}
-                className="h-[46px] min-w-0 flex-1 rounded-l-[var(--radius-md)] border border-white/40 bg-black/40 px-5 text-body-strong text-white placeholder:text-white/70 backdrop-blur-xl focus:border-[var(--primary)] focus:outline-none"
+                className="h-[46px] min-w-0 flex-1 rounded-l-[var(--radius-md)] border border-white/40 bg-black/40 px-5 text-body-strong text-white placeholder:text-white/70 backdrop-blur-xl focus:border-[var(--primary)] focus:outline-none focus:ring-3 focus:ring-[var(--focus)]/35"
               />
               <button
                 type="submit"

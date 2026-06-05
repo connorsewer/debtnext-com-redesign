@@ -45,6 +45,7 @@ export function PageHero({
   return (
     <SectionContainer
       surface="dark"
+      ambient
       containerSize="page"
       // Extra top padding so the eyebrow + headline clear the fixed nav.
       // SiteHeader is h-14 / h-16 / h-18 (56 / 64 / 72px) by breakpoint;

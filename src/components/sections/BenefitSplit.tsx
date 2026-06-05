@@ -1,9 +1,12 @@
 "use client";
 
+import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import hover from "@/components/motion/hover.module.css";
+import { RevealSection } from "@/components/sections/RevealSection";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
 import { track } from "@/lib/analytics";
@@ -24,6 +27,10 @@ export interface BenefitSplitProps {
     width: number;
     height: number;
   };
+  /** Optional live product visual rendered in place of the static media image
+   *  (e.g. a lazy-loaded DecisionEnginePreview). Falls back to `media` when
+   *  not provided. */
+  visual?: React.ReactNode;
   surface?: SectionSurface;
   /** Swap copy + media columns */
   mediaPosition?: "left" | "right";
@@ -42,12 +49,14 @@ export function BenefitSplit({
   link,
   linkLocation,
   media,
+  visual,
   surface = "dark",
   mediaPosition = "right",
   id,
 }: BenefitSplitProps) {
   return (
     <SectionContainer surface={surface} id={id}>
+      <RevealSection>
       <div
         className={cn(
           "grid items-center gap-12 @md/section:gap-16",
@@ -101,8 +110,11 @@ export function BenefitSplit({
                   })
                 }
               >
-                <Link href={link.href}>
-                  {link.label} <span aria-hidden="true">→</span>
+                <Link href={link.href} className={hover.hoverArrow}>
+                  {link.label}{" "}
+                  <span aria-hidden="true" className={hover.arrow}>
+                    →
+                  </span>
                 </Link>
               </Button>
             </div>
@@ -115,16 +127,19 @@ export function BenefitSplit({
             mediaPosition === "left" ? "@md/section:order-1" : ""
           )}
         >
-          <Image
-            src={media.src}
-            alt={media.alt}
-            width={media.width}
-            height={media.height}
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="h-auto w-full object-cover"
-          />
+          {visual ?? (
+            <Image
+              src={media.src}
+              alt={media.alt}
+              width={media.width}
+              height={media.height}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="h-auto w-full object-cover"
+            />
+          )}
         </div>
       </div>
+      </RevealSection>
     </SectionContainer>
   );
 }

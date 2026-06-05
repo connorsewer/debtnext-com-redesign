@@ -11,6 +11,7 @@ import { CardGrid } from "@/components/sections/CardGrid";
 import { IntegrationStrip } from "@/components/sections/IntegrationStrip";
 import { ProofBand } from "@/components/sections/ProofBand";
 import { PartnerMap } from "@/components/sections/PartnerMap";
+import { LazyDecisionEnginePreview } from "@/components/product/visuals/lazy";
 import { ProseIntro } from "@/components/sections/ProseIntro";
 import { StatMarquee } from "@/components/sections/StatMarquee";
 import { TrustBand } from "@/components/sections/TrustBand";
@@ -93,6 +94,7 @@ export default function HomePage() {
         link={homepageBenefitSplit.link}
         linkLocation="homepage_decision_engine"
         media={homepageBenefitSplit.media}
+        visual={<LazyDecisionEnginePreview />}
         surface="light"
       />
 

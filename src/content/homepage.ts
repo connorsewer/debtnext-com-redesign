@@ -98,16 +98,22 @@ export const homepageProof = {
   stats: [
     {
       number: "116.8M",
+      value: 116.8,
+      suffix: "M",
+      decimals: 1,
       label: "Accounts managed",
       caption: "Across client portfolios",
     },
     {
       number: "10B+",
+      value: 10,
+      suffix: "B+",
       label: "Transactions processed",
       caption: "In continuous production since 2003",
     },
     {
       number: "538",
+      value: 538,
       label: "Agency and legal partners",
       caption: "Integrated across the recovery network",
     },

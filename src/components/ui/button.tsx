@@ -3,6 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { Slot } from "radix-ui";
 
 import { cn } from "@/lib/utils";
+import hover from "@/components/motion/hover.module.css";
 
 /**
  * Buttons follow DESIGN.md §8.1.
@@ -71,7 +72,10 @@ function Button({
       data-slot="button"
       data-variant={variant ?? "primary"}
       data-size={size ?? "md"}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(
+        buttonVariants({ variant, size, className }),
+        (variant ?? "primary") === "primary" && hover.hoverButton
+      )}
       {...props}
     />
   );

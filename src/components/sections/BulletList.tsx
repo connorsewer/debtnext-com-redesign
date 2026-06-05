@@ -1,5 +1,10 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
+import { fadeUpItem, staggerContainer } from "@/components/product/motion";
 
 export interface BulletListProps {
   eyebrow?: string;
@@ -23,6 +28,7 @@ export function BulletList({
   bullets,
   surface = "elevated-dark",
 }: BulletListProps) {
+  const reduce = useReducedMotion();
   return (
     <SectionContainer surface={surface}>
       <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
@@ -42,10 +48,17 @@ export function BulletList({
           ) : null}
         </div>
 
-        <ul className="grid gap-3">
+        <motion.ul
+          className="grid gap-3"
+          variants={staggerContainer}
+          initial={reduce ? false : "hidden"}
+          whileInView={reduce ? undefined : "show"}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {bullets.map((bullet) => (
-            <li
+            <motion.li
               key={bullet}
+              variants={reduce ? undefined : fadeUpItem}
               className="flex items-start gap-3 text-body-md text-[var(--foreground)]"
             >
               <span
@@ -53,9 +66,9 @@ export function BulletList({
                 className="mt-2 inline-block h-1 w-3 shrink-0 rounded-[var(--radius-xs)] bg-[var(--primary)]"
               />
               <span>{bullet}</span>
-            </li>
+            </motion.li>
           ))}
-        </ul>
+        </motion.ul>
       </div>
     </SectionContainer>
   );

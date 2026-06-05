@@ -29,6 +29,7 @@ export function FinalCTA({
   return (
     <SectionContainer
       surface="dark"
+      ambient
       containerSize="readable"
       className="[padding-bottom:max(env(safe-area-inset-bottom),6rem)]"
     >

@@ -1,9 +1,14 @@
+"use client";
+
 import * as React from "react";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
+import { fadeUpItem, staggerContainer } from "@/components/product/motion";
 import { cn } from "@/lib/utils";
+import hover from "@/components/motion/hover.module.css";
 
 export interface GridCard {
   title: string;
@@ -44,6 +49,7 @@ export function CardGrid({
   surface = "dark",
   id,
 }: CardGridProps) {
+  const reduce = useReducedMotion();
   const colClass = {
     2: "@sm/card:grid-cols-2",
     3: "@sm/card:grid-cols-2 @5xl/card:grid-cols-3",
@@ -68,11 +74,21 @@ export function CardGrid({
         ) : null}
       </div>
 
-      <ul className={cn("container-card mt-10 grid gap-4 md:mt-14", colClass)}>
+      <motion.ul
+        className={cn("container-card mt-10 grid gap-4 md:mt-14", colClass)}
+        variants={staggerContainer}
+        initial={reduce ? false : "hidden"}
+        whileInView={reduce ? undefined : "show"}
+        viewport={{ once: true, amount: 0.15 }}
+      >
         {cards.map((card) => (
-          <li
+          <motion.li
             key={card.title}
-            className="flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6 transition-colors duration-[var(--duration-instant)] hover:border-[var(--focus)] md:p-7"
+            variants={reduce ? undefined : fadeUpItem}
+            className={cn(
+              "flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6 md:p-7",
+              hover.hoverCard
+            )}
           >
             {card.icon ? (
               <span
@@ -98,14 +114,20 @@ export function CardGrid({
             {card.link ? (
               <Link
                 href={card.link.href}
-                className="inline-flex min-h-touch items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+                className={cn(
+                  "inline-flex min-h-touch items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]",
+                  hover.hoverArrow
+                )}
               >
-                {card.link.label} <span aria-hidden="true">→</span>
+                {card.link.label}{" "}
+                <span aria-hidden="true" className={hover.arrow}>
+                  →
+                </span>
               </Link>
             ) : null}
-          </li>
+          </motion.li>
         ))}
-      </ul>
+      </motion.ul>
     </SectionContainer>
   );
 }
