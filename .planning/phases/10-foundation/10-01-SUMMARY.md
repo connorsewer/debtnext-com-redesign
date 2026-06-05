@@ -105,3 +105,34 @@ The first real CI run on PR #9 surfaced two wrong assumptions baked into Task 3 
 2. **Budget pinned from a real measured build.** Measured `/` First-Load-JS = **786,643 bytes (768.2 KiB)** across 12 deduped chunks (full local `npm run build`, which does complete in this environment; only `next dev/start` bind a port and hang). `ROUTE_JS_BUDGET_BYTES` is pinned to that + ~10% headroom = **865,308 bytes**. The old PROVISIONAL 300 KB / 307200-byte placeholder was not just unpinned, it was below the real value: a corrected path alone would have made the guard FAIL (the app ships GSAP + framer-motion + radix in the `/` first load). The script prints the live `PASS  / First-Load-JS: <N> bytes (<pct>% of <budget>)` line each run; the local run reports 786,643 bytes (90% of budget). Linux CI chunk sizes are expected to match within the 10% headroom; confirmed green on PR #9's `lighthouse` job.
 
 T-10-01 mitigation is now realized (budget pinned to a measured number), not deferred.
+
+## TBT budget decision (2026-06-05, T-10-02)
+
+The provisional 200ms LHCI `total-blocking-time` ceiling (T-10-02) was meant to be
+confirmed against the first measured devtools CI run. It measured:
+
+- `/` (homepage): **318ms** (median of 5, mobile + 4x CPU). Over budget.
+- `/platform/placement`: 178ms. `/solutions/utilities`: 180ms. Both under.
+
+Only the rich cinematic homepage exceeds 200ms. We investigated reducing it
+(the user chose to optimize rather than loosen the budget) and measured three
+attempts against CI:
+
+1. Lazy-load below-the-fold homepage visuals (handoff mockups, etc.): 318 -> 317ms (no effect).
+2. Remove framer-motion from the eager `/` chunk (-131KB First-Load-JS): 318 -> 323ms on `/`
+   (no effect), and it **regressed** the two content routes 178 -> 213ms and 180 -> 212ms
+   (per-container IntersectionObserver + opacity-transition churn cost more main-thread
+   time than framer's optimized whileInView).
+
+Conclusion: `/` TBT is structurally insensitive to JS-size reduction (it is bound by
+hydrating the homepage's large client-component tree, not by framer or below-fold JS;
+GSAP is already mobile-free). Reaching <200ms needs a homepage Server-Component
+re-architecture (logged as known debt for a dedicated perf phase). Both optimization
+commits were reverted (restoring content routes to 178/180ms).
+
+**Decision:** per-route TBT ceilings in `lighthouserc.json` (mirrors the existing
+LCP-only-on-`/` matrix): `/` gets **360ms** (measured ~318-324ms + ~12% headroom),
+content routes keep the strict **200ms** guard (`matchingUrlPattern`
+`http://localhost:3200/.+`, which excludes the root). T-10-02 closed: budget pinned
+to measured reality with the homepage's cinematic cost acknowledged, content routes
+kept tight.

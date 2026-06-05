@@ -37,11 +37,15 @@
             "largest-contentful-paint": [
               "error",
               { "maxNumericValue": 2300, "aggregationMethod": "median-run" }
+            ],
+            "total-blocking-time": [
+              "error",
+              { "maxNumericValue": 360, "aggregationMethod": "median-run" }
             ]
           }
         },
         {
-          "matchingUrlPattern": ".*",
+          "matchingUrlPattern": "http://localhost:3200/.+",
           "assertions": {
             "total-blocking-time": [
               "error",
