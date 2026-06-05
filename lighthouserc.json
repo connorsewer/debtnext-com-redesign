@@ -3,7 +3,7 @@
     "collect": {
       "startServerCommand": "npm run start -- --port 3200",
       "url": ["http://localhost:3200/"],
-      "numberOfRuns": 3,
+      "numberOfRuns": 5,
       "settings": {
         "screenEmulation": {
           "mobile": true,
@@ -12,7 +12,7 @@
           "deviceScaleFactor": 1.75,
           "disabled": false
         },
-        "throttlingMethod": "simulate",
+        "throttlingMethod": "devtools",
         "throttling": {
           "rttMs": 150,
           "throughputKbps": 1638.4,
