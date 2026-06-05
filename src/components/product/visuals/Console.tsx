@@ -187,7 +187,8 @@ function Rows({ className }: { className?: string }) {
 function barTone(
   tone: NonNullable<ConsoleData["rows"][number]["bar"]>["tone"],
 ): "indigo" | "success" | "warning" | undefined {
-  return tone === "success" || tone === "warning" ? tone : tone === "indigo" ? "indigo" : undefined;
+  // "neutral"/undefined fall back to ValueBar's default indigo tone.
+  return tone === "success" || tone === "warning" || tone === "indigo" ? tone : undefined;
 }
 
 /** Pills: the StatPill footer row. */

@@ -43,7 +43,8 @@ function BarSeries({ series }: { series: Extract<Chart, { kind: "bars" }>["serie
 }
 
 function barTone(tone?: string): "indigo" | "success" | "warning" | undefined {
-  return tone === "success" || tone === "warning" ? tone : tone === "indigo" ? "indigo" : undefined;
+  // "neutral"/undefined fall back to ValueBar's default indigo tone.
+  return tone === "success" || tone === "warning" || tone === "indigo" ? tone : undefined;
 }
 
 /** Cards grid: the SolutionsIndustryCards layout, now fed entirely by payload. */
