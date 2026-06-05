@@ -8,19 +8,23 @@ Production marketing website for DebtNext at debtnext.com, modeled on Mercury.co
 
 Convert qualified enterprise buyers into demo requests. Every page, every CTA, every section exists to produce one outcome: a "Request a demo" submission from a VP-or-above buyer at a regulated credit originator.
 
-## Current Milestone: M5 Launch readiness + motion pass
+## Current Milestone: M6 Premium visual + motion system
 
-**Goal:** Take the site from "shipped" to "launchable". Fix the `/` LCP regression, wire analytics, ship SEO baseline, walk the Definition-of-Done on every route, and add restrained motion to the 10 non-home pages.
+**Goal:** Fill every gap found in the 2026-06-04 visual-asset audit with a 3-archetype visual library (console / data story / schematic) and a 7-type motion vocabulary, lifting the whole site to a flagship premium feel within the brand's restraint. Design source: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-design.md`.
 
 **Target feature categories:**
 
-- Hero performance (bring `/` under the 2.5s LCP target on 4G mobile)
-- Analytics (GA4 + GTM dataLayer; verify all CLAUDE.md §13 events in GTM Preview)
-- SEO baseline (per-route OG images, JSON-LD on `/` and `/demo`)
-- Definition-of-done walkthrough on every v1 route (CLAUDE.md §14 checklist)
-- Restrained motion pass across the 10 non-home pages
+- Per-industry solutions visuals (replace the single duplicate widget across 7 pages with distinct, real-data visuals)
+- Platform capability visuals (replace ~20 FeatureAccordion text placeholders with real product visuals)
+- Solutions capability visuals (replace ~25 FeatureAccordion text placeholders)
+- Premium motion + interactivity system (shared, reduced-motion-aware primitives for the 7-type vocabulary)
+- Text-only page elevation (compare, why-dplat, company set, resources, integrations, demo)
+- Visual system consolidation (merge `sections/mockups` + `product/visuals`; retire dead `dashboard-dark.png` fallbacks)
+- Homepage / hero flagship capstone pass
 
-**Phase numbering:** Continues from M4. M5 starts at Phase 5.
+**Phase numbering:** Continues from M5. M5 owns Phases 5–9 (with decimal insertions 5.1–5.3); **M6 starts at Phase 10.** M6's motion foundation supersedes M5's small "Phase 8 Motion pass."
+
+**Also open (paused): M5 Launch readiness + motion pass.** M5 is in-flight, not shipped — blocked on the Phase 5 hero LCP gate (Phase 5.3 queued). Its resume context is preserved in STATE.md. M5 work (hero perf, analytics, SEO, DoD) and M6 work run as two concurrent open milestones per the 2026-06-04 sequencing decision ("premium now, M5 stays open").
 
 ## Requirements
 
@@ -184,4 +188,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-20 after GSD `.planning/` bootstrap (M1–M4 captured retroactively before M5 opens)*
+*Last updated: 2026-06-04 — M6 (Premium visual + motion system) opened alongside the still-open M5; phases continue from Phase 10.*

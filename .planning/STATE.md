@@ -1,16 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: blocked
-last_updated: "2026-05-21T21:30:00Z"
-last_activity: 2026-05-21
+milestone: M6
+milestone_name: Premium visual + motion system
+status: defining-requirements
+paused_milestone: "M5 — Launch readiness (blocked on Phase 5 hero LCP gate; resume context preserved below)"
+last_updated: "2026-06-04T00:00:00Z"
+last_activity: 2026-06-04
 progress:
-  total_phases: 6
+  total_phases: 0
   completed_phases: 0
-  total_plans: 9
-  completed_plans: 7
-  percent: 70
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # STATE.md
@@ -20,9 +21,15 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 **Core value:** Convert qualified enterprise buyers into demo requests. The single conversion action is "Request a demo".
-**Current focus:** Phase 05.1 — hero-04-gap-closure-webm-encoder-re-tune-and-mobile-video-ga
+**Current focus:** M6 — Premium visual + motion system (defining requirements → roadmap).
 
 ## Current Position
+
+Milestone: **M6 — Premium visual + motion system.** Status: defining requirements (roadmap pending; phases continue from **Phase 10**). M6's motion foundation supersedes M5's planned "Phase 8 Motion pass." Last activity: 2026-06-04 — M6 opened via `/gsd-new-milestone` alongside the still-open M5 ("premium now, M5 stays open" sequencing decision). Design source: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-design.md`.
+
+Resume M6 from: requirements → roadmap (this run). After roadmap: `/gsd-plan-phase 10`.
+
+## M5 (paused) — resume context
 
 Phase: 05.2 (swap-hero-poster-to-avif) — see PARTIAL note below. 3 commits shipped (1ee187b AVIF swap, 84f20dd drop `<video poster>`, 8920088 Inter `display: optional`). LHCI Case C median LCP dropped from 16,411 ms to 3,869 ms (4.2x improvement) but the 2,300 ms gate is still red by 1,569 ms.
 Phase: 05.1 (hero-04-gap-closure-webm-encoder-re-tune-and-mobile-video-ga): STILL PAUSED. Plan 03 Task 1 EXECUTED with FAILED outcome (`docs/m5-phase-5-lhci-run.md` carries the writeup). Tasks 2 + 3 stay deferred until the gate closes.
