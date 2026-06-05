@@ -110,7 +110,20 @@ for (const route of VISUAL_ROUTES) {
           rect.height > 0;
         if (!intersects) continue;
 
-        const opacity = parseFloat(getComputedStyle(el).opacity);
+        // Skip elements that are intentionally hidden, not reveal-gated:
+        //  - visibility:hidden/collapse (e.g. the header's hover/focus nav
+        //    flyouts) keep a layout box but are not perceivable. visibility
+        //    inherits, so the element's own computed value already reflects a
+        //    hidden ancestor.
+        //  - aria-hidden subtrees (decorative crossfade layers like the hero's
+        //    framed-dashboard finale) are not content a user reads.
+        // The Reveal primitive (src/components/motion/Reveal.tsx) uses neither,
+        // so excluding these cannot mask a genuine reveal-failed-closed.
+        const style = getComputedStyle(el);
+        if (style.visibility !== "visible") continue;
+        if (el.closest('[aria-hidden="true"]')) continue;
+
+        const opacity = parseFloat(style.opacity);
         // Assert opacity === 1: anything below means the reveal failed closed.
         if (Number.isFinite(opacity) && opacity < 1) {
           found.push({

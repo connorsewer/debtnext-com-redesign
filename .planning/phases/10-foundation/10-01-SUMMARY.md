@@ -95,3 +95,13 @@ None. No new network endpoints, auth paths, file access, or schema changes intro
 ## Self-Check: PASSED
 
 All created/modified files exist on disk (8/8) and all 3 task commits exist in git history (0062e29, 79539f1, 0e76333).
+
+## Post-CI correction (2026-06-05, FND-05/FND-06)
+
+The first real CI run on PR #9 surfaced two wrong assumptions baked into Task 3 above, now fixed:
+
+1. **Manifest path was wrong for Next 16 + Turbopack.** This project builds with `next@16.2.6` using Turbopack, which does **not** emit the legacy `.next/app-build-manifest.json` (the `APP_BUILD_MANIFEST` constant no longer exists in Next 16), and its build-output route table no longer prints a "First Load JS" column (so the `BUILD_LOG` stdout fallback was also dead). The script failed with `FAIL  .next/app-build-manifest.json not found ...` even though `npm run build` ran first. `check-route-js-budget.sh` now reads the App Router per-route client chunks from `.next/server/app/page_client-reference-manifest.js` (`self.__RSC_MANIFEST["/page"].entryJSFiles`) unioned with the shared runtime chunks in `.next/build-manifest.json` -> `rootMainFiles`, summing on-disk byte sizes. The legacy build-stdout fallback was removed.
+
+2. **Budget pinned from a real measured build.** Measured `/` First-Load-JS = **786,643 bytes (768.2 KiB)** across 12 deduped chunks (full local `npm run build`, which does complete in this environment; only `next dev/start` bind a port and hang). `ROUTE_JS_BUDGET_BYTES` is pinned to that + ~10% headroom = **865,308 bytes**. The old PROVISIONAL 300 KB / 307200-byte placeholder was not just unpinned, it was below the real value: a corrected path alone would have made the guard FAIL (the app ships GSAP + framer-motion + radix in the `/` first load). The script prints the live `PASS  / First-Load-JS: <N> bytes (<pct>% of <budget>)` line each run; the local run reports 786,643 bytes (90% of budget). Linux CI chunk sizes are expected to match within the 10% headroom; confirmed green on PR #9's `lighthouse` job.
+
+T-10-01 mitigation is now realized (budget pinned to a measured number), not deferred.
