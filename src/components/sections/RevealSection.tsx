@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+
+import { RevealOnView } from "@/components/motion/css-reveal";
 
 export interface RevealSectionProps {
   children: React.ReactNode;
@@ -15,23 +16,20 @@ export interface RevealSectionProps {
  * matching the entrance curve used by ProofBand and the product visuals
  * (DESIGN.md motion guidance: fade-ins only, restrained).
  *
- * Respects prefers-reduced-motion: the wrapper renders its children
- * untouched, so content is fully visible with no transform under that
- * setting (and the section never ships blank).
+ * FND-06 framer-free: the wrapper observes itself via RevealOnView and the
+ * visual transition is pure CSS (`.dn-reveal`). Reduced motion is handled in
+ * CSS, which forces the rested, fully-visible state, so the section never
+ * ships blank. The optional `delay` reuses the per-child stagger custom
+ * property consumed by `.dn-reveal`.
  */
 export function RevealSection({ children, delay = 0 }: RevealSectionProps) {
-  const reduceMotion = useReducedMotion();
-
-  if (reduceMotion) return <>{children}</>;
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-12% 0px" }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay }}
+    <RevealOnView
+      className="dn-reveal"
+      margin="-12% 0px"
+      style={{ ["--dn-reveal-i" as string]: delay } as React.CSSProperties}
     >
       {children}
-    </motion.div>
+    </RevealOnView>
   );
 }

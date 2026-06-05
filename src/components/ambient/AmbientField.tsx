@@ -13,7 +13,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { useReducedMotion } from "framer-motion";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import styles from "./AmbientField.module.css";
 
 interface Particle {
@@ -61,7 +61,7 @@ export function AmbientField({
   seed = 538,
   className,
 }: AmbientFieldProps) {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const particles = useMemo(() => makeParticles(particleCount, seed), [particleCount, seed]);
 
   return (

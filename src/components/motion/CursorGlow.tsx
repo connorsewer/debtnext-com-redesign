@@ -11,7 +11,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useReducedMotion } from "framer-motion";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import styles from "./CursorGlow.module.css";
 
 interface CursorGlowProps {
@@ -21,7 +21,7 @@ interface CursorGlowProps {
 
 export function CursorGlow({ size = 480, className }: CursorGlowProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
 
   useEffect(() => {
     if (reduce) return;
