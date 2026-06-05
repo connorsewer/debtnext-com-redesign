@@ -57,3 +57,6 @@ next-env.d.ts
 
 # Lighthouse CI run artifacts
 /.lighthouseci/
+
+# Visual brainstorm companion
+.superpowers/
