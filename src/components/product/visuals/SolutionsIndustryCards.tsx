@@ -76,15 +76,25 @@ function AccentBar({ value, accent }: { value: number; accent: string }) {
 }
 
 export const SolutionsIndustryCards = React.memo(function SolutionsIndustryCards() {
+  // Fail open under reduced motion: render the cards at their shown state
+  // immediately rather than parking them at the fadeUpItem hidden (opacity:0)
+  // state until whileInView fires (this is an ssr:false visual, so a late mount
+  // can leave the cards invisible). Mirrors BulletList / AccentBar above.
+  const reduce = useReducedMotion();
   return (
     <ProductCanvas className="text-[var(--product-text)]" bloom="dual">
       <motion.div
         className="grid grid-cols-2 gap-3"
         variants={staggerContainer}
-        {...inViewProps}
+        {...(reduce
+          ? { initial: "show" as const, animate: "show" as const }
+          : inViewProps)}
       >
         {INDUSTRIES.map((ind) => (
-          <motion.div key={ind.name} variants={fadeUpItem}>
+          <motion.div
+            key={ind.name}
+            variants={reduce ? undefined : fadeUpItem}
+          >
             <ProductCard className="flex h-full flex-col gap-3 p-[15px]">
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
