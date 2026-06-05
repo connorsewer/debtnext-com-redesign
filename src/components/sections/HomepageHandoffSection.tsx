@@ -246,7 +246,7 @@ export function HomepageHandoffSection() {
                         ?.focus();
                     }}
                     className={cn(
-                      "inline-flex min-h-[40px] items-center rounded-[var(--radius-xl)] border px-4 py-2 text-body-sm font-[480] transition-colors duration-[var(--duration-instant)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]",
+                      "inline-flex min-h-[44px] items-center rounded-[var(--radius-xl)] border px-4 py-2 text-body-sm font-[480] transition-colors duration-[var(--duration-instant)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]",
                       isActive
                         ? "border-[var(--primary)] bg-[var(--primary)]/15 text-[var(--foreground)]"
                         : "border-[var(--border)] bg-transparent text-[var(--text-tertiary)] hover:border-[var(--text-tertiary)] hover:text-white"
@@ -273,7 +273,7 @@ export function HomepageHandoffSection() {
             <div className="mt-4">
               <Link
                 href={heroHandoff.link.href}
-                className="inline-flex items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+                className="min-h-touch inline-flex items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
               >
                 {heroHandoff.link.label} <span aria-hidden="true">→</span>
               </Link>
