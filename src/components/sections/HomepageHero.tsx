@@ -2,17 +2,22 @@
 
 import * as React from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 
 import { CursorGlow } from "@/components/motion/CursorGlow";
 import { FramedDashboard } from "@/components/sections/mockups/FramedDashboard";
 import { track } from "@/lib/analytics";
 import { heroCinematic } from "@/content/homepage-hero";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+// Desktop-only, non-reduced-motion owner of ALL GSAP. Loaded via next/dynamic
+// with ssr:false so GSAP never enters the `/` eager client chunk; mobile and
+// reduced-motion sessions never download it (HERO-04 LHCI lever).
+const HeroCinematicController = dynamic(
+  () =>
+    import("./HeroCinematicController").then((m) => m.HeroCinematicController),
+  { ssr: false }
+);
 
 /**
  * Cinematic homepage hero with a held framed-dashboard finale.
@@ -54,96 +59,20 @@ export function HomepageHero() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  useGSAP(
-    () => {
-      // Early bail when React state has settled mobile. The synchronous wire()
-      // path relies on this; the deferred (loadedmetadata) path also re-checks
-      // matchMedia live inside wire() to catch the state-flip race.
-      if (isMobile) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      const video = videoRef.current;
-      const section = sectionRef.current;
-      const sticky = stickyRef.current;
-      const overlay = overlayRef.current;
-      const startFrame = startFrameRef.current;
-      const framedDash = framedDashRef.current;
-      if (!video || !section || !sticky || !overlay || !startFrame || !framedDash) return;
+  const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
+  React.useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handler = () => setPrefersReducedMotion(mq.matches);
+    handler();
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
-      const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
-      const ease = (a: number, b: number, p: number) => clamp01((p - a) / (b - a));
-
-      const wire = () => {
-        // Re-check live: if we deferred wire via `loadedmetadata`, isMobile or
-        // prefers-reduced-motion may have flipped between useGSAP setup and the
-        // event firing. Bail before creating a ScrollTrigger that would inject
-        // a .pin-spacer wrapping the sticky div on a layout that no longer
-        // wants the cinematic.
-        if (window.matchMedia("(max-width: 767px)").matches) return;
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-        const duration = video.duration || 1;
-
-        ScrollTrigger.create({
-          trigger: section,
-          pin: sticky,
-          pinSpacing: true,
-          start: "top top",
-          end: () => `+=${window.innerHeight * 2.6}`,
-          scrub: 0.5,
-          onUpdate: (self) => {
-            const p = self.progress;
-
-            video.currentTime = duration * p;
-
-            // Overlay fades out + lifts
-            const overlayOut = ease(0, 0.12, p);
-            overlay.style.opacity = String(1 - overlayOut);
-            overlay.style.transform = `translateY(${-50 * overlayOut}px)`;
-
-            // Video fades in immediately, then fades out during the
-            // direct crossfade into the framed dashboard.
-            const videoIn = ease(0.0, 0.03, p);
-            const videoOut = ease(0.7, 0.88, p);
-            video.style.opacity = String(videoIn * (1 - videoOut));
-
-            // Cliffside (start-frame) fades out beneath the crossfade.
-            const cliffOut = ease(0.78, 0.88, p);
-            startFrame.style.opacity = String(1 - cliffOut);
-
-            // Framed dashboard fades in to cover by p=0.88, holds at full
-            // size for the rest of the cinematic, then crossfades OUT in
-            // place at the very end so the Platform section's matching
-            // framed dashboard (sticky-pinned at the exact same viewport
-            // position) seamlessly takes over. The dashboard never moves;
-            // only its opacity changes.
-            const dashIn = ease(0.70, 0.88, p);
-            const dashCrossfadeOut = ease(0.95, 1.0, p);
-            framedDash.style.opacity = String(dashIn * (1 - dashCrossfadeOut));
-
-            // Platform section: invisible during the cinematic, crossfades
-            // in during the same 5% window the hero's dashboard fades out.
-            // At p=1.0 the hero's dashboard is gone and Platform's
-            // dashboard is fully visible at the exact same viewport-y.
-            const handoff = document.querySelector(
-              "[data-handoff-section]"
-            ) as HTMLElement | null;
-            if (handoff) {
-              const platformIn = ease(0.95, 1.0, p);
-              handoff.style.opacity = String(platformIn);
-            }
-          },
-        });
-      };
-
-      if (video.readyState >= 1) {
-        wire();
-      } else {
-        video.addEventListener("loadedmetadata", wire, { once: true });
-        return () => video.removeEventListener("loadedmetadata", wire);
-      }
-    },
-    { scope: sectionRef, dependencies: [isMobile] }
-  );
+  // Cinematic runs on desktop, non-reduced-motion only. All GSAP wiring lives
+  // in HeroCinematicController, mounted via next/dynamic below. When this gate
+  // is false (mobile / reduced motion / SSR) the static start-frame + overlay
+  // tree below renders on its own (this IS the fail-open render).
+  const cinematicEnabled = !isMobile && !prefersReducedMotion;
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -162,6 +91,18 @@ export function HomepageHero() {
       data-slot="homepage-hero"
       className="relative bg-[var(--background)]"
     >
+      {cinematicEnabled && (
+        <HeroCinematicController
+          heroRefs={{
+            section: sectionRef,
+            sticky: stickyRef,
+            video: videoRef,
+            startFrame: startFrameRef,
+            framedDash: framedDashRef,
+            overlay: overlayRef,
+          }}
+        />
+      )}
       <div
         ref={stickyRef}
         className="relative h-screen w-full overflow-hidden bg-[var(--background)]"
