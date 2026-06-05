@@ -46,3 +46,13 @@ export {
   issuesFlagshipItems,
 } from "./issues";
 export type { IssuesFlagshipItem } from "./issues";
+export {
+  reportingInventory,
+  reportingVendor,
+  reportingCost,
+  reportingSla,
+  reportingActivity,
+  reportingFlagshipConsole,
+  reportingFlagshipMetrics,
+} from "./reporting";
+export type { ReportingFlagshipMetric } from "./reporting";
