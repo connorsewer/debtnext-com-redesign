@@ -52,6 +52,15 @@
               { "maxNumericValue": 240, "aggregationMethod": "median-run" }
             ]
           }
+        },
+        {
+          "matchingUrlPattern": "http://localhost:3200/platform/placement$",
+          "assertions": {
+            "cumulative-layout-shift": [
+              "error",
+              { "maxNumericValue": 0.1, "aggregationMethod": "median-run" }
+            ]
+          }
         }
       ]
     },
