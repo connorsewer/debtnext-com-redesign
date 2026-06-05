@@ -136,6 +136,9 @@ export const AreaLine = React.memo(function AreaLine({
   const ref = React.useRef<SVGSVGElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
   const shown = reduce || inView;
+  const uid = React.useId();
+  const fillId = `al-fill-${uid}`;
+  const glowId = `al-glow-${uid}`;
   const w = 100;
   const h = 40;
   const step = points.length > 1 ? w / (points.length - 1) : w;
@@ -157,18 +160,18 @@ export const AreaLine = React.memo(function AreaLine({
       aria-hidden="true"
     >
       <defs>
-        <linearGradient id="al-fill" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={fillId} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="rgba(82,102,235,0.35)" />
           <stop offset="100%" stopColor="rgba(82,102,235,0)" />
         </linearGradient>
-        <radialGradient id="al-glow">
+        <radialGradient id={glowId}>
           <stop offset="0%" stopColor="rgba(82,102,235,0.6)" />
           <stop offset="100%" stopColor="rgba(82,102,235,0)" />
         </radialGradient>
       </defs>
       <motion.path
         d={area}
-        fill="url(#al-fill)"
+        fill={`url(#${fillId})`}
         initial={reduce ? false : { opacity: 0 }}
         animate={{ opacity: shown ? 1 : 0 }}
         transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: 0.2 }}
@@ -187,7 +190,7 @@ export const AreaLine = React.memo(function AreaLine({
         cx={last[0]}
         cy={last[1]}
         r="4"
-        fill="url(#al-glow)"
+        fill={`url(#${glowId})`}
         initial={reduce ? false : { opacity: 0 }}
         animate={
           reduce
