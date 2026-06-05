@@ -1,9 +1,12 @@
 import { test, expect } from "@playwright/test";
-import { ROUTES } from "../helpers/routes";
+import { ROUTES, VISUAL_ROUTES } from "../helpers/routes";
 
+// `reducedMotion` is a context option, not a top-level Fixtures property, so it
+// cannot sit beside `colorScheme` in `test.use` (TS2353). The page-level
+// `emulateMedia` in beforeEach is what actually makes the media query match for
+// this project's dev server, so the reduce flag lives there.
 test.use({
   colorScheme: "dark",
-  reducedMotion: "reduce",
 });
 
 // Belt-and-braces: re-emulate at the page level. The context-level `reducedMotion`
@@ -60,5 +63,73 @@ for (const route of ROUTES) {
     });
 
     expect(animating, `Animations still running: ${JSON.stringify(animating, null, 2)}`).toEqual([]);
+  });
+}
+
+// Reveals must fail OPEN under reduced motion, not merely "stop animating".
+// "No running animations" (above) does not prove the text is visible: a reveal
+// could be parked at opacity:0 with its animation neutralized to 0.01ms by the
+// globals.css reduced-motion sweep, which would pass the loop above while
+// leaving the text hidden. This sibling test asserts that every in-viewport
+// text-bearing element rests at computed opacity === 1 under reduced motion,
+// across the same VISUAL_ROUTES the motion-on reveal-fail-open spec covers.
+for (const route of VISUAL_ROUTES) {
+  test(`${route}: in-viewport text rests at opacity 1 under reduced motion`, async ({
+    page,
+  }) => {
+    await page.goto(route);
+    await page.waitForLoadState("networkidle");
+
+    // Surface IO-driven entrances: scroll to the bottom and back to the top.
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(150);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(150);
+
+    // Collect up to 5 in-viewport, text-bearing elements whose computed opacity
+    // is below 1 (i.e. NOT === 1). Same offender shape as reveal-fail-open.spec.
+    const offenders = await page.evaluate(() => {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const all = Array.from(document.querySelectorAll<HTMLElement>("*"));
+      const found: { tag: string; className: string; opacity: number }[] = [];
+
+      for (const el of all) {
+        if (found.length >= 5) break;
+
+        const text = (el.textContent ?? "").trim();
+        if (text.length === 0) continue;
+
+        const rect = el.getBoundingClientRect();
+        const intersects =
+          rect.bottom > 0 &&
+          rect.right > 0 &&
+          rect.top < vh &&
+          rect.left < vw &&
+          rect.width > 0 &&
+          rect.height > 0;
+        if (!intersects) continue;
+
+        const opacity = parseFloat(getComputedStyle(el).opacity);
+        // Assert opacity === 1: anything below means the reveal failed closed.
+        if (Number.isFinite(opacity) && opacity < 1) {
+          found.push({
+            tag: el.tagName,
+            className: el.className.toString().slice(0, 80),
+            opacity,
+          });
+        }
+      }
+      return found;
+    });
+
+    expect(
+      offenders,
+      `Reduced-motion text not at opacity 1 (reveal failed closed): ${JSON.stringify(
+        offenders,
+        null,
+        2
+      )}`
+    ).toEqual([]);
   });
 }
