@@ -18,3 +18,12 @@ export type {
 } from "./types";
 
 export { placementConsole } from "./placement";
+export {
+  placementVendorPools,
+  placementRecall,
+  placementBusinessRules,
+  placementReconciliation,
+  placementFlagshipConsole,
+  placementFlagshipTiers,
+} from "./placement-accordion";
+export type { PlacementFlagshipTier } from "./placement-accordion";
