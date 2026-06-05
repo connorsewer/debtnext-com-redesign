@@ -2,12 +2,12 @@
 gsd_state_version: 1.0
 milestone: M6
 milestone_name: Premium visual + motion system
-status: defining-requirements
+status: roadmap-complete
 paused_milestone: "M5 — Launch readiness (blocked on Phase 5 hero LCP gate; resume context preserved below)"
 last_updated: "2026-06-04T00:00:00Z"
 last_activity: 2026-06-04
 progress:
-  total_phases: 0
+  total_phases: 6
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -25,9 +25,23 @@ See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 ## Current Position
 
-Milestone: **M6 — Premium visual + motion system.** Status: defining requirements (roadmap pending; phases continue from **Phase 10**). M6's motion foundation supersedes M5's planned "Phase 8 Motion pass." Last activity: 2026-06-04 — M6 opened via `/gsd-new-milestone` alongside the still-open M5 ("premium now, M5 stays open" sequencing decision). Design source: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-design.md`.
+Milestone: **M6 — Premium visual + motion system.** Status: roadmap complete; phases 10-15 defined. **Current phase: Phase 10 — Foundation (not started).** Next step: `/gsd-plan-phase 10`. M6's motion foundation (Phase 10) supersedes M5's planned "Phase 8 Motion pass" — do not double-schedule motion work. Last activity: 2026-06-04 — M6 roadmap created alongside the still-open M5 ("premium now, M5 stays open" sequencing decision). Design source: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-design.md`.
 
-Resume M6 from: requirements → roadmap (this run). After roadmap: `/gsd-plan-phase 10`.
+**Cross-milestone gate:** Phase 10 must co-land with or after **M5 Phase 5.3 (lazy-GSAP)** so the `/` mobile JS budget is not re-opened (Pitfalls 1 + 6). Phase 15 (homepage capstone) is double-gated: on Phases 10-14 and on the M5 hero LCP fix being closed or renegotiated.
+
+### M6 phase map (from roadmap)
+
+| Phase | Goal (one line) | REQ-IDs | Depends on |
+|---|---|---|---|
+| 10 — Foundation | Motion barrel + 3 archetypes + typed payloads + primitives + CI guardrails | FND-01..06 | M5 Phase 5.3 (lazy-GSAP, cross-milestone) |
+| 11 — Platform deep-dive visuals | Real archetype visuals + 1 explorable flagship per platform page | PLATVIS-01..03 | Phase 10 |
+| 12 — Solutions per-industry visuals | Kill duplicate widget; per-industry Console+Schematic+Data-story | SOLVIS-01..05 | Phase 10 (after 11 hardens schemas) |
+| 13 — Visual system consolidation | Merge mockups behind stable MockupForTab; retire dead PNGs | SYSVIS-01..02 | Phase 10, Phase 11 (Console proven) |
+| 14 — Text-only page elevation | Visuals/motion where they lift compare/why-dplat/company/resources/integrations/demo | PAGEVIS-01..04 | Phase 10 |
+| 15 — Homepage flagship capstone | Matured-system hero pass; LHCI Case C hard gate | HOMEVIS-01 | Phases 10-14 + M5 hero LCP fix |
+
+Coverage: 21/21 M6 requirements mapped. No orphans. Last (Phase 15) gated on M5 perf close.
+
 
 ## M5 (paused) — resume context
 
@@ -107,3 +121,5 @@ Coverage: 21/21 M5 requirements mapped. No orphans.
 
 ---
 *Last updated: 2026-05-21 by `/gsd-execute-phase 05.1`. Phase 05.1 paused at Plan 03 Task 1 after LHCI Case C re-run on the Vercel preview measured median LCP 16,411 ms (gate 2,300 ms). Per-run 16,411 / 16,365 / 15,479. Root cause: the SSR-rendered `<video poster="/hero/homepage-hero-start.png">` triggers a 2.55 MB raw PNG download on mobile before the `!isMobile` React gate removes the element post-hydration. At 1.6 Mbps throttled bandwidth the PNG alone takes ~13s, blocking H1 paint. This is the A5 risk documented in 05.1-CONTEXT.md and called out in Plan 03 Task 1's pitfalls. WebM ladder removal (Plan 01) and regression nets (Plan 02) are real but insufficient to close HERO-04 on their own. Routing to Phase 5.2 (AVIF poster swap) for the gap. Plan 03 stays incomplete and resumes after 5.2 closes the gate.*
+
+*M6 update: 2026-06-04 by GSD roadmapper. M6 roadmap created (Phases 10-15) alongside the still-open M5. Current M6 position: Phase 10 (Foundation) — not started. Next step: `/gsd-plan-phase 10`, which must co-land with or after M5 Phase 5.3 (lazy-GSAP). M5 resume context, Roadmap Evolution, and Accumulated Context above are unchanged.*

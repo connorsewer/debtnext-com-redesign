@@ -132,6 +132,27 @@ Explicitly excluded during M5 scoping with reasoning:
 | MOTION-02 | Phase 8 | — | Open |
 | MOTION-03 | Phase 8 | — | Open |
 | MOTION-04 | Phase 8 | — | Open |
+| FND-01 | Phase 10 | — | Open |
+| FND-02 | Phase 10 | — | Open |
+| FND-03 | Phase 10 | — | Open |
+| FND-04 | Phase 10 | — | Open |
+| FND-05 | Phase 10 | — | Open |
+| FND-06 | Phase 10 | — | Open |
+| PLATVIS-01 | Phase 11 | — | Open |
+| PLATVIS-02 | Phase 11 | — | Open |
+| PLATVIS-03 | Phase 11 | — | Open |
+| SOLVIS-01 | Phase 12 | — | Open |
+| SOLVIS-02 | Phase 12 | — | Open |
+| SOLVIS-03 | Phase 12 | — | Open |
+| SOLVIS-04 | Phase 12 | — | Open |
+| SOLVIS-05 | Phase 12 | — | Open |
+| SYSVIS-01 | Phase 13 | — | Open |
+| SYSVIS-02 | Phase 13 | — | Open |
+| PAGEVIS-01 | Phase 14 | — | Open |
+| PAGEVIS-02 | Phase 14 | — | Open |
+| PAGEVIS-03 | Phase 14 | — | Open |
+| PAGEVIS-04 | Phase 14 | — | Open |
+| HOMEVIS-01 | Phase 15 | — | Open |
 
 ---
-*Last updated: 2026-06-04 — M6 (Premium visual + motion system) requirements added: 21 across 6 categories (FND, PLATVIS, SOLVIS, SYSVIS, PAGEVIS, HOMEVIS). M5's 21 requirements remain open/in-flight. M6 phases continue from Phase 10; traceability filled by the M6 roadmapper.*
+*Last updated: 2026-06-04 — M6 roadmap created. Traceability filled: 21 M6 requirements mapped 1:1 to Phases 10-15 (FND→10, PLATVIS→11, SOLVIS→12, SYSVIS→13, PAGEVIS→14, HOMEVIS→15). M5's 21 requirements (Phases 5-9) remain open/in-flight, unchanged. M6 coverage 21/21; M5 coverage 21/21.*
