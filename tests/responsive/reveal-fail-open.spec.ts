@@ -46,7 +46,9 @@ for (const route of VISUAL_ROUTES) {
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(200);
     await page.evaluate(() => window.scrollTo(0, 0));
-    await page.waitForTimeout(200);
+    // Longer settle at the top: the homepage GSAP cinematic uses scrub:0.5, so
+    // its scroll-linked opacities keep easing for ~0.5s after the scroll stops.
+    await page.waitForTimeout(700);
 
     // Open every collapsed accordion trigger and every tab control so reveals
     // sitting behind collapsed UI also settle. Absence of these controls is not
@@ -125,6 +127,12 @@ for (const route of VISUAL_ROUTES) {
           )
         )
           continue;
+        // Skip the homepage GSAP cinematic Platform section. Its opacity is
+        // scroll-scrubbed (the section is the downstream panel that fades in at
+        // the end of the hero hand-off), so at scroll-top it is intentionally
+        // opacity:0 — not a failed reveal. Its fail-open is covered separately:
+        // under reduced motion it renders the static, fully-visible branch.
+        if (el.closest("[data-handoff-section]")) continue;
 
         const opacity = parseFloat(style.opacity);
         if (Number.isFinite(opacity) && opacity < 1) {

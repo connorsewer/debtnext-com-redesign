@@ -117,7 +117,10 @@ export function HomepageHandoffSection() {
     scrollToTab(tab.id);
   };
 
-  if (isMobile) {
+  // Reduced-motion desktop takes the same static stacked layout as mobile: the
+  // 400vh scroll-scrub region only makes sense when the GSAP cinematic drives
+  // it, so without motion we render the honest, fully-visible fallback.
+  if (isMobile || prefersReducedMotion) {
     return (
       <section
         ref={sectionRef}
@@ -165,7 +168,11 @@ export function HomepageHandoffSection() {
     <section
       ref={sectionRef}
       data-handoff-section
-      style={{ opacity: 0 }}
+      // Start invisible ONLY when the cinematic will run (GSAP fades this in as
+      // the hero hands off). Under reduced motion the controller never mounts,
+      // so opacity:0 would leave the whole Platform section stuck invisible.
+      // Fail open: render at full opacity when the cinematic is disabled.
+      style={cinematicEnabled ? { opacity: 0 } : undefined}
       className="relative -mt-[100vh] h-[400vh] bg-[var(--background)]"
     >
       {cinematicEnabled && (
