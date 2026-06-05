@@ -85,10 +85,15 @@ for (const route of VISUAL_ROUTES) {
     await page.waitForLoadState("load");
 
     // Surface IO-driven entrances: scroll to the bottom and back to the top.
+    // The settle after returning to the top is generous: framer's
+    // useReducedMotion (still used by a few non-homepage reveals, e.g.
+    // BulletList and the ssr:false SolutionsIndustryCards) resolves in an effect,
+    // so a freshly-hydrated reveal can show a one-frame opacity:0 before it
+    // fails open. We assert the RESTED state, so let those reveals settle.
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(150);
+    await page.waitForTimeout(200);
     await page.evaluate(() => window.scrollTo(0, 0));
-    await page.waitForTimeout(150);
+    await page.waitForTimeout(700);
 
     // Collect up to 5 in-viewport, text-bearing elements whose computed opacity
     // is below 1 (i.e. NOT === 1). Same offender shape as reveal-fail-open.spec.
