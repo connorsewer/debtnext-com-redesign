@@ -27,3 +27,12 @@ export {
   placementFlagshipTiers,
 } from "./placement-accordion";
 export type { PlacementFlagshipTier } from "./placement-accordion";
+export {
+  optimizationBands,
+  optimizationShare,
+  optimizationBonus,
+  optimizationHistory,
+  optimizationFlagshipConsole,
+  optimizationFlagshipVendors,
+} from "./optimization";
+export type { OptimizationFlagshipVendor } from "./optimization";
