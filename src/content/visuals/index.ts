@@ -36,3 +36,13 @@ export {
   optimizationFlagshipVendors,
 } from "./optimization";
 export type { OptimizationFlagshipVendor } from "./optimization";
+export {
+  issuesAutoHandling,
+  issuesWorkflows,
+  issuesVendorPortal,
+  issuesSla,
+  issuesAudit,
+  issuesFlagshipConsole,
+  issuesFlagshipItems,
+} from "./issues";
+export type { IssuesFlagshipItem } from "./issues";
