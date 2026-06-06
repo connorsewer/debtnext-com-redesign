@@ -59,6 +59,7 @@ export interface ConsoleRow {
   trailing?: {
     // right column: count OR pct
     value: number;
+    prefix?: string; // "$" for currency cells (optimizationBonus); none for pct/count. Additive/backward-compatible.
     suffix?: string; // "%" for the mockup, none for the matrix count
     decimals?: number;
     animate?: "count" | "shift" | "none"; // AnimatedNumber vs NumberShift vs static

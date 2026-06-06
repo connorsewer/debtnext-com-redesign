@@ -128,19 +128,19 @@ export const optimizationBonus = {
       primary: "Primary · Q2",
       secondary: "Target 22% · achieved 24.6%",
       bar: { segments: [100], tone: "success" },
-      trailing: { value: 18400, suffix: "", animate: "count" },
+      trailing: { value: 18400, prefix: "$", suffix: "", animate: "count" },
     },
     {
       primary: "Secondary · Q2",
       secondary: "Target 18% · achieved 19.1%",
       bar: { segments: [100], tone: "success" },
-      trailing: { value: 9250, suffix: "", animate: "count" },
+      trailing: { value: 9250, prefix: "$", suffix: "", animate: "count" },
     },
     {
       primary: "Tertiary · Q2",
       secondary: "Target 16% · achieved 15.8%",
       bar: { segments: [88], tone: "warning" },
-      trailing: { value: 0, suffix: "", animate: "none" },
+      trailing: { value: 0, prefix: "$", suffix: "", animate: "none" },
     },
   ],
   pills: [
