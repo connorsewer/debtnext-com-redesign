@@ -184,7 +184,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 ## M6 Phases
 
 - [x] **Phase 10: Foundation** — Motion barrel + 3 archetypes + typed payloads + shared primitives + CI guardrails; the keystone that unblocks all page work (completed 2026-06-05)
-- [ ] **Phase 11: Platform deep-dive visuals** — Battle-test archetypes on the 4 platform pages; one explorable flagship per page; zero accordion placeholders
+- [x] **Phase 11: Platform deep-dive visuals** — Battle-test archetypes on the 4 platform pages; one explorable flagship per page; zero accordion placeholders (completed 2026-06-06)
 - [ ] **Phase 12: Solutions per-industry visuals** — Kill the duplicate widget; per-industry Console + Schematic + Data-story; replace accordion placeholders across 6 industries
 - [ ] **Phase 13: Visual system consolidation** — Merge `sections/mockups` behind unchanged `MockupForTab` signatures (after Console is proven); retire dead PNG fallbacks
 - [ ] **Phase 14: Text-only page elevation** — Archetype visuals + motion where they lift compare / why-dplat / company set / resources / integrations / demo
@@ -195,7 +195,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 10. Foundation | 6/6 | Complete    | 2026-06-05 |
-| 11. Platform deep-dive visuals | 0/5 | Planned | — |
+| 11. Platform deep-dive visuals | 5/5 | Complete    | 2026-06-06 |
 | 12. Solutions per-industry visuals | 0/0 | Not started | — |
 | 13. Visual system consolidation | 0/0 | Not started | — |
 | 14. Text-only page elevation | 0/0 | Not started | — |
@@ -233,11 +233,11 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
   3. The BenefitSplit live visuals on platform pages render archetype instances fed real payloads, not the shared static image
   4. LHCI on `/platform/*` keeps LCP under 2.5s, CLS under 0.1, and INP under 200ms after the visuals land, and all existing Playwright specs stay green
 **Plans**: 5 plans (3 waves)
-- [ ] 11-01-PLAN.md — Wave 1: archetype-mapping table (D-03 approval gate) + placement end-to-end (5 accordion visuals + Explorable Console flagship) as the proven pattern
-- [ ] 11-02-PLAN.md — Wave 2: optimization page (4 accordion visuals + Explorable flagship)
-- [ ] 11-03-PLAN.md — Wave 2: issues page (5 accordion visuals + Explorable flagship, label-paired status)
-- [ ] 11-04-PLAN.md — Wave 2: reporting page (5 accordion visuals + Explorable flagship)
-- [ ] 11-05-PLAN.md — Wave 3: verification gate (LHCI on all 4 platform routes + full Playwright + axe + human-verify)
+- [x] 11-01-PLAN.md — Wave 1: archetype-mapping table (D-03 approval gate) + placement end-to-end (5 accordion visuals + Explorable Console flagship) as the proven pattern
+- [x] 11-02-PLAN.md — Wave 2: optimization page (4 accordion visuals + Explorable flagship)
+- [x] 11-03-PLAN.md — Wave 2: issues page (5 accordion visuals + Explorable flagship, label-paired status)
+- [x] 11-04-PLAN.md — Wave 2: reporting page (5 accordion visuals + Explorable flagship)
+- [x] 11-05-PLAN.md — Wave 3: verification gate (LHCI on all 4 platform routes + full Playwright + axe + human-verify)
 **Notes**: This is where Console / Schematic / DataStory schemas get battle-tested against real platform data before Phase 13 re-points the homepage handoff. Explorable flagships are the main consumer of the keyboard + focus-parity contract (Pitfall 7) and the label-paired-status / text-alternative contract (Pitfall 8). Per-archetype lazy skeletons must match the resolved box (Pitfall 4). Any metric in a payload or caption → `[CLAIMS REVIEW]`; any vendor/TSI framing → `[COI REVIEW]`. Inherits standing constraints: DESIGN.md tokens only, one filled CTA per band, WCAG 2.2 AA + axe-core, reduced-motion gated, LCP<2.5s / CLS<0.1 / INP<200ms, all existing Playwright specs green, per-commit docs-in-sync, COI/CLAIMS review on any new copy.
 **UI hint**: yes
 
