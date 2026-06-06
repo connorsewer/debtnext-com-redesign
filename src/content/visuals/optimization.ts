@@ -166,7 +166,7 @@ export const optimizationHistory = {
     cards: [
       {
         name: "Recovery partner A",
-        accent: "#5266EB",
+        accent: "var(--primary)",
         tag: "MAY 02",
         value: 47,
         suffix: "%",
@@ -175,7 +175,7 @@ export const optimizationHistory = {
       },
       {
         name: "Recovery partner C",
-        accent: "#E0A33E",
+        accent: "var(--status-warning)",
         tag: "MAY 02",
         value: 13,
         suffix: "%",
@@ -184,7 +184,7 @@ export const optimizationHistory = {
       },
       {
         name: "Recovery partner B",
-        accent: "#4C8DFF",
+        accent: "var(--status-focus)",
         tag: "APR 04",
         value: 33,
         suffix: "%",
@@ -193,7 +193,7 @@ export const optimizationHistory = {
       },
       {
         name: "Recovery partner D",
-        accent: "#E0A33E",
+        accent: "var(--status-warning)",
         tag: "APR 04",
         value: 7,
         suffix: "%",
