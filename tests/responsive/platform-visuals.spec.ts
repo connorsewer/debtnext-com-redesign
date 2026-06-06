@@ -185,7 +185,19 @@ async function assertReducedMotionDataParity(page: Page, route: string, values: 
 /** No in-viewport text-bearing element sits at opacity < 1 after interaction
  *  (reveal-fail-open shape, scoped to this route). */
 async function assertNoStuckOpacity(page: Page) {
-  await page.waitForTimeout(300);
+  // Wait until reveal/fade animations have settled instead of a fixed sleep.
+  // getAnimations() returns every running Web Animation (the reveal stagger and
+  // fade-ins included); once none are running the opacity sweep is stable. Guard
+  // for engines without the API by treating its absence as "settled".
+  await page.waitForFunction(() => {
+    const getAnimations = (document as Document & {
+      getAnimations?: () => Animation[];
+    }).getAnimations;
+    if (typeof getAnimations !== "function") return true;
+    return getAnimations.call(document).every(
+      (anim) => anim.playState === "finished" || anim.playState === "idle",
+    );
+  });
   const offenders = await page.evaluate(() => {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
