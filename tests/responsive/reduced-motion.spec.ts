@@ -87,7 +87,7 @@ for (const route of VISUAL_ROUTES) {
     // Surface IO-driven entrances: scroll to the bottom and back to the top.
     // The settle after returning to the top is generous: framer's
     // useReducedMotion (still used by a few non-homepage reveals, e.g.
-    // BulletList and the ssr:false SolutionsIndustryCards) resolves in an effect,
+    // BulletList and the ssr:false solutions Console visuals) resolves in an effect,
     // so a freshly-hydrated reveal can show a one-frame opacity:0 before it
     // fails open. We assert the RESTED state, so let those reveals settle.
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));

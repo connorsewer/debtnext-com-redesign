@@ -44,11 +44,6 @@ export const LazyPlatformSystemMap = dynamic(
   { ssr: false, loading: VisualSkeleton },
 );
 
-export const LazySolutionsIndustryCards = dynamic(
-  () => import("./SolutionsIndustryCards").then((m) => m.SolutionsIndustryCards),
-  { ssr: false, loading: VisualSkeleton },
-);
-
 export const LazyPlacementMatrix = dynamic(
   () => import("./PlacementMatrix").then((m) => m.PlacementMatrix),
   { ssr: false, loading: VisualSkeleton },
