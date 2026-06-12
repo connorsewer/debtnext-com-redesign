@@ -45,6 +45,7 @@ next-env.d.ts
 # Local snapshot/debug artifacts
 /hero-snapshots/
 /.playwright-mcp/
+/review-screenshots/
 /optA-*.jpg
 /handoff-*.jpg
 /tabs-scroll-*.jpg
