@@ -59,10 +59,17 @@ export interface ConsoleRow {
   trailing?: {
     // right column: count OR pct
     value: number;
+    prefix?: string; // "$" for currency cells (optimizationBonus); none for pct/count. Additive/backward-compatible.
     suffix?: string; // "%" for the mockup, none for the matrix count
     decimals?: number;
     animate?: "count" | "shift" | "none"; // AnimatedNumber vs NumberShift vs static
   };
+  // D-08 additive optional field (11-03, issues vendor-portal). Horizontal
+  // alignment hint for a message-thread row so vendor vs operator messages read
+  // as a two-sided conversation. Optional and backward-compatible: every existing
+  // payload omits it and keeps its `satisfies ConsoleData` green. Renderers that
+  // don't read it fall back to the default left alignment.
+  align?: "start" | "end";
 }
 
 export interface ConsoleData {

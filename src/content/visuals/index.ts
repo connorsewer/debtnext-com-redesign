@@ -18,3 +18,41 @@ export type {
 } from "./types";
 
 export { placementConsole } from "./placement";
+export {
+  placementVendorPools,
+  placementRecall,
+  placementBusinessRules,
+  placementReconciliation,
+  placementFlagshipConsole,
+  placementFlagshipTiers,
+} from "./placement-accordion";
+export type { PlacementFlagshipTier } from "./placement-accordion";
+export {
+  optimizationBands,
+  optimizationShare,
+  optimizationBonus,
+  optimizationHistory,
+  optimizationFlagshipConsole,
+  optimizationFlagshipVendors,
+} from "./optimization";
+export type { OptimizationFlagshipVendor } from "./optimization";
+export {
+  issuesAutoHandling,
+  issuesWorkflows,
+  issuesVendorPortal,
+  issuesSla,
+  issuesAudit,
+  issuesFlagshipConsole,
+  issuesFlagshipItems,
+} from "./issues";
+export type { IssuesFlagshipItem } from "./issues";
+export {
+  reportingInventory,
+  reportingVendor,
+  reportingCost,
+  reportingSla,
+  reportingActivity,
+  reportingFlagshipConsole,
+  reportingFlagshipMetrics,
+} from "./reporting";
+export type { ReportingFlagshipMetric } from "./reporting";

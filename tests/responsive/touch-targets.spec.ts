@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { ROUTES } from "../helpers/routes";
+import { VISUAL_ROUTES } from "../helpers/routes";
 
 test.describe("touch-target floor at 375", () => {
-  for (const route of ROUTES) {
+  for (const route of VISUAL_ROUTES) {
     test(`${route}: every interactive element is ≥44×44`, async ({ page }) => {
       await page.setViewportSize({ width: 375, height: 812 });
       await page.goto(route);

@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
-import { ROUTES } from "../helpers/routes";
+import { VISUAL_ROUTES } from "../helpers/routes";
 
 const VIEWPORTS = [
   { name: "mobile-375", width: 375, height: 812 },
@@ -8,7 +8,7 @@ const VIEWPORTS = [
 ];
 
 for (const vp of VIEWPORTS) {
-  for (const route of ROUTES) {
+  for (const route of VISUAL_ROUTES) {
     test(`axe ${route} @ ${vp.name}`, async ({ page }) => {
       await page.setViewportSize({ width: vp.width, height: vp.height });
       await page.goto(route);

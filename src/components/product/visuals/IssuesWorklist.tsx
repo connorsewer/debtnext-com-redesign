@@ -8,7 +8,6 @@ import { MetricCell } from "@/components/product/primitives/MetricCell";
 import { ProductCanvas } from "@/components/product/primitives/ProductCanvas";
 import { TypeChip, type ToneKey } from "@/components/product/visuals/parts";
 import {
-  AnimatedNumber,
   fadeUpItem,
   inViewProps,
   staggerContainer,
@@ -98,7 +97,7 @@ export const IssuesWorklist = React.memo(function IssuesWorklist() {
                   }
                 />
                 <span className="text-[11px] tabular-nums" style={{ color: dotColor }}>{it.timer}</span>
-                <span className="hidden text-[9.5px] uppercase tracking-[0.04em] text-[var(--product-text-3)] @sm:inline">
+                <span className="text-[9.5px] uppercase tracking-[0.04em] text-[var(--product-text-3)]">
                   {it.status}
                 </span>
               </div>

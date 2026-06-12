@@ -7,7 +7,11 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProcessStrip } from "@/components/sections/ProcessStrip";
 import { ProseIntro } from "@/components/sections/ProseIntro";
-import { LazyOptimizationEngine } from "@/components/product/visuals/lazy";
+import {
+  ConsoleVisual,
+  DataStoryVisual,
+} from "@/components/product/visuals/archetypes";
+import { LazyOptimizationFlagship } from "@/components/product/visuals/lazy";
 import {
   optimizationAccordion,
   optimizationBenefit,
@@ -17,6 +21,12 @@ import {
   optimizationMeta,
   optimizationProcess,
 } from "@/content/optimization";
+import {
+  optimizationBands,
+  optimizationBonus,
+  optimizationHistory,
+  optimizationShare,
+} from "@/content/visuals";
 
 export const metadata: Metadata = {
   title: optimizationMeta.title,
@@ -53,13 +63,19 @@ export default function OptimizationPage() {
         section="optimization_accordion"
         heading={optimizationAccordion.heading}
         items={optimizationAccordion.items}
+        visuals={{
+          bands: <DataStoryVisual data={optimizationBands} />,
+          share: <ConsoleVisual data={optimizationShare} />,
+          bonus: <ConsoleVisual data={optimizationBonus} />,
+          history: <DataStoryVisual data={optimizationHistory} />,
+        }}
       />
 
       <BenefitSplit
         heading={optimizationBenefit.heading}
         body={optimizationBenefit.body}
         bullets={optimizationBenefit.bullets}
-        visual={<LazyOptimizationEngine />}
+        visual={<LazyOptimizationFlagship />}
         surface="light"
       />
 

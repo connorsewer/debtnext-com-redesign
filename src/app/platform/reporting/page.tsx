@@ -7,7 +7,18 @@ import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProseIntro } from "@/components/sections/ProseIntro";
-import { LazyReportingDashboard } from "@/components/product/visuals/lazy";
+import { LazyReportingFlagship } from "@/components/product/visuals/lazy";
+import {
+  ConsoleVisual,
+  DataStoryVisual,
+} from "@/components/product/visuals/archetypes";
+import {
+  reportingActivity,
+  reportingCost,
+  reportingInventory,
+  reportingSla,
+  reportingVendor,
+} from "@/content/visuals";
 import {
   reportingAccordion,
   reportingBenefit,
@@ -52,13 +63,20 @@ export default function ReportingPage() {
         section="reporting_accordion"
         heading={reportingAccordion.heading}
         items={reportingAccordion.items}
+        visuals={{
+          inventory: <ConsoleVisual data={reportingInventory} />,
+          vendor: <DataStoryVisual data={reportingVendor} />,
+          cost: <DataStoryVisual data={reportingCost} />,
+          sla: <ConsoleVisual data={reportingSla} />,
+          activity: <DataStoryVisual data={reportingActivity} />,
+        }}
       />
 
       <BenefitSplit
         heading={reportingBenefit.heading}
         body={reportingBenefit.body}
         bullets={reportingBenefit.bullets}
-        visual={<LazyReportingDashboard />}
+        visual={<LazyReportingFlagship />}
         surface="light"
       />
 

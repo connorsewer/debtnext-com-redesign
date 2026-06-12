@@ -170,6 +170,7 @@ function Rows({ className }: { className?: string }) {
               row.trailing
                 ? {
                     value: row.trailing.value,
+                    prefix: row.trailing.prefix,
                     suffix: row.trailing.suffix,
                     decimals: row.trailing.decimals,
                     animate: row.trailing.animate === "count" ? "count" : "none",
