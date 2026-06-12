@@ -1,7 +1,7 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
+milestone: M6
+milestone_name: Premium visual + motion system
 status: Ready to execute
 last_updated: "2026-06-12T17:33:01.821Z"
 progress:
