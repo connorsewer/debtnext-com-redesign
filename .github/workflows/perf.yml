@@ -9,7 +9,9 @@ on:
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # 6 URLs x 5 devtools-throttled runs (~20-30s each) + npm ci + next build
+    # does not fit in 15 minutes; Phase 11 grew the collection from 2 to 6 URLs.
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
