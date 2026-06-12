@@ -7,7 +7,11 @@ import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProductVisualBand } from "@/components/sections/ProductVisualBand";
-import { LazySolutionsIndustryCards } from "@/components/product/visuals/lazy";
+import {
+  ConsoleVisual,
+  DataStoryVisual,
+  SchematicVisual,
+} from "@/components/product/visuals/archetypes";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
 import {
@@ -19,6 +23,12 @@ import {
   insuranceProof,
   insuranceRegulatory,
 } from "@/content/solutions-insurance";
+import {
+  insuranceConfig,
+  insuranceConsole,
+  insuranceReconciliation,
+  insuranceRouting,
+} from "@/content/visuals/solutions-insurance";
 
 export const metadata: Metadata = {
   title: insuranceMeta.title,
@@ -42,7 +52,13 @@ export default function InsuranceSolutionPage() {
       />
 
       <ProductVisualBand>
-        <LazySolutionsIndustryCards />
+        {/* Reserve the resolved Console hero box so the lazy swap (20rem
+            skeleton) does not shift layout (CLS guard, Pitfall 1). Authored to
+            the locked min-h-[34rem] (544px) Wave-2 hero budget: KPI header + 4
+            rows + callout + 3 pills. */}
+        <div className="min-h-[34rem]">
+          <ConsoleVisual data={insuranceConsole} />
+        </div>
       </ProductVisualBand>
 
       <RevealSection>
@@ -62,6 +78,11 @@ export default function InsuranceSolutionPage() {
           intro={insuranceHowItRuns.intro}
           items={insuranceHowItRuns.items}
           section="insurance_how_it_runs"
+          visuals={{
+            placement: <SchematicVisual data={insuranceRouting} />,
+            optimization: <ConsoleVisual data={insuranceConfig} />,
+            reporting: <DataStoryVisual data={insuranceReconciliation} />,
+          }}
         />
       </RevealSection>
 
