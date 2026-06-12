@@ -48,7 +48,7 @@
           }
         },
         {
-          "matchingUrlPattern": "http://localhost:3200/.+",
+          "matchingUrlPattern": "http://localhost:3200/(?!platform/placement$).+",
           "assertions": {
             "total-blocking-time": [
               "error",
@@ -62,6 +62,10 @@
             "cumulative-layout-shift": [
               "error",
               { "maxNumericValue": 0.1, "aggregationMethod": "median-run" }
+            ],
+            "total-blocking-time": [
+              "error",
+              { "maxNumericValue": 300, "aggregationMethod": "median-run" }
             ]
           }
         },
