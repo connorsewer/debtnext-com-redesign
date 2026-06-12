@@ -68,21 +68,21 @@ export const fintechHowItRuns: {
       title: "API-first integration with your stack",
       body:
         "dPlat integrates through API with modern origination, billing, and servicing systems, for real-time exchange that moves recovery data the way the rest of your infrastructure already does.",
-      visualLabel: "Placement matrix fed by API integration with your stack",
+      visualLabel: "Routing schematic · lending stack API feeds early-stage and late-stage vendor pools",
     },
     {
       id: "optimization",
       title: "Configure in-app, with no release cycle",
       body:
         "Your team adjusts placement rules, settlement thresholds, payment plans, and recall windows inside the application. A product change doesn't trigger a recovery-platform project.",
-      visualLabel: "Configuration model applying changes inside the platform",
+      visualLabel: "Config console · BNPL and loan books tuned in-app with no release cycle",
     },
     {
       id: "reporting",
       title: "One connection across the vendor network",
       body:
         "One standardized connection consolidates updates across your entire vendor network, so a fast-moving fintech operation keeps a single, current view of recovery.",
-      visualLabel: "Reporting view consolidating updates across the vendor network",
+      visualLabel: "Data story · one connection consolidating every vendor across the network",
     },
   ],
 };
