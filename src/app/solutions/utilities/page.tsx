@@ -7,7 +7,11 @@ import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProductVisualBand } from "@/components/sections/ProductVisualBand";
-import { LazySolutionsIndustryCards } from "@/components/product/visuals/lazy";
+import {
+  ConsoleVisual,
+  DataStoryVisual,
+  SchematicVisual,
+} from "@/components/product/visuals/archetypes";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
 import {
@@ -19,6 +23,12 @@ import {
   utilitiesProof,
   utilitiesRegulatory,
 } from "@/content/solutions-utilities";
+import {
+  utilitiesConfig,
+  utilitiesConsole,
+  utilitiesReconciliation,
+  utilitiesRouting,
+} from "@/content/visuals/solutions-utilities";
 
 export const metadata: Metadata = {
   title: utilitiesMeta.title,
@@ -42,7 +52,14 @@ export default function UtilitiesSolutionPage() {
       />
 
       <ProductVisualBand>
-        <LazySolutionsIndustryCards />
+        {/* Reserve the resolved Console hero box so the lazy swap (20rem
+            skeleton) does not shift layout (CLS guard, Pitfall 1). The utilities
+            hero is authored to a fixed budget: KPI header + 4 rows + callout + 3
+            pills resolves under min-h-[34rem] (544px). Wave-2 heroes match this
+            box. */}
+        <div className="min-h-[34rem]">
+          <ConsoleVisual data={utilitiesConsole} />
+        </div>
       </ProductVisualBand>
 
       <RevealSection>
@@ -62,6 +79,11 @@ export default function UtilitiesSolutionPage() {
           intro={utilitiesHowItRuns.intro}
           items={utilitiesHowItRuns.items}
           section="utilities_how_it_runs"
+          visuals={{
+            placement: <SchematicVisual data={utilitiesRouting} />,
+            optimization: <ConsoleVisual data={utilitiesConfig} />,
+            reporting: <DataStoryVisual data={utilitiesReconciliation} />,
+          }}
         />
       </RevealSection>
 
