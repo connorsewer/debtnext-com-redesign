@@ -7,7 +7,11 @@ import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProductVisualBand } from "@/components/sections/ProductVisualBand";
-import { LazySolutionsIndustryCards } from "@/components/product/visuals/lazy";
+import {
+  ConsoleVisual,
+  DataStoryVisual,
+  SchematicVisual,
+} from "@/components/product/visuals/archetypes";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
 import {
@@ -19,6 +23,12 @@ import {
   healthcareProof,
   healthcareRegulatory,
 } from "@/content/solutions-healthcare";
+import {
+  healthcareConfig,
+  healthcareConsole,
+  healthcareReconciliation,
+  healthcareRouting,
+} from "@/content/visuals/solutions-healthcare";
 
 export const metadata: Metadata = {
   title: healthcareMeta.title,
@@ -42,7 +52,13 @@ export default function HealthcareSolutionPage() {
       />
 
       <ProductVisualBand>
-        <LazySolutionsIndustryCards />
+        {/* Reserve the resolved Console hero box so the lazy swap does not shift
+            layout (CLS guard, Pitfall 1). Authored to the Wave-2 family budget:
+            KPI header + 4 rows + callout + 3 pills resolves under
+            min-h-[34rem] (544px), matching utilities/insurance per 12-01. */}
+        <div className="min-h-[34rem]">
+          <ConsoleVisual data={healthcareConsole} />
+        </div>
       </ProductVisualBand>
 
       <RevealSection>
@@ -62,6 +78,11 @@ export default function HealthcareSolutionPage() {
           intro={healthcareHowItRuns.intro}
           items={healthcareHowItRuns.items}
           section="healthcare_how_it_runs"
+          visuals={{
+            placement: <SchematicVisual data={healthcareRouting} />,
+            optimization: <ConsoleVisual data={healthcareConfig} />,
+            reporting: <DataStoryVisual data={healthcareReconciliation} />,
+          }}
         />
       </RevealSection>
 

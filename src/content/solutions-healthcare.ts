@@ -70,7 +70,7 @@ export const healthcareHowItRuns: {
       body:
         "dPlat loads from the patient accounting and RCM systems you already run, then routes by balance age, service date, account status, and balance size. Early-stage and bad-debt accounts each follow their own path.",
       visualLabel:
-        "Placement matrix routing healthcare accounts across vendor pools",
+        "Routing schematic · EHR and clearinghouse feed splits self-pay and balance-after-insurance across EBO and bad-debt vendor pools",
     },
     {
       id: "optimization",
@@ -78,7 +78,7 @@ export const healthcareHowItRuns: {
       body:
         "Extended business office and bad-debt portfolios get their own workflows, with vendor pools you can share or split. Each book is worked the way it should be, under one platform.",
       visualLabel:
-        "Configuration model for separate EBO and bad-debt workflows",
+        "Workflow console · EBO and bad-debt tracks configured separately with their own cycles and vendor pools",
     },
     {
       id: "reporting",
@@ -86,7 +86,7 @@ export const healthcareHowItRuns: {
       body:
         "dPlat reconciles daily with every agency, so balances and payments stay accurate across the network and reporting surfaces downstream agency performance.",
       visualLabel:
-        "Reporting dashboard reconciling balances across the vendor network",
+        "Reconciliation area chart · self-pay and balance-after-insurance recoveries matched daily across the network",
     },
   ],
 };
