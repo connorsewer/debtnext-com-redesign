@@ -68,21 +68,21 @@ export const telecomHowItRuns: {
       body:
         "dPlat connects to telecom CIS and billing platforms including ICOMS, CSG, and the systems your carrier runs, then handles high-volume daily placement with automated routing across the vendor network.",
       visualLabel:
-        "Placement matrix routing high daily volume across vendor pools",
+        "Routing schematic · OSS / BSS feeds the engine, splits to high-volume and device pools",
     },
     {
       id: "optimization",
       title: "Short-cycle recall and reallocation",
       body:
         "Configurable short-cycle recall and reallocation, tuned to telecom write-off timelines, so accounts don't sit idle in a pool that isn't producing.",
-      visualLabel: "Decision engine running short-cycle recall logic",
+      visualLabel: "Recall console · per-tier windows with reallocated account counts",
     },
     {
       id: "issues",
       title: "Prepaid and postpaid, worked separately",
       body:
         "Separate prepaid and postpaid workflows run under one platform, each with the treatment path its account type calls for.",
-      visualLabel: "Worklist separating prepaid and postpaid treatment paths",
+      visualLabel: "Prepaid vs postpaid treatment-path split across the book",
     },
   ],
 };

@@ -7,7 +7,11 @@ import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProductVisualBand } from "@/components/sections/ProductVisualBand";
-import { LazySolutionsIndustryCards } from "@/components/product/visuals/lazy";
+import {
+  ConsoleVisual,
+  DataStoryVisual,
+  SchematicVisual,
+} from "@/components/product/visuals/archetypes";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
 import {
@@ -19,6 +23,12 @@ import {
   telecomProof,
   telecomRegulatory,
 } from "@/content/solutions-telecom";
+import {
+  telecomConsole,
+  telecomPrepaidPostpaid,
+  telecomRecall,
+  telecomRouting,
+} from "@/content/visuals/solutions-telecom";
 
 export const metadata: Metadata = {
   title: telecomMeta.title,
@@ -42,7 +52,13 @@ export default function TelecomSolutionPage() {
       />
 
       <ProductVisualBand>
-        <LazySolutionsIndustryCards />
+        {/* Reserve the resolved Console hero box so the lazy swap (20rem
+            skeleton) does not shift layout (CLS guard, Pitfall 1). Authored to
+            the Wave-2 hero budget locked in 12-01-SUMMARY: KPI header + 4 rows +
+            callout + 3 pills resolves under min-h-[34rem] (544px). */}
+        <div className="min-h-[34rem]">
+          <ConsoleVisual data={telecomConsole} />
+        </div>
       </ProductVisualBand>
 
       <RevealSection>
@@ -62,6 +78,11 @@ export default function TelecomSolutionPage() {
           intro={telecomHowItRuns.intro}
           items={telecomHowItRuns.items}
           section="telecom_how_it_runs"
+          visuals={{
+            placement: <SchematicVisual data={telecomRouting} />,
+            optimization: <ConsoleVisual data={telecomRecall} />,
+            issues: <DataStoryVisual data={telecomPrepaidPostpaid} />,
+          }}
         />
       </RevealSection>
 
