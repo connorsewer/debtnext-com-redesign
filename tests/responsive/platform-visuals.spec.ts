@@ -194,9 +194,13 @@ async function assertNoStuckOpacity(page: Page) {
       getAnimations?: () => Animation[];
     }).getAnimations;
     if (typeof getAnimations !== "function") return true;
-    return getAnimations.call(document).every(
-      (anim) => anim.playState === "finished" || anim.playState === "idle",
-    );
+    return getAnimations.call(document).every((anim) => {
+      // Infinite ambient loops (status pulses, node pulses, marquees) never
+      // reach "finished" — only wait on finite reveal/fade animations.
+      const timing = anim.effect?.getTiming?.();
+      if (timing && timing.iterations === Infinity) return true;
+      return anim.playState === "finished" || anim.playState === "idle";
+    });
   });
   const offenders = await page.evaluate(() => {
     const vw = window.innerWidth;

@@ -112,13 +112,17 @@ export function IssuesFlagship() {
             <Explorable.Toggle
               key={item.id}
               id={item.id}
-              className={cn(
-                "rounded-full px-3 py-1.5 text-[11px] font-[500] ring-1 transition-colors",
-                "text-[var(--product-text-2)] ring-[var(--border)] hover:text-[var(--product-text)]",
-                "aria-expanded:bg-[var(--primary)] aria-expanded:text-white aria-expanded:ring-[var(--primary)]",
-              )}
+              className="group flex min-h-touch items-center"
             >
-              {item.label}
+              <span
+                className={cn(
+                  "rounded-full px-3 py-1.5 text-[11px] font-[500] ring-1 transition-colors",
+                  "text-[var(--product-text-2)] ring-[var(--border)] group-hover:text-[var(--product-text)]",
+                  "group-aria-expanded:bg-[var(--primary)] group-aria-expanded:text-white group-aria-expanded:ring-[var(--primary)]",
+                )}
+              >
+                {item.label}
+              </span>
             </Explorable.Toggle>
           ))}
         </div>
