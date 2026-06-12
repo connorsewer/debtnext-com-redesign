@@ -360,6 +360,8 @@ The visual target is Mercury-like typography: proprietary Arcadia/Arcadia Displa
 --font-body-preferred: "Arcadia", Inter, system-ui, sans-serif;
 ```
 
+**Wordmark exception (sanctioned):** the "DebtNext" wordmark in nav and footer chrome renders in self-hosted General Sans 600 (`src/app/fonts.ts`, `--font-general-sans`). This is a deliberate brand-mark decision from M5 HERO-02 (self-hosted woff2, no third-party CDN). General Sans is approved for the wordmark only; all other type uses the stacks above.
+
 ### Type scale
 
 | Role | Size | Weight | Line height | Use |
