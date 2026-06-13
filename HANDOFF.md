@@ -271,6 +271,17 @@ Killed the duplicate `SolutionsIndustryCards` widget that shipped identically ac
 - **Deleted:** `src/components/product/visuals/SolutionsIndustryCards.tsx` and its `LazySolutionsIndustryCards` export in `lazy.tsx`. The cards branch of `DataStoryData` (types.ts) subsumes the old layout, so the no-prop duplicate is impossible to reconstruct. Remaining `SolutionsIndustryCards` mentions in src/ are inert history comments only.
 - Numbers are real-shaped, anonymized, generic per D-09 (Andrew pre-cleared 2026-06-12); `[CLAIMS REVIEW]`/`[COI REVIEW]` tags retained on payloads for audit, non-blocking. Closes SOLVIS-01..05.
 
+## M6 Phase 13: Visual system consolidation (2026-06-13)
+
+Consolidated the homepage handoff onto the archetype library. All 4 platform tabs (placement, performance, issues, reporting) now render bare `Console` instances behind the unchanged `MockupForTab` / `mockupTitleForTab` / `FramedDashboard` facade in `src/components/sections/mockups/index.tsx`; the firewall files (`HomepageHero.tsx`, `HomepageHandoffSection.tsx`) and the `FramedDashboard.tsx` bezel were held byte-unchanged the entire phase (verified per-task via `git diff --exit-code`).
+
+- **Typed payloads** at `src/content/visuals/handoff-{placement,performance,issues,reporting}.ts`, each `satisfies ConsoleData` with DESIGN.md chart tokens only (zero raw hex) and `[CLAIMS REVIEW]` + `[COI REVIEW]` markers. Performance grade/sparkline and reporting dual-line trend are approximated within the Console schema (no schema extension): severity rides as label-paired TEXT in row `secondary`, never color-only (Pitfall 8).
+- **Reporting archetype (D-04):** rendered as Console-with-KPIs, the D-04-compliant path. A scoped DataStory exception to D-04 was NOT taken (it requires explicit user approval that was not granted this run); the 8-week trend is stated in words. If the trend reads weak on the preview, the DataStory exception is the documented fallback, and only with approval.
+- **Retired (D-05):** the 4 bespoke per-tab mockup files (`PlacementMockup`, `VendorPerformanceMockup`, `IssuesMockup`, `ReportingMockup`) are deleted; `sections/mockups/` now holds only `index.tsx` (facade) + `FramedDashboard.tsx` (both pinned by the firewall imports, so the directory does not fully disappear).
+- **Tokens (P13-02):** off-token gradient hex (`#22c55e`/`#d97706`/`#0891b2`) is eliminated; it only ever lived in `PlacementMockup`, now deleted. `grep -rn "#22c55e\|#d97706\|#0891b2" src/` returns zero.
+- **Dead assets (SYSVIS-02):** the only remaining `.png` reference in `src/` is the hero finale `dashboard-dark.png` in `HomepageHero.tsx`. It is intentionally retained pending **Phase 15** (HOMEVIS-01); Phase 13 confirms and documents it but does not delete it (editing the hero would also violate the firewall). The 6 dead BenefitSplit `dashboard-dark.png` fallbacks remain gone (removed in Phase 10).
+- Full Playwright execution of the 8-spec regression set is deferred to CI (PR #12). Desktop cinematic parity human-verify (all 4 tabs) is deferred to a single end-of-phase preview review by Connor. Closes SYSVIS-01, SYSVIS-02 (code-complete; visual sign-off pending).
+
 ## M5 — Launch readiness + motion pass (opened 2026-05-20)
 
 The post-M4 follow-ups listed here were folded into M5 when Connor chose framing (b) — bundle launch-critical items + motion into a single longer milestone. Roadmap lives in `.planning/ROADMAP.md` (Phases 5–9, 21 requirements, 100% coverage). REQ-IDs and traceability in `.planning/REQUIREMENTS.md`.
