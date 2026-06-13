@@ -262,6 +262,15 @@ Full system rebuild against the approved spec at `docs/superpowers/specs/2026-05
 
 **Tooling (2026-05-20, PR #3 `bd2d7ce`):** GreenSock's official gsap-skills pack installed at `.claude/skills/`. 8 skills covering core, timeline, ScrollTrigger, plugins, utils, React, performance, frameworks. Auto-loads on next session start. All formerly Club GSAP plugins (SplitText, MorphSVG, Flip, Draggable, Inertia, Observer, ScrollSmoother, etc.) are free post-Webflow acquisition, so the full plugin surface is available.
 
+## M6 Phase 12 — Per-industry solutions visuals (2026-06-12)
+
+Killed the duplicate `SolutionsIndustryCards` widget that shipped identically across all 7 solution surfaces (6 industry pages + the `/solutions` hub). Each surface now renders its own typed visual payload fed into the shared archetype components (`ConsoleVisual` / `SchematicVisual` / `DataStoryVisual` from `src/components/product/visuals/archetypes.tsx`):
+
+- **Per-industry payload modules** at `src/content/visuals/solutions-<industry>.ts` (utilities, financial-services, telecom, fintech, insurance, healthcare). Each carries a Console hero + a Schematic (placement) + a DataStory (carrier) + a Console (remaining item), so all three archetypes appear on every industry page. Archetype + accent assignments are locked in `.planning/phases/12-solutions-per-industry-visuals/12-ARCHETYPE-MAP.md` (D-08 no-two-alike, D-11 chart-1/3/4/5 accents only).
+- **Hub DataStory** at `src/content/visuals/solutions-hub.ts` (`solutionsHubStory`): a 6-card cross-industry overview in the `/solutions` BenefitSplit slot, distinct from every industry page's Console hero.
+- **Deleted:** `src/components/product/visuals/SolutionsIndustryCards.tsx` and its `LazySolutionsIndustryCards` export in `lazy.tsx`. The cards branch of `DataStoryData` (types.ts) subsumes the old layout, so the no-prop duplicate is impossible to reconstruct. Remaining `SolutionsIndustryCards` mentions in src/ are inert history comments only.
+- Numbers are real-shaped, anonymized, generic per D-09 (Andrew pre-cleared 2026-06-12); `[CLAIMS REVIEW]`/`[COI REVIEW]` tags retained on payloads for audit, non-blocking. Closes SOLVIS-01..05.
+
 ## M5 — Launch readiness + motion pass (opened 2026-05-20)
 
 The post-M4 follow-ups listed here were folded into M5 when Connor chose framing (b) — bundle launch-critical items + motion into a single longer milestone. Roadmap lives in `.planning/ROADMAP.md` (Phases 5–9, 21 requirements, 100% coverage). REQ-IDs and traceability in `.planning/REQUIREMENTS.md`.

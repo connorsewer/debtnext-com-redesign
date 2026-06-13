@@ -70,7 +70,7 @@ export const insuranceHowItRuns: {
       body:
         "dPlat loads from the claims, policy, and billing systems you already run, then routes by recovery type, obligor type, loss date, and balance age. Subrogation, deductible, salvage, and premium receivables each follow their own path.",
       visualLabel:
-        "Placement matrix routing insurance recovery accounts across vendor pools",
+        "Routing schematic · policy admin feeds business and consumer obligor vendor pools",
     },
     {
       id: "optimization",
@@ -78,7 +78,7 @@ export const insuranceHowItRuns: {
       body:
         "Commercial and consumer recovery get their own workflows, with vendor pools you can share or split. Each book is worked the way it should be, under one platform.",
       visualLabel:
-        "Configuration model for separate business and consumer recovery workflows",
+        "Config console · business and consumer recovery books configured separately",
     },
     {
       id: "reporting",
@@ -86,7 +86,7 @@ export const insuranceHowItRuns: {
       body:
         "dPlat reconciles daily with every agency and law firm, so balances and payments stay accurate across the network and reporting surfaces downstream vendor performance.",
       visualLabel:
-        "Reporting dashboard reconciling balances across the vendor network",
+        "Data story · premium and subrogation balances reconciling daily by recovery type",
     },
   ],
 };

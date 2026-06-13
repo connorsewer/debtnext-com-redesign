@@ -70,7 +70,7 @@ export const utilitiesHowItRuns: {
       body:
         "dPlat loads from SAP, Oracle CC&B, Oracle C2M, and the utility CIS platforms you already run, then routes by disconnect reason, service class, deposit balance, and account age.",
       visualLabel:
-        "Placement matrix routing utility accounts across vendor pools",
+        "Routing diagram sending residential and commercial accounts from billing to vendor pools",
     },
     {
       id: "optimization",
@@ -78,7 +78,7 @@ export const utilitiesHowItRuns: {
       body:
         "Residential and commercial portfolios get their own workflows, with vendor pools you can share or split. Each book is worked the way it should be, under one platform.",
       visualLabel:
-        "Configuration model for separate residential and commercial workflows",
+        "Console configuring residential and commercial books on separate vendor pools and cycles",
     },
     {
       id: "reporting",
@@ -86,7 +86,7 @@ export const utilitiesHowItRuns: {
       body:
         "dPlat reconciles daily with every agency, so balances and payments stay accurate across the network and reporting surfaces downstream agency performance.",
       visualLabel:
-        "Reporting dashboard reconciling balances across the vendor network",
+        "Daily reconciliation spark matching arrears and deposit balances across the network",
     },
   ],
 };

@@ -6,7 +6,7 @@ import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
-import { LazySolutionsIndustryCards } from "@/components/product/visuals/lazy";
+import { DataStoryVisual } from "@/components/product/visuals/archetypes";
 import {
   solutionsCompliance,
   solutionsCrossIndustry,
@@ -15,6 +15,7 @@ import {
   solutionsIndustries,
   solutionsMeta,
 } from "@/content/solutions";
+import { solutionsHubStory } from "@/content/visuals/solutions-hub";
 
 export const metadata: Metadata = {
   title: solutionsMeta.title,
@@ -47,7 +48,7 @@ export default function SolutionsPage() {
         heading={solutionsCrossIndustry.heading}
         body={solutionsCrossIndustry.body}
         bullets={solutionsCrossIndustry.bullets}
-        visual={<LazySolutionsIndustryCards />}
+        visual={<DataStoryVisual data={solutionsHubStory} />}
         surface="light"
       />
 

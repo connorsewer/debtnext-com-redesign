@@ -7,7 +7,11 @@ import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProductVisualBand } from "@/components/sections/ProductVisualBand";
-import { LazySolutionsIndustryCards } from "@/components/product/visuals/lazy";
+import {
+  ConsoleVisual,
+  DataStoryVisual,
+  SchematicVisual,
+} from "@/components/product/visuals/archetypes";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
 import {
@@ -19,6 +23,12 @@ import {
   financialServicesProof,
   financialServicesRegulatory,
 } from "@/content/solutions-financial-services";
+import {
+  financialServicesConsole,
+  financialServicesExceptions,
+  financialServicesRouting,
+  financialServicesSettlement,
+} from "@/content/visuals/solutions-financial-services";
 
 export const metadata: Metadata = {
   title: financialServicesMeta.title,
@@ -42,7 +52,13 @@ export default function FinancialServicesSolutionPage() {
       />
 
       <ProductVisualBand>
-        <LazySolutionsIndustryCards />
+        {/* Reserve the resolved Console hero box so the lazy swap (20rem
+            skeleton) does not shift layout (CLS guard, Pitfall 1). Authored to
+            the Wave-2 hero budget locked in 12-01-SUMMARY: KPI header + 4 rows +
+            callout + 3 pills resolves under min-h-[34rem] (544px). */}
+        <div className="min-h-[34rem]">
+          <ConsoleVisual data={financialServicesConsole} />
+        </div>
       </ProductVisualBand>
 
       <RevealSection>
@@ -62,6 +78,11 @@ export default function FinancialServicesSolutionPage() {
           intro={financialServicesHowItRuns.intro}
           items={financialServicesHowItRuns.items}
           section="financial_services_how_it_runs"
+          visuals={{
+            placement: <SchematicVisual data={financialServicesRouting} />,
+            issues: <DataStoryVisual data={financialServicesExceptions} />,
+            optimization: <ConsoleVisual data={financialServicesSettlement} />,
+          }}
         />
       </RevealSection>
 

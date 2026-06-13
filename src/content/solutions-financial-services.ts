@@ -68,14 +68,14 @@ export const financialServicesHowItRuns: {
       body:
         "One standardized connection to your systems replaces individual integrations with every collection vendor. dPlat consolidates updates across every connected vendor, formatted to your data-exchange standards.",
       visualLabel:
-        "Placement matrix connecting core systems to the vendor network",
+        "Routing schematic · core banking feeds the engine, splits to agency and law-firm pools",
     },
     {
       id: "issues",
       title: "Bankruptcy, deceased, and disputes as exceptions",
       body:
         "Bankruptcy, deceased, dispute, and documentation workflows are standardized and configurable. Regulatory exceptions apply automatically and stay recorded on the account.",
-      visualLabel: "Issue worklist with bankruptcy and dispute exceptions",
+      visualLabel: "Exception volumes · bankruptcy, deceased, dispute, and documentation holds",
     },
     {
       id: "optimization",
@@ -83,7 +83,7 @@ export const financialServicesHowItRuns: {
       body:
         "Settlement thresholds set at the vendor and tier level, so nothing settles below your floor. Payment plans track automatically, with delinquency flagged the moment a payment is missed.",
       visualLabel:
-        "Optimization engine enforcing settlement thresholds and payment plans",
+        "Settlement console · per-product floors and payment plans enforced",
     },
   ],
 };
