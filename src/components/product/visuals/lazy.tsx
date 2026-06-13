@@ -44,26 +44,6 @@ export const LazyPlatformSystemMap = dynamic(
   { ssr: false, loading: VisualSkeleton },
 );
 
-export const LazyPlacementMatrix = dynamic(
-  () => import("./PlacementMatrix").then((m) => m.PlacementMatrix),
-  { ssr: false, loading: VisualSkeleton },
-);
-
-export const LazyOptimizationEngine = dynamic(
-  () => import("./OptimizationEngine").then((m) => m.OptimizationEngine),
-  { ssr: false, loading: VisualSkeleton },
-);
-
-export const LazyIssuesWorklist = dynamic(
-  () => import("./IssuesWorklist").then((m) => m.IssuesWorklist),
-  { ssr: false, loading: VisualSkeleton },
-);
-
-export const LazyReportingDashboard = dynamic(
-  () => import("./ReportingDashboard").then((m) => m.ReportingDashboard),
-  { ssr: false, loading: VisualSkeleton },
-);
-
 // Placement explorable flagship (PLATVIS-02). Uses the taller FlagshipSkeleton so
 // the resolved Console + tier-inspect box reserves its height and the lazy swap is
 // CLS-free. Inline-literal options per Turbopack static-analysis.
