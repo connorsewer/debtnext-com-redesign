@@ -185,7 +185,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 
 - [x] **Phase 10: Foundation** — Motion barrel + 3 archetypes + typed payloads + shared primitives + CI guardrails; the keystone that unblocks all page work (completed 2026-06-05)
 - [x] **Phase 11: Platform deep-dive visuals** — Battle-test archetypes on the 4 platform pages; one explorable flagship per page; zero accordion placeholders (completed 2026-06-06)
-- [ ] **Phase 12: Solutions per-industry visuals** — Kill the duplicate widget; per-industry Console + Schematic + Data-story; replace accordion placeholders across 6 industries
+- [x] **Phase 12: Solutions per-industry visuals** — Kill the duplicate widget; per-industry Console + Schematic + Data-story; replace accordion placeholders across 6 industries (completed 2026-06-13)
 - [ ] **Phase 13: Visual system consolidation** — Merge `sections/mockups` behind unchanged `MockupForTab` signatures (after Console is proven); retire dead PNG fallbacks
 - [ ] **Phase 14: Text-only page elevation** — Archetype visuals + motion where they lift compare / why-dplat / company set / resources / integrations / demo
 - [ ] **Phase 15: Homepage flagship capstone** — Matured-system pass on the hero; gated on the M5 hero LCP fix; LHCI Case C re-run as a hard merge gate; last
@@ -196,7 +196,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 |-------|----------------|--------|-----------|
 | 10. Foundation | 6/6 | Complete    | 2026-06-05 |
 | 11. Platform deep-dive visuals | 5/5 | Complete    | 2026-06-06 |
-| 12. Solutions per-industry visuals | 0/5 | Planned | — |
+| 12. Solutions per-industry visuals | 5/5 | Complete    | 2026-06-13 |
 | 13. Visual system consolidation | 0/0 | Not started | — |
 | 14. Text-only page elevation | 0/0 | Not started | — |
 | 15. Homepage flagship capstone | 0/0 | Not started | — |
@@ -252,11 +252,11 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
   4. Every per-industry number is sourced from a typed payload under `src/content/visuals/`, carries a `[CLAIMS REVIEW]` flag, and every status color is paired with a label or icon so the data story survives grayscale and screen readers
   5. LHCI on `/solutions/*` keeps LCP under 2.5s, CLS under 0.1, and INP under 200ms after the highest-volume visual load, and all existing Playwright specs stay green
 **Plans**: 5 plans (3 waves)
-- [ ] 12-01-PLAN.md — Wave 1: 12-ARCHETYPE-MAP (D-08 gate) + solutions-visuals.spec.ts skeleton + utilities end-to-end (proven pattern); checkpoint approval
-- [ ] 12-02-PLAN.md — Wave 2: financial-services + telecom (Console hero + routing Schematic + issues-carried DataStory + accordion archetypes)
-- [ ] 12-03-PLAN.md — Wave 2: fintech + insurance (reporting-carried DataStory; accent-collision distinctness vs utilities/telecom)
-- [ ] 12-04-PLAN.md — Wave 2: healthcare (area-chart reconciliation; completes the utilities/insurance/healthcare cluster differentiation)
-- [ ] 12-05-PLAN.md — Wave 3: hub DataStory migration + SolutionsIndustryCards deletion (SOLVIS-01) + phase verification gate
+- [x] 12-01-PLAN.md — Wave 1: 12-ARCHETYPE-MAP (D-08 gate) + solutions-visuals.spec.ts skeleton + utilities end-to-end (proven pattern); checkpoint approval
+- [x] 12-02-PLAN.md — Wave 2: financial-services + telecom (Console hero + routing Schematic + issues-carried DataStory + accordion archetypes)
+- [x] 12-03-PLAN.md — Wave 2: fintech + insurance (reporting-carried DataStory; accent-collision distinctness vs utilities/telecom)
+- [x] 12-04-PLAN.md — Wave 2: healthcare (area-chart reconciliation; completes the utilities/insurance/healthcare cluster differentiation)
+- [x] 12-05-PLAN.md — Wave 3: hub DataStory migration + SolutionsIndustryCards deletion (SOLVIS-01) + phase verification gate
 **Notes**: Highest-visibility credibility fix (the duplicate is the clearest "templated" tell) and the highest volume of new charts (~25 placeholders + 6 industry triads), so Pitfalls 4 (CLS), 8 (color-only / no-text-alt), and the `[CLAIMS REVIEW]` ceiling are highest-stakes here. Open question to flag before planning: if only fully-generic numbers clear Andrew Budish's review, the per-industry-realism differentiator weakens — surface this early (research SUMMARY "Gaps to Address"). Industries: utilities, financial-services, telecom, fintech, insurance, healthcare. Inherits standing constraints: DESIGN.md tokens only, one filled CTA per band, WCAG 2.2 AA + axe-core, reduced-motion gated, LCP<2.5s / CLS<0.1 / INP<200ms, all existing Playwright specs green, per-commit docs-in-sync, COI/CLAIMS review on any new copy.
 **UI hint**: yes
 
