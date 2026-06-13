@@ -13,8 +13,9 @@ export interface FeatureAccordionItem {
   id: string;
   title: string;
   body: string;
-  /** Caption rendered over the visual placeholder for M2.
-   *  Replace with real media slot in M3. */
+  /** Accessible name + caption for the static text-placeholder fallback (pages
+   *  that reuse FeatureAccordion without a live visual). Live visuals carry
+   *  their own accessible name, so this is not used when one is present. */
   visualLabel: string;
 }
 
@@ -41,8 +42,10 @@ export interface FeatureAccordionProps {
  *   reduced motion because the global @media block neutralizes it)
  * - Visual cross-fades to the active item
  *
- * Visuals for M2 are dark placeholder surfaces with the section label.
- * Real product screenshots arrive in M3 (Paul/Connor).
+ * The paired visual resolves in priority order: an explicit `visuals[id]` node,
+ * then the homepage AccordionVisual flagship registry, then a static text
+ * placeholder. Live visuals carry their own accessible name (Console role="img",
+ * Explorable role="group"); only the placeholder takes role="img"/visualLabel.
  */
 export function FeatureAccordion({
   eyebrow,
