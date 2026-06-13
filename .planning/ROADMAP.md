@@ -270,7 +270,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
   3. `src/components/sections/mockups/` is retired only after the handoff renders identically through Console; the 6 dead `dashboard-dark.png` BenefitSplit fallbacks are confirmed removed (closed in Phase 10) and any remaining dead PNG references are gone
 **Plans**: 5 plans (3 waves)
 - [x] 13-01-PLAN.md — Wave 0: bare Console render path + 3 missing cinematic regression specs (pin-anchored / bezel-seam / dashboard-static) + placement-tab payload (firewall byte-check groundwork)
-- [ ] 13-02-PLAN.md — Wave 1: placement-tab proof repoint (D-06) behind unchanged MockupForTab + full regression gate + human-verify
+- [x] 13-02-PLAN.md — Wave 1: placement-tab proof repoint (D-06) behind unchanged MockupForTab + full regression gate (human-verify DEFERRED to end-of-phase preview)
 - [ ] 13-03-PLAN.md — Wave 2: fan out performance / issues / reporting (per-tab gate; reporting Console-vs-DataStory decision)
 - [ ] 13-04-PLAN.md — Wave 3: retire the 4 bespoke mockups + P13-02 token sweep + SYSVIS-02 dead-PNG confirmation + phase gate
 - [ ] 13-05-PLAN.md — Wave 1 (Front B, parallel): repoint VISUALS registry to Phase 11 Flagships (reporting key verified) + delete the 4 bespoke accordion visuals (P13-01)
