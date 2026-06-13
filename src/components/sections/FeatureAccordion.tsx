@@ -149,6 +149,7 @@ export function FeatureAccordion({
             return (
               <motion.div
                 key={item.id}
+                role="img"
                 aria-label={item.visualLabel}
                 initial={
                   reduceMotion ? false : { opacity: 0, y: 16, filter: "blur(4px)" }
