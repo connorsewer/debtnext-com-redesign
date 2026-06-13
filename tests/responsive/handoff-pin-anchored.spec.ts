@@ -20,6 +20,30 @@ test.describe("Handoff desktop pin anchored", () => {
     await page.waitForLoadState("networkidle");
 
     const section = page.locator("[data-handoff-section]");
+
+    // The section starts at opacity:0 (HomepageHandoffSection.tsx:175) and GSAP
+    // fades it in AND rewrites the cinematic scroll geometry (ScrollTrigger pin
+    // spacers) AFTER networkidle. Measuring the sticky y before that settles
+    // reads a transient layout (received varied 948 / 1466 across runs). Wait
+    // until GSAP has made the section visible before taking any geometry.
+    await page
+      .locator("[data-handoff-section]")
+      .evaluate((el) =>
+        new Promise<void>((resolve) => {
+          const settled = () =>
+            parseFloat(getComputedStyle(el).opacity || "0") > 0.99;
+          if (settled()) return resolve();
+          const t = setInterval(() => {
+            if (settled()) {
+              clearInterval(t);
+              resolve();
+            }
+          }, 50);
+        }),
+      );
+    // Let ScrollTrigger finish its initial refresh after the fade-in.
+    await page.waitForTimeout(250);
+
     const sectionHeight = await section.evaluate(
       (el) => el.getBoundingClientRect().height,
     );
