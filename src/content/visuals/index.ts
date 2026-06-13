@@ -20,6 +20,7 @@ export type {
 export { handoffPlacementConsole } from "./handoff-placement";
 export { handoffPerformanceConsole } from "./handoff-performance";
 export { handoffIssuesConsole } from "./handoff-issues";
+export { handoffReportingConsole } from "./handoff-reporting";
 export { placementConsole } from "./placement";
 export {
   placementVendorPools,

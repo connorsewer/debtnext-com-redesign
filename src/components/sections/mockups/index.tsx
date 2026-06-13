@@ -29,14 +29,12 @@ import {
   handoffPlacementConsole,
   handoffPerformanceConsole,
   handoffIssuesConsole,
+  handoffReportingConsole,
 } from "@/content/visuals";
-import {
-  ReportingMockup,
-  reportingMockupTitle,
-} from "./ReportingMockup";
 import { placementMockupTitle } from "./PlacementMockup";
 import { vendorPerformanceMockupTitle } from "./VendorPerformanceMockup";
 import { issuesMockupTitle } from "./IssuesMockup";
+import { reportingMockupTitle } from "./ReportingMockup";
 
 export function MockupForTab({ id }: { id: PlatformTab["id"] }) {
   switch (id) {
@@ -47,7 +45,7 @@ export function MockupForTab({ id }: { id: PlatformTab["id"] }) {
     case "issues":
       return <Console bare data={handoffIssuesConsole} />;
     case "reporting":
-      return <ReportingMockup />;
+      return <Console bare data={handoffReportingConsole} />;
   }
 }
 
