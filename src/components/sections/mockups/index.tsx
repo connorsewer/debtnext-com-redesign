@@ -24,10 +24,8 @@ export {
 } from "./ReportingMockup";
 
 import type { PlatformTab } from "@/content/homepage-hero";
-import {
-  PlacementMockup,
-  placementMockupTitle,
-} from "./PlacementMockup";
+import { Console } from "@/components/product/visuals/Console";
+import { handoffPlacementConsole } from "@/content/visuals";
 import {
   VendorPerformanceMockup,
   vendorPerformanceMockupTitle,
@@ -40,11 +38,12 @@ import {
   ReportingMockup,
   reportingMockupTitle,
 } from "./ReportingMockup";
+import { placementMockupTitle } from "./PlacementMockup";
 
 export function MockupForTab({ id }: { id: PlatformTab["id"] }) {
   switch (id) {
     case "placement":
-      return <PlacementMockup />;
+      return <Console bare data={handoffPlacementConsole} />;
     case "performance":
       return <VendorPerformanceMockup />;
     case "issues":
