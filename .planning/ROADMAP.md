@@ -197,7 +197,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 | 10. Foundation | 6/6 | Complete    | 2026-06-05 |
 | 11. Platform deep-dive visuals | 5/5 | Complete    | 2026-06-06 |
 | 12. Solutions per-industry visuals | 5/5 | Complete    | 2026-06-13 |
-| 13. Visual system consolidation | 0/5 | Not started | — |
+| 13. Visual system consolidation | 1/5 | In Progress|  |
 | 14. Text-only page elevation | 0/0 | Not started | — |
 | 15. Homepage flagship capstone | 0/0 | Not started | — |
 
@@ -269,7 +269,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
   2. The GSAP pin, the 400vh sticky progression, and the `FramedDashboard` bezel behave identically to today — the dashboard never moves during the crossfade and the bezel stays viewport-centered across the hero→Platform seam (the locked decisions); the platform-mobile and reduced-motion Playwright specs stay green
   3. `src/components/sections/mockups/` is retired only after the handoff renders identically through Console; the 6 dead `dashboard-dark.png` BenefitSplit fallbacks are confirmed removed (closed in Phase 10) and any remaining dead PNG references are gone
 **Plans**: 5 plans (3 waves)
-- [ ] 13-01-PLAN.md — Wave 0: bare Console render path + 3 missing cinematic regression specs (pin-anchored / bezel-seam / dashboard-static) + placement-tab payload (firewall byte-check groundwork)
+- [x] 13-01-PLAN.md — Wave 0: bare Console render path + 3 missing cinematic regression specs (pin-anchored / bezel-seam / dashboard-static) + placement-tab payload (firewall byte-check groundwork)
 - [ ] 13-02-PLAN.md — Wave 1: placement-tab proof repoint (D-06) behind unchanged MockupForTab + full regression gate + human-verify
 - [ ] 13-03-PLAN.md — Wave 2: fan out performance / issues / reporting (per-tab gate; reporting Console-vs-DataStory decision)
 - [ ] 13-04-PLAN.md — Wave 3: retire the 4 bespoke mockups + P13-02 token sweep + SYSVIS-02 dead-PNG confirmation + phase gate
