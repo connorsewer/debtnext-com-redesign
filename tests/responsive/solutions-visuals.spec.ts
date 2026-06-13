@@ -275,8 +275,10 @@ test("/solutions hub: cross-industry DataStory present + 6 industry cards", asyn
   ).toBeGreaterThan(0);
 
   for (const name of HUB_CARD_NAMES) {
+    // Scope to main: the nav's Solutions dropdown contains hidden menu items
+    // with the same industry names, and getByText().first() resolves to those.
     await expect(
-      page.getByText(name, { exact: false }).first(),
+      page.locator("main").getByText(name, { exact: false }).first(),
       `hub card name "${name}" present`,
     ).toBeVisible();
   }
