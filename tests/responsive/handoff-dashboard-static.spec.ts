@@ -36,17 +36,20 @@ test.describe("Handoff dashboard static across crossfade", () => {
     const frame = page.locator("[data-handoff-mockup-frame]");
     await expect(frame).toHaveCount(1);
 
-    // The centering-transform contract, asserted two ways for robustness:
+    // The centering contract, asserted two ways for robustness:
     //  1. The Tailwind centering utility classes are present.
-    //  2. The computed transform is a real translate (not `none`), so the
-    //     -translate-x-1/2 / -translate-y-1/2 actually resolved.
+    //  2. The computed centering offset resolved (not removed), so the
+    //     -translate-x-1/2 / -translate-y-1/2 actually applied.
+    // NOTE: Tailwind v4's `translate-*` utilities emit the standalone CSS
+    // `translate` property, NOT `transform`. So getComputedStyle().transform is
+    // legitimately "none" here; the resolved centering lives in .translate.
     const contract = await frame.evaluate((el) => {
       const cls = el.className;
       const cs = getComputedStyle(el);
       return {
         className: cls,
         position: cs.position,
-        transform: cs.transform,
+        translate: cs.translate,
       };
     });
 
@@ -57,9 +60,11 @@ test.describe("Handoff dashboard static across crossfade", () => {
     expect(contract.className).toContain("-translate-y-1/2");
     // Absolutely positioned within the pinned sticky inner.
     expect(contract.position).toBe("absolute");
-    // The centering translate resolved to a real matrix (not removed).
-    expect(contract.transform).not.toBe("none");
-    expect(contract.transform.startsWith("matrix")).toBe(true);
+    // The centering offset resolved to real values (not removed/`none`).
+    expect(contract.translate).not.toBe("none");
+    expect(contract.translate.trim()).not.toBe("");
+    // Two resolved axes (px or %), e.g. "-372px -208px" or "-50% -50%".
+    expect(/-?\d/.test(contract.translate)).toBe(true);
 
     // The frame still wraps the dashboard chrome it is meant to center. The
     // FramedDashboard renders the tablist label "dPlat capability surfaces"

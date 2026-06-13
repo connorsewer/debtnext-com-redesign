@@ -31,8 +31,8 @@ Every visual on the site follows the same construction so they read as a system:
 **Typography**
 - Eyebrow labels: 10.5px, uppercase, 0.12em letter-spacing, color `#9CB4E8`, prefixed with a glowing 4px indigo dot
 - Titles: 17px / 500 weight / -0.02em tracking, color `#EDEDF3`
-- Subtitles: 12px, color `#87878E`
-- KPI labels: 10.5px uppercase, 0.08em tracking, color `#87878E`
+- Subtitles: 12px, color `#8A8A91`
+- KPI labels: 10.5px uppercase, 0.08em tracking, color `#8A8A91`
 - KPI values: 17-18px / 500 weight / -0.022em tracking, with unit suffixes at smaller size
 - Body: 11-13px with `-0.003em to -0.005em` tracking depending on size
 - All numbers use `tabular-nums` for stable layout
@@ -48,7 +48,7 @@ Every visual on the site follows the same construction so they read as a system:
 - Special category: `#BB86FC` (used for SCRA)
 - Primary text: `#EDEDF3`
 - Secondary text: `#C8C8D0`
-- Tertiary text: `#87878E`
+- Tertiary text: `#8A8A91`
 - Disabled / muted: `#6B6B7B`
 
 **Motion vocabulary**
