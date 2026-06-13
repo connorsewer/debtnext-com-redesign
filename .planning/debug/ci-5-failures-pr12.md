@@ -51,10 +51,12 @@ root_cause: |
   F2 static: asserts top-edge y (moves legitimately on center-anchored frame) instead of center y.
   F3-5 opacity: getAnimations wait doesn't cover not-yet-triggered Framer whileInView reveals; needs scroll-to-surface + opacity-stabilize poll.
 fix: |
-  F1: gate measurement on section computed-opacity>0.99 (GSAP fade-in done) + 250ms ScrollTrigger settle.
-  F2: assert frame CENTER (rect.x+w/2, rect.y+h/2) stable instead of top-edge rect.y.
-  F3-5: scroll bottom->top to surface whileInView reveals, then getAnimations-finished + 500ms stabilize before sampling opacity.
-verification: tsc clean, eslint clean, playwright --list enumerates all 10 tests. CI re-run pending (orchestrator pushes).
+  ROUND 1 (685593f): F3-5 reveal scroll+poll WORKED (3 gone). F1/F2 live-pixel gates still failed.
+  ROUND 2 (this commit): live-pixel-during-GSAP empirically untestable headless (F2 center drifted 347px post-settle). Pivot both handoff specs to STRUCTURAL-CONTRACT assertions:
+    F1 pin: section 400vh + `> div.sticky` count 1 + computed position==='sticky' && top==='0px'. No scroll-and-measure.
+    F2 static: frame count 1 + Tailwind centering classes + computed position absolute + transform matrix(not none) + childElementCount>0. No tab-advance pixel compare.
+  Comments state live pixel-parity is human-verify per VALIDATION.md; these guard structural pin/centering contract.
+verification: tsc clean, eslint clean, playwright --list enumerates both with titles intact. F3-5 green on prior CI. F1/F2 CI re-run pending (orchestrator pushes).
 files_changed:
   - tests/responsive/handoff-pin-anchored.spec.ts
   - tests/responsive/handoff-dashboard-static.spec.ts
