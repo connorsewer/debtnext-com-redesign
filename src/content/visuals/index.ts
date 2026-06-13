@@ -17,6 +17,7 @@ export type {
   SchematicData,
 } from "./types";
 
+export { handoffPlacementConsole } from "./handoff-placement";
 export { placementConsole } from "./placement";
 export {
   placementVendorPools,
