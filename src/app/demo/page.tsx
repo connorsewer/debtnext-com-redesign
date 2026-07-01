@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { DemoForm } from "@/components/forms/DemoForm";
 import { CardGrid } from "@/components/sections/CardGrid";
 import { SectionContainer } from "@/components/sections/SectionContainer";
@@ -10,6 +11,7 @@ import {
   demoReassurance,
   demoWhatToExpect,
 } from "@/content/demo";
+import { contactPageSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: demoMeta.title,
@@ -21,6 +23,8 @@ export const metadata: Metadata = {
 export default function DemoPage() {
   return (
     <>
+      <JsonLd data={contactPageSchema()} />
+
       <ScrollDepthTracker />
 
       <SectionContainer
