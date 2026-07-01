@@ -198,7 +198,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 | 11. Platform deep-dive visuals | 5/5 | Complete    | 2026-06-06 |
 | 12. Solutions per-industry visuals | 5/5 | Complete    | 2026-06-13 |
 | 13. Visual system consolidation | 0/0 | Not started | — |
-| 14. Text-only page elevation | 4/4 | Complete   | 2026-07-01 |
+| 14. Text-only page elevation | 4/4 | Complete    | 2026-07-01 |
 | 15. Homepage flagship capstone | 0/0 | Not started | — |
 
 ## M6 Phase Details
