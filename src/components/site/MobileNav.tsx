@@ -65,7 +65,7 @@ export function MobileNav() {
               href="/"
               onClick={() => setOpen(false)}
               aria-label="DebtNext home"
-              className="text-[var(--text-h4)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+              className="text-h4 focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
             >
               <Wordmark />
             </Link>
@@ -106,7 +106,7 @@ export function MobileNav() {
                   aria-current={isActive ? "page" : undefined}
                   onClick={() => setOpen(false)}
                   className={cn(
-                    "flex h-12 items-center text-[var(--text-h4)] font-[480] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]",
+                    "flex h-12 items-center text-h4 font-[480] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]",
                     isActive
                       ? "text-white"
                       : "text-[var(--foreground)]"
