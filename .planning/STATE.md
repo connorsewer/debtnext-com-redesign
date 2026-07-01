@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: M6
 milestone_name: Premium visual + motion system
-status: Ready to plan
-last_updated: "2026-06-13T00:28:34.326Z"
+status: Ready to execute
+last_updated: "2026-07-01T20:20:46.846Z"
 progress:
   total_phases: 14
   completed_phases: 5
-  total_plans: 27
+  total_plans: 31
   completed_plans: 26
-  percent: 96
+  percent: 84
 ---
 
 # STATE.md
@@ -19,11 +19,11 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 **Core value:** Convert qualified enterprise buyers into demo requests. The single conversion action is "Request a demo".
-**Current focus:** Phase 12 — Solutions per-industry visuals
+**Current focus:** Phase 14 — Text-only page elevation
 
 ## Current Position
 
-Phase: 13
+Phase: 14 (planned 2026-07-01: 4 plans, 2 waves; ready to execute on branch `phase-14-text-page-elevation`). Phase 12 merged via PR #11; Phase 13 complete on PR #12 (green, awaiting Connor's preview review + merge).
 Plan: Not started
 Milestone: **M6 — Premium visual + motion system.** Status: roadmap complete; phases 10-15 defined. **Phase 10 — Foundation COMPLETE 2026-06-05** (motion barrel + 3 archetypes + typed payloads + 4 primitives + CI guardrails; FND-01..06 satisfied; 5 runtime UAT items tracked in 10-HUMAN-UAT.md). **Current phase: Phase 11 — Platform deep-dive visuals (not started).** Next step: `/gsd-plan-phase 11`. M6's motion foundation (Phase 10) supersedes M5's planned "Phase 8 Motion pass" — do not double-schedule motion work. Last activity: 2026-06-04 — M6 roadmap created alongside the still-open M5 ("premium now, M5 stays open" sequencing decision). Design source: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-design.md`.
 
