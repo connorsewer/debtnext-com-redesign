@@ -334,6 +334,18 @@ Phase 5 is NOT shipped. HERO-01..03 are correct and stay. HERO-04 needs a gap-cl
 
 ---
 
+## M5 Phase 7 — SEO baseline (2026-07-01, branch phase-07-seo-baseline)
+
+SEO-01..06 Done. Per-route Open Graph images, JSON-LD on `/` and `/demo`, Twitter cards, and canonical verification.
+
+- **OG images (SEO-01/05):** shared renderer `src/lib/og/template.tsx` (`renderOgImage({title, eyebrow?})`, `next/og` `ImageResponse`, 1200x630 PNG, dark `#171721` canvas, static "DebtNext" wordmark + indigo `#5266EB` node, single subtle accent glow, General Sans 600 via `src/lib/og/loadFont.ts` reading `src/app/fonts/GeneralSans-Semibold.woff2`, Node runtime). One `opengraph-image.tsx` per route dir (root + 23) that imports the route's approved `*Meta.title` and re-exports `size`/`contentType`/`alt`/`default Image()`. **D2:** scope expanded from the original 11 to all 24 v1 route dirs. `alt` is `"<title> | dPlat"` (pipe, no em dash, voice-rules compliant). `twitter: { card: "summary_large_image" }` added once to the root `layout.tsx` metadata; Next reuses each route's OG image as `twitter:image`.
+- **JSON-LD (SEO-02/03/04):** `src/content/org.ts` holds the sourced org facts (legalName "DebtNext, LLC" from SiteFooter, foundingDate 2003 from company-about, parent Transworld Systems Inc. / tsico.com, LinkedIn, areaServed US/CA, product dPlat). `src/lib/seo/schema.ts` builds `organizationSchema()` / `softwareApplicationSchema()` / `contactPageSchema()`. `src/components/seo/JsonLd.tsx` is a server component emitting `<script type="application/ld+json">`. Organization + SoftwareApplication render on `/` (src/app/page.tsx); ContactPage on `/demo`. **D3:** a `[COI REVIEW]` marker sits directly above `sameAs` (TSI + LinkedIn), non-blocking per the 2026-06 pre-clearance, retained for audit. **D5:** no `logo`. No invented price/rating/phone/email; the SoftwareApplication offer is quote-shaped only.
+- **Canonicals (SEO-06):** already wired via `alternates.canonical` (production origin hardcoded in each content `*Meta.canonical`). `tests/seo/canonical.spec.ts` (**D1**) asserts exactly one canonical per route pointing at a single `EXPECTED_CANONICAL_ORIGIN` (`https://debtnext.com`) regardless of the test base URL, so a Vercel preview still emits the production canonical.
+- **Sitemap (D2):** `src/app/sitemap.ts` gained `/solutions/insurance` + `/solutions/healthcare` (previously missing).
+- **Tests:** `tests/seo/{canonical,jsonld,og-metadata}.spec.ts` iterate `VISUAL_ROUTES` (24). They run on CI against the Vercel preview via `PLAYWRIGHT_BASE_URL`; not run locally (next server hangs in sandbox).
+- **Verification:** `npx tsc --noEmit` clean; `npx eslint src tests` clean. `npx next build` was NOT runnable in this worktree: it has no local `node_modules` (deps hoist to the parent repo), Turbopack rejects a symlink that escapes the project root, and the `--webpack` builder hangs in-sandbox (same class as the known next-dev/start hang). The build + confirmation that the `opengraph-image` routes appear in build output must run on CI or in a checkout with a real `node_modules`.
+- **No new deps.** `next/og` ships with Next 16.
+
 ## Known open items / loose threads
 
 These are not bugs — they're things flagged for follow-up.

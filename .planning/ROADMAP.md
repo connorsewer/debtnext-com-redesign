@@ -10,7 +10,7 @@ Granularity: `standard` (5–8 phases per milestone). 21 active requirements acr
 
 - [x] **Phase 5: Hero performance** — Cut `/` LCP under 2.5s on 4G mobile so launch is unblocked. **CLOSED 2026-06-04** via Phases 5 + 5.1 + 5.2 + 5.3 (lazy-GSAP + simulate→devtools measurement; bar unchanged at 2,300 ms). HERO-01..04 Done.
 - [ ] **Phase 6: Analytics wiring** — GA4 + GTM dataLayer wired with graceful no-op until IDs land
-- [ ] **Phase 7: SEO baseline** — Per-route OG images, JSON-LD on `/` and `/demo`, Twitter cards, canonicals
+- [x] **Phase 7: SEO baseline** — Per-route OG images (24 routes), JSON-LD on `/` and `/demo`, Twitter cards, canonicals verified. **COMPLETE 2026-07-01.** SEO-01..06 Done.
 - [ ] **Phase 8: Motion pass** — Restrained Framer reveals + ProofBand counters across the 10 non-home routes
 - [ ] **Phase 9: Definition-of-done walkthrough + launch readiness** — CLAUDE.md §14 walked per route, all `[COI REVIEW]` / `[CLAIMS REVIEW]` cleared, nav label decided
 
@@ -20,7 +20,7 @@ Granularity: `standard` (5–8 phases per milestone). 21 active requirements acr
 |-------|----------------|--------|-----------|
 | 5. Hero performance | 5/5 (+5.1, 5.2, 5.3) | Complete | 2026-06-04 |
 | 6. Analytics wiring | 0/0 | Not started | — |
-| 7. SEO baseline | 0/0 | Not started | — |
+| 7. SEO baseline | 1/1 | Complete | 2026-07-01 |
 | 8. Motion pass | 0/0 | Not started | — |
 | 9. Definition-of-done walkthrough + launch readiness | 0/0 | Not started | — |
 
