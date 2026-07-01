@@ -1,7 +1,7 @@
 # Phase 14 archetype-mapping table (D-01 lift/no-lift decision record)
 
 **Authored:** 2026-07-01 (Plan 14-01, Task 1)
-**Status:** Awaiting Connor approval (Task 3 checkpoint)
+**Status:** Approved 2026-07-01 (Task 3 checkpoint; auto-approved per the active --auto chain, Connor reviews at the phase boundary)
 **Decision basis:** D-01 (lift over coverage: a visual is added only where it advances the page's argument; a no-lift call is a deliberate decision, recorded, not an omission), D-02 (reuse the on-main archetype library, build nothing new), D-03 (CTA primacy: one filled "Request a demo" per band, motion below the CTA in visual weight), D-11 (accents from existing chart tokens only). Mirrors the approved Phase 12 D-08 map gate.
 
 This map covers all 9 target routes. The operative discipline is RESTRAINT: most target pages already carry section-level scroll-reveal via the legacy `product/motion` barrel (`CardGrid`, `BulletList`, `CompareMatrix`, `ComparisonTable`, `ProcessStrip`, `IntegrationTable`, `LeadershipTable`, `IntegrationStrip` all self-animate), so several pages correctly get **nothing new**. Only two routes earn an archetype this phase: `/compare` and `/platform/integrations`. Each archetype row names the argument the visual advances that the prose/table does not (the D-01 lift bar, Pitfall 2). Each no-lift row names why a visual would be decoration.
