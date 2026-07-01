@@ -7,9 +7,12 @@ import { CompareMatrix } from "@/components/sections/CompareMatrix";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { LeadershipTable } from "@/components/sections/LeadershipTable";
 import { PageHero } from "@/components/sections/PageHero";
+import { ProductVisualBand } from "@/components/sections/ProductVisualBand";
 import { ProofBand } from "@/components/sections/ProofBand";
 import { ProseIntro } from "@/components/sections/ProseIntro";
 import { ProseSection } from "@/components/sections/ProseSection";
+import { DataStoryVisual } from "@/components/product/visuals/archetypes";
+import { compareTimeToProduction } from "@/content/visuals/compare";
 import {
   compareBestFit,
   compareDifferentiators,
@@ -56,6 +59,10 @@ export default function ComparePage() {
         body={compareMatrix.body}
         platforms={compareMatrix.platforms}
       />
+
+      <ProductVisualBand>
+        <DataStoryVisual data={compareTimeToProduction} />
+      </ProductVisualBand>
 
       <CardGrid
         heading={compareDifferentiators.heading}

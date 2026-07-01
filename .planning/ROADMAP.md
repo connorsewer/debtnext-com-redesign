@@ -187,7 +187,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 - [x] **Phase 11: Platform deep-dive visuals** — Battle-test archetypes on the 4 platform pages; one explorable flagship per page; zero accordion placeholders (completed 2026-06-06)
 - [x] **Phase 12: Solutions per-industry visuals** — Kill the duplicate widget; per-industry Console + Schematic + Data-story; replace accordion placeholders across 6 industries (completed 2026-06-13)
 - [x] **Phase 13: Visual system consolidation** — Merge `sections/mockups` behind unchanged `MockupForTab` signatures (after Console is proven); retire dead PNG fallbacks (completed 2026-06-13)
-- [ ] **Phase 14: Text-only page elevation** — Archetype visuals + motion where they lift compare / why-dplat / company set / resources / integrations / demo
+- [x] **Phase 14: Text-only page elevation** — Archetype visuals + motion where they lift compare / why-dplat / company set / resources / integrations / demo (completed 2026-07-01)
 - [ ] **Phase 15: Homepage flagship capstone** — Matured-system pass on the hero; gated on the M5 hero LCP fix; LHCI Case C re-run as a hard merge gate; last
 
 ## M6 Progress
@@ -197,8 +197,8 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 | 10. Foundation | 6/6 | Complete    | 2026-06-05 |
 | 11. Platform deep-dive visuals | 5/5 | Complete    | 2026-06-06 |
 | 12. Solutions per-industry visuals | 5/5 | Complete    | 2026-06-13 |
-| 13. Visual system consolidation | 5/5 | Complete   | 2026-06-13 |
-| 14. Text-only page elevation | 0/0 | Not started | — |
+| 13. Visual system consolidation | 5/5 | Complete    | 2026-06-13 |
+| 14. Text-only page elevation | 4/4 | Complete    | 2026-07-01 |
 | 15. Homepage flagship capstone | 0/0 | Not started | — |
 
 ## M6 Phase Details
@@ -286,7 +286,11 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
   2. A user on the `/company` set (`/company`, `/about`, `/leadership`, `/careers`, `/contact`) and `/resources` sees visuals or motion where they lift, consistent with the system
   3. A user on `/platform/integrations` and `/demo` sees archetype visuals or motion consistent with the system, without competing with the single "Request a demo" CTA per band
   4. Every elevated page keeps LCP under 2.5s, CLS under 0.1, INP under 200ms, passes axe-core, and is added to the reduced-motion Playwright spec; all existing specs stay green
-**Plans**: TBD
+**Plans**: 4 plans (2 waves)
+- [x] 14-01-PLAN.md — Wave 1: 14-ARCHETYPE-MAP.md (D-01 lift/no-lift gate, Connor approval) + 14-page-elevation.spec.ts skeleton (RED)
+- [x] 14-02-PLAN.md — Wave 1 (independent): P14-01 DemoForm aria-invalid/aria-describedby + P14-02 AttachedForm §8.3 ring + DESIGN.md note + a11y spec
+- [x] 14-03-PLAN.md — Wave 2: /platform/integrations Schematic + /compare DataStory (non-duplicative) + /why-dplat per map + BL-01 fix; spec RED→GREEN
+- [x] 14-04-PLAN.md — Wave 2: /demo AmbientField + 14-MOTION-CONFIRM.md (PAGEVIS-03 reveal-coverage evidence) + phase verification gate
 **Notes**: Lower buyer-impact than Platform/Solutions; restraint is the operative discipline — motion never out-shouts the CTA (Pitfall, UX). New captions are governed copy: voice rules, no em dashes / banned phrases, `[CLAIMS REVIEW]` on any metric, `[COI REVIEW]` on any vendor/TSI framing (the `/compare` comparative claims and `/company` TSI section are the live governance surfaces). Mostly DataStory + Schematic + Reveal/Ambient. Inherits standing constraints: DESIGN.md tokens only, one filled CTA per band, WCAG 2.2 AA + axe-core, reduced-motion gated, LCP<2.5s / CLS<0.1 / INP<200ms, all existing Playwright specs green, per-commit docs-in-sync, COI/CLAIMS review on any new copy.
 **UI hint**: yes
 
