@@ -186,7 +186,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 - [x] **Phase 10: Foundation** — Motion barrel + 3 archetypes + typed payloads + shared primitives + CI guardrails; the keystone that unblocks all page work (completed 2026-06-05)
 - [x] **Phase 11: Platform deep-dive visuals** — Battle-test archetypes on the 4 platform pages; one explorable flagship per page; zero accordion placeholders (completed 2026-06-06)
 - [x] **Phase 12: Solutions per-industry visuals** — Kill the duplicate widget; per-industry Console + Schematic + Data-story; replace accordion placeholders across 6 industries (completed 2026-06-13)
-- [ ] **Phase 13: Visual system consolidation** — Merge `sections/mockups` behind unchanged `MockupForTab` signatures (after Console is proven); retire dead PNG fallbacks
+- [x] **Phase 13: Visual system consolidation** — Merge `sections/mockups` behind unchanged `MockupForTab` signatures (after Console is proven); retire dead PNG fallbacks (completed 2026-06-13)
 - [x] **Phase 14: Text-only page elevation** — Archetype visuals + motion where they lift compare / why-dplat / company set / resources / integrations / demo (completed 2026-07-01)
 - [ ] **Phase 15: Homepage flagship capstone** — Matured-system pass on the hero; gated on the M5 hero LCP fix; LHCI Case C re-run as a hard merge gate; last
 
@@ -197,7 +197,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 | 10. Foundation | 6/6 | Complete    | 2026-06-05 |
 | 11. Platform deep-dive visuals | 5/5 | Complete    | 2026-06-06 |
 | 12. Solutions per-industry visuals | 5/5 | Complete    | 2026-06-13 |
-| 13. Visual system consolidation | 0/0 | Not started | — |
+| 13. Visual system consolidation | 5/5 | Complete    | 2026-06-13 |
 | 14. Text-only page elevation | 4/4 | Complete    | 2026-07-01 |
 | 15. Homepage flagship capstone | 0/0 | Not started | — |
 
@@ -268,7 +268,12 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
   1. The homepage handoff renders Console-archetype instances for all 4 tabs behind unchanged `MockupForTab` / `mockupTitleForTab` signatures; `HomepageHero.tsx` and `HomepageHandoffSection.tsx` need no changes (the regression firewall holds)
   2. The GSAP pin, the 400vh sticky progression, and the `FramedDashboard` bezel behave identically to today — the dashboard never moves during the crossfade and the bezel stays viewport-centered across the hero→Platform seam (the locked decisions); the platform-mobile and reduced-motion Playwright specs stay green
   3. `src/components/sections/mockups/` is retired only after the handoff renders identically through Console; the 6 dead `dashboard-dark.png` BenefitSplit fallbacks are confirmed removed (closed in Phase 10) and any remaining dead PNG references are gone
-**Plans**: TBD
+**Plans**: 5 plans (3 waves)
+- [x] 13-01-PLAN.md — Wave 0: bare Console render path + 3 missing cinematic regression specs (pin-anchored / bezel-seam / dashboard-static) + placement-tab payload (firewall byte-check groundwork)
+- [x] 13-02-PLAN.md — Wave 1: placement-tab proof repoint (D-06) behind unchanged MockupForTab + full regression gate (human-verify DEFERRED to end-of-phase preview)
+- [x] 13-03-PLAN.md — Wave 2: fan out performance / issues / reporting (per-tab gate; reporting decision resolved to Console-with-KPIs, D-04-compliant, no DataStory exception; parity human-verify DEFERRED to end-of-phase preview)
+- [x] 13-04-PLAN.md — Wave 3: retired the 4 bespoke mockups + P13-02 token sweep (zero off-token hex) + SYSVIS-02 dead-PNG confirm (only hero finale) + phase gate (firewall byte-identical whole phase; full Playwright + LHCI deferred to CI PR #12)
+- [x] 13-05-PLAN.md — Wave 1 (Front B, parallel): repoint VISUALS registry to Phase 11 Flagships (reporting key verified) + delete the 4 bespoke accordion visuals (P13-01)
 **Notes**: Deliberately NOT first — proving Console on Platform (Phase 11) de-risks this re-point, the single most important ordering decision for avoiding a homepage regression. High-risk migration; the research recommends planning the exact migration order and the regression-spec set (pin anchored, bezel centered across the seam, reduced-motion, platform-mobile) — consider `/gsd-research-phase 13`. `FramedDashboard` relocation (to `product/visuals/` vs keep in slimmed `sections/mockups/`) is cosmetic; decide here. Inherits standing constraints: DESIGN.md tokens only, one filled CTA per band, WCAG 2.2 AA + axe-core, reduced-motion gated, LCP<2.5s / CLS<0.1 / INP<200ms, all existing Playwright specs green, per-commit docs-in-sync, COI/CLAIMS review on any new copy.
 **UI hint**: yes
 

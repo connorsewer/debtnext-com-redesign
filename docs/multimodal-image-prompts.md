@@ -44,7 +44,7 @@ Positive / success: #5BCB89
 Warning: #FFB86C
 Breach / negative: #E27676
 Special (SCRA): #BB86FC
-Text primary: #EDEDF3   secondary: #C8C8D0   tertiary: #87878E   muted: #6B6B7B
+Text primary: #EDEDF3   secondary: #C8C8D0   tertiary: #8A8A91   muted: #6B6B7B
 Type: Inter or clean geometric sans-serif, tight heading letter-spacing, tabular numerals
 Always: no browser chrome, no cursor, no people, no photographs, no logos beyond
   specified wordmarks, no invented UI elements, pixel-sharp legible text,

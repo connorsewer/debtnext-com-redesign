@@ -32,7 +32,17 @@ const EXCEPTIONS = [
 export const ComplianceStandards = React.memo(function ComplianceStandards() {
   const reduce = useReducedMotion();
   return (
-    <ProductCanvas className="text-[var(--product-text)]">
+    // role="img" + a root text alternative so this visual self-labels like the
+    // four Console-based homepage flagships (which emit role="img" via their
+    // ariaSummary). FeatureAccordion no longer wraps live visuals in role="img"
+    // (that tripped axe nested-interactive), so each visual owns its own name.
+    // [CLAIMS REVIEW]/[COI REVIEW]: the summary mirrors the displayed VENDORS /
+    // EXCEPTIONS values above and carries the same regulated-status framing.
+    <ProductCanvas
+      role="img"
+      aria-label="Compliance and work standards console. Vendor adherence over 30 days: recovery partner A 98.2% compliant, partner B 96.8% compliant, partner C 91.4% in review. Auto-surfaced regulated-status exceptions: a deceased match suspends treatment, a bankruptcy filing auto-recalls the account, and confirmed active duty applies an SCRA rate cap."
+      className="text-[var(--product-text)]"
+    >
       <div className="flex items-start justify-between gap-4">
         <div>
           <EyebrowLabel>COMPLIANCE &amp; WORK STANDARDS</EyebrowLabel>
