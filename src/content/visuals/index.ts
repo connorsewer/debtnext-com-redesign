@@ -17,6 +17,7 @@ export type {
   SchematicData,
 } from "./types";
 
+export { integrationsSystemMap } from "./integrations";
 export { placementConsole } from "./placement";
 export {
   placementVendorPools,
