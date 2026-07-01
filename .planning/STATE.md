@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: M6
 milestone_name: Premium visual + motion system
-status: Ready to plan
-last_updated: "2026-06-13T00:28:34.326Z"
+status: Phase complete — ready for verification
+last_updated: "2026-06-13T11:16:28.387Z"
 progress:
   total_phases: 14
-  completed_phases: 5
-  total_plans: 27
-  completed_plans: 26
-  percent: 96
+  completed_phases: 6
+  total_plans: 32
+  completed_plans: 31
+  percent: 97
 ---
 
 # STATE.md
@@ -19,12 +19,12 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 **Core value:** Convert qualified enterprise buyers into demo requests. The single conversion action is "Request a demo".
-**Current focus:** Phase 12 — Solutions per-industry visuals
+**Current focus:** Phase 13 — Visual system consolidation
 
 ## Current Position
 
-Phase: 13
-Plan: Not started
+Phase: 13 (Visual system consolidation) — COMPLETE (ready for verification)
+Plan: 5 of 5 COMPLETE. FRONT A: 13-02 + 13-03 + 13-04 shipped (all 4 handoff tabs on bare Console, bespoke mockups retired, P13-02/SYSVIS-02 closed). FRONT B / P13-01: 13-05 shipped this session — the homepage FeatureAccordion VISUALS registry was repointed to the Phase 11 *Flagship components for placement/optimization/issues/reporting (reporting key migration grep-verified), ComplianceStandards kept, and the 4 bespoke visuals (+ their dead Lazy* wrappers) deleted as a set after a passing import guard (commits 19adbec, 11bd019). tsc/eslint/next build clean; firewall byte-unchanged. SYSVIS-01 marked complete. DEFERRED human-verify (end-of-phase preview, per the "implement all code, defer human-verify" directive this run): (1) FRONT A desktop cinematic parity across all 4 handoff tabs; (2) FRONT B FeatureAccordion visual parity — each of the 5 accordion items shows a correct archetype/Flagship visual, no blank box / wrong visual / double-frame, reduced-motion safe.
 Milestone: **M6 — Premium visual + motion system.** Status: roadmap complete; phases 10-15 defined. **Phase 10 — Foundation COMPLETE 2026-06-05** (motion barrel + 3 archetypes + typed payloads + 4 primitives + CI guardrails; FND-01..06 satisfied; 5 runtime UAT items tracked in 10-HUMAN-UAT.md). **Current phase: Phase 11 — Platform deep-dive visuals (not started).** Next step: `/gsd-plan-phase 11`. M6's motion foundation (Phase 10) supersedes M5's planned "Phase 8 Motion pass" — do not double-schedule motion work. Last activity: 2026-06-04 — M6 roadmap created alongside the still-open M5 ("premium now, M5 stays open" sequencing decision). Design source: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-design.md`.
 
 **Cross-milestone gate (SATISFIED 2026-06-04):** Phase 10's dependency on **M5 Phase 5.3 (lazy-GSAP)** is closed. GSAP is off the `/` eager chunk and the hero LCP gate is green under devtools, so the `/` mobile JS budget is shut (Pitfalls 1 + 6 cleared). Phase 10 can land freely. Phase 15 (homepage capstone) stays double-gated: on Phases 10-14 and on the M5 hero LCP fix being closed (now closed) or renegotiated.

@@ -337,7 +337,7 @@ Used only by the product-visual system in `src/components/product/` (the dashboa
 | `--product-card` | `#1B1B27` | Glass card base |
 | `--product-text` | `#EDEDF3` | Primary text in visuals |
 | `--product-text-2` | `#C8C8D0` | Secondary text |
-| `--product-text-3` | `#87878E` | Tertiary / labels |
+| `--product-text-3` | `#8A8A91` | Tertiary / labels (AA: clears 4.5:1 on the `#20212d` card surface) |
 | `--product-text-muted` | `#6B6B7B` | Muted |
 | `--status-success` | `#5BCB89` | Positive delta, compliant, on-time |
 | `--status-warning` | `#FFB86C` | Warning, review, mid band |

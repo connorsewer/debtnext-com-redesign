@@ -214,6 +214,12 @@ export interface ConsoleProps {
   /** Custom slot composition. When omitted, a default flat render is used. */
   children?: React.ReactNode;
   className?: string;
+  /**
+   * When true, render the slots in a plain div instead of a ProductCanvas card
+   * (parent supplies the frame, e.g. FramedDashboard). Default false keeps every
+   * existing call site byte-identical.
+   */
+  bare?: boolean;
 }
 
 /**
@@ -226,7 +232,35 @@ export interface ConsoleProps {
  *     <Console.Rows />
  *   </Console>
  */
-function ConsoleRoot({ data, children, className }: ConsoleProps) {
+function ConsoleRoot({ data, children, className, bare = false }: ConsoleProps) {
+  const body = children ?? (
+    <>
+      <Header />
+      <Callout />
+      <Rows />
+      <Pills />
+    </>
+  );
+
+  // bare: the parent supplies the single frame (e.g. FramedDashboard), so the
+  // slots render in a plain div with no ProductCanvas card, padding box, rounded
+  // corners, or radial bloom — avoiding the double-frame inside FramedDashboard.
+  // The aria-label (data.ariaSummary) moves onto this bare root so the role="img"
+  // text-alternative contract (Pitfall 8) holds in both modes.
+  if (bare) {
+    return (
+      <ConsoleContext value={data}>
+        <div
+          role="img"
+          aria-label={data.ariaSummary}
+          className={cn("flex flex-col gap-4 text-[var(--product-text)]", className)}
+        >
+          {body}
+        </div>
+      </ConsoleContext>
+    );
+  }
+
   return (
     <ConsoleContext value={data}>
       <ProductCanvas
@@ -234,14 +268,7 @@ function ConsoleRoot({ data, children, className }: ConsoleProps) {
         aria-label={data.ariaSummary}
         className={cn("flex flex-col gap-4 text-[var(--product-text)]", className)}
       >
-        {children ?? (
-          <>
-            <Header />
-            <Callout />
-            <Rows />
-            <Pills />
-          </>
-        )}
+        {body}
       </ProductCanvas>
     </ConsoleContext>
   );

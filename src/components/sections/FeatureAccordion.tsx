@@ -13,8 +13,9 @@ export interface FeatureAccordionItem {
   id: string;
   title: string;
   body: string;
-  /** Caption rendered over the visual placeholder for M2.
-   *  Replace with real media slot in M3. */
+  /** Accessible name + caption for the static text-placeholder fallback (pages
+   *  that reuse FeatureAccordion without a live visual). Live visuals carry
+   *  their own accessible name, so this is not used when one is present. */
   visualLabel: string;
 }
 
@@ -41,8 +42,10 @@ export interface FeatureAccordionProps {
  *   reduced motion because the global @media block neutralizes it)
  * - Visual cross-fades to the active item
  *
- * Visuals for M2 are dark placeholder surfaces with the section label.
- * Real product screenshots arrive in M3 (Paul/Connor).
+ * The paired visual resolves in priority order: an explicit `visuals[id]` node,
+ * then the homepage AccordionVisual flagship registry, then a static text
+ * placeholder. Live visuals carry their own accessible name (Console role="img",
+ * Explorable role="group"); only the placeholder takes role="img"/visualLabel.
  */
 export function FeatureAccordion({
   eyebrow,
@@ -146,22 +149,31 @@ export function FeatureAccordion({
             // FeatureAccordion keeps the original placeholder.
             const item = items.find((i) => i.id === activeId) ?? items[0];
             if (!item) return null;
+            // Live visuals (page-supplied `visuals` or the homepage flagship
+            // registry) carry their own semantics (Console role="img",
+            // Explorable role="group") and some are interactive. Wrapping them
+            // in role="img" both masks that structure and trips axe
+            // nested-interactive (role="img" must not have focusable
+            // descendants), so the labelled image wrapper is reserved for the
+            // static text placeholder.
+            const liveVisual =
+              visuals?.[item.id] ??
+              (isAccordionVisualId(item.id) ? (
+                <AccordionVisual id={item.id} />
+              ) : null);
             return (
               <motion.div
                 key={item.id}
-                role="img"
-                aria-label={item.visualLabel}
+                {...(liveVisual
+                  ? {}
+                  : { role: "img", "aria-label": item.visualLabel })}
                 initial={
                   reduceMotion ? false : { opacity: 0, y: 16, filter: "blur(4px)" }
                 }
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               >
-                {visuals?.[item.id] ? (
-                  visuals[item.id]
-                ) : isAccordionVisualId(item.id) ? (
-                  <AccordionVisual id={item.id} />
-                ) : (
+                {liveVisual ?? (
                   <div className="flex min-h-[22rem] w-full flex-col items-center justify-center gap-4 p-8 text-center">
                     <span className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
                       Visual

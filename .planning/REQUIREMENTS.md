@@ -33,7 +33,7 @@ Source design: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-d
 
 ### Visual system consolidation + cleanup (SYSVIS)
 
-- [ ] **SYSVIS-01** — `src/components/sections/mockups/` is merged into the archetype library; the homepage handoff renders Console-archetype instances behind unchanged `MockupForTab`/`mockupTitleForTab` signatures, with the GSAP pin + `FramedDashboard` bezel behavior unchanged (no handoff regression)
+- [x] **SYSVIS-01** — `src/components/sections/mockups/` is merged into the archetype library; the homepage handoff renders Console-archetype instances behind unchanged `MockupForTab`/`mockupTitleForTab` signatures, with the GSAP pin + `FramedDashboard` bezel behavior unchanged (no handoff regression)
 - [ ] **SYSVIS-02** — The 6 dead `dashboard-dark.png` BenefitSplit `media` fallbacks are removed; the hero's use of the asset is resolved (kept intentionally or replaced with a Console instance)
 
 ### Text-only page elevation (PAGEVIS)

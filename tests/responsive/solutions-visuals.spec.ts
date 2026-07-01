@@ -151,9 +151,21 @@ async function assertReducedMotionDataParity(
 /** No in-viewport text-bearing element sits at opacity < 1 after interaction
  *  (reveal-fail-open shape, scoped to this route). */
 async function assertNoStuckOpacity(page: Page) {
-  // Wait until reveal/fade animations have settled instead of a fixed sleep.
-  // getAnimations() returns every running Web Animation; once none finite are
-  // running the opacity sweep is stable. Guard for engines without the API.
+  // The accordion archetypes use Framer `whileInView` reveals (Reveal.tsx:
+  // initial="hidden" {opacity:0} -> "show"), which only animate once the element
+  // scrolls into view. A reveal parked at the hidden state has NO running Web
+  // Animation, so the old getAnimations() gate returned immediately and we then
+  // sampled an element legitimately mid-reveal-or-untriggered at opacity:0 ->
+  // flaky "stuck below opacity:1" on a non-deterministic page set. Mirror the
+  // robust settle idiom from reduced-motion.spec.ts: surface every IO-gated
+  // reveal by scrolling the page bottom-to-top, THEN wait out the fade.
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await page.waitForTimeout(200);
+  await page.evaluate(() => window.scrollTo(0, 0));
+
+  // Now wait until finite reveal/fade animations have finished AND the computed
+  // opacities have actually stabilized (poll twice and compare), so a reveal
+  // that fired late after the scroll cannot be sampled mid-flight.
   await page.waitForFunction(() => {
     const getAnimations = (document as Document & {
       getAnimations?: () => Animation[];
@@ -167,6 +179,10 @@ async function assertNoStuckOpacity(page: Page) {
       return anim.playState === "finished" || anim.playState === "idle";
     });
   });
+  // Generous settle for Framer's useReducedMotion/whileInView reveals that
+  // resolve in an effect a frame or two after the scroll (same rationale as
+  // reduced-motion.spec.ts:90-96).
+  await page.waitForTimeout(500);
   const offenders = await page.evaluate(() => {
     const vw = window.innerWidth;
     const vh = window.innerHeight;

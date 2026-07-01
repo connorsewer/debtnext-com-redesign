@@ -33,19 +33,19 @@ function Fallback() {
 // analysis requirement), so each call repeats { ssr: false, loading }.
 const VISUALS: Record<AccordionVisualId, React.ComponentType> = {
   placement: dynamic(
-    () => import("./PlacementMatrix").then((m) => m.PlacementMatrix),
+    () => import("./PlacementFlagship").then((m) => m.PlacementFlagship),
     { ssr: false, loading: Fallback },
   ),
   optimization: dynamic(
-    () => import("./OptimizationEngine").then((m) => m.OptimizationEngine),
+    () => import("./OptimizationFlagship").then((m) => m.OptimizationFlagship),
     { ssr: false, loading: Fallback },
   ),
   issues: dynamic(
-    () => import("./IssuesWorklist").then((m) => m.IssuesWorklist),
+    () => import("./IssuesFlagship").then((m) => m.IssuesFlagship),
     { ssr: false, loading: Fallback },
   ),
   reporting: dynamic(
-    () => import("./ReportingDashboard").then((m) => m.ReportingDashboard),
+    () => import("./ReportingFlagship").then((m) => m.ReportingFlagship),
     { ssr: false, loading: Fallback },
   ),
   compliance: dynamic(
