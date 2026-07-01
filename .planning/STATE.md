@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: M6
 milestone_name: Premium visual + motion system
-status: Executing Phase 14
-last_updated: "2026-07-01T20:21:51.528Z"
+status: Ready to plan
+last_updated: "2026-07-01T21:50:31.869Z"
 progress:
   total_phases: 14
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 31
-  completed_plans: 26
-  percent: 84
+  completed_plans: 30
+  percent: 97
 ---
 
 # STATE.md
@@ -23,8 +23,8 @@ See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 ## Current Position
 
-Phase: 14 (text-only-page-elevation) — EXECUTING
-Plan: 1 of 4
+Phase: 15
+Plan: Not started
 Milestone: **M6 — Premium visual + motion system.** Status: roadmap complete; phases 10-15 defined. **Phase 10 — Foundation COMPLETE 2026-06-05** (motion barrel + 3 archetypes + typed payloads + 4 primitives + CI guardrails; FND-01..06 satisfied; 5 runtime UAT items tracked in 10-HUMAN-UAT.md). **Current phase: Phase 11 — Platform deep-dive visuals (not started).** Next step: `/gsd-plan-phase 11`. M6's motion foundation (Phase 10) supersedes M5's planned "Phase 8 Motion pass" — do not double-schedule motion work. Last activity: 2026-06-04 — M6 roadmap created alongside the still-open M5 ("premium now, M5 stays open" sequencing decision). Design source: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-design.md`.
 
 **Cross-milestone gate (SATISFIED 2026-06-04):** Phase 10's dependency on **M5 Phase 5.3 (lazy-GSAP)** is closed. GSAP is off the `/` eager chunk and the hero LCP gate is green under devtools, so the `/` mobile JS budget is shut (Pitfalls 1 + 6 cleared). Phase 10 can land freely. Phase 15 (homepage capstone) stays double-gated: on Phases 10-14 and on the M5 hero LCP fix being closed (now closed) or renegotiated.
