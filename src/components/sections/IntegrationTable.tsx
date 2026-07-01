@@ -7,8 +7,8 @@ import type { SectionSurface } from "@/components/sections/SectionContainer";
 import {
   AnimatedNumber,
   fadeUpItem,
-  inViewProps,
   staggerContainer,
+  useInViewProps,
 } from "@/components/product/motion";
 
 export interface IntegrationRow {
@@ -48,6 +48,7 @@ export function IntegrationTable({
   surface = "dark",
 }: IntegrationTableProps) {
   const paragraphs = body ? (Array.isArray(body) ? body : [body]) : [];
+  const reveal = useInViewProps();
 
   return (
     <SectionContainer surface={surface}>
@@ -92,7 +93,7 @@ export function IntegrationTable({
               </th>
             </tr>
           </thead>
-          <motion.tbody {...inViewProps} variants={staggerContainer}>
+          <motion.tbody {...reveal} variants={staggerContainer}>
             {rows.map((row) => (
               <motion.tr
                 key={row.platform}

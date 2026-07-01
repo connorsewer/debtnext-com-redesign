@@ -7,8 +7,8 @@ import type { SectionSurface } from "@/components/sections/SectionContainer";
 import {
   AnimatedNumber,
   fadeUpItem,
-  inViewProps,
   staggerContainer,
+  useInViewProps,
 } from "@/components/product/motion";
 
 export interface LeaderRow {
@@ -39,6 +39,7 @@ export function LeadershipTable({
   yearsLabel = "Years in recovery",
   surface = "elevated-dark",
 }: LeadershipTableProps) {
+  const reveal = useInViewProps();
   return (
     <SectionContainer surface={surface}>
       <div className="max-w-2xl">
@@ -79,7 +80,7 @@ export function LeadershipTable({
               </th>
             </tr>
           </thead>
-          <motion.tbody {...inViewProps} variants={staggerContainer}>
+          <motion.tbody {...reveal} variants={staggerContainer}>
             {leaders.map((leader) => (
               <motion.tr
                 key={leader.name}
