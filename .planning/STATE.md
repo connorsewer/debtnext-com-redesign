@@ -58,6 +58,18 @@ Phases 5 + 5.1 + 5.2 + 5.3 are CLOSED. HERO-01..04 are Done. The LHCI Case C `/`
 - **Phase 8 (M5 Motion):** unblocked by this close, but **superseded by M6 Phase 10** (Foundation). Do not double-schedule the Phase 8 motion-foundation work; M6 Phase 10's `Reveal`/`LiveValue` primitives absorb MOTION-01..04.
 - **Plan progression (history):** Phase 5 plans 05-01..05-04 ✓ → 05-05 ✗ (absorbed by 5.1 per D-08) → Phase 5.1 Plans 01 ✓ (47cdc5b, 56fc69d), 02 ✓ (084de36, 10c562c, fc4712d), 03 Task 1 EXECUTED FAILED (writeup in `docs/m5-phase-5-lhci-run.md`) → Phase 5.2 Plan 01 ✓ (1ee187b, 84f20dd, 8920088) PARTIAL → Phase 5.3 Plan 01 ✓ (f58b436, 0db8994) + perf methodology (1a62d93) + a11y fix (48b1222) + Plan 02 D-08 close-out.
 
+## M5 Phase 7 — SEO baseline — COMPLETE (2026-07-01)
+
+SEO-01..06 Done on branch `phase-07-seo-baseline` (off `phase-14-text-page-elevation` HEAD). Shipped:
+- **OG images (SEO-01/05):** shared `renderOgImage()` in `src/lib/og/template.tsx` (`next/og` `ImageResponse`, 1200x630, dark canvas `#171721`, static wordmark + indigo node, General Sans 600 via `src/lib/og/loadFont.ts` reading the same woff2 as the wordmark). One `opengraph-image.tsx` per route dir (root + 23) reusing each route's approved `*Meta.title` (no new copy). D2: scope is all 24 v1 routes, not the original 11. `alt` uses `"<title> | dPlat"` (pipe, not em dash, per voice rules). Twitter `summary_large_image` added once on the root layout metadata; Next reuses the per-route OG image as `twitter:image`.
+- **JSON-LD (SEO-02/03/04):** `src/content/org.ts` (sourced facts), `src/lib/seo/schema.ts` (`organizationSchema`, `softwareApplicationSchema`, `contactPageSchema`), `src/components/seo/JsonLd.tsx` server component. Organization + SoftwareApplication on `/`; ContactPage on `/demo`. `[COI REVIEW]` marker sits directly above `sameAs` (TSI + LinkedIn), non-blocking per 2026-06 pre-clearance, retained for audit (D3). No logo (D5), no invented price/rating/phone/email.
+- **Canonicals (SEO-06):** already wired via `alternates.canonical` (production-origin hardcoded in content). `tests/seo/canonical.spec.ts` verifies exactly one canonical per route asserting the production origin regardless of test base URL (D1, single `EXPECTED_CANONICAL_ORIGIN` constant).
+- **Sitemap (D2):** `src/app/sitemap.ts` gained the two missing routes `/solutions/insurance` + `/solutions/healthcare`.
+- **Tests:** `tests/seo/{canonical,jsonld,og-metadata}.spec.ts` iterate `VISUAL_ROUTES` (24). They run on CI against the Vercel preview (`PLAYWRIGHT_BASE_URL`); not run locally (server hangs in sandbox).
+- **Verification:** `npx tsc --noEmit` clean, `npx eslint src tests` clean. `npx next build` could not run in this worktree (no local `node_modules`; Turbopack rejects the parent-repo symlink and the webpack builder hangs in-sandbox, same class as the known next-dev/start hang). Build + OG-route output confirmation deferred to CI / a checkout with a real `node_modules`.
+
+This is M5 phase work; the `milestone: M6` frontmatter is intentionally unchanged.
+
 ## Roadmap Evolution
 
 - 2026-05-21: Phase 5.1 inserted after Phase 5 (URGENT). HERO-04 gap closure — WebM encoder re-tune + mobile video gate. Triggered by Phase 5 Plan 05 LHCI gate failing at Case C (representative-run `/` LCP 16,219 ms vs 2,300 ms gate). Two real defects: (A) D-04 violation, mobile downloads 8.88 MB WebM; (B) WebM ladder larger than MP4 ladder at every tier.
