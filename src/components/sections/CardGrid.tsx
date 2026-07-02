@@ -74,60 +74,62 @@ export function CardGrid({
         ) : null}
       </div>
 
-      <motion.ul
-        className={cn("container-card mt-10 grid gap-4 md:mt-14", colClass)}
-        variants={staggerContainer}
-        initial={reduce ? false : "hidden"}
-        whileInView={reduce ? undefined : "show"}
-        viewport={{ once: true, amount: 0.15 }}
-      >
-        {cards.map((card) => (
-          <motion.li
-            key={card.title}
-            variants={reduce ? undefined : fadeUpItem}
-            className={cn(
-              "flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6 md:p-7",
-              hover.hoverCard
-            )}
-          >
-            {card.icon ? (
-              <span
-                aria-hidden="true"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-xs)] bg-[var(--secondary)] text-[var(--foreground)]"
-              >
-                {card.icon}
-              </span>
-            ) : null}
-            {card.eyebrow ? (
-              <p className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
-                {card.eyebrow}
-              </p>
-            ) : null}
-            <div className="flex-1">
-              <h3 className="text-h4 font-[480] text-[var(--foreground)]">
-                {card.title}
-              </h3>
-              <p className="mt-3 text-body-md text-[var(--text-tertiary)]">
-                {card.body}
-              </p>
-            </div>
-            {card.link ? (
-              <Link
-                href={card.link.href}
-                className={cn(
-                  "inline-flex min-h-touch items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]",
-                  hover.hoverArrow
-                )}
-              >
-                {card.link.label}{" "}
-                <span aria-hidden="true" className={hover.arrow}>
-                  →
+      <div className="container-card mt-10 md:mt-14">
+        <motion.ul
+          className={cn("grid gap-4", colClass)}
+          variants={staggerContainer}
+          initial={reduce ? false : "hidden"}
+          whileInView={reduce ? undefined : "show"}
+          viewport={{ once: true, amount: 0.15 }}
+        >
+          {cards.map((card) => (
+            <motion.li
+              key={card.title}
+              variants={reduce ? undefined : fadeUpItem}
+              className={cn(
+                "flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6 md:p-7",
+                hover.hoverCard
+              )}
+            >
+              {card.icon ? (
+                <span
+                  aria-hidden="true"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-xs)] bg-[var(--secondary)] text-[var(--foreground)]"
+                >
+                  {card.icon}
                 </span>
-              </Link>
-            ) : null}
-          </motion.li>
-        ))}
-      </motion.ul>
+              ) : null}
+              {card.eyebrow ? (
+                <p className="text-caption font-[480] uppercase tracking-wider text-[var(--accent-text-dark)]">
+                  {card.eyebrow}
+                </p>
+              ) : null}
+              <div className="flex-1">
+                <h3 className="text-h4 font-[480] text-[var(--foreground)]">
+                  {card.title}
+                </h3>
+                <p className="mt-3 text-body-md text-[var(--text-tertiary)]">
+                  {card.body}
+                </p>
+              </div>
+              {card.link ? (
+                <Link
+                  href={card.link.href}
+                  className={cn(
+                    "inline-flex min-h-touch items-center gap-1 text-body-strong font-[480] text-[var(--foreground)] underline-offset-4 hover:text-white hover:underline hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]",
+                    hover.hoverArrow
+                  )}
+                >
+                  {card.link.label}{" "}
+                  <span aria-hidden="true" className={hover.arrow}>
+                    →
+                  </span>
+                </Link>
+              ) : null}
+            </motion.li>
+          ))}
+        </motion.ul>
+      </div>
     </SectionContainer>
   );
 }
