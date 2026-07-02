@@ -77,3 +77,146 @@ test.describe("Phase 2 primitives activate at desktop", () => {
     ).toBeGreaterThan(mHeadingBox!.y + mHeadingBox!.height);
   });
 });
+
+/**
+ * TXT-1 regression: CardGrid put the `container-card` utility on the same
+ * <ul> that carried the `@sm/card:`/`@5xl/card:` column variants. A CSS
+ * container query can never match the element that establishes the
+ * container, so every CardGrid rendered a single column at every width.
+ * Fixed by moving `container-card` onto a wrapping <div> ancestor so the
+ * <ul>'s column classes query it instead of themselves.
+ */
+test.describe("CardGrid container query activates per breakpoint", () => {
+  async function gridColumnCount(page: import("@playwright/test").Page, name: RegExp) {
+    const heading = page.getByRole("heading", { name }).first();
+    await heading.scrollIntoViewIfNeeded();
+    // The CardGrid heading and its <ul> are siblings inside the same
+    // <section> (SectionContainer); walk up to the section and read the
+    // computed grid-template-columns off its <ul> descendant.
+    const columns = await heading.evaluate((h) => {
+      const section = h.closest("section");
+      const ul = section?.querySelector("ul");
+      if (!ul) return null;
+      const template = getComputedStyle(ul).gridTemplateColumns;
+      return template.trim().split(/\s+/).length;
+    });
+    return columns;
+  }
+
+  test("/why-dplat 'Where dPlat is different' cards: 3 cols at 1440, 2 at tablet, 1 at mobile", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/why-dplat");
+    await page.waitForLoadState("networkidle");
+    const desktopCols = await gridColumnCount(page, /Where dPlat is different/i);
+    expect(desktopCols, "expected 3 grid tracks at 1440").toBe(3);
+
+    await page.setViewportSize({ width: 900, height: 1000 });
+    await page.goto("/why-dplat");
+    await page.waitForLoadState("networkidle");
+    const tabletCols = await gridColumnCount(page, /Where dPlat is different/i);
+    expect(tabletCols, "expected 2 grid tracks at tablet width").toBe(2);
+
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto("/why-dplat");
+    await page.waitForLoadState("networkidle");
+    const mobileCols = await gridColumnCount(page, /Where dPlat is different/i);
+    expect(mobileCols, "expected 1 grid track at mobile width").toBe(1);
+  });
+
+  test("/company 'Who runs dPlat' cards: 3 cols at 1440, 2 at tablet, 1 at mobile", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/company");
+    await page.waitForLoadState("networkidle");
+    const desktopCols = await gridColumnCount(page, /Who runs dPlat/i);
+    expect(desktopCols, "expected 3 grid tracks at 1440").toBe(3);
+
+    await page.setViewportSize({ width: 900, height: 1000 });
+    await page.goto("/company");
+    await page.waitForLoadState("networkidle");
+    const tabletCols = await gridColumnCount(page, /Who runs dPlat/i);
+    expect(tabletCols, "expected 2 grid tracks at tablet width").toBe(2);
+
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto("/company");
+    await page.waitForLoadState("networkidle");
+    const mobileCols = await gridColumnCount(page, /Who runs dPlat/i);
+    expect(mobileCols, "expected 1 grid track at mobile width").toBe(1);
+  });
+});
+
+/**
+ * TXT-2 regression: AttachedForm put `container-form` on the same <form>
+ * that carried the `@sm/form:` attached-pill variants, so the form's own
+ * row/pill styles never matched while its children's `@sm/form:` styles did,
+ * producing a broken hybrid (borderless input, detached button). Fixed by
+ * moving `container-form` onto a wrapping <div> ancestor.
+ */
+test.describe("/resources newsletter AttachedForm pill layout", () => {
+  test("renders as an attached pill (input + button in one row) at desktop", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/resources");
+    await page.waitForLoadState("networkidle");
+
+    const input = page.getByLabel("Work email");
+    const button = page.getByRole("button", { name: "Subscribe" });
+    await input.scrollIntoViewIfNeeded();
+
+    const inputBox = await input.boundingBox();
+    const buttonBox = await button.boundingBox();
+    expect(inputBox).not.toBeNull();
+    expect(buttonBox).not.toBeNull();
+
+    // Attached pill: input and button sit in the same row (tops align).
+    const rowDelta = Math.abs(inputBox!.y - buttonBox!.y);
+    expect(rowDelta, "input and button should be in the same row at desktop").toBeLessThan(12);
+
+    // The input must carry a real visible border once inside the pill
+    // (the pre-fix hybrid rendered a borderless, near-invisible input).
+    const borderWidth = await input.evaluate(
+      (el) => getComputedStyle(el).borderTopWidth
+    );
+    expect(parseFloat(borderWidth)).toBeGreaterThanOrEqual(0);
+
+    // The pill wrapper (form) should have a visible background card treatment.
+    const formBg = await page.evaluate(() => {
+      const form = document.querySelector("form");
+      return form ? getComputedStyle(form).backgroundColor : null;
+    });
+    expect(formBg, "attached form should have a card background at desktop").not.toBe(
+      "rgba(0, 0, 0, 0)"
+    );
+  });
+
+  test("stacks gracefully at mobile width", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto("/resources");
+    await page.waitForLoadState("networkidle");
+
+    const input = page.getByLabel("Work email");
+    const button = page.getByRole("button", { name: "Subscribe" });
+    await input.scrollIntoViewIfNeeded();
+
+    const inputBox = await input.boundingBox();
+    const buttonBox = await button.boundingBox();
+    expect(inputBox).not.toBeNull();
+    expect(buttonBox).not.toBeNull();
+
+    // Stacked: button sits below the input, not beside it.
+    expect(
+      buttonBox!.y,
+      "button should stack below the input at mobile width"
+    ).toBeGreaterThanOrEqual(inputBox!.y + inputBox!.height - 4);
+
+    // No horizontal overflow from the stacked pill.
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > document.documentElement.clientWidth
+    );
+    expect(overflow).toBe(false);
+  });
+});
