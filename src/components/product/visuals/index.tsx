@@ -31,21 +31,29 @@ function Fallback() {
 
 // next/dynamic options must be an inline object literal (Turbopack static
 // analysis requirement), so each call repeats { ssr: false, loading }.
+// The accordion renders the Console HALF of each platform flagship only; the
+// Explorable inspect panel stays on the /platform/* deep-dive pages. Mounting
+// the full *Flagship here stacked two visuals per item (Connor, 2026-07-02).
 const VISUALS: Record<AccordionVisualId, React.ComponentType> = {
   placement: dynamic(
-    () => import("./PlacementFlagship").then((m) => m.PlacementFlagship),
+    () =>
+      import("./accordion-consoles").then((m) => m.PlacementAccordionConsole),
     { ssr: false, loading: Fallback },
   ),
   optimization: dynamic(
-    () => import("./OptimizationFlagship").then((m) => m.OptimizationFlagship),
+    () =>
+      import("./accordion-consoles").then(
+        (m) => m.OptimizationAccordionConsole,
+      ),
     { ssr: false, loading: Fallback },
   ),
   issues: dynamic(
-    () => import("./IssuesFlagship").then((m) => m.IssuesFlagship),
+    () => import("./accordion-consoles").then((m) => m.IssuesAccordionConsole),
     { ssr: false, loading: Fallback },
   ),
   reporting: dynamic(
-    () => import("./ReportingFlagship").then((m) => m.ReportingFlagship),
+    () =>
+      import("./accordion-consoles").then((m) => m.ReportingAccordionConsole),
     { ssr: false, loading: Fallback },
   ),
   compliance: dynamic(
