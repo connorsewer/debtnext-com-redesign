@@ -50,7 +50,10 @@ export const integrationsSystemMap = {
     {
       id: "sor",
       label: "System of record",
-      sub: "SAP · Oracle ERP · billing / CIS",
+      // NBSP around "/" (billing / CIS) keeps "CIS" from wrapping onto
+      // its own line as an orphan in the narrow 4-column schematic grid; same
+      // words and punctuation as the approved copy, layout-only whitespace fix.
+      sub: "SAP · Oracle ERP · billing / CIS",
       kind: "source",
     },
     {
