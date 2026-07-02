@@ -14,8 +14,8 @@ excluded.
 
 | Plan | Title | Priority | Effort | Depends on | Status |
 |------|-------|----------|--------|------------|--------|
-| 001 | Restore font-size on nav/footer/forms (bare `text-[var(--text-*)]` bug) | P1 | S | — | TODO |
-| 002 | Reveals honor prefers-reduced-motion (fail open) | P1 | S | — | TODO |
+| 001 | Restore font-size on nav/footer/forms (bare `text-[var(--text-*)]` bug) | P1 | S | — | DONE |
+| 002 | Reveals honor prefers-reduced-motion (fail open) | P1 | S | — | DONE |
 | 003 | Interaction polish (hover affordance, ProcessStrip fill, 44px dropdowns, off-screen loops) | P2 | S | — | TODO |
 | 004 | Token fidelity (icon-tile gradient, nav underline, attached-form radius, hero weight) | P2 | S | — | TODO |
 | 005 | Extract `<Eyebrow>` primitive (codemod ~24 files) | P2 | M | 001 | TODO |

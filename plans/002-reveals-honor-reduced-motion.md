@@ -18,6 +18,18 @@
 - **Depends on**: none
 - **Category**: bug (accessibility)
 - **Planned at**: commit `273ccf0`, 2026-06-13
+- **Executed at**: 2026-07-01. Drift check confirmed `IssuesWorklist.tsx`,
+  `OptimizationEngine.tsx`, `PlacementMatrix.tsx`, `ReportingDashboard.tsx`
+  were deleted by the Phase 14 archetype-pages work and replaced with
+  `IssuesFlagship.tsx`, `OptimizationFlagship.tsx`, `PlacementFlagship.tsx`,
+  `ReportingFlagship.tsx` (plus new shared `parts.tsx`/`archetypes.tsx`). The
+  4 replacement files were verified to have no raw scroll-reveal pattern at
+  all (built on the already-reduced-motion-safe primitives in `parts.tsx`), so
+  those 4 original findings (and the inline `OptimizationEngine.tsx` Step 3
+  fix) are moot/already-resolved. The remaining 5 sites
+  (`PlatformSystemMap.tsx`, `ComplianceStandards.tsx` x2, `CompareMatrix.tsx`
+  x2, `LeadershipTable.tsx`, `IntegrationTable.tsx`) were unchanged and fixed
+  as planned.
 
 ## Why this matters
 

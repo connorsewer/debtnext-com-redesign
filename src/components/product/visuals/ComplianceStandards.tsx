@@ -11,9 +11,9 @@ import { Tag, TypeChip, ValueBar, type ToneKey } from "@/components/product/visu
 import {
   AnimatedNumber,
   fadeUpItem,
-  inViewProps,
   popItem,
   staggerContainer,
+  useInViewProps,
 } from "@/components/product/motion";
 
 // [CLAIMS REVIEW] placeholder values — Andrew sign-off required.
@@ -31,6 +31,7 @@ const EXCEPTIONS = [
 
 export const ComplianceStandards = React.memo(function ComplianceStandards() {
   const reduce = useReducedMotion();
+  const reveal = useInViewProps();
   return (
     // role="img" + a root text alternative so this visual self-labels like the
     // four Console-based homepage flagships (which emit role="img" via their
@@ -60,7 +61,7 @@ export const ComplianceStandards = React.memo(function ComplianceStandards() {
       <motion.div
         className="mt-2 flex flex-col gap-2.5"
         variants={staggerContainer}
-        {...inViewProps}
+        {...reveal}
       >
         {VENDORS.map((v) => (
           <motion.div key={v.name} variants={fadeUpItem} className="grid grid-cols-[1.4fr_2fr_auto_auto] items-center gap-3">
@@ -95,7 +96,7 @@ export const ComplianceStandards = React.memo(function ComplianceStandards() {
       <motion.div
         className="mt-2 flex flex-col divide-y divide-white/[0.06]"
         variants={staggerContainer}
-        {...inViewProps}
+        {...reveal}
       >
         {EXCEPTIONS.map((e) => (
           <motion.div key={e.desc} variants={fadeUpItem} className="flex items-center justify-between gap-3 py-2">
