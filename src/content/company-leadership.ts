@@ -23,7 +23,7 @@ export const leadershipHero = {
   eyebrow: "Leadership",
   h1: "The people who build dPlat have run recovery operations.",
   body:
-    "dPlat is led by a team with more than 100 combined years in recovery operations. Not software executives who learned the domain on the job. People who spent careers inside placement, vendor management, and platform delivery, and then built the system they wished they'd had.",
+    "dPlat is led by a team with more than 100 combined years in recovery operations. They spent their careers inside placement, vendor management, and platform delivery, and then built the system they wished they'd had.",
   primaryCta: { label: "Request a demo", href: "/demo" },
   secondaryCta: { label: "See the platform", href: "/platform" },
 };
