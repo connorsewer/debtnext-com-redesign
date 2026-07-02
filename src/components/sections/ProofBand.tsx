@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import { CountUp } from "@/components/sections/CountUp";
+import { useHydrated } from "@/components/motion/useHydrated";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
 import { track } from "@/lib/analytics";
@@ -56,13 +57,17 @@ export function ProofBand({
   linkLocation = "proof_band",
 }: ProofBandProps) {
   const reduceMotion = useReducedMotion();
-  const enter = reduceMotion
-    ? { initial: false, animate: undefined }
-    : {
+  const hydrated = useHydrated();
+  // Fail open: arm the opacity:0 entrance only after hydration (and never under
+  // reduced motion) so the stat numbers render in the SSR / pre-hydration DOM.
+  const armed = !reduceMotion && hydrated;
+  const enter = armed
+    ? {
         initial: { opacity: 0, y: 16 },
         whileInView: { opacity: 1, y: 0 },
         viewport: { once: true, margin: "-10% 0px" },
-      };
+      }
+    : { initial: false, animate: undefined };
 
   return (
     <SectionContainer surface={surface}>
