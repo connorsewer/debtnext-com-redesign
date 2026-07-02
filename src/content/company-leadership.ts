@@ -52,7 +52,7 @@ export const leadershipTeam: {
         "Co-founder & President. Leads corporate strategy, sales, and client engagement across the dPlat business.",
     },
     {
-      eyebrow: "Co-founder",
+      eyebrow: "25 years",
       title: "Rob Novosel",
       body:
         "Co-founder & CTO. Co-founded DebtNext in 2003. Oversees product, operations, and technology, including platform development, implementation success, and support.",
