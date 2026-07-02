@@ -165,6 +165,10 @@ public/
 
 ## What's complete
 
+### 2026-07-02 — homepage accordion single-visual fix
+
+- The homepage FeatureAccordion `VISUALS` registry now renders the Console half of each platform flagship via `src/components/product/visuals/accordion-consoles.tsx` (payloads: `*FlagshipConsole`). The full `*Flagship` components (Console + Explorable inspect panel) stay on their `/platform/*` pages. Mounting the full Flagship in the accordion stacked two visuals per item (Connor preview review, 2026-07-02). ComplianceStandards unchanged.
+
 ### M1 — Foundation (deployed)
 
 - Repo normalized: `content/pages/*.md`, `docs/content-map.md`, `DESIGN.md`, all hero assets in `public/hero/`
