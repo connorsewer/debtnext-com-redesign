@@ -82,6 +82,104 @@ export interface ConsoleData {
 }
 
 // ---------------------------------------------------------------------------
+// Handoff showcase payloads (homepage THE PLATFORM band, 2026-07-02 rework).
+//
+// The 4 bespoke showcase components on the homepage handoff band render a denser
+// slice of the approved Executive Portfolio Overview dashboard than the flat
+// Console archetype. These interfaces EXTEND (do not replace) the ConsoleData the
+// facade already carries: each showcase payload keeps the ConsoleData surface
+// (header/rows/pills/ariaSummary, the [CLAIMS REVIEW]-auditable home) and adds a
+// `showcase` block with the extra real-shaped figures (trend series, ROI, letter
+// grades, KPI tiles) drawn from the dashboard reference. Numbers stay governed
+// copy: anonymized, generic, qualified, label-paired for every color encoding.
+// ---------------------------------------------------------------------------
+
+/** placement showcase: honestly-proportional routing pools (35/28/18/12 + held 7
+ *  = 100) plus a per-pool vendor count and a live routing tick. */
+export interface PlacementShowcaseData extends ConsoleData {
+  showcase: {
+    /** Waterfall-ordered routing pools; shares MUST sum to 100. */
+    pools: {
+      name: string;
+      vendors: string; // "2 vendors"
+      share: number; // percent, 0..100
+      tone?: "indigo" | "success" | "warning" | "neutral";
+    }[];
+    /** Live routing ticks streamed under the pool bars (batch progress hints). */
+    ticks: { label: string; value: string }[];
+  };
+}
+
+/** performance showcase: ranked vendor scorecard rows with proportional
+ *  liquidation bars, per-row trend sparklines, letter-grade tier chips (text +
+ *  color), plus ROI and collections pulled from the reference scorecard table. */
+export interface PerformanceShowcaseData extends ConsoleData {
+  showcase: {
+    vendors: {
+      name: string;
+      grade: string; // "A", "A-", "B", "C" -- text label, never color alone
+      gradeTone: "success" | "warning" | "breach";
+      liquidation: number; // percent
+      liquidationDelta: string; // "+2.1 vs prior 30d"
+      deltaTone: "success" | "breach";
+      roi: number; // percent
+      collections: string; // "$5.6M"
+      trend: number[]; // 0..1 sparkline series
+    }[];
+  };
+}
+
+/** issues showcase: SLA-proximity-ordered worklist rows with label-paired status
+ *  chips and an SLA age bar, keeping the auto-handled row's honest "closed / no
+ *  SLA window" treatment. */
+export interface IssuesShowcaseData extends ConsoleData {
+  showcase: {
+    items: {
+      type: string; // "SCRA . Active-duty verification"
+      typeTone: "special" | "warning" | "breach" | "neutral";
+      account: string; // "7715-009"
+      vendor: string;
+      sla: string; // "Overdue 1h" | "Due 22h" | "Closed"
+      status: string; // "Escalated" | "Investigating" | "Auto-handled"
+      statusTone: "breach" | "warning" | "success" | "neutral";
+      /** SLA-age fill 0..100; higher = closer to / past breach. */
+      age: number;
+      ageTone: "breach" | "warning" | "success";
+    }[];
+  };
+}
+
+/** reporting showcase: executive KPI row (net-back, inventory, liquidation), a
+ *  dual 8-week trend (inventory + liquidation area/line), and adherence bars with
+ *  a REVIEW outlier, echoing the exec dashboard layout. */
+export interface ReportingShowcaseData extends ConsoleData {
+  showcase: {
+    kpis: {
+      caption: string;
+      value: number;
+      prefix?: string;
+      suffix?: string;
+      decimals?: number;
+      delta: string;
+      deltaTone: "success" | "breach";
+    }[];
+    /** 8-week trend, both series normalized 0..1 for the area/line atoms. */
+    trend: {
+      weeks: string[]; // x-axis labels, e.g. "May 12"
+      inventory: number[]; // 0..1
+      liquidation: number[]; // 0..1
+    };
+    /** SLA-adherence bars per pool; one carries a REVIEW label-paired outlier. */
+    adherence: {
+      label: string;
+      value: number; // percent
+      tone: "success" | "warning";
+      note?: string; // "Review" -- label-paired, never color alone
+    }[];
+  };
+}
+
+// ---------------------------------------------------------------------------
 // DataStoryData (10-RESEARCH.md §1)
 // ---------------------------------------------------------------------------
 

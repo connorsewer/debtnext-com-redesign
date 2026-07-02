@@ -15,13 +15,10 @@
 export { FramedDashboard } from "./FramedDashboard";
 
 import type { PlatformTab } from "@/content/homepage-hero";
-import { Console } from "@/components/product/visuals/Console";
-import {
-  handoffPlacementConsole,
-  handoffPerformanceConsole,
-  handoffIssuesConsole,
-  handoffReportingConsole,
-} from "@/content/visuals";
+import { HandoffPlacementShowcase } from "@/components/product/visuals/HandoffPlacementShowcase";
+import { HandoffPerformanceShowcase } from "@/components/product/visuals/HandoffPerformanceShowcase";
+import { HandoffIssuesShowcase } from "@/components/product/visuals/HandoffIssuesShowcase";
+import { HandoffReportingShowcase } from "@/components/product/visuals/HandoffReportingShowcase";
 
 const placementMockupTitle = "Placement run · 12:04 PM";
 const vendorPerformanceMockupTitle = "Vendor scorecard · YTD";
@@ -31,13 +28,13 @@ const reportingMockupTitle = "Liquidation trend · 8 weeks";
 export function MockupForTab({ id }: { id: PlatformTab["id"] }) {
   switch (id) {
     case "placement":
-      return <Console bare data={handoffPlacementConsole} />;
+      return <HandoffPlacementShowcase />;
     case "performance":
-      return <Console bare data={handoffPerformanceConsole} />;
+      return <HandoffPerformanceShowcase />;
     case "issues":
-      return <Console bare data={handoffIssuesConsole} />;
+      return <HandoffIssuesShowcase />;
     case "reporting":
-      return <Console bare data={handoffReportingConsole} />;
+      return <HandoffReportingShowcase />;
   }
 }
 
