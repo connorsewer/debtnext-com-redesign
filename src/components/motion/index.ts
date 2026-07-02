@@ -20,6 +20,7 @@
 // 1 + tokens
 export * from "./tokens";
 export * from "./Reveal";
+export { useHydrated } from "./useHydrated";
 
 // 2 live data
 export * from "./LiveValue";

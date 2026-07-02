@@ -6,7 +6,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
-import { fadeUpItem, staggerContainer } from "@/components/product/motion";
+import { fadeUpItem, staggerContainer, useHydrated } from "@/components/product/motion";
 import { cn } from "@/lib/utils";
 import hover from "@/components/motion/hover.module.css";
 
@@ -40,6 +40,10 @@ export function IntegrationStrip({
   link,
 }: IntegrationStripProps) {
   const reduce = useReducedMotion();
+  const hydrated = useHydrated();
+  // Fail open: arm the hidden initial state only after hydration (and never
+  // under reduced motion) so the SSR markup renders visible.
+  const armed = !reduce && hydrated;
   return (
     <SectionContainer surface={surface}>
       <div className="max-w-3xl">
@@ -61,8 +65,8 @@ export function IntegrationStrip({
       <motion.ul
         className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-14 lg:grid-cols-4"
         variants={staggerContainer}
-        initial={reduce ? false : "hidden"}
-        whileInView={reduce ? undefined : "show"}
+        initial={armed ? "hidden" : false}
+        whileInView={armed ? "show" : undefined}
         viewport={{ once: true, amount: 0.2 }}
       >
         {cards.map((card) => (
