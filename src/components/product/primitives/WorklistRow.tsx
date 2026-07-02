@@ -44,7 +44,7 @@ export interface WorklistRowProps {
 }
 
 /**
- * Console row atom. Generalizes the inline `grid-cols-[1.1fr_2fr_0.6fr]` row in
+ * Console row atom. Generalizes the inline `grid-cols-[1.5fr_1.6fr_0.7fr]` row in
  * PlacementMatrix/IssuesWorklist into a single token-driven atom so the Console
  * archetype (Phase 10-05) composes rows without per-page styling.
  *
@@ -70,7 +70,12 @@ export const WorklistRow = React.memo(function WorklistRow({
     <div
       ref={ref}
       className={cn(
-        "grid grid-cols-[1.1fr_2fr_0.6fr] items-center gap-x-4 gap-y-1",
+        // PLT-8: the primary/secondary cell was starved at 1.1fr against a 2fr
+        // bar, so sub-labels truncated ("Settlement threshold · spe...", "SCRA ·
+        // ISS-4824 · r..."). Give the label cell more room and trim the bar cell;
+        // the bar fills its track proportionally at any width, so it loses the
+        // least from a narrower column.
+        "grid grid-cols-[1.5fr_1.6fr_0.7fr] items-center gap-x-4 gap-y-1",
         className,
       )}
     >
@@ -116,7 +121,17 @@ export const WorklistRow = React.memo(function WorklistRow({
                 suffix={trailing.suffix ?? ""}
               />
             ) : (
-              `${trailing.prefix ?? ""}${trailing.value}${trailing.suffix ?? ""}`
+              // Static branch (SOL-7): format numeric values with the en-US
+              // locale so thousands separators match AnimatedNumber's output
+              // (84,210 not 84210). Pre-formatted strings pass through unchanged.
+              `${trailing.prefix ?? ""}${
+                typeof trailing.value === "number"
+                  ? trailing.value.toLocaleString("en-US", {
+                      minimumFractionDigits: trailing.decimals ?? 0,
+                      maximumFractionDigits: trailing.decimals ?? 0,
+                    })
+                  : trailing.value
+              }${trailing.suffix ?? ""}`
             )}
           </span>
         ) : null}

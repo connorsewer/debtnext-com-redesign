@@ -54,14 +54,24 @@ export const SegmentedBar = React.memo(function SegmentedBar({
   );
 });
 
-/** Single-value progress bar with a tone color. */
+/** Single-value progress bar with a tone color.
+ *
+ *  `value` is a 0..100 CSS-percent fill width (the atom's explicit contract).
+ *  When the fill is a true percentage of some whole (a vendor-allocation share,
+ *  a match rate), the default aria-label announces it as a percent. When the
+ *  fill is a proportional length derived from a non-percentage value (an account
+ *  count scaled to the series max), pass `ariaValueLabel` so the accessible name
+ *  describes the series member instead of announcing a made-up percentage
+ *  (SOL-3: the old `${value}%` label was a screen-reader lie for count bars). */
 export const ValueBar = React.memo(function ValueBar({
   value,
   tone = "indigo",
+  ariaValueLabel,
   className,
 }: {
   value: number;
   tone?: "indigo" | "success" | "warning";
+  ariaValueLabel?: string;
   className?: string;
 }) {
   const reduce = useReducedMotion();
@@ -79,7 +89,7 @@ export const ValueBar = React.memo(function ValueBar({
       ref={ref}
       className={cn("h-1.5 w-full rounded-full bg-white/10", className)}
       role="img"
-      aria-label={`${value}%`}
+      aria-label={ariaValueLabel ?? `${value}%`}
     >
       <motion.div
         className="h-full origin-left rounded-full"
