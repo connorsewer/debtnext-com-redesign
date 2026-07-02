@@ -23,7 +23,7 @@ export const careersHero = {
   h1: "Build software that runs recovery at national scale.",
   body:
     "DebtNext is a small, onshore team focused on one product. The platform manages more than $1.9B in transactions a year on behalf of clients, so the work is real and the stakes are concrete. If you want ownership over software that does a hard job well, this is a place to do it.",
-  primaryCta: { label: "Get in touch", href: "/company/contact" },
+  primaryCta: { label: "Request a demo", href: "/demo" },
   secondaryCta: { label: "See the platform", href: "/platform" },
 };
 
@@ -58,5 +58,5 @@ export const careersOpenRoles = {
 export const careersFinalCta = {
   heading: "Find your fit.",
   body: "Tell us where you'd fit and we'll get you to the right opening.",
-  primaryCta: { label: "Get in touch about roles", href: "/company/contact" },
+  primaryCta: { label: "Request a demo", href: "/demo" },
 };
