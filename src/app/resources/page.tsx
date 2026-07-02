@@ -4,9 +4,9 @@ import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { CardGrid } from "@/components/sections/CardGrid";
 import { CaseStudyBand } from "@/components/sections/CaseStudyBand";
 import { FinalCTA } from "@/components/sections/FinalCTA";
+import { NewsletterSignup } from "@/components/sections/NewsletterSignup";
 import { PageHero } from "@/components/sections/PageHero";
 import { SectionContainer } from "@/components/sections/SectionContainer";
-import { AttachedForm } from "@/components/ui/AttachedForm";
 import {
   resourcesCaseStudies,
   resourcesCategories,
@@ -61,14 +61,15 @@ export default function ResourcesPage() {
           </p>
         </div>
         <div className="mt-8 flex justify-center">
-          <AttachedForm
+          <NewsletterSignup
             inputLabel={resourcesNewsletter.inputLabel}
             inputPlaceholder={resourcesNewsletter.inputPlaceholder}
             buttonLabel={resourcesNewsletter.buttonLabel}
           />
         </div>
         <p className="mt-4 text-center text-body-sm text-[var(--text-tertiary)]">
-          One email a month. Unsubscribe anytime.
+          The digest isn&apos;t live yet. This takes you to request a demo,
+          so a real person follows up in the meantime.
         </p>
       </SectionContainer>
 

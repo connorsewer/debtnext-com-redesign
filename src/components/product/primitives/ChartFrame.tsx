@@ -69,11 +69,14 @@ export const ChartFrame = React.memo(function ChartFrame({
       </div>
 
       {annotation ? (
+        // SOL-8: the value span must stay on one line ("2 paths", "6 portfolios")
+        // instead of wrapping beside its caption. whitespace-nowrap + shrink-0
+        // hold the value together; the caption takes the remaining width and wraps.
         <div className="mt-3 flex items-baseline gap-2">
-          <span className="text-[18px] font-[500] leading-none tracking-[-0.022em] tabular-nums text-[var(--product-text)]">
+          <span className="shrink-0 whitespace-nowrap text-[18px] font-[500] leading-none tracking-[-0.022em] tabular-nums text-[var(--product-text)]">
             {annotation.value}
           </span>
-          <span className="text-[11px] text-[var(--product-text-3)]">
+          <span className="min-w-0 text-[11px] text-[var(--product-text-3)]">
             {annotation.caption}
           </span>
         </div>

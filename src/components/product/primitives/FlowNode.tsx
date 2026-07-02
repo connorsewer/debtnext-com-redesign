@@ -1,9 +1,5 @@
 "use client";
 
-// PROVISIONAL (A2): there is no existing schematic implementation to extract
-// from; SchematicData is MEDIUM confidence. Harden this shape in Phase 11
-// against PlatformSystemMap.tsx + the real "how it works" data before locking it.
-
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -31,6 +27,14 @@ export interface FlowNodeProps {
  * nodes expose role="img" + aria-label so the diagram reads to assistive tech;
  * decorative nodes are aria-hidden.
  *
+ * `w-full` + `min-h-[56px]` (with the sub-label) keep every node in a row the
+ * same footprint so edges, which anchor to the row's shared center line, never
+ * enter a box above or below its actual text. The background is opaque enough
+ * (`--product-card`-family surface, not a near-transparent gradient) that an
+ * edge routed behind the node layer can never show through the label text,
+ * even if the geometry is ever wrong; boundary-correct edge geometry (see
+ * Schematic.tsx) is the primary fix, this is the backstop.
+ *
  * Static atom — no layout-property animation (Pitfall 5 / T-10-06).
  */
 export const FlowNode = React.memo(function FlowNode({
@@ -50,16 +54,17 @@ export const FlowNode = React.memo(function FlowNode({
       ref={ref}
       {...a11y}
       className={cn(
-        "inline-flex flex-col rounded-[10px] border border-[rgba(255,255,255,0.08)] px-3 py-2",
+        "flex w-full min-h-[52px] flex-col justify-center gap-0.5 rounded-[10px] border border-[rgba(255,255,255,0.08)] px-3 py-2.5",
         className,
       )}
       style={{
+        backgroundColor: "var(--product-card)",
         backgroundImage:
-          "linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.008))",
+          "linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015))",
         boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${tone} 22%, transparent)`,
       }}
     >
-      <span className="flex items-center gap-1.5 text-[12px] font-[500] text-[var(--product-text)]">
+      <span className="flex items-center gap-1.5 text-[12px] font-[500] leading-tight text-[var(--product-text)]">
         <span
           aria-hidden="true"
           className="h-1.5 w-1.5 shrink-0 rounded-full"
@@ -68,7 +73,9 @@ export const FlowNode = React.memo(function FlowNode({
         {label}
       </span>
       {sub ? (
-        <span className="mt-0.5 text-[10.5px] text-[var(--product-text-3)]">{sub}</span>
+        <span className="text-balance text-[10.5px] leading-snug text-[var(--product-text-3)]">
+          {sub}
+        </span>
       ) : null}
     </div>
   );
