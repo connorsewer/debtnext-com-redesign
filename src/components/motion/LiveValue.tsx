@@ -7,6 +7,11 @@
 // Reduced-motion contract (fail open): AnimatedNumber early-returns the final
 // formatted value under prefers-reduced-motion; NumberShift renders the static
 // string. Content is never stuck mid-count or at opacity:0.
+//
+// SSR contract (fail open): the final formatted value is the server-rendered
+// text. The count-up from zero is a post-hydration enhancement only, so a
+// crawler, a capture tool, or a user who reads the number before hydration sees
+// the real figure, never a 0.
 "use client";
 
 import * as React from "react";
@@ -44,14 +49,13 @@ export function AnimatedNumber({
   React.useEffect(() => {
     const node = ref.current;
     if (!node) return;
-    if (reduce) {
-      node.textContent = format(value);
-      return;
-    }
-    if (!inView) {
-      node.textContent = format(0);
-      return;
-    }
+    // Fail open: the count-up runs only as a post-hydration enhancement, and
+    // only once the element scrolls into view. Until then the node keeps the
+    // final value it was server-rendered with, so it is never captured at 0.
+    if (reduce || !inView) return;
+    // Reset to 0 synchronously here (not in render), so the first animated
+    // frame starts from zero without ever server-rendering a 0.
+    node.textContent = format(0);
     const controls = animate(0, value, {
       duration: DUR_COUNT,
       ease: EASE_ENTRANCE,
@@ -62,13 +66,15 @@ export function AnimatedNumber({
     return () => controls.stop();
   }, [value, reduce, inView, format]);
 
+  // Always render the final value as the SSR / pre-hydration text. The effect
+  // above (post-mount, on scroll-into-view) is what swaps in the count-up.
   return (
     <span
       ref={ref}
       className={className}
       style={{ fontVariantNumeric: "tabular-nums" }}
     >
-      {format(reduce ? value : 0)}
+      {format(value)}
     </span>
   );
 }

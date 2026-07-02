@@ -6,7 +6,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
-import { fadeUpItem, staggerContainer } from "@/components/product/motion";
+import { fadeUpItem, staggerContainer, useHydrated } from "@/components/product/motion";
 import { cn } from "@/lib/utils";
 import hover from "@/components/motion/hover.module.css";
 
@@ -50,6 +50,10 @@ export function CardGrid({
   id,
 }: CardGridProps) {
   const reduce = useReducedMotion();
+  const hydrated = useHydrated();
+  // Fail open: hold the hidden initial state off until reduced motion is
+  // resolved AND the client has hydrated, so SSR markup renders visible.
+  const armed = !reduce && hydrated;
   const colClass = {
     2: "@sm/card:grid-cols-2",
     3: "@sm/card:grid-cols-2 @5xl/card:grid-cols-3",
@@ -77,8 +81,8 @@ export function CardGrid({
       <motion.ul
         className={cn("container-card mt-10 grid gap-4 md:mt-14", colClass)}
         variants={staggerContainer}
-        initial={reduce ? false : "hidden"}
-        whileInView={reduce ? undefined : "show"}
+        initial={armed ? "hidden" : false}
+        whileInView={armed ? "show" : undefined}
         viewport={{ once: true, amount: 0.15 }}
       >
         {cards.map((card) => (

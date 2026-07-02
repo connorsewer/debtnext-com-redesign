@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
-import { fadeUpItem, staggerContainer } from "@/components/product/motion";
+import { fadeUpItem, staggerContainer, useHydrated } from "@/components/product/motion";
 
 export interface BulletListProps {
   eyebrow?: string;
@@ -29,6 +29,10 @@ export function BulletList({
   surface = "elevated-dark",
 }: BulletListProps) {
   const reduce = useReducedMotion();
+  const hydrated = useHydrated();
+  // Fail open: arm the hidden initial state only after hydration (and never
+  // under reduced motion) so the SSR markup renders the bullet text visible.
+  const armed = !reduce && hydrated;
   return (
     <SectionContainer surface={surface}>
       <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
@@ -51,8 +55,8 @@ export function BulletList({
         <motion.ul
           className="grid gap-3"
           variants={staggerContainer}
-          initial={reduce ? false : "hidden"}
-          whileInView={reduce ? undefined : "show"}
+          initial={armed ? "hidden" : false}
+          whileInView={armed ? "show" : undefined}
           viewport={{ once: true, amount: 0.2 }}
         >
           {bullets.map((bullet) => (

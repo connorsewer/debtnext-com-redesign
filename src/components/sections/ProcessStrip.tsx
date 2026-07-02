@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
-import { fadeUpItem, staggerContainer } from "@/components/product/motion";
+import { fadeUpItem, staggerContainer, useHydrated } from "@/components/product/motion";
 
 export interface ProcessStep {
   title: string;
@@ -29,6 +29,10 @@ export function ProcessStrip({
   surface = "dark",
 }: ProcessStripProps) {
   const reduce = useReducedMotion();
+  const hydrated = useHydrated();
+  // Fail open: arm the hidden initial state only after hydration (and never
+  // under reduced motion) so the SSR markup renders visible.
+  const armed = !reduce && hydrated;
   return (
     <SectionContainer surface={surface}>
       <div className="max-w-3xl">
@@ -45,8 +49,8 @@ export function ProcessStrip({
       <motion.ol
         className="mt-10 flex flex-col gap-0 md:mt-14 @md/section:grid @md/section:gap-px @md/section:overflow-hidden @md/section:rounded-[var(--radius-sm)] @md/section:bg-[var(--border)] @md/section:grid-cols-3 @lg/section:grid-cols-5"
         variants={staggerContainer}
-        initial={reduce ? false : "hidden"}
-        whileInView={reduce ? undefined : "show"}
+        initial={armed ? "hidden" : false}
+        whileInView={armed ? "show" : undefined}
         viewport={{ once: true, amount: 0.2 }}
       >
         {steps.map((step, idx) => (
