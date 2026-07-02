@@ -15,10 +15,10 @@ import { VISUAL_ROUTES } from "../helpers/routes";
 const EXPECTED_CANONICAL_ORIGIN = "https://debtnext.com";
 
 function expectedCanonical(route: string): string {
-  // The homepage canonical carries a trailing slash ("https://debtnext.com/");
-  // every other route is the origin + path with no trailing slash.
+  // Next normalizes the homepage canonical to the bare origin (no trailing
+  // slash); every other route is the origin + path with no trailing slash.
   if (route === "/") {
-    return `${EXPECTED_CANONICAL_ORIGIN}/`;
+    return EXPECTED_CANONICAL_ORIGIN;
   }
   return `${EXPECTED_CANONICAL_ORIGIN}${route}`;
 }
