@@ -136,7 +136,7 @@ export function HandoffPerformanceShowcase() {
       </RevealStagger>
 
       <div className="flex flex-wrap gap-2">
-        <StatPill label="4 vendors scored" />
+        <StatPill label={`${data.showcase.vendors.length} vendors scored`} />
         <StatPill label="Liquidation · trailing 30d" />
         <StatPill label="Grades update as pool performance shifts" tone="indigo" />
       </div>

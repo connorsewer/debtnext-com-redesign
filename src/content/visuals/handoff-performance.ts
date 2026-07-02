@@ -67,13 +67,13 @@ export const handoffPerformanceConsole = {
       trailing: { value: 9.6, suffix: "%", decimals: 1 },
     },
   ],
-  pills: [{ label: "4 vendors scored" }, { label: "Liquidation, trailing 30d" }],
+  pills: [{ label: "5 vendors scored" }, { label: "Liquidation, trailing 30d" }],
   ariaSummary:
     "Vendor scorecard console. Liquidation across all pools is 14.7%, up 1.3% versus the prior 30 days. Four vendors are graded: ABC Recovery grade A at 18.7% liquidation, up 2.1; Global Collect grade A- at 16.3%, up 0.8; Summit Recovery grade B at 13.5%, down 0.4; GDW Recovery grade C at 9.6%, down 1.7.",
   showcase: {
     // Vendor names are FIXED anonymized labels (do not rename). Liquidation %,
-    // grade, and delta mirror the payload rows; ROI% and collections are drawn
-    // from the approved Vendor Performance Scorecard reference table.
+    // grade, and delta mirror the payload rows; ROI% and collections are
+    // real-shaped anonymized figures consistent with the scorecard visual.
     vendors: [
       {
         name: "ABC Recovery",
@@ -82,7 +82,7 @@ export const handoffPerformanceConsole = {
         liquidation: 18.7,
         liquidationDelta: "+2.1 vs prior 30d",
         deltaTone: "success",
-        roi: 18.7,
+        roi: 24.2,
         collections: "$5.6M",
         trend: [0.62, 0.68, 0.71, 0.74, 0.79, 0.83, 0.88, 0.94],
       },
@@ -93,9 +93,20 @@ export const handoffPerformanceConsole = {
         liquidation: 16.3,
         liquidationDelta: "+0.8 vs prior 30d",
         deltaTone: "success",
-        roi: 16.3,
+        roi: 21.6,
         collections: "$4.2M",
         trend: [0.58, 0.6, 0.63, 0.66, 0.68, 0.72, 0.76, 0.81],
+      },
+      {
+        name: "Best Resolution",
+        grade: "B+",
+        gradeTone: "warning",
+        liquidation: 14.8,
+        liquidationDelta: "+0.3 vs prior 30d",
+        deltaTone: "success",
+        roi: 19.1,
+        collections: "$3.3M",
+        trend: [0.55, 0.57, 0.6, 0.61, 0.63, 0.66, 0.68, 0.7],
       },
       {
         name: "Summit Recovery",
@@ -104,7 +115,7 @@ export const handoffPerformanceConsole = {
         liquidation: 13.5,
         liquidationDelta: "-0.4 vs prior 30d",
         deltaTone: "breach",
-        roi: 13.5,
+        roi: 15.4,
         collections: "$2.1M",
         trend: [0.7, 0.68, 0.66, 0.64, 0.63, 0.61, 0.6, 0.58],
       },
@@ -115,7 +126,7 @@ export const handoffPerformanceConsole = {
         liquidation: 9.6,
         liquidationDelta: "-1.7 vs prior 30d",
         deltaTone: "breach",
-        roi: 9.6,
+        roi: 10.8,
         collections: "$1.1M",
         trend: [0.72, 0.68, 0.62, 0.56, 0.5, 0.45, 0.41, 0.38],
       },
