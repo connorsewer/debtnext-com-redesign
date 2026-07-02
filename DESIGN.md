@@ -524,6 +524,7 @@ The supplied CSS is a good implementation baseline because it maps Tailwind them
 
 - Root tokens must support light and dark modes.
 - The marketing site should default to dark styling for the main hero and high-emphasis sections.
+- Ratified exception (Connor, 2026-07-02): the homepage hero opens on the cinematic scroll video (a warm tropical open that zooms into a laptop) instead of the dark canvas. The video is a deliberate, approved lead-in; it crossfades to the real dPlat dashboard screenshot (`/hero/dashboard-finale.png`) as the finale, and the platform band beneath it returns to the dark canvas. This exception is scoped to the homepage hero only; every other surface still opens dark.
 - `--primary` must remain `#5266EB`.
 - Dark mode `--background` must remain `#171721`.
 - Dark mode `--foreground` must remain `#EDEDF3`.

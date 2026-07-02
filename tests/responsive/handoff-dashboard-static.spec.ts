@@ -1,32 +1,28 @@
 import { test, expect } from "@playwright/test";
 
-// Phase 13 / SYSVIS-01. Regression guard for the desktop cinematic crossfade:
-// when the active tab changes, only the content inside the frame swaps; the
-// FramedDashboard stays VISUALLY CENTERED in the viewport. Asserts against
-// CURRENT main, so it guards the Plan 02/03 Console repoint (the swap must
-// remain content-only).
+// Phase 13 / SYSVIS-01, updated 2026-07-02 for the platform-band density rework.
 //
-// Selector (VERIFIED HomepageHandoffSection.tsx:204-206): [data-handoff-mockup-frame],
-// which is `absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2` — i.e.
-// CENTER-anchored at the viewport center. That centering transform is exactly
-// what keeps the frame static while the inner content crossfades between tabs of
-// differing heights.
+// The handoff dashboard frame is no longer absolutely centered at the viewport
+// center (top-1/2 -translate-y-1/2). The band was recomposed into ONE centered
+// flex column — heading directly above the frame, tabs directly beneath — so the
+// frame now flows in normal document order inside the sticky inner. The static
+// guarantee it must still keep: only the CONTENT inside the frame swaps when the
+// active tab changes; the frame itself stays horizontally centered (mx-auto,
+// max-w-6xl) and stays wrapping a FramedDashboard.
+//
+// Selector (VERIFIED HomepageHandoffSection.tsx): [data-handoff-mockup-frame].
 //
 // WHY STRUCTURAL, NOT LIVE-PIXEL: advancing the tab and comparing the frame's
-// pixel box is empirically unreliable in headless Chromium. Even the CENTER point
-// drifted ~347px across a GSAP-scrubbed tab advance, because the scroll-scrubbed
+// pixel box is empirically unreliable in headless Chromium (the scroll-scrubbed
 // crossfade + ScrollTrigger move measured pixels mid-animation regardless of
-// settle waits. Live cinematic pixel-parity is HUMAN-VERIFY per VALIDATION.md
-// (desktop cinematic = manual-only). This spec instead guards the STABLE DOM
-// CONTRACT that produces the static centering: the frame exists, carries the
-// `left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2` centering (verified both
-// via the Tailwind classes and the computed transform matrix), and still wraps a
-// FramedDashboard. That catches the real regression class (a refactor breaking
-// the centering so the dashboard would jump on tab change) without false-failing
-// on GSAP timing.
+// settle waits). Live cinematic pixel-parity is HUMAN-VERIFY per VALIDATION.md.
+// This spec instead guards the STABLE DOM CONTRACT that keeps the frame centered
+// and content-swapping: the frame exists, its inner wrapper is horizontally
+// centered (mx-auto + a capped max width), and it still wraps a non-empty
+// FramedDashboard subtree.
 
 test.describe("Handoff dashboard static across crossfade", () => {
-  test("the dashboard frame does not move when the active tab advances", async ({
+  test("the dashboard frame stays centered and content-only across tab swaps", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
@@ -36,41 +32,31 @@ test.describe("Handoff dashboard static across crossfade", () => {
     const frame = page.locator("[data-handoff-mockup-frame]");
     await expect(frame).toHaveCount(1);
 
-    // The centering contract, asserted two ways for robustness:
-    //  1. The Tailwind centering utility classes are present.
-    //  2. The computed centering offset resolved (not removed), so the
-    //     -translate-x-1/2 / -translate-y-1/2 actually applied.
-    // NOTE: Tailwind v4's `translate-*` utilities emit the standalone CSS
-    // `translate` property, NOT `transform`. So getComputedStyle().transform is
-    // legitimately "none" here; the resolved centering lives in .translate.
-    const contract = await frame.evaluate((el) => {
-      const cls = el.className;
-      const cs = getComputedStyle(el);
+    // The centered inner wrapper: mx-auto + capped max width keeps the frame
+    // horizontally centered inside the sticky column regardless of tab content
+    // height. Assert the wrapper is horizontally centered in the viewport (its
+    // own center-x is within a small tolerance of the viewport center-x).
+    const inner = frame.locator("> div").first();
+    await expect(inner).toHaveCount(1);
+
+    const geom = await inner.evaluate((el) => {
+      const r = el.getBoundingClientRect();
       return {
-        className: cls,
-        position: cs.position,
-        translate: cs.translate,
+        centerX: r.x + r.width / 2,
+        viewportCenterX: window.innerWidth / 2,
+        className: el.className,
+        childCount: el.childElementCount,
       };
     });
 
-    // left-1/2 + top-1/2 + the two -translate-1/2 utilities = viewport-centered.
-    expect(contract.className).toContain("left-1/2");
-    expect(contract.className).toContain("top-1/2");
-    expect(contract.className).toContain("-translate-x-1/2");
-    expect(contract.className).toContain("-translate-y-1/2");
-    // Absolutely positioned within the pinned sticky inner.
-    expect(contract.position).toBe("absolute");
-    // The centering offset resolved to real values (not removed/`none`).
-    expect(contract.translate).not.toBe("none");
-    expect(contract.translate.trim()).not.toBe("");
-    // Two resolved axes (px or %), e.g. "-372px -208px" or "-50% -50%".
-    expect(/-?\d/.test(contract.translate)).toBe(true);
-
-    // The frame still wraps the dashboard chrome it is meant to center. The
-    // FramedDashboard renders the tablist label "dPlat capability surfaces"
-    // region; assert the frame is non-empty so a refactor that empties or
-    // relocates the dashboard out of the centered frame fails here.
-    const childCount = await frame.evaluate((el) => el.childElementCount);
-    expect(childCount).toBeGreaterThan(0);
+    // Horizontally centered inside the viewport (mx-auto). Tolerance absorbs
+    // sub-pixel rounding and the sticky column's symmetric horizontal padding.
+    expect(Math.abs(geom.centerX - geom.viewportCenterX)).toBeLessThanOrEqual(4);
+    // The capped max width is what lets the frame own the band without spanning
+    // edge to edge; the wrapper carries mx-auto.
+    expect(geom.className).toContain("mx-auto");
+    expect(geom.className).toContain("max-w-6xl");
+    // Still wraps the FramedDashboard chrome it is meant to center.
+    expect(geom.childCount).toBeGreaterThan(0);
   });
 });
