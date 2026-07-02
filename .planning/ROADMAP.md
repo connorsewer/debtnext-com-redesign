@@ -9,20 +9,20 @@ Granularity: `standard` (5–8 phases per milestone). 21 active requirements acr
 ## Phases
 
 - [x] **Phase 5: Hero performance** — Cut `/` LCP under 2.5s on 4G mobile so launch is unblocked. **CLOSED 2026-06-04** via Phases 5 + 5.1 + 5.2 + 5.3 (lazy-GSAP + simulate→devtools measurement; bar unchanged at 2,300 ms). HERO-01..04 Done.
-- [ ] **Phase 6: Analytics wiring** — GA4 + GTM dataLayer wired with graceful no-op until IDs land
+- [ ] **Phase 6: Analytics wiring** — GA4 + GTM dataLayer wired with graceful no-op until IDs land. **DEFERRED by Connor 2026-07-01** (test site). `track()` no-ops safely; the GTM loader (P6-01) is not built, so events reach nothing until Phase 6 runs.
 - [x] **Phase 7: SEO baseline** — Per-route OG images (24 routes), JSON-LD on `/` and `/demo`, Twitter cards, canonicals verified. **COMPLETE 2026-07-01.** SEO-01..06 Done.
-- [ ] **Phase 8: Motion pass** — Restrained Framer reveals + ProofBand counters across the 10 non-home routes
-- [ ] **Phase 9: Definition-of-done walkthrough + launch readiness** — CLAUDE.md §14 walked per route, all `[COI REVIEW]` / `[CLAIMS REVIEW]` cleared, nav label decided
+- [x] **Phase 8: Motion pass** — Restrained Framer reveals + ProofBand counters across the 10 non-home routes. **CLOSED as superseded by M6 Phase 10 (Foundation).** The M6 motion barrel (`Reveal`/`LiveValue` primitives) absorbs MOTION-01..04; do not double-schedule. See STATE.md M5-hero close-out.
+- [x] **Phase 9: Definition-of-done walkthrough + launch readiness** — CLAUDE.md §14 walked per route (24 routes), `[COI REVIEW]` / `[CLAIMS REVIEW]` cleared via Andrew's pre-clearance (markers retained for audit), launch-readiness summary published. **COMPLETE 2026-07-02.** DOD-01/02/03 Done; DOD-04 (nav label) pending Connor. Evidence: `docs/m5-dod-walkthrough.md`, `docs/launch-readiness.md`.
 
 ## Progress
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 5. Hero performance | 5/5 (+5.1, 5.2, 5.3) | Complete | 2026-06-04 |
-| 6. Analytics wiring | 0/0 | Not started | — |
+| 6. Analytics wiring | 0/0 | Deferred (Connor 2026-07-01) | — |
 | 7. SEO baseline | 1/1 | Complete | 2026-07-01 |
-| 8. Motion pass | 0/0 | Not started | — |
-| 9. Definition-of-done walkthrough + launch readiness | 0/0 | Not started | — |
+| 8. Motion pass | 0/0 | Closed (superseded by M6 Phase 10) | 2026-06-04 |
+| 9. Definition-of-done walkthrough + launch readiness | 1/1 | Complete | 2026-07-02 |
 
 ## Phase Details
 

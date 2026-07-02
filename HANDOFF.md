@@ -359,6 +359,17 @@ SEO-01..06 Done. Per-route Open Graph images, JSON-LD on `/` and `/demo`, Twitte
 - **Verification:** `npx tsc --noEmit` clean; `npx eslint src tests` clean. `npx next build` was NOT runnable in this worktree: it has no local `node_modules` (deps hoist to the parent repo), Turbopack rejects a symlink that escapes the project root, and the `--webpack` builder hangs in-sandbox (same class as the known next-dev/start hang). The build + confirmation that the `opengraph-image` routes appear in build output must run on CI or in a checkout with a real `node_modules`.
 - **No new deps.** `next/og` ships with Next 16.
 
+## M5 Phase 9 — DoD walkthrough + launch readiness (2026-07-02, branch phase-09-dod-walkthrough)
+
+DOD-01/02/03 Done; DOD-04 pending Connor. Documentation/audit phase — no servers run, no source code changed. Two docs added, planning docs synced.
+
+- **`docs/m5-dod-walkthrough.md`:** CLAUDE.md §14 walked for all 24 routes in the §9 route map (scope expanded from the original 11). Cross-cutting evidence: one H1 is structural (21 routes via `PageHero.tsx:66`, `/` via `HomepageHero.tsx:200`); "Request a demo" is the only conversion label (48 occurrences, no competing CTAs); axe/touch-targets/reduced-motion/reveal-fail-open iterate `VISUAL_ROUTES` (23); LHCI Case C gate on `/` (`lighthouserc.json`, devtools, ≤2,300 ms). No copy/CTA/brand/H1/heading failures found.
+- **`docs/launch-readiness.md`:** leadership-facing plain-English summary. Build/QA evidence (24 Playwright spec files, axe over 23 routes, LHCI gate + ~1,254 ms real H1 paint, route-JS 797,844/865,308), deferred analytics, open human gates table, recommendation.
+- **Gaps recorded (honest):** (1) LHCI covers 6 of 24 routes; 18 have no per-route LCP/CLS/TBT gate. (2) **P6-01** — no GTM loader in `src/app/layout.tsx`; analytics `track()` is a safe no-op but reaches nothing (analytics **Deferred by Connor 2026-07-01**). (3) `/demo` fails open silently until `ZOHO_WEBHOOK_URL` set (Austin Johnson) — launch-blocking for real traffic. (4) Leadership titles/tenures (Paul Goske) + named-client consent (Andrew) are human-only.
+- **COI/CLAIMS:** cleared via Andrew's 2026-06-12 complete sign-off + 2026-06 figures pre-clearance. 134 markers across 40 files STAY as the audit trail; none removed.
+- **Phase 8 (M5 Motion):** formally closed in ROADMAP as superseded by M6 Phase 10 (Foundation).
+- **Verification:** static analysis only. No `tsc`/`eslint`/build run (docs-only change, no source touched).
+
 ## Known open items / loose threads
 
 These are not bugs — they're things flagged for follow-up.

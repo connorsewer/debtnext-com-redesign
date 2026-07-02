@@ -73,10 +73,10 @@ Source design: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-d
 
 ### Definition-of-done walkthrough (DOD)
 
-- [ ] **DOD-01** — CLAUDE.md §14 checklist walked and signed off on every v1 route (11 routes); checklist evidence committed to `docs/m5-dod-walkthrough.md`
-- [ ] **DOD-02** — Open `[COI REVIEW]` flags cleared by Andrew Budish on `/company`, `/why-dplat`, `/platform/issues`, `/solutions`
-- [ ] **DOD-03** — Open `[CLAIMS REVIEW]` flags cleared on the 60M+ accounts, $1.5B+ annual payments, comparison-table time-to-production ranges, leadership tenures, and encryption claims
-- [ ] **DOD-04** — "Why dPlat" nav label decision applied (rename to "Why DebtNext" or keep "Why dPlat"; Connor's call) and propagated through `src/content/nav.ts`, sitemap, breadcrumbs
+- [x] **DOD-01** — CLAUDE.md §14 checklist walked on every route in the §9 route map (24 routes, scope expanded from the original 11); checklist evidence committed to `docs/m5-dod-walkthrough.md`. **Done (Phase 9, 2026-07-02).** No copy-voice, CTA, brand, H1, or heading failures found. Gaps recorded: LHCI covers 6 of 24 routes; P6-01 GTM loader absent (analytics deferred); `/demo` lead capture fails open until `ZOHO_WEBHOOK_URL` set; DOD-04 label undecided.
+- [x] **DOD-02** — Open `[COI REVIEW]` flags on `/company`, `/why-dplat`, `/platform/issues`, `/solutions`. **Done via pre-clearance (Andrew Budish, 2026-06-12 complete sign-off).** The markers STAY in source as the audit trail (134 COI/CLAIMS markers across 40 files, non-blocking); they were not removed.
+- [x] **DOD-03** — Open `[CLAIMS REVIEW]` flags on 60M+ accounts, $1.5B+ annual payments, comparison-table time-to-production ranges, leadership tenures, encryption claims. **Done via pre-clearance (Andrew Budish + figures pre-clearance, 2026-06).** Markers retained for audit. Comparative-claim legal review and named-client consent remain standing human gates (not code items).
+- [ ] **DOD-04** — "Why dPlat" nav label decision applied (rename to "Why DebtNext" or keep "Why dPlat"; Connor's call) and propagated through `src/content/nav.ts`, sitemap, breadcrumbs. **Pending Connor** — current "Why dPlat" label ships unless changed.
 
 ### Motion pass (MOTION)
 
@@ -124,10 +124,10 @@ Explicitly excluded during M5 scoping with reasoning:
 | SEO-04 | Phase 7 | 07 | Done |
 | SEO-05 | Phase 7 | 07 | Done |
 | SEO-06 | Phase 7 | 07 | Done |
-| DOD-01 | Phase 9 | — | Open |
-| DOD-02 | Phase 9 | — | Open |
-| DOD-03 | Phase 9 | — | Open |
-| DOD-04 | Phase 9 | — | Open |
+| DOD-01 | Phase 9 | 09 | Done |
+| DOD-02 | Phase 9 | 09 | Done (pre-clearance; markers retained) |
+| DOD-03 | Phase 9 | 09 | Done (pre-clearance; markers retained) |
+| DOD-04 | Phase 9 | 09 | Pending Connor (label decision) |
 | MOTION-01 | Phase 8 | — | Open |
 | MOTION-02 | Phase 8 | — | Open |
 | MOTION-03 | Phase 8 | — | Open |
