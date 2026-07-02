@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
-import { fadeUpItem, inViewProps, staggerContainer } from "@/components/product/motion";
+import { fadeUpItem, staggerContainer, useInViewProps } from "@/components/product/motion";
 import { cn } from "@/lib/utils";
 
 export interface ComparePlatform {
@@ -39,8 +39,9 @@ const COLS = [
  * one platform per row, with the dPlat row carrying the accent highlight.
  *
  * Desktop: full table. Mobile (<768 container width): stacked cards.
- * Rows reveal with a staggered fade-up on first scroll-in; collapses to
- * instant under prefers-reduced-motion (handled inside the motion vocab).
+ * Rows reveal with a staggered fade-up on first scroll-in; under
+ * prefers-reduced-motion, `useInViewProps` resolves straight to the final
+ * "show" state so rows render at opacity 1 with no animation (fail open).
  */
 export function CompareMatrix({
   eyebrow,
@@ -49,6 +50,7 @@ export function CompareMatrix({
   platforms,
   surface = "dark",
 }: CompareMatrixProps) {
+  const reveal = useInViewProps();
   return (
     <SectionContainer surface={surface}>
       <div className="container-section">
@@ -88,7 +90,7 @@ export function CompareMatrix({
                 ))}
               </tr>
             </thead>
-            <motion.tbody {...inViewProps} variants={staggerContainer}>
+            <motion.tbody {...reveal} variants={staggerContainer}>
               {platforms.map((p) => (
                 <motion.tr
                   key={p.name}
@@ -132,7 +134,7 @@ export function CompareMatrix({
 
         {/* Mobile: stacked cards, one platform each. */}
         <motion.ul
-          {...inViewProps}
+          {...reveal}
           variants={staggerContainer}
           className="mt-10 space-y-4 @md/section:hidden"
         >

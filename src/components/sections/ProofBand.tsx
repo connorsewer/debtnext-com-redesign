@@ -67,7 +67,7 @@ export function ProofBand({
   return (
     <SectionContainer surface={surface}>
       {eyebrow ? (
-        <p className="text-center text-[var(--text-caption)] font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
+        <p className="text-center text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
           {eyebrow}
         </p>
       ) : null}

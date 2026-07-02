@@ -52,12 +52,12 @@ export function AttachedForm({
         onChange={(e) => setEmail(e.target.value)}
         placeholder={inputPlaceholder}
         required
-        className="min-h-touch w-full min-w-0 rounded-[var(--radius-xl)] border border-[var(--foreground)] bg-transparent px-5 text-[var(--text-body-strong)] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)] focus:outline-none @sm/form:h-[46px] @sm/form:min-h-0 @sm/form:flex-1 @sm/form:rounded-[var(--radius-xl)] @sm/form:border-0 @sm/form:bg-transparent @sm/form:pl-5 @sm/form:pr-3"
+        className="min-h-touch w-full min-w-0 rounded-[var(--radius-xl)] border border-[var(--foreground)] bg-transparent px-5 text-body-strong text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)] focus:outline-none focus:ring-3 focus:ring-[var(--focus)]/35 @sm/form:h-[46px] @sm/form:min-h-0 @sm/form:flex-1 @sm/form:rounded-[var(--radius-xl)] @sm/form:border-0 @sm/form:bg-transparent @sm/form:pl-5 @sm/form:pr-3"
       />
       <button
         type="submit"
         aria-label={buttonAriaLabel ?? buttonLabel}
-        className="min-h-touch inline-flex w-full items-center justify-center rounded-[var(--radius-xl)] bg-[var(--primary)] px-5 text-[var(--text-body-strong)] font-[420] text-white transition-colors duration-[var(--duration-instant)] hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)] @sm/form:h-[46px] @sm/form:min-h-0 @sm/form:w-auto @sm/form:rounded-[var(--radius-xl)]"
+        className="min-h-touch inline-flex w-full items-center justify-center rounded-[var(--radius-xl)] bg-[var(--primary)] px-5 text-body-strong font-[420] text-white transition-colors duration-[var(--duration-instant)] hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)] @sm/form:h-[46px] @sm/form:min-h-0 @sm/form:w-auto @sm/form:rounded-[var(--radius-xl)]"
       >
         {buttonLabel}
       </button>

@@ -10,9 +10,9 @@ import { ProductCard } from "@/components/product/primitives/ProductCard";
 import { StatPill } from "@/components/product/primitives/StatPill";
 import {
   fadeUpItem,
-  inViewProps,
   popItem,
   staggerContainer,
+  useInViewProps,
 } from "@/components/product/motion";
 import { cn } from "@/lib/utils";
 
@@ -35,6 +35,7 @@ const MODULES = [
 
 export const PlatformSystemMap = React.memo(function PlatformSystemMap() {
   const reduce = useReducedMotion();
+  const reveal = useInViewProps();
   const [active, setActive] = React.useState(0);
 
   React.useEffect(() => {
@@ -98,7 +99,7 @@ export const PlatformSystemMap = React.memo(function PlatformSystemMap() {
       <motion.div
         className="mt-5 grid grid-cols-3 gap-2.5"
         variants={staggerContainer}
-        {...inViewProps}
+        {...reveal}
       >
         {MODULES.map((m) => (
           <motion.div key={m.name} variants={fadeUpItem}>

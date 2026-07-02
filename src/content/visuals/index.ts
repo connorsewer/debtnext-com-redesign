@@ -17,6 +17,8 @@ export type {
   SchematicData,
 } from "./types";
 
+export { compareTimeToProduction } from "./compare";
+export { integrationsSystemMap } from "./integrations";
 export { handoffPlacementConsole } from "./handoff-placement";
 export { handoffPerformanceConsole } from "./handoff-performance";
 export { handoffIssuesConsole } from "./handoff-issues";

@@ -23,7 +23,7 @@ export function TrustBand({ eyebrow, industries }: TrustBandProps) {
       surface="dark"
       className="border-y border-[var(--border)] py-10 md:py-14 lg:py-16"
     >
-      <p className="text-center text-[var(--text-caption)] font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
+      <p className="text-center text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
         {eyebrow}
       </p>
       <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 md:mt-10 md:gap-x-14">
@@ -33,7 +33,7 @@ export function TrustBand({ eyebrow, industries }: TrustBandProps) {
           return (
             <li
               key={label}
-              className="text-[var(--text-body-strong)] font-[420] text-[var(--text-tertiary)]"
+              className="text-body-strong font-[420] text-[var(--text-tertiary)]"
             >
               {href ? (
                 <Link
