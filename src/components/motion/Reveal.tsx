@@ -58,7 +58,7 @@ export function useInViewProps() {
     : inViewProps;
 }
 
-type DivProps = React.ComponentPropsWithoutRef<typeof motion.div>;
+type DivProps = React.ComponentPropsWithRef<typeof motion.div>;
 
 /**
  * Stagger container that fades its children up as it scrolls into view.
