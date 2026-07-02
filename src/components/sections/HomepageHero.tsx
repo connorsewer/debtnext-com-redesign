@@ -2,79 +2,71 @@
 
 import * as React from "react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 
 import { CursorGlow } from "@/components/motion/CursorGlow";
-import { FramedDashboard } from "@/components/sections/mockups/FramedDashboard";
-import { Console } from "@/components/product/visuals/Console";
 import { track } from "@/lib/analytics";
 import { heroCinematic } from "@/content/homepage-hero";
-import { handoffPlacementConsole } from "@/content/visuals";
-
-// Desktop-only, non-reduced-motion owner of ALL GSAP. Loaded via next/dynamic
-// with ssr:false so GSAP never enters the `/` eager client chunk; mobile and
-// reduced-motion sessions never download it (HERO-04 LHCI lever).
-const HeroCinematicController = dynamic(
-  () =>
-    import("./HeroCinematicController").then((m) => m.HeroCinematicController),
-  { ssr: false }
-);
 
 /**
- * Cinematic homepage hero with a held framed-dashboard finale.
+ * Cinematic homepage hero with a real dashboard-screenshot finale.
  *
- * Pinned via GSAP for ~260vh of scroll. After the pin releases, the
- * Platform section starts immediately with no ride-out gap. A single
- * master ScrollTrigger drives the cinematic via onUpdate(progress 0→1):
+ * Pinned via GSAP for ~260vh of scroll. The GSAP wiring lives in
+ * HeroCinematicController, which is now mounted ONCE by the shared
+ * HomepageHeroHandoff wrapper (not here) so a single controller owns both the
+ * hero pin and the handoff tab-progression trigger. This component is the
+ * presentational hero: it receives its refs and the mobile/reduced-motion flags
+ * from the wrapper and renders the static fail-open tree on its own.
  *
- *   p = 0       — start-frame PNG owns the viewport; overlay + form visible
- *   p = 0→0.03  — video fades IN once the user starts scrolling
- *   p = 0→0.12  — overlay fades out + lifts -50px
- *   p = 0→1     — video scrubs frame-by-frame through the cinematic zoom
- *   p = 0.70→0.88 — video fades OUT while framed dashboard fades IN
- *                  (direct crossfade; no intermediate unframed end-frame)
- *   p = 0.78→0.88 — start-frame (cliffside) fades out underneath
- *   p ≥ 0.88     — framed dashboard fully visible, held at center,
- *                  full size, full opacity for the rest of the pin and
- *                  through the handoff into the Platform section
+ * A single master ScrollTrigger drives the cinematic via onUpdate(progress 0→1):
+ *
+ *   p = 0        — start-frame PNG owns the viewport; overlay + form visible
+ *   p = 0→0.03   — video fades IN once the user starts scrolling
+ *   p = 0→0.12   — overlay fades out + lifts -50px
+ *   p = 0→1      — video scrubs frame-by-frame through the cinematic zoom
+ *   p = 0.55→0.74 — video fades OUT while the real dashboard screenshot fades IN
+ *                   (early crossfade buries the video's garbled AI frames)
+ *   p = 0.64→0.74 — start-frame (cliffside) fades out underneath
+ *   p ≥ 0.74      — dashboard screenshot fully visible, held at center, full
+ *                   size, full opacity for the rest of the pin and through the
+ *                   handoff into the Platform section
  *
  * Mobile (≤768px): scrubbing is disabled. Static start-frame with overlay
  * shown statically. Next section begins below.
  */
-export function HomepageHero() {
+
+export type HeroRefs = {
+  section: React.RefObject<HTMLElement | null>;
+  sticky: React.RefObject<HTMLDivElement | null>;
+  video: React.RefObject<HTMLVideoElement | null>;
+  startFrame: React.RefObject<HTMLDivElement | null>;
+  framedDash: React.RefObject<HTMLDivElement | null>;
+  overlay: React.RefObject<HTMLDivElement | null>;
+};
+
+type HomepageHeroProps = {
+  refs: HeroRefs;
+  /** True on ≤768px viewports; suppresses the video + finale layers. */
+  isMobile: boolean;
+};
+
+export function HomepageHero({ refs, isMobile }: HomepageHeroProps) {
   const router = useRouter();
-  const sectionRef = React.useRef<HTMLElement | null>(null);
-  const stickyRef = React.useRef<HTMLDivElement | null>(null);
-  const videoRef = React.useRef<HTMLVideoElement | null>(null);
-  const startFrameRef = React.useRef<HTMLDivElement | null>(null);
-  const framedDashRef = React.useRef<HTMLDivElement | null>(null);
-  const overlayRef = React.useRef<HTMLDivElement | null>(null);
   const [email, setEmail] = React.useState("");
 
-  const [isMobile, setIsMobile] = React.useState(false);
-  React.useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    const handler = () => setIsMobile(mq.matches);
-    handler();
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
-  React.useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const handler = () => setPrefersReducedMotion(mq.matches);
-    handler();
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  // Cinematic runs on desktop, non-reduced-motion only. All GSAP wiring lives
-  // in HeroCinematicController, mounted via next/dynamic below. When this gate
-  // is false (mobile / reduced motion / SSR) the static start-frame + overlay
-  // tree below renders on its own (this IS the fail-open render).
-  const cinematicEnabled = !isMobile && !prefersReducedMotion;
+  // Destructure the passed-in ref objects into locals. Assigning them to
+  // JSX `ref={...}` as plain identifiers keeps the react-hooks/refs lint rule
+  // happy (it flags member access like `refs.section` on a ref-typed field as
+  // "accessing a ref during render", even though these are RefObjects, not
+  // `.current` reads).
+  const {
+    section: sectionRef,
+    sticky: stickyRef,
+    video: videoRef,
+    startFrame: startFrameRef,
+    framedDash: framedDashRef,
+    overlay: overlayRef,
+  } = refs;
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -93,24 +85,12 @@ export function HomepageHero() {
       data-slot="homepage-hero"
       className="relative bg-[var(--background)]"
     >
-      {cinematicEnabled && (
-        <HeroCinematicController
-          heroRefs={{
-            section: sectionRef,
-            sticky: stickyRef,
-            video: videoRef,
-            startFrame: startFrameRef,
-            framedDash: framedDashRef,
-            overlay: overlayRef,
-          }}
-        />
-      )}
       <div
         ref={stickyRef}
         className="relative h-screen w-full overflow-hidden bg-[var(--background)]"
       >
         {/* Layer 1: start-frame PNG. LCP target; wrapped so we can fade
-            the cliffside out as the framed-dashboard finale takes over. */}
+            the cliffside out as the dashboard finale takes over. */}
         <div ref={startFrameRef} className="absolute inset-0">
           <Image
             src={heroCinematic.media.startFrame}
@@ -126,10 +106,8 @@ export function HomepageHero() {
 
         {/* Layer 2: video — scrubbed by scroll progress. <source> children mapped
             from the multi-resolution ladder (HERO-01). Browser walks them
-            top-down: WebM-VP9 first for Chrome/Firefox/Edge, MP4-H.264 fallback
-            for Safari; within each codec, narrowest-viewport `media` query first
-            so iPad-portrait (≤1023px) gets 360p and narrow-laptop (≤1439px) gets
-            540p. GSAP scrub binding below is unchanged: video.duration and
+            top-down; within each codec, narrowest-viewport `media` query first.
+            GSAP scrub binding below is unchanged: video.duration and
             video.currentTime work identically with mapped sources. */}
         {!isMobile && (
           <video
@@ -141,16 +119,6 @@ export function HomepageHero() {
             style={{ opacity: 0 }}
             className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
           >
-            {/* Phase 05.2 follow-up: no `poster=` attribute. Layer 1
-                <Image src={startFrame} preload fetchPriority="high">
-                above already paints the start frame full-cover under the
-                video. The video element starts at opacity 0 and GSAP
-                fades it in only once scroll progresses, so a separate
-                poster fetch shows nothing the underlying <Image> isn't
-                already painting. Keeping `poster` here would re-fetch
-                the AVIF on mobile during the SSR-to-hydration window
-                (the `<video>` lives in the initial HTML before
-                `isMobile` flips), wasting bandwidth that LCP needs. */}
             {heroCinematic.media.video.map((source) => (
               <source
                 key={source.src}
@@ -169,11 +137,13 @@ export function HomepageHero() {
           className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/40"
         />
 
-        {/* Layer 3: framed dashboard finale. Crossfades in from the video
-            directly (no intermediate unframed end-frame). Once visible,
-            holds at full size and full opacity — the dashboard never moves,
-            and the Platform section's matching framed dashboard picks up
-            at the same screen position. */}
+        {/* Layer 3: real dashboard screenshot finale. Crossfades in from the
+            video directly. Once visible, holds at full size and full opacity —
+            the screenshot never moves, and the Platform section's matching
+            framed dashboard picks up at the same screen position. This is the
+            approved DebtNext "Executive Portfolio Overview" export; it ships
+            its own dark product chrome, so it renders WITHOUT the FramedDashboard
+            bezel (the bezel is for the DOM Console mockups only). */}
         {!isMobile && (
           <div
             ref={framedDashRef}
@@ -181,12 +151,16 @@ export function HomepageHero() {
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 opacity-0 md:px-8 lg:px-12"
           >
-            <FramedDashboard
-              title="DebtNext · Executive Portfolio Overview"
-              className="w-full max-w-5xl"
-            >
-              <Console bare data={handoffPlacementConsole} />
-            </FramedDashboard>
+            <div className="w-full max-w-6xl overflow-hidden rounded-[var(--radius-md)] border border-[var(--border)] shadow-[var(--shadow-deep)]">
+              <Image
+                src="/hero/dashboard-finale.png"
+                alt="dPlat executive portfolio overview dashboard showing total inventory, weekly liquidation and payments, SLA compliance, an inventory and payments trend chart, a portfolio mix donut, a vendor performance scorecard, and an SLA exception queue."
+                width={1536}
+                height={1024}
+                sizes="(min-width: 1280px) 1152px, 100vw"
+                className="h-auto w-full"
+              />
+            </div>
           </div>
         )}
 

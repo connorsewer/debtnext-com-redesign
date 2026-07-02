@@ -26,15 +26,19 @@ import * as React from "react";
  *     plugin registration only because GSAP's React integration expects it
  *     registered; the actual wiring is the imperative effect below.
  *
- * Plugin registration is idempotent. Both sections mount their own controller
- * instance (hero with heroRefs, handoff with handoff wiring); the repeat
- * call from the second instance is a harmless no-op. It does not
- * double-register and does not race.
+ * Plugin registration is idempotent.
  *
- * The hero scrub math (pin, scrub, ease windows, crossfades) and the handoff
- * tab-progression math (VH_PER_TAB / tabCount / Math.floor) are lifted VERBATIM
- * from HomepageHero.tsx and HomepageHandoffSection.tsx. No numeric coefficient,
- * easing window, selector, or scroll length is changed.
+ * SINGLE INSTANCE (2026-07-02 mechanics fix): exactly ONE controller mounts,
+ * from the shared HomepageHeroHandoff wrapper, owning BOTH the hero master
+ * trigger and the handoff tab-progression trigger. Ordering matters and is now
+ * explicit: create the hero pin FIRST (awaiting the video's `loadedmetadata`
+ * if the metadata has not arrived yet), THEN create the handoff trigger, THEN
+ * ScrollTrigger.refresh(). The deferred (metadata-await) path also calls
+ * refresh() inside wire() after the pin exists, so the handoff trigger always
+ * snapshots its start/end AFTER the ~260vh pin spacer has shifted the document.
+ * Before this fix two independent instances left creation/refresh order unowned,
+ * so the handoff trigger cached a stale start and jumped straight to the last
+ * tab (reporting).
  */
 
 type HeroRefs = {
@@ -87,6 +91,36 @@ export function HeroCinematicController({
       const { useGSAP } = gsapReactMod;
       gsap.registerPlugin(ScrollTrigger, useGSAP); // idempotent; safe per-instance
 
+      // Create the handoff tab-progression trigger and refresh. Extracted so
+      // both the synchronous path and the deferred `loadedmetadata` path run it
+      // AFTER the hero pin exists (the pin's ~260vh spacer shifts the handoff
+      // section's document position; the handoff trigger must snapshot start/end
+      // after that shift or it fires mid-cinematic and jumps to the last tab).
+      const createHandoffTriggerAndRefresh = () => {
+        if (handoff) {
+          const { sectionRef, tabCount, vhPerTab, onActiveTab } = handoff;
+          if (sectionRef.current) {
+            const handoffTrigger = ScrollTrigger.create({
+              trigger: sectionRef.current,
+              start: "top top",
+              end: () => `+=${window.innerHeight * vhPerTab * tabCount}`,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                const idx = Math.min(
+                  tabCount - 1,
+                  Math.floor(self.progress * tabCount)
+                );
+                onActiveTab(idx);
+              },
+            });
+            triggers.push(handoffTrigger);
+          }
+        }
+        // Refresh once both triggers exist so the handoff trigger snapshots its
+        // start/end AFTER the hero pin-spacer is in place.
+        ScrollTrigger.refresh();
+      };
+
       // ---- Hero master ScrollTrigger (verbatim from HomepageHero.tsx) ----
       if (heroRefs) {
         const video = heroRefs.video.current;
@@ -133,22 +167,25 @@ export function HeroCinematicController({
                 overlay.style.transform = `translateY(${-50 * overlayOut}px)`;
 
                 // Video fades in immediately, then fades out during the
-                // direct crossfade into the framed dashboard.
+                // direct crossfade into the real dashboard screenshot. The
+                // crossfade now starts EARLY (p=0.55) so the video's garbled
+                // AI dashboard frames (audit HOME-2) are buried behind the real
+                // screenshot before they become legible at full viewport size.
                 const videoIn = ease(0.0, 0.03, p);
-                const videoOut = ease(0.7, 0.88, p);
+                const videoOut = ease(0.55, 0.74, p);
                 video.style.opacity = String(videoIn * (1 - videoOut));
 
                 // Cliffside (start-frame) fades out beneath the crossfade.
-                const cliffOut = ease(0.78, 0.88, p);
+                const cliffOut = ease(0.64, 0.74, p);
                 startFrame.style.opacity = String(1 - cliffOut);
 
-                // Framed dashboard fades in to cover by p=0.88, holds at full
-                // size for the rest of the cinematic, then crossfades OUT in
-                // place at the very end so the Platform section's matching
+                // Real dashboard screenshot fades in to cover by p=0.74, holds
+                // at full size for the rest of the cinematic, then crossfades
+                // OUT in place at the very end so the Platform section's matching
                 // framed dashboard (sticky-pinned at the exact same viewport
                 // position) seamlessly takes over. The dashboard never moves;
                 // only its opacity changes.
-                const dashIn = ease(0.7, 0.88, p);
+                const dashIn = ease(0.55, 0.74, p);
                 const dashCrossfadeOut = ease(0.95, 1.0, p);
                 framedDash.style.opacity = String(dashIn * (1 - dashCrossfadeOut));
 
@@ -169,49 +206,34 @@ export function HeroCinematicController({
           };
 
           if (video.readyState >= 1) {
+            // Metadata already available: pin first, then handoff + refresh.
             wire();
+            createHandoffTriggerAndRefresh();
           } else {
-            const onLoadedMetadata = () => wire();
+            // Deferred: create the pin only once metadata arrives, THEN create
+            // the handoff trigger and refresh so it snapshots start/end after
+            // the pin spacer exists. This is the exact ordering the previous
+            // two-instance design could not guarantee.
+            const onLoadedMetadata = () => {
+              if (cancelled) return;
+              wire();
+              createHandoffTriggerAndRefresh();
+            };
             video.addEventListener("loadedmetadata", onLoadedMetadata, {
               once: true,
             });
             cleanupListener = () =>
               video.removeEventListener("loadedmetadata", onLoadedMetadata);
           }
+        } else {
+          // Hero refs incomplete (defensive): still create the handoff trigger
+          // so tab progression works even without the pin.
+          createHandoffTriggerAndRefresh();
         }
+      } else {
+        // No hero refs at all (defensive): handoff-only wiring.
+        createHandoffTriggerAndRefresh();
       }
-
-      // ---- Handoff tab-progression ScrollTrigger (verbatim from
-      //      HomepageHandoffSection.tsx) ----
-      if (handoff) {
-        const { sectionRef, tabCount, vhPerTab, onActiveTab } = handoff;
-        if (sectionRef.current) {
-          const handoffTrigger = ScrollTrigger.create({
-            trigger: sectionRef.current,
-            start: "top top",
-            end: () => `+=${window.innerHeight * vhPerTab * tabCount}`,
-            // Recompute start/end on every refresh — important because the
-            // hero's GSAP pin spacer (added in HomepageHero) shifts this
-            // section's document position AFTER this trigger is created.
-            // Without this, the trigger caches a stale start and fires
-            // mid-cinematic, dragging activeId straight to "reporting".
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              const idx = Math.min(
-                tabCount - 1,
-                Math.floor(self.progress * tabCount)
-              );
-              onActiveTab(idx);
-            },
-          });
-          triggers.push(handoffTrigger);
-        }
-      }
-
-      // Refresh once after the relevant trigger(s) exist so the handoff trigger
-      // snapshots positions after the hero pin-spacer is in place (matches the
-      // belt-and-suspenders refresh in the original sections).
-      ScrollTrigger.refresh();
     })();
 
     return () => {

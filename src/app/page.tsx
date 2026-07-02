@@ -6,8 +6,7 @@ import { IntegrationIcon } from "@/components/icons/IntegrationIcons";
 import { BenefitSplit } from "@/components/sections/BenefitSplit";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
-import { HomepageHandoffSection } from "@/components/sections/HomepageHandoffSection";
-import { HomepageHero } from "@/components/sections/HomepageHero";
+import { HomepageHeroHandoff } from "@/components/sections/HomepageHeroHandoff";
 import { CardGrid } from "@/components/sections/CardGrid";
 import { IntegrationStrip } from "@/components/sections/IntegrationStrip";
 import { ProofBand } from "@/components/sections/ProofBand";
@@ -47,12 +46,11 @@ export default function HomePage() {
 
       <ScrollDepthTracker />
 
-      {/* Mercury-faithful cinematic hero. 300vh scroll-scrubbed sequence
-          on desktop; static start-frame fallback on ≤768px. */}
-      <HomepageHero />
-
-      {/* The accounts panel docks here after the scrub completes. */}
-      <HomepageHandoffSection />
+      {/* Mercury-faithful cinematic hero + platform-handoff pair. A single
+          shared client wrapper owns the one GSAP controller that drives both
+          the hero pin and the handoff tab progression (desktop, non-reduced
+          motion); mobile / reduced motion render static fail-open trees. */}
+      <HomepageHeroHandoff />
 
       <TrustBand
         eyebrow={homepageTrust.eyebrow}
