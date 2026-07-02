@@ -31,9 +31,11 @@ test.describe("Hero finale renders a Console, not a raster", () => {
     await expect(finale).toHaveCount(1);
 
     // The Console bare root exposes role="img" (its text-alternative contract).
-    // Exactly one Console renders inside the finale.
-    const console = finale.locator('[role="img"]');
-    await expect(console).toHaveCount(1);
+    // Nested chart/flow parts self-label too (repo a11y convention), so assert
+    // the OUTERMOST role="img" is the placement-payload Console root rather
+    // than demanding a single labeled node.
+    const console = finale.locator('[role="img"]').first();
+    await expect(console).toHaveAttribute("aria-label", /Placement run console/);
 
     // The retired raster must be gone: no <img> anywhere inside the finale, and
     // in particular nothing pointing at the deleted dashboard-dark asset.
