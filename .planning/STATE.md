@@ -70,6 +70,17 @@ SEO-01..06 Done on branch `phase-07-seo-baseline` (off `phase-14-text-page-eleva
 
 This is M5 phase work; the `milestone: M6` frontmatter is intentionally unchanged.
 
+## M5 Phase 9 — DoD walkthrough + launch readiness — COMPLETE (2026-07-02)
+
+DOD-01/02/03 Done; DOD-04 pending Connor. Audit ran on branch `phase-09-dod-walkthrough` (cut from `phase-15-homepage-capstone`, the final state with Phases 5-7, 10-15 + polish merged). Documentation/audit phase only — no servers run (D-07 sandbox hang), static analysis + recorded CI evidence.
+
+- **DOD-01 (Done):** `docs/m5-dod-walkthrough.md` walks CLAUDE.md §14 for all 24 routes in the §9 route map (scope expanded from the original 11). No copy-voice, CTA-discipline, brand, one-H1, or heading-hierarchy failures. One H1 is structural (every route via `PageHero` or `HomepageHero`, one `<h1>` each). "Request a demo" is the only conversion label (48 occurrences; no competing CTAs).
+- **DOD-02/03 (Done via pre-clearance):** Andrew Budish's 2026-06-12 complete sign-off + the 2026-06 figures pre-clearance clear the COI/CLAIMS copy. The 134 `[COI REVIEW]`/`[CLAIMS REVIEW]` markers across 40 source files STAY as the audit trail; none removed. Comparative-claim legal review and named-client consent remain standing human gates (not code items).
+- **DOD-04 (pending Connor):** "Why dPlat" nav label ships as-is unless changed.
+- **Gaps recorded (honest):** (1) LHCI collects only 6 of 24 routes; the other 18 have no per-route LCP/CLS/TBT gate (inherit shared-shell budget + route-JS gate). (2) **P6-01** — no GTM loader in `src/app/layout.tsx`; `track()` is a safe no-op but reaches nothing, so "Analytics events fire correctly" is unmet on all routes. Analytics is **Deferred by Connor 2026-07-01**, not done. (3) `/demo` lead capture fails open silently until `ZOHO_WEBHOOK_URL` is set (Austin Johnson) — launch-blocking for real traffic. (4) Leadership titles/tenures (Paul Goske) + named-client consent are human-only, not codebase-checkable.
+- **Leadership-facing summary:** `docs/launch-readiness.md` (plain English; build/QA evidence, deferred analytics, open human gates table, recommendation). Route-JS budget cited as 797,844 / 865,308 bytes; LHCI `/` real H1 paint ~1,254 ms.
+- **Phase 8 (M5 Motion):** formally closed in ROADMAP as superseded by M6 Phase 10 (Foundation); MOTION-01..04 absorbed by the motion barrel. Not double-scheduled.
+
 ## Roadmap Evolution
 
 - 2026-05-21: Phase 5.1 inserted after Phase 5 (URGENT). HERO-04 gap closure — WebM encoder re-tune + mobile video gate. Triggered by Phase 5 Plan 05 LHCI gate failing at Case C (representative-run `/` LCP 16,219 ms vs 2,300 ms gate). Two real defects: (A) D-04 violation, mobile downloads 8.88 MB WebM; (B) WebM ladder larger than MP4 ladder at every tier.
