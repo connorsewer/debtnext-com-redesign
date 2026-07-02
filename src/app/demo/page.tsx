@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
+import { AmbientField } from "@/components/ambient/AmbientField";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { DemoForm } from "@/components/forms/DemoForm";
 import { CardGrid } from "@/components/sections/CardGrid";
 import { SectionContainer } from "@/components/sections/SectionContainer";
@@ -10,6 +12,7 @@ import {
   demoReassurance,
   demoWhatToExpect,
 } from "@/content/demo";
+import { contactPageSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: demoMeta.title,
@@ -21,14 +24,25 @@ export const metadata: Metadata = {
 export default function DemoPage() {
   return (
     <>
+      <JsonLd data={contactPageSchema()} />
+
       <ScrollDepthTracker />
 
+      {/* Opt out of SectionContainer's default ambient so the hero carries a
+          single, deliberately-authored AmbientField instead of the default
+          field + CursorGlow pair (avoids double-stacking, Pitfall 5 / T-14-14). */}
       <SectionContainer
         surface="dark"
         containerSize="page"
-        className="border-b border-[var(--border)]"
+        ambient={false}
+        className="relative isolate overflow-hidden border-b border-[var(--border)]"
       >
-        <div className="mx-auto max-w-3xl text-center">
+        {/* Restrained ambient atmosphere behind the hero band only (D-01d).
+            aria-hidden, seeded (no hydration mismatch), collapses to a static
+            bloom under prefers-reduced-motion. Sits BEHIND content; never
+            competes with the DemoForm submit CTA below. No archetype on /demo. */}
+        <AmbientField particleCount={5} bloom />
+        <div className="relative z-10 mx-auto max-w-3xl text-center">
           <p className="text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
             {demoHero.eyebrow}
           </p>

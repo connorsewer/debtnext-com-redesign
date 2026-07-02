@@ -96,7 +96,7 @@ export const compareMatrix: {
     {
       name: "Symend",
       builtFor:
-        "Consumer engagement and self-cure. Behavioral-science driven digital journeys.",
+        "Consumer engagement and self-cure. Behavioral-science driven digital outreach flows.",
       chosen:
         "Telecom, utilities, and consumer lenders focused on pre-charge-off retention and churn reduction.",
       stops:

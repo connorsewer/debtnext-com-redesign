@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { IntegrationIcon } from "@/components/icons/IntegrationIcons";
 import { BenefitSplit } from "@/components/sections/BenefitSplit";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
@@ -27,6 +28,10 @@ import {
   homepageService,
   homepageTrust,
 } from "@/content/homepage";
+import {
+  organizationSchema,
+  softwareApplicationSchema,
+} from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: homepageMeta.title,
@@ -37,6 +42,9 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      <JsonLd data={organizationSchema()} />
+      <JsonLd data={softwareApplicationSchema()} />
+
       <ScrollDepthTracker />
 
       {/* Mercury-faithful cinematic hero. 300vh scroll-scrubbed sequence

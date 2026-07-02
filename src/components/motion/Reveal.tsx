@@ -46,6 +46,18 @@ export const inViewProps = {
   viewport: { once: true, amount: 0.3 },
 };
 
+/**
+ * Reduced-motion-aware reveal props. Use instead of spreading `inViewProps`
+ * directly on a motion element: under prefers-reduced-motion it renders the
+ * element at its final "show" state (fail open, never stuck at opacity:0).
+ */
+export function useInViewProps() {
+  const reduce = useReducedMotion();
+  return reduce
+    ? { initial: "show" as const, animate: "show" as const }
+    : inViewProps;
+}
+
 type DivProps = React.ComponentPropsWithoutRef<typeof motion.div>;
 
 /**

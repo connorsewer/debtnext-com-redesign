@@ -6,8 +6,11 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { IntegrationTable } from "@/components/sections/IntegrationTable";
 import { LogoMarquee } from "@/components/sections/LogoMarquee";
 import { PageHero } from "@/components/sections/PageHero";
+import { ProductVisualBand } from "@/components/sections/ProductVisualBand";
 import { ProofBand } from "@/components/sections/ProofBand";
 import { ProseSection } from "@/components/sections/ProseSection";
+import { SchematicVisual } from "@/components/product/visuals/archetypes";
+import { integrationsSystemMap } from "@/content/visuals/integrations";
 import {
   integrationsCis,
   integrationsErp,
@@ -55,6 +58,10 @@ export default function IntegrationsPage() {
         notes={integrationsFootprint.notes}
         surface="elevated-dark"
       />
+
+      <ProductVisualBand>
+        <SchematicVisual data={integrationsSystemMap} />
+      </ProductVisualBand>
 
       <IntegrationTable
         eyebrow={integrationsErp.eyebrow}

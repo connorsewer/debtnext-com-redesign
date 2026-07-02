@@ -20,19 +20,19 @@ export function SiteFooter() {
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Link
               href="/"
-              className="inline-flex min-h-touch min-w-touch items-center text-[var(--text-h4)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+              className="inline-flex min-h-touch min-w-touch items-center text-h4 focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
               aria-label="DebtNext home"
             >
               <Wordmark />
             </Link>
-            <p className="mt-4 max-w-xs text-[var(--text-body-sm)] leading-5">
+            <p className="mt-4 max-w-xs text-body-sm leading-5">
               Recovery management software for credit originators. Built since 2003.
             </p>
           </div>
 
           {footerGroups.map((group) => (
             <div key={group.title}>
-              <h2 className="text-[var(--text-caption)] font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
+              <h2 className="text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
                 {group.title}
               </h2>
               <ul className="mt-4 space-y-3">
@@ -40,7 +40,7 @@ export function SiteFooter() {
                   <li key={`${group.title}-${link.label}`}>
                     <Link
                       href={link.href}
-                      className="inline-flex min-h-touch min-w-touch items-center text-[var(--text-body-sm)] text-[var(--text-tertiary)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+                      className="inline-flex min-h-touch min-w-touch items-center text-body-sm text-[var(--text-tertiary)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
                     >
                       {link.label}
                     </Link>
@@ -52,10 +52,10 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-16 flex flex-col gap-4 border-t border-[var(--border)] pt-8 md:flex-row md:items-center md:justify-between">
-          <p className="text-[var(--text-body-sm)]">{tsiOwnershipLine}</p>
+          <p className="text-body-sm">{tsiOwnershipLine}</p>
 
           <div className="flex items-center gap-6">
-            <p className="text-[var(--text-body-sm)]">
+            <p className="text-body-sm">
               &copy; {year} DebtNext, LLC. All rights reserved.
             </p>
             <Link

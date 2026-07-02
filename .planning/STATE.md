@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: M6
 milestone_name: Premium visual + motion system
-status: Phase complete — ready for verification
-last_updated: "2026-07-01T00:00:00.000Z"
+status: Ready to plan
+last_updated: "2026-07-02T00:45:00.000Z"
 progress:
   total_phases: 14
-  completed_phases: 7
-  total_plans: 33
-  completed_plans: 33
-  percent: 100
+  completed_phases: 8
+  total_plans: 37
+  completed_plans: 36
+  percent: 97
 ---
 
 # STATE.md
@@ -19,12 +19,13 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-05-20)
 
 **Core value:** Convert qualified enterprise buyers into demo requests. The single conversion action is "Request a demo".
-**Current focus:** Phase 13 — Visual system consolidation
+**Current focus:** Phase 15 — homepage flagship capstone (next; Phases 13 + 14 both complete and merged)
 
 ## Current Position
 
-Phase: 13 (Visual system consolidation) — COMPLETE (ready for verification)
-Plan: 5 of 5 COMPLETE. FRONT A: 13-02 + 13-03 + 13-04 shipped (all 4 handoff tabs on bare Console, bespoke mockups retired, P13-02/SYSVIS-02 closed). FRONT B / P13-01: 13-05 shipped this session — the homepage FeatureAccordion VISUALS registry was repointed to the Phase 11 *Flagship components for placement/optimization/issues/reporting (reporting key migration grep-verified), ComplianceStandards kept, and the 4 bespoke visuals (+ their dead Lazy* wrappers) deleted as a set after a passing import guard (commits 19adbec, 11bd019). tsc/eslint/next build clean; firewall byte-unchanged. SYSVIS-01 marked complete. DEFERRED human-verify (end-of-phase preview, per the "implement all code, defer human-verify" directive this run): (1) FRONT A desktop cinematic parity across all 4 handoff tabs; (2) FRONT B FeatureAccordion visual parity — each of the 5 accordion items shows a correct archetype/Flagship visual, no blank box / wrong visual / double-frame, reduced-motion safe.
+Phase: 15
+Plan: Not started
+Phases 13 (visual system consolidation, PR #12 merged 2026-07-01) and 14 (text-only page elevation) are both COMPLETE. Carried human-verify items live in 13-UAT.md and 14-VERIFICATION.md (Connor preview pass: 4 handoff tabs cinematic parity, FeatureAccordion visual parity, Phase 14 elevated pages).
 Milestone: **M6 — Premium visual + motion system.** Status: roadmap complete; phases 10-15 defined. **Phase 10 — Foundation COMPLETE 2026-06-05** (motion barrel + 3 archetypes + typed payloads + 4 primitives + CI guardrails; FND-01..06 satisfied; 5 runtime UAT items tracked in 10-HUMAN-UAT.md). **Current phase: Phase 11 — Platform deep-dive visuals (not started).** Next step: `/gsd-plan-phase 11`. M6's motion foundation (Phase 10) supersedes M5's planned "Phase 8 Motion pass" — do not double-schedule motion work. Last activity: 2026-06-04 — M6 roadmap created alongside the still-open M5 ("premium now, M5 stays open" sequencing decision). Design source: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-design.md`.
 
 **Cross-milestone gate (SATISFIED 2026-06-04):** Phase 10's dependency on **M5 Phase 5.3 (lazy-GSAP)** is closed. GSAP is off the `/` eager chunk and the hero LCP gate is green under devtools, so the `/` mobile JS budget is shut (Pitfalls 1 + 6 cleared). Phase 10 can land freely. Phase 15 (homepage capstone) stays double-gated: on Phases 10-14 and on the M5 hero LCP fix being closed (now closed) or renegotiated.
@@ -56,6 +57,18 @@ Phases 5 + 5.1 + 5.2 + 5.3 are CLOSED. HERO-01..04 are Done. The LHCI Case C `/`
 - **Cross-milestone gate:** M6 Phase 10's dependency on M5 Phase 5.3 (lazy-GSAP) is now **SATISFIED**. The `/` mobile JS budget is closed; Phase 10 motion-foundation work can land without re-opening it.
 - **Phase 8 (M5 Motion):** unblocked by this close, but **superseded by M6 Phase 10** (Foundation). Do not double-schedule the Phase 8 motion-foundation work; M6 Phase 10's `Reveal`/`LiveValue` primitives absorb MOTION-01..04.
 - **Plan progression (history):** Phase 5 plans 05-01..05-04 ✓ → 05-05 ✗ (absorbed by 5.1 per D-08) → Phase 5.1 Plans 01 ✓ (47cdc5b, 56fc69d), 02 ✓ (084de36, 10c562c, fc4712d), 03 Task 1 EXECUTED FAILED (writeup in `docs/m5-phase-5-lhci-run.md`) → Phase 5.2 Plan 01 ✓ (1ee187b, 84f20dd, 8920088) PARTIAL → Phase 5.3 Plan 01 ✓ (f58b436, 0db8994) + perf methodology (1a62d93) + a11y fix (48b1222) + Plan 02 D-08 close-out.
+
+## M5 Phase 7 — SEO baseline — COMPLETE (2026-07-01)
+
+SEO-01..06 Done on branch `phase-07-seo-baseline` (off `phase-14-text-page-elevation` HEAD). Shipped:
+- **OG images (SEO-01/05):** shared `renderOgImage()` in `src/lib/og/template.tsx` (`next/og` `ImageResponse`, 1200x630, dark canvas `#171721`, static wordmark + indigo node, General Sans 600 via `src/lib/og/loadFont.ts` reading the same woff2 as the wordmark). One `opengraph-image.tsx` per route dir (root + 23) reusing each route's approved `*Meta.title` (no new copy). D2: scope is all 24 v1 routes, not the original 11. `alt` uses `"<title> | dPlat"` (pipe, not em dash, per voice rules). Twitter `summary_large_image` added once on the root layout metadata; Next reuses the per-route OG image as `twitter:image`.
+- **JSON-LD (SEO-02/03/04):** `src/content/org.ts` (sourced facts), `src/lib/seo/schema.ts` (`organizationSchema`, `softwareApplicationSchema`, `contactPageSchema`), `src/components/seo/JsonLd.tsx` server component. Organization + SoftwareApplication on `/`; ContactPage on `/demo`. `[COI REVIEW]` marker sits directly above `sameAs` (TSI + LinkedIn), non-blocking per 2026-06 pre-clearance, retained for audit (D3). No logo (D5), no invented price/rating/phone/email.
+- **Canonicals (SEO-06):** already wired via `alternates.canonical` (production-origin hardcoded in content). `tests/seo/canonical.spec.ts` verifies exactly one canonical per route asserting the production origin regardless of test base URL (D1, single `EXPECTED_CANONICAL_ORIGIN` constant).
+- **Sitemap (D2):** `src/app/sitemap.ts` gained the two missing routes `/solutions/insurance` + `/solutions/healthcare`.
+- **Tests:** `tests/seo/{canonical,jsonld,og-metadata}.spec.ts` iterate `VISUAL_ROUTES` (24). They run on CI against the Vercel preview (`PLAYWRIGHT_BASE_URL`); not run locally (server hangs in sandbox).
+- **Verification:** `npx tsc --noEmit` clean, `npx eslint src tests` clean. `npx next build` could not run in this worktree (no local `node_modules`; Turbopack rejects the parent-repo symlink and the webpack builder hangs in-sandbox, same class as the known next-dev/start hang). Build + OG-route output confirmation deferred to CI / a checkout with a real `node_modules`.
+
+This is M5 phase work; the `milestone: M6` frontmatter is intentionally unchanged.
 
 ## Roadmap Evolution
 

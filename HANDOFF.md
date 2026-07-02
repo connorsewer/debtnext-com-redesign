@@ -262,6 +262,10 @@ Full system rebuild against the approved spec at `docs/superpowers/specs/2026-05
 
 **Tooling (2026-05-20, PR #3 `bd2d7ce`):** GreenSock's official gsap-skills pack installed at `.claude/skills/`. 8 skills covering core, timeline, ScrollTrigger, plugins, utils, React, performance, frameworks. Auto-loads on next session start. All formerly Club GSAP plugins (SplitText, MorphSVG, Flip, Draggable, Inertia, Observer, ScrollSmoother, etc.) are free post-Webflow acquisition, so the full plugin surface is available.
 
+## M6 Phase 14 — Text-only page elevation (2026-07-01)
+
+Executed on branch `phase-14-text-page-elevation` (off main @ ab0ad77, after PR #11 merged Phase 12; Phase 13 sits on PR #12 awaiting review). 4 plans, 2 waves. What shipped: `/platform/integrations` gained a Schematic system map (`integrationsSystemMap`: system of record → dPlat routing → recovery vendors → reconciliation); `/compare` gained a time-to-production DataStory (`compareTimeToProduction`, dPlat on chart-1 vs muted chart-2 typical-build baseline) plus the BL-01 "digital journeys" reword; `/demo` gained one restrained hero AmbientField (`ambient={false}` on SectionContainer to avoid double-stacking); P14-01 wired `aria-invalid`/`aria-describedby` on all 8 real DemoForm fields (honeypot untouched); P14-02 added the §8.3 focus ring to AttachedForm and documented the 3px `#9CB4E8` input ring in DESIGN.md as intentional. The other 6 routes are deliberate no-lifts recorded in `14-ARCHETYPE-MAP.md` + `14-MOTION-CONFIRM.md` (D-01 restraint). New specs: `tests/responsive/14-page-elevation.spec.ts` (3) + `tests/a11y/demoform-aria.spec.ts` (4); 295 total discovered. Local gates green (tsc, eslint, code review clean); CI/preview truth + Connor visual sign-off + /compare legal gate tracked in `14-HUMAN-UAT.md`. HomepageHero firewall verified untouched.
+
 ## M6 Phase 12 — Per-industry solutions visuals (2026-06-12)
 
 Killed the duplicate `SolutionsIndustryCards` widget that shipped identically across all 7 solution surfaces (6 industry pages + the `/solutions` hub). Each surface now renders its own typed visual payload fed into the shared archetype components (`ConsoleVisual` / `SchematicVisual` / `DataStoryVisual` from `src/components/product/visuals/archetypes.tsx`):
@@ -342,6 +346,18 @@ Phase 5 is NOT shipped. HERO-01..03 are correct and stay. HERO-04 needs a gap-cl
 - **CI single-build optimization**: the a11y workflow runs `npm run build` explicitly and then `npm run test:e2e`, which re-runs `npm run build && npm run start` via Playwright's `webServer` block. CI builds twice per run (~3-5 min wasted). Worth fixing only if CI runtime becomes an issue.
 
 ---
+
+## M5 Phase 7 — SEO baseline (2026-07-01, branch phase-07-seo-baseline)
+
+SEO-01..06 Done. Per-route Open Graph images, JSON-LD on `/` and `/demo`, Twitter cards, and canonical verification.
+
+- **OG images (SEO-01/05):** shared renderer `src/lib/og/template.tsx` (`renderOgImage({title, eyebrow?})`, `next/og` `ImageResponse`, 1200x630 PNG, dark `#171721` canvas, static "DebtNext" wordmark + indigo `#5266EB` node, single subtle accent glow, General Sans 600 via `src/lib/og/loadFont.ts` reading `src/app/fonts/GeneralSans-Semibold.woff2`, Node runtime). One `opengraph-image.tsx` per route dir (root + 23) that imports the route's approved `*Meta.title` and re-exports `size`/`contentType`/`alt`/`default Image()`. **D2:** scope expanded from the original 11 to all 24 v1 route dirs. `alt` is `"<title> | dPlat"` (pipe, no em dash, voice-rules compliant). `twitter: { card: "summary_large_image" }` added once to the root `layout.tsx` metadata; Next reuses each route's OG image as `twitter:image`.
+- **JSON-LD (SEO-02/03/04):** `src/content/org.ts` holds the sourced org facts (legalName "DebtNext, LLC" from SiteFooter, foundingDate 2003 from company-about, parent Transworld Systems Inc. / tsico.com, LinkedIn, areaServed US/CA, product dPlat). `src/lib/seo/schema.ts` builds `organizationSchema()` / `softwareApplicationSchema()` / `contactPageSchema()`. `src/components/seo/JsonLd.tsx` is a server component emitting `<script type="application/ld+json">`. Organization + SoftwareApplication render on `/` (src/app/page.tsx); ContactPage on `/demo`. **D3:** a `[COI REVIEW]` marker sits directly above `sameAs` (TSI + LinkedIn), non-blocking per the 2026-06 pre-clearance, retained for audit. **D5:** no `logo`. No invented price/rating/phone/email; the SoftwareApplication offer is quote-shaped only.
+- **Canonicals (SEO-06):** already wired via `alternates.canonical` (production origin hardcoded in each content `*Meta.canonical`). `tests/seo/canonical.spec.ts` (**D1**) asserts exactly one canonical per route pointing at a single `EXPECTED_CANONICAL_ORIGIN` (`https://debtnext.com`) regardless of the test base URL, so a Vercel preview still emits the production canonical.
+- **Sitemap (D2):** `src/app/sitemap.ts` gained `/solutions/insurance` + `/solutions/healthcare` (previously missing).
+- **Tests:** `tests/seo/{canonical,jsonld,og-metadata}.spec.ts` iterate `VISUAL_ROUTES` (24). They run on CI against the Vercel preview via `PLAYWRIGHT_BASE_URL`; not run locally (next server hangs in sandbox).
+- **Verification:** `npx tsc --noEmit` clean; `npx eslint src tests` clean. `npx next build` was NOT runnable in this worktree: it has no local `node_modules` (deps hoist to the parent repo), Turbopack rejects a symlink that escapes the project root, and the `--webpack` builder hangs in-sandbox (same class as the known next-dev/start hang). The build + confirmation that the `opengraph-image` routes appear in build output must run on CI or in a checkout with a real `node_modules`.
+- **No new deps.** `next/og` ships with Next 16.
 
 ## Known open items / loose threads
 

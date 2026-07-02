@@ -64,12 +64,12 @@ Source design: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-d
 
 ### SEO baseline (SEO)
 
-- [ ] **SEO-01** — Per-route `opengraph-image.tsx` via `@vercel/og` for all 11 v1 routes; consistent dark-canvas treatment with route title + dPlat wordmark
-- [ ] **SEO-02** — `Organization` JSON-LD on `/` (legal name DebtNext, URL, sameAs links to TSI per Andrew's clearance)
-- [ ] **SEO-03** — `SoftwareApplication` JSON-LD on `/` describing dPlat (applicationCategory: BusinessApplication, operatingSystem: Web, offers: enterprise quote)
-- [ ] **SEO-04** — `ContactPage` JSON-LD on `/demo` with contactType + areaServed
-- [ ] **SEO-05** — Twitter card metadata (`twitter:card` summary_large_image, `twitter:image` per route reuses OG image) across all 11 routes
-- [ ] **SEO-06** — Canonical URLs per route via `metadata.alternates.canonical`; verified by an integration spec
+- [x] **SEO-01** — Per-route `opengraph-image.tsx` via `next/og` for all 24 v1 routes (scope expanded from 11 per Phase 7 D2: every route dir with a `page.tsx`); consistent dark-canvas treatment with route title + dPlat wordmark. Shared renderer `src/lib/og/template.tsx`.
+- [x] **SEO-02** — `Organization` JSON-LD on `/` (legal name DebtNext, LLC, URL, sameAs to TSI + LinkedIn per Andrew's clearance, foundingDate 2003, parentOrganization TSI). `src/lib/seo/schema.ts` `organizationSchema()`.
+- [x] **SEO-03** — `SoftwareApplication` JSON-LD on `/` describing dPlat (applicationCategory: BusinessApplication, operatingSystem: Web, quote-based offer, no invented price/rating).
+- [x] **SEO-04** — `ContactPage` JSON-LD on `/demo` with contactType "Sales" + areaServed US/CA (no invented phone/email).
+- [x] **SEO-05** — Twitter card metadata (`twitter:card` summary_large_image on the root layout; `twitter:image` reuses the per-route OG image) across all 24 routes.
+- [x] **SEO-06** — Canonical URLs per route via `metadata.alternates.canonical` (already wired; production-origin hardcoded in content `*Meta.canonical`); verified by `tests/seo/canonical.spec.ts` (D1: exactly one canonical per route, production origin regardless of test base URL).
 
 ### Definition-of-done walkthrough (DOD)
 
@@ -118,12 +118,12 @@ Explicitly excluded during M5 scoping with reasoning:
 | ANALYTICS-01 | Phase 6 | — | Open |
 | ANALYTICS-02 | Phase 6 | — | Open |
 | ANALYTICS-03 | Phase 6 | — | Open |
-| SEO-01 | Phase 7 | — | Open |
-| SEO-02 | Phase 7 | — | Open |
-| SEO-03 | Phase 7 | — | Open |
-| SEO-04 | Phase 7 | — | Open |
-| SEO-05 | Phase 7 | — | Open |
-| SEO-06 | Phase 7 | — | Open |
+| SEO-01 | Phase 7 | 07 | Done |
+| SEO-02 | Phase 7 | 07 | Done |
+| SEO-03 | Phase 7 | 07 | Done |
+| SEO-04 | Phase 7 | 07 | Done |
+| SEO-05 | Phase 7 | 07 | Done |
+| SEO-06 | Phase 7 | 07 | Done |
 | DOD-01 | Phase 9 | — | Open |
 | DOD-02 | Phase 9 | — | Open |
 | DOD-03 | Phase 9 | — | Open |

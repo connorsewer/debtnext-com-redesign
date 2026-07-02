@@ -41,6 +41,9 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "dPlat",
   },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export const viewport: Viewport = {

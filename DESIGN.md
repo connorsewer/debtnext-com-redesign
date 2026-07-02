@@ -1117,6 +1117,8 @@ This is the Mercury-like hero conversion pattern: a rounded input attached to a 
 - Loading: show inline spinner or submit button loading state.
 - Error: border `#ef4444`; adjacent message with `role="alert"` or connected `aria-describedby`.
 
+**Input focus ring (intentional pattern).** Text inputs, selects, and textareas use a 3px `#9CB4E8` focus ring, not the 2px outline plus 2px offset that §8 defines for buttons, links, and tabs. The ring is the `shadows.focus` token (`0 0 0 3px rgba(156, 180, 232, 0.35)`, line 133), paired with the `#5266EB` border shift. It sits inside the rounded field edge, so it reads as a filled glow rather than a detached outline, which keeps the attached-form pill and the boxed demo-form inputs looking consistent. Both the DemoForm inputs and the AttachedForm email input use this ring. Treat it as the sanctioned input focus treatment; the 2px offset outline stays the rule for non-input interactive controls.
+
 ### Form accessibility
 
 - Every input must have a visible or programmatic label.

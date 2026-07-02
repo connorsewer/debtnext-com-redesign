@@ -149,7 +149,7 @@ export function DemoForm() {
               type="text"
               autoComplete="given-name"
               {...register("firstName")}
-              {...inputClasses(errors.firstName)}
+              {...inputClasses(errors.firstName, "firstName")}
             />
           }
         />
@@ -163,7 +163,7 @@ export function DemoForm() {
               type="text"
               autoComplete="family-name"
               {...register("lastName")}
-              {...inputClasses(errors.lastName)}
+              {...inputClasses(errors.lastName, "lastName")}
             />
           }
         />
@@ -180,7 +180,7 @@ export function DemoForm() {
             inputMode="email"
             autoComplete="email"
             {...register("workEmail")}
-            {...inputClasses(errors.workEmail)}
+            {...inputClasses(errors.workEmail, "workEmail")}
           />
         }
       />
@@ -196,7 +196,7 @@ export function DemoForm() {
               type="text"
               autoComplete="organization"
               {...register("company")}
-              {...inputClasses(errors.company)}
+              {...inputClasses(errors.company, "company")}
             />
           }
         />
@@ -210,7 +210,7 @@ export function DemoForm() {
               type="text"
               autoComplete="organization-title"
               {...register("jobTitle")}
-              {...inputClasses(errors.jobTitle)}
+              {...inputClasses(errors.jobTitle, "jobTitle")}
             />
           }
         />
@@ -226,7 +226,7 @@ export function DemoForm() {
               id="industry"
               defaultValue=""
               {...register("industry")}
-              {...inputClasses(errors.industry)}
+              {...inputClasses(errors.industry, "industry")}
             >
               <option value="" disabled>
                 Choose one
@@ -249,7 +249,7 @@ export function DemoForm() {
               id="portfolioSize"
               defaultValue=""
               {...register("portfolioSize")}
-              {...inputClasses(errors.portfolioSize)}
+              {...inputClasses(errors.portfolioSize, "portfolioSize")}
             >
               <option value="">Prefer not to say</option>
               {PORTFOLIO_SIZE_OPTIONS.map((opt) => (
@@ -273,7 +273,7 @@ export function DemoForm() {
             rows={4}
             maxLength={500}
             {...register("whatToSee")}
-            {...inputClasses(errors.whatToSee)}
+            {...inputClasses(errors.whatToSee, "whatToSee")}
           />
         }
       />
@@ -366,7 +366,7 @@ function Field({ label, id, error, hint, input }: FieldProps) {
   );
 }
 
-function inputClasses(error: unknown) {
+function inputClasses(error: unknown, id: string) {
   return {
     className: cn(
       "min-h-[44px] w-full rounded-[var(--radius-xs)] border bg-[var(--card)] px-4 py-2 text-body-md text-[var(--foreground)] transition-colors duration-[var(--duration-instant)] placeholder:text-[var(--muted-foreground)] focus:outline-none focus:border-[var(--primary)] focus:ring-3 focus:ring-[var(--focus)]/35",
@@ -374,5 +374,7 @@ function inputClasses(error: unknown) {
         ? "border-[var(--destructive)]"
         : "border-[var(--border)] hover:border-[var(--focus)]"
     ),
+    "aria-invalid": error ? true : undefined,
+    "aria-describedby": error ? `${id}-error` : undefined,
   };
 }

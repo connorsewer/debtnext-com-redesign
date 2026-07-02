@@ -71,7 +71,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Link
             href="/"
-            className="inline-flex min-h-touch min-w-touch items-center text-[var(--text-h4)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
+            className="inline-flex min-h-touch min-w-touch items-center text-h4 focus-visible:outline-2 focus-visible:outline-[var(--focus)]"
             aria-label="DebtNext home"
           >
             <Wordmark />
@@ -88,7 +88,7 @@ export function SiteHeader() {
             const hasDropdown = Boolean(dropdown);
 
             const linkClass = cn(
-              "relative inline-flex items-center gap-1 text-[var(--text-body-strong)] font-[420] transition-colors duration-[var(--duration-instant)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)] aria-[current=page]:text-white",
+              "relative inline-flex items-center gap-1 text-body-strong font-[420] transition-colors duration-[var(--duration-instant)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)] aria-[current=page]:text-white",
               // Indigo underline wipe-in on hover (skipped for the active link,
               // which already carries the primary underline).
               !isActive && hover.hoverUnderline,

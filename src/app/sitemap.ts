@@ -16,6 +16,8 @@ const STATIC_ROUTES = [
   "/solutions/financial-services",
   "/solutions/telecom",
   "/solutions/fintech",
+  "/solutions/insurance",
+  "/solutions/healthcare",
   "/why-dplat",
   "/compare",
   "/resources",
