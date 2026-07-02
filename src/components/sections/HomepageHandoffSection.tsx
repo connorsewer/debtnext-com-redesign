@@ -2,88 +2,64 @@
 
 import * as React from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 
 import {
   FramedDashboard,
   MockupForTab,
   mockupTitleForTab,
 } from "@/components/sections/mockups";
-import { useIsMobile } from "@/hooks/use-is-mobile";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { heroHandoff, type PlatformTab } from "@/content/homepage-hero";
 
-// Desktop-only, non-reduced-motion owner of ALL GSAP. Loaded via next/dynamic
-// with ssr:false so GSAP never enters the `/` eager client chunk. registerPlugin
-// is idempotent, so this second controller instance (the hero mounts its own) is
-// a harmless no-op — no double-register, no race.
-const HeroCinematicController = dynamic(
-  () =>
-    import("./HeroCinematicController").then((m) => m.HeroCinematicController),
-  { ssr: false }
-);
+/**
+ * Per-tab vertical scroll allocation (in viewport heights). Tightened from 0.75
+ * to 0.58 (2026-07-02) so 4 tabs step through in ~2.3vh of pinned scroll instead
+ * of 3vh — the band no longer feels slack while the active tab still settles for
+ * long enough to read.
+ */
+export const VH_PER_TAB = 0.58;
 
-/** Per-tab vertical scroll allocation (in viewport heights). */
-const VH_PER_TAB = 0.75;
+type HomepageHandoffSectionProps = {
+  sectionRef: React.RefObject<HTMLElement | null>;
+  activeId: PlatformTab["id"];
+  setActiveId: (id: PlatformTab["id"]) => void;
+  /** True on desktop + non-reduced-motion (the pinned cinematic runs). */
+  cinematicEnabled: boolean;
+  /** True on ≤768px viewports or reduced motion (render the static stack). */
+  staticStack: boolean;
+};
 
 /**
- * The section that catches the framed dashboard at the end of the hero pin.
+ * The section that catches the dashboard finale at the end of the hero pin.
  *
- * Structurally: a 400vh-tall section with a sticky 100vh inner. The inner
- * pins at viewport top while the user scrolls through the 4 tabs — each
- * tab gets ~75vh of scroll, so the active tab updates automatically as
- * the user keeps scrolling past the hero. Click/keyboard interaction
- * smooth-scrolls to the matching scroll position (or instant-scrolls
- * under prefers-reduced-motion). Eyebrow + heading and tabs + body + link
- * are absolute-positioned above and below the centered dashboard. The
- * negative top margin pulls the section up by 100vh so its top aligns
- * with the hero's pin release — at that moment the dashboard is at the
- * exact same viewport-y (50vh) as the hero's framed dashboard.
+ * Structurally: a tall section with a sticky 100vh inner. The inner pins at
+ * viewport top while the user scrolls through the 4 tabs — each tab gets
+ * ~VH_PER_TAB of scroll, so the active tab updates automatically as the user
+ * keeps scrolling past the hero. The scroll-to-tab math and the tab-progression
+ * ScrollTrigger both read VH_PER_TAB, so they stay in lockstep. The GSAP wiring
+ * lives in HeroCinematicController, mounted ONCE by the shared HomepageHeroHandoff
+ * wrapper (not here).
  *
- * Initial opacity is 0; the hero's ScrollTrigger sets the opacity as it
- * approaches its pin release so Platform stays invisible during the
- * cinematic and transfers visibility cleanly at the seam.
+ * Desktop composition (2026-07-02 density rework): heading, dashboard frame, and
+ * tabs are stacked as ONE centered unit that fills the viewport with intent —
+ * heading directly above the frame, tabs + body + link directly beneath it — so
+ * there are no dead vertical gaps between three loosely-anchored strata. The
+ * frame grows to max-w-6xl since it is the hero artifact of the section.
+ *
+ * Mobile / reduced-motion render the honest static stacked layout (the fail-open
+ * path that passed the audit) unchanged.
  */
-export function HomepageHandoffSection() {
-  const sectionRef = React.useRef<HTMLElement | null>(null);
+export function HomepageHandoffSection({
+  sectionRef,
+  activeId,
+  setActiveId,
+  cinematicEnabled,
+  staticStack,
+}: HomepageHandoffSectionProps) {
   const tabCount = heroHandoff.tabs.length;
-  const isMobile = useIsMobile();
-  const [activeId, setActiveId] = React.useState<PlatformTab["id"]>(
-    heroHandoff.tabs[0].id
-  );
   const active =
     heroHandoff.tabs.find((t) => t.id === activeId) ?? heroHandoff.tabs[0];
-
-  // Mirror ref so the controller's onActiveTab callback can compare against the
-  // latest value without re-creating the ScrollTrigger on every state change.
-  const activeIdRef = React.useRef(activeId);
-  React.useEffect(() => {
-    activeIdRef.current = activeId;
-  }, [activeId]);
-
-  const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
-  React.useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const handler = () => setPrefersReducedMotion(mq.matches);
-    handler();
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  // Scroll-driven tab progression now lives in HeroCinematicController (the
-  // single dynamic-GSAP owner). The controller calls this with the active tab
-  // index; the guarded update is identical to the old GSAP onUpdate body.
-  const onActiveTab = React.useCallback((idx: number) => {
-    const id = heroHandoff.tabs[idx]?.id;
-    if (id && id !== activeIdRef.current) {
-      activeIdRef.current = id;
-      setActiveId(id);
-    }
-  }, []);
-
-  // Desktop + non-reduced-motion only. Mobile renders the static stack below.
-  const cinematicEnabled = !isMobile && !prefersReducedMotion;
 
   /** Smooth-scroll to the middle of a tab's scroll slice when clicked. */
   function scrollToTab(tabId: PlatformTab["id"]) {
@@ -93,8 +69,8 @@ export function HomepageHandoffSection() {
     if (idx < 0) return;
     const sectionTop = section.getBoundingClientRect().top + window.scrollY;
     const perTabPx = window.innerHeight * VH_PER_TAB;
-    // Aim for ~30% into the tab's slice so the active tab settles
-    // immediately rather than at the boundary between two tabs.
+    // Aim for ~30% into the tab's slice so the active tab settles immediately
+    // rather than at the boundary between two tabs.
     const targetScrollY = Math.round(sectionTop + (idx + 0.3) * perTabPx);
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
@@ -118,9 +94,9 @@ export function HomepageHandoffSection() {
   };
 
   // Reduced-motion desktop takes the same static stacked layout as mobile: the
-  // 400vh scroll-scrub region only makes sense when the GSAP cinematic drives
-  // it, so without motion we render the honest, fully-visible fallback.
-  if (isMobile || prefersReducedMotion) {
+  // tall scroll-scrub region only makes sense when the GSAP cinematic drives it,
+  // so without motion we render the honest, fully-visible fallback.
+  if (staticStack) {
     return (
       <section
         ref={sectionRef}
@@ -169,27 +145,17 @@ export function HomepageHandoffSection() {
       ref={sectionRef}
       data-handoff-section
       // Start invisible ONLY when the cinematic will run (GSAP fades this in as
-      // the hero hands off). Under reduced motion the controller never mounts,
-      // so opacity:0 would leave the whole Platform section stuck invisible.
-      // Fail open: render at full opacity when the cinematic is disabled.
+      // the hero hands off). Fail open: full opacity when the cinematic is off.
       style={cinematicEnabled ? { opacity: 0 } : undefined}
-      className="relative -mt-[100vh] h-[400vh] bg-[var(--background)]"
+      // Height = pin length. VH_PER_TAB (0.58) * 4 tabs of scroll drive the tab
+      // progression; the extra 100vh absorbs the negative top margin that pulls
+      // this section up onto the hero's pin release. 0.58*4 + 1 = 3.32.
+      className="relative -mt-[100vh] h-[332vh] bg-[var(--background)]"
     >
-      {cinematicEnabled && (
-        <HeroCinematicController
-          handoff={{
-            sectionRef,
-            tabCount,
-            vhPerTab: VH_PER_TAB,
-            onActiveTab,
-          }}
-        />
-      )}
-      <div className="sticky top-0 h-screen overflow-hidden">
-        <div className="relative mx-auto h-full max-w-[var(--container-page)] px-4 md:px-6 lg:px-8">
-          {/* Eyebrow + heading, anchored in the top portion of the viewport
-              with enough offset to clear the fixed site header. */}
-          <div className="absolute left-1/2 top-[88px] w-full max-w-4xl -translate-x-1/2 px-4 text-center md:top-[96px]">
+      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+        <div className="mx-auto flex w-full max-w-[var(--container-page)] flex-col items-center px-4 pt-[72px] md:px-6 lg:px-8">
+          {/* Eyebrow + heading, directly above the frame. */}
+          <div className="w-full max-w-4xl text-center">
             <p className="text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]">
               {heroHandoff.eyebrow}
             </p>
@@ -198,33 +164,32 @@ export function HomepageHandoffSection() {
             </h2>
           </div>
 
-          {/* Framed dashboard pinned at viewport center. Matches the hero's
-              framed dashboard position exactly (50% horizontal, 50% vertical
-              via the centering transform). */}
+          {/* Framed dashboard. Center-anchored so it never moves as the inner
+              content crossfades between tabs of differing heights, and so it
+              shares the hero finale's horizontal center at the seam. */}
           <div
             data-handoff-mockup-frame
-            className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 px-4 md:px-8 lg:px-12"
+            className="mt-6 w-full md:mt-8"
           >
-            <div className="mx-auto w-full max-w-5xl">
+            <div className="mx-auto w-full max-w-6xl">
               <FramedDashboard title={mockupTitleForTab(activeId)}>
-                {/* key={activeId} forces a clean re-mount, so the chrome
-                    title and inner content always change in sync. Each
-                    mockup's own internal motion-entrance animations replay
-                    on every mount. */}
+                {/* key={activeId} forces a clean re-mount, so the chrome title
+                    and inner content always change in sync. Each mockup's own
+                    internal motion-entrance animations replay on every mount. */}
                 <MockupForTab key={activeId} id={activeId} />
               </FramedDashboard>
             </div>
           </div>
 
-          {/* Tabs + body + link, anchored in the bottom portion of the viewport. */}
-          <div className="absolute bottom-[3vh] left-1/2 w-full -translate-x-1/2 px-4 text-center md:bottom-[3.5vh]">
+          {/* Tabs + body + link, directly beneath the frame. */}
+          <div className="mt-6 w-full text-center md:mt-8">
             <div
               role="tablist"
               aria-label="dPlat capability surfaces"
               aria-orientation="horizontal"
               className="mx-auto flex flex-wrap justify-center gap-2"
             >
-              {heroHandoff.tabs.map((tab) => {
+              {heroHandoff.tabs.map((tab, idx) => {
                 const isActive = tab.id === activeId;
                 return (
                   <button
@@ -239,13 +204,13 @@ export function HomepageHandoffSection() {
                     onKeyDown={(e) => {
                       if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
                       e.preventDefault();
-                      const idx = heroHandoff.tabs.findIndex(
+                      const current = heroHandoff.tabs.findIndex(
                         (t) => t.id === activeId
                       );
                       const next =
                         e.key === "ArrowRight"
-                          ? (idx + 1) % tabCount
-                          : (idx - 1 + tabCount) % tabCount;
+                          ? (current + 1) % tabCount
+                          : (current - 1 + tabCount) % tabCount;
                       const target = heroHandoff.tabs[next];
                       handleTabActivate(target);
                       document
@@ -253,13 +218,24 @@ export function HomepageHandoffSection() {
                         ?.focus();
                     }}
                     className={cn(
-                      "inline-flex min-h-[44px] items-center rounded-[var(--radius-xl)] border px-4 py-2 text-body-sm font-[480] transition-colors duration-[var(--duration-instant)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]",
+                      "relative inline-flex min-h-[44px] items-center overflow-hidden rounded-[var(--radius-xl)] border px-4 py-2 text-body-sm font-[480] transition-colors duration-[var(--duration-instant)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]",
                       isActive
                         ? "border-[var(--primary)] bg-[var(--primary)]/15 text-[var(--foreground)]"
                         : "border-[var(--border)] bg-transparent text-[var(--text-tertiary)] hover:border-[var(--text-tertiary)] hover:text-white"
                     )}
                   >
                     {tab.label}
+                    {/* Per-tab progress affordance: a thin underline on the
+                        active pill so users read the scroll as stepping through
+                        an ordered sequence rather than a jump. Purely decorative;
+                        the aria-selected state carries the real meaning. */}
+                    {isActive && (
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute bottom-0 left-0 h-[2px] bg-[var(--primary)]"
+                        style={{ width: `${((idx + 1) / tabCount) * 100}%` }}
+                      />
+                    )}
                   </button>
                 );
               })}
