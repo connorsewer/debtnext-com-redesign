@@ -21,7 +21,7 @@
  * separately by mockupTitleForTab and is NOT part of this in-canvas payload.
  */
 
-import type { ConsoleData } from "./types";
+import type { PerformanceShowcaseData } from "./types";
 
 // [CLAIMS REVIEW] liquidation percentages and deltas are governed copy mirrored
 // from the existing VendorPerformanceMockup wording; real-shaped anonymized
@@ -70,4 +70,55 @@ export const handoffPerformanceConsole = {
   pills: [{ label: "4 vendors scored" }, { label: "Liquidation, trailing 30d" }],
   ariaSummary:
     "Vendor scorecard console. Liquidation across all pools is 14.7%, up 1.3% versus the prior 30 days. Four vendors are graded: ABC Recovery grade A at 18.7% liquidation, up 2.1; Global Collect grade A- at 16.3%, up 0.8; Summit Recovery grade B at 13.5%, down 0.4; GDW Recovery grade C at 9.6%, down 1.7.",
-} satisfies ConsoleData;
+  showcase: {
+    // Vendor names are FIXED anonymized labels (do not rename). Liquidation %,
+    // grade, and delta mirror the payload rows; ROI% and collections are drawn
+    // from the approved Vendor Performance Scorecard reference table.
+    vendors: [
+      {
+        name: "ABC Recovery",
+        grade: "A",
+        gradeTone: "success",
+        liquidation: 18.7,
+        liquidationDelta: "+2.1 vs prior 30d",
+        deltaTone: "success",
+        roi: 18.7,
+        collections: "$5.6M",
+        trend: [0.62, 0.68, 0.71, 0.74, 0.79, 0.83, 0.88, 0.94],
+      },
+      {
+        name: "Global Collect",
+        grade: "A-",
+        gradeTone: "success",
+        liquidation: 16.3,
+        liquidationDelta: "+0.8 vs prior 30d",
+        deltaTone: "success",
+        roi: 16.3,
+        collections: "$4.2M",
+        trend: [0.58, 0.6, 0.63, 0.66, 0.68, 0.72, 0.76, 0.81],
+      },
+      {
+        name: "Summit Recovery",
+        grade: "B",
+        gradeTone: "warning",
+        liquidation: 13.5,
+        liquidationDelta: "-0.4 vs prior 30d",
+        deltaTone: "breach",
+        roi: 13.5,
+        collections: "$2.1M",
+        trend: [0.7, 0.68, 0.66, 0.64, 0.63, 0.61, 0.6, 0.58],
+      },
+      {
+        name: "GDW Recovery",
+        grade: "C",
+        gradeTone: "breach",
+        liquidation: 9.6,
+        liquidationDelta: "-1.7 vs prior 30d",
+        deltaTone: "breach",
+        roi: 9.6,
+        collections: "$1.1M",
+        trend: [0.72, 0.68, 0.62, 0.56, 0.5, 0.45, 0.41, 0.38],
+      },
+    ],
+  },
+} satisfies PerformanceShowcaseData;

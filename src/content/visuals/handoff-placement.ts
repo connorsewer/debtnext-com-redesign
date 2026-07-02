@@ -15,7 +15,7 @@
  * separately by mockupTitleForTab and is NOT part of this in-canvas payload.
  */
 
-import type { ConsoleData } from "./types";
+import type { PlacementShowcaseData } from "./types";
 
 // [CLAIMS REVIEW] KPI and pool numbers are governed copy mirrored from the
 // existing PlacementMockup wording; real-shaped anonymized figures only,
@@ -67,4 +67,21 @@ export const handoffPlacementConsole = {
   ],
   ariaSummary:
     "Placement run console. 120,418 accounts are loaded in the inbound batch worth $284.6M, with the routing engine running. The batch splits across four routing pools plus a held remainder: pre-collect 35% across 2 vendors, primary 28% across 3 vendors, secondary 18% across 2 vendors, tertiary 12% across 4 vendors, and 7% held for manual review. The five shares sum to 100%.",
-} satisfies ConsoleData;
+  showcase: {
+    // 35 + 28 + 18 + 12 + 7 = 100 EXACTLY (figure honesty, do not rebalance).
+    pools: [
+      { name: "Pre-collect", vendors: "2 vendors", share: 35 },
+      { name: "Primary", vendors: "3 vendors", share: 28 },
+      { name: "Secondary", vendors: "2 vendors", share: 18 },
+      { name: "Tertiary", vendors: "4 vendors", share: 12 },
+      { name: "Held / manual review", vendors: "Exceptions and holds", share: 7, tone: "neutral" },
+    ],
+    // Live routing ticks: real-shaped batch-progress hints derived from the
+    // 120,418-account / $284.6M inbound batch. No new claim beyond the batch total.
+    ticks: [
+      { label: "Routed this run", value: "111,988" },
+      { label: "Held for review", value: "8,430" },
+      { label: "Rules evaluated", value: "14 live" },
+    ],
+  },
+} satisfies PlacementShowcaseData;

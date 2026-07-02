@@ -15,6 +15,10 @@ export type {
   SchematicNode,
   SchematicEdge,
   SchematicData,
+  PlacementShowcaseData,
+  PerformanceShowcaseData,
+  IssuesShowcaseData,
+  ReportingShowcaseData,
 } from "./types";
 
 export { compareTimeToProduction } from "./compare";
