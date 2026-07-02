@@ -58,7 +58,13 @@ export const handoffPlacementConsole = {
       bar: { segments: [12] },
       trailing: { value: 12, suffix: "%" },
     },
+    {
+      primary: "Held / manual review",
+      secondary: "Exceptions and holds",
+      bar: { segments: [7], tone: "neutral" },
+      trailing: { value: 7, suffix: "%" },
+    },
   ],
   ariaSummary:
-    "Placement run console. 120,418 accounts are loaded in the inbound batch worth $284.6M, with the routing engine running. Four pools split the batch: pre-collect 35% across 2 vendors, primary 28% across 3 vendors, secondary 18% across 2 vendors, tertiary 12% across 4 vendors.",
+    "Placement run console. 120,418 accounts are loaded in the inbound batch worth $284.6M, with the routing engine running. The batch splits across four routing pools plus a held remainder: pre-collect 35% across 2 vendors, primary 28% across 3 vendors, secondary 18% across 2 vendors, tertiary 12% across 4 vendors, and 7% held for manual review. The five shares sum to 100%.",
 } satisfies ConsoleData;

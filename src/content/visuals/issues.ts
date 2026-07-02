@@ -248,12 +248,16 @@ export const issuesFlagshipConsole = {
     bar: "SLA window remaining",
     trailing: "Time left",
   },
+  // Ordered by SLA proximity: soonest deadline first (matches the header
+  // "sorted by SLA proximity" label). The resolved SCRA issue has no live SLA
+  // window, so it sorts last with a neutral empty bar and a "Closed" text label
+  // rather than a full green bar reading "0h" (HOME-3).
   rows: [
     {
-      primary: "Dispute · ISS-4829 · on time",
-      secondary: "Assigned to Recovery partner A · itemization requested",
-      bar: { segments: [62], tone: "success" },
-      trailing: { value: 4.2, suffix: "h", decimals: 1, animate: "none" },
+      primary: "Complaint · ISS-4818 · escalated",
+      secondary: "Routed to compliance review",
+      bar: { segments: [9], tone: "warning" },
+      trailing: { value: 0.3, suffix: "h", decimals: 1, animate: "none" },
     },
     {
       primary: "Bankruptcy · ISS-4827 · warning",
@@ -262,16 +266,15 @@ export const issuesFlagshipConsole = {
       trailing: { value: 1.6, suffix: "h", decimals: 1, animate: "none" },
     },
     {
-      primary: "SCRA · ISS-4824 · resolved",
-      secondary: "Active duty confirmed · rate cap applied by the engine",
-      bar: { segments: [100], tone: "success" },
-      trailing: { value: 0, suffix: "h", decimals: 1, animate: "none" },
+      primary: "Dispute · ISS-4829 · on time",
+      secondary: "Assigned to Recovery partner A · itemization requested",
+      bar: { segments: [62], tone: "success" },
+      trailing: { value: 4.2, suffix: "h", decimals: 1, animate: "none" },
     },
     {
-      primary: "Complaint · ISS-4818 · escalated",
-      secondary: "Routed to compliance review",
-      bar: { segments: [9], tone: "warning" },
-      trailing: { value: 0.3, suffix: "h", decimals: 1, animate: "none" },
+      primary: "SCRA · ISS-4824 · resolved · closed",
+      secondary: "Active duty confirmed · rate cap applied · no SLA window",
+      bar: { segments: [0], tone: "neutral" },
     },
   ],
   pills: [
@@ -280,7 +283,7 @@ export const issuesFlagshipConsole = {
     { label: "Auto-resolved 64%" },
   ],
   ariaSummary:
-    "Issues worklist console. An active worklist of 94 open issues, 11 escalated, sorts by SLA proximity across portfolios. The ISS-4829 dispute is on time with 4.2 hours left, the ISS-4827 bankruptcy is in warning at 1.6 hours with auto-recall pending, the ISS-4824 SCRA issue is resolved after the engine applied a rate cap, and the ISS-4818 complaint has escalated to compliance review with 0.3 hours left. Across the portfolio 30-day SLA adherence is 97.4%, average resolution is 3.2 hours, and 64% of issues auto-resolve. Each status is shown with a text label, not color alone.",
+    "Issues worklist console. An active worklist of 94 open issues, 11 escalated, sorts by SLA proximity across portfolios, soonest deadline first. The ISS-4818 complaint has escalated to compliance review with 0.3 hours left, the ISS-4827 bankruptcy is in warning at 1.6 hours with auto-recall pending, and the ISS-4829 dispute is on time with 4.2 hours left. The ISS-4824 SCRA issue is resolved and closed with no live SLA window after the engine applied a rate cap, so it sorts last with an empty bar. Across the portfolio 30-day SLA adherence is 97.4%, average resolution is 3.2 hours, and 64% of issues auto-resolve. Each status is shown with a text label, not color alone.",
 } satisfies ConsoleData;
 
 // Per-issue detail revealed inside the flagship Explorable panels. Each id
