@@ -77,9 +77,11 @@ function Header({ className }: { className?: string }) {
         ) : null}
       </div>
       {header.status ? (
+        // LiveStatus renders its own pulsing dot inside the pill when live, so a
+        // standalone PulseDot beside it (SOL-9) read as a stray dot floating left
+        // of the pill. The pill's internal dot is the single live indicator.
         <span className="flex shrink-0 items-center gap-2">
-          {live ? <PulseDot tone="focus" /> : null}
-          <LiveStatus label={header.status.label} />
+          <LiveStatus label={header.status.label} tone={live ? "live" : "success"} />
         </span>
       ) : null}
     </div>
@@ -140,7 +142,12 @@ function Callout({ className }: { className?: string }) {
         </div>
       </div>
       {callout.action ? (
-        <span className="shrink-0 rounded-full bg-[var(--primary)] px-3 py-1.5 text-[11px] font-[500] text-white">
+        // SOL-10: a filled-indigo pill here echoed the primary "Request a demo"
+        // CTA in the same band. Downgraded to a tonal treatment (indigo text on a
+        // tinted indigo fill, with a live pulse) so nothing inside the product
+        // mock out-shouts the one filled CTA per band.
+        <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[color-mix(in_srgb,var(--primary)_35%,transparent)] bg-[color-mix(in_srgb,var(--primary)_16%,transparent)] px-3 py-1.5 text-[11px] font-[500] text-[var(--primary)]">
+          <PulseDot tone="indigo" size={6} />
           {callout.action}
         </span>
       ) : null}
@@ -154,7 +161,7 @@ function Rows({ className }: { className?: string }) {
   return (
     <RevealStagger className={cn("flex flex-col gap-3", className)}>
       {columns ? (
-        <div className="grid grid-cols-[1.1fr_2fr_0.6fr] gap-x-4 text-[10px] uppercase tracking-[0.08em] text-[var(--product-text-3)]">
+        <div className="grid grid-cols-[1.5fr_1.6fr_0.7fr] gap-x-4 text-[10px] uppercase tracking-[0.08em] text-[var(--product-text-3)]">
           <span>{columns.primary}</span>
           <span>{columns.bar}</span>
           <span className="text-right">{columns.trailing}</span>
