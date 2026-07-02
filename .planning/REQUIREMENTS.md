@@ -45,7 +45,7 @@ Source design: `docs/superpowers/specs/2026-06-04-premium-visual-motion-system-d
 
 ### Homepage flagship capstone (HOMEVIS)
 
-- [ ] **HOMEVIS-01** — The homepage receives the matured-system capstone pass; it is sequenced after the M5 hero LCP fix and re-runs LHCI Case C as a hard merge gate (never lands before the M5 perf gate is closed or renegotiated)
+- [x] **HOMEVIS-01** — The homepage receives the matured-system capstone pass; it is sequenced after the M5 hero LCP fix and re-runs LHCI Case C as a hard merge gate (never lands before the M5 perf gate is closed or renegotiated). Done (Phase 15, 2026-07-01): the hero finale renders `<Console bare data={handoffPlacementConsole} />` in place of the retired `dashboard-dark.png` raster; LHCI Case C re-baseline is recorded from the PR's green CI run.
 
 ## In-flight (M5 — paused)
 
@@ -152,7 +152,7 @@ Explicitly excluded during M5 scoping with reasoning:
 | PAGEVIS-02 | Phase 14 | — | Open |
 | PAGEVIS-03 | Phase 14 | — | Open |
 | PAGEVIS-04 | Phase 14 | — | Open |
-| HOMEVIS-01 | Phase 15 | — | Open |
+| HOMEVIS-01 | Phase 15 | — | Done |
 
 ---
 *Last updated: 2026-06-04. Phase 5.3 D-08 close-out: HERO-01..04 flipped to Done. The HERO-04 LHCI Case C gate is green (lazy-GSAP plus a simulate-to-devtools measurement change; the 2,300 ms bar is unchanged). Phases 5 + 5.1 + 5.2 + 5.3 closed together. M5's remaining 17 requirements (ANALYTICS, SEO, MOTION, DOD) stay open/in-flight; M5's MOTION-01..04 are superseded by M6's FND-* work. M6 coverage 21/21; M5 coverage 21/21.*

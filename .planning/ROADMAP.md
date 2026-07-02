@@ -188,7 +188,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 - [x] **Phase 12: Solutions per-industry visuals** — Kill the duplicate widget; per-industry Console + Schematic + Data-story; replace accordion placeholders across 6 industries (completed 2026-06-13)
 - [x] **Phase 13: Visual system consolidation** — Merge `sections/mockups` behind unchanged `MockupForTab` signatures (after Console is proven); retire dead PNG fallbacks (completed 2026-06-13)
 - [x] **Phase 14: Text-only page elevation** — Archetype visuals + motion where they lift compare / why-dplat / company set / resources / integrations / demo (completed 2026-07-01)
-- [ ] **Phase 15: Homepage flagship capstone** — Matured-system pass on the hero; gated on the M5 hero LCP fix; LHCI Case C re-run as a hard merge gate; last
+- [x] **Phase 15: Homepage flagship capstone** — Matured-system pass on the hero; gated on the M5 hero LCP fix; LHCI Case C re-run as a hard merge gate; last (completed 2026-07-01)
 
 ## M6 Progress
 
@@ -199,7 +199,7 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
 | 12. Solutions per-industry visuals | 5/5 | Complete    | 2026-06-13 |
 | 13. Visual system consolidation | 5/5 | Complete    | 2026-06-13 |
 | 14. Text-only page elevation | 4/4 | Complete    | 2026-07-01 |
-| 15. Homepage flagship capstone | 0/0 | Not started | — |
+| 15. Homepage flagship capstone | 1/1 | Complete    | 2026-07-01 |
 
 ## M6 Phase Details
 
@@ -302,7 +302,8 @@ Granularity: `standard` (5–8 phases). 21 M6 requirements across 6 categories (
   1. The homepage receives the matured-system capstone pass (hero elevated toward a Console-archetype treatment per the design spec) and the `dashboard-dark.png` hero asset's fate is resolved (kept intentionally or replaced with a Console instance)
   2. LHCI Case C re-runs as a hard merge gate and passes — `/` LCP stays under the gate the M5 hero fix established, First-Load-JS on `/` did not grow, and the capstone never lands before the M5 perf gate is closed or explicitly renegotiated
   3. Final motion polish is in place site-wide-consistent, with `prefers-reduced-motion` honored on the homepage and the reduced-motion + mobile-GSAP-free specs green
-**Plans**: TBD
+**Plans**: 1 plan (1 wave)
+- [x] 15-01 — Hero-finale swap: replace the `/product/dashboard-dark.png` raster inside the held `FramedDashboard` finale with `<Console bare data={handoffPlacementConsole} />` (reuses the Phase 13 handoff placement payload; no new content/claims); add the `hero-finale-console.spec.ts` structural regression guard; retire the raster. Firewall (`data-hero-framed-dashboard` wrapper + chrome title) byte-identical; HeroCinematicController animates the wrapper only, so no controller change. Post-Phase-13 the handoff already renders Console archetypes, so the capstone reduced to this finale swap. LHCI Case C re-baseline recorded from the PR's green CI run.
 **Notes**: GENUINELY LAST. Both M5 and M6 touch the same hero and share the same marginal mobile JS budget, so this is the highest-risk perf change in M6. Needs an LHCI re-baseline plan coordinated with M5 state (consider `/gsd-research-phase 15`). Hard gate: LHCI Case C re-run before merge; do not merge if `/` regresses. Inherits standing constraints: DESIGN.md tokens only, one filled CTA per band, WCAG 2.2 AA + axe-core, reduced-motion gated, LCP<2.5s / CLS<0.1 / INP<200ms, all existing Playwright specs green, per-commit docs-in-sync, COI/CLAIMS review on any new copy.
 **UI hint**: yes
 

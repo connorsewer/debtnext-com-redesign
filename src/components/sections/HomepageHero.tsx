@@ -7,8 +7,10 @@ import { useRouter } from "next/navigation";
 
 import { CursorGlow } from "@/components/motion/CursorGlow";
 import { FramedDashboard } from "@/components/sections/mockups/FramedDashboard";
+import { Console } from "@/components/product/visuals/Console";
 import { track } from "@/lib/analytics";
 import { heroCinematic } from "@/content/homepage-hero";
+import { handoffPlacementConsole } from "@/content/visuals";
 
 // Desktop-only, non-reduced-motion owner of ALL GSAP. Loaded via next/dynamic
 // with ssr:false so GSAP never enters the `/` eager client chunk; mobile and
@@ -183,14 +185,7 @@ export function HomepageHero() {
               title="DebtNext · Executive Portfolio Overview"
               className="w-full max-w-5xl"
             >
-              <Image
-                src="/product/dashboard-dark.png"
-                alt=""
-                width={1536}
-                height={1024}
-                sizes="(min-width: 1024px) 80vw, 100vw"
-                className="block h-auto w-full"
-              />
+              <Console bare data={handoffPlacementConsole} />
             </FramedDashboard>
           </div>
         )}
