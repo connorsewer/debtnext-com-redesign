@@ -2,14 +2,19 @@
 
 // Placement explorable flagship (PLATVIS-02 + PLATVIS-03, D-06/D-07).
 //
-// Refactors DecisionEnginePreview into an Explorable-composed Console-archetype
-// instance fed the typed `placementFlagshipConsole` payload. The console rows
-// (the four treatment tiers) render by default via Console.Header / Console.Callout
-// / Console.Rows / Console.Pills slots (no boolean props). Below the console, one
-// Explorable.Toggle per tier reveals that tier's per-vendor allocation in an
-// Explorable.Panel.
+// UNIFIED VISUAL (fix/platform-flagship-unified): the console rows and the
+// inspect region now live inside ONE ProductCanvas frame, so the section reads
+// as a single dense product surface instead of a console PLUS a stacked second
+// panel. Composition:
+//   - <Console bare> renders its slots (Header / Callout / Rows / Pills) in a
+//     plain div (no second ProductCanvas frame, no double role="img"). The bare
+//     div keeps role="img" over its STATIC rows only.
+//   - A thin divider, then an integrated inspect toolbar (pill row) and the
+//     per-tier inspect panel, are siblings of that bare div, inside the same
+//     frame. They are NOT inside the console's role="img" (a11y: role="img"
+//     must not wrap interactive content).
 //
-// D-05 parity contract (Phase 10 locked):
+// D-05 parity contract (Phase 10 locked, preserved through the unification):
 //   - Every headline value (tier accounts, vendor allocation bars, closed-pool
 //     metrics) is in the DOM by default via the Console slots, never hover-gated.
 //   - Toggles are the real <button>s from Explorable.Toggle (keyboard Enter/Space
@@ -67,30 +72,30 @@ function TierAllocation({ tier }: { tier: PlacementFlagshipTier }) {
 }
 
 /**
- * Placement decision-engine flagship. The Console renders the four treatment
- * tiers and closed-pool metrics by default; the Explorable toggles let a user
- * inspect each tier's vendor split. Composes Console + Explorable slots, never
- * boolean props.
+ * Placement decision-engine flagship, unified. One ProductCanvas frame hosts the
+ * Console rows (rendered bare) plus an integrated inspect region (pill toolbar +
+ * per-tier allocation panel). Composes Console + Explorable slots, never boolean
+ * props.
  */
 export function PlacementFlagship() {
   return (
     <Explorable
       label="Placement decision engine, inspect a treatment tier's vendor allocation"
       defaultActive={placementFlagshipTiers[0]?.id ?? null}
-      className="flex flex-col gap-4"
+      className="rounded-[16px] bg-[var(--product-canvas)] p-[26px] text-[var(--product-text)]"
     >
-      <Console data={placementFlagshipConsole}>
+      <Console data={placementFlagshipConsole} bare>
         <Console.Header />
         <Console.Callout />
         <Console.Rows />
         <Console.Pills />
       </Console>
 
-      <div className="flex flex-col gap-3 rounded-[14px] bg-[var(--product-canvas)] p-4 ring-1 ring-[var(--border)]">
+      <div className="mt-4 border-t border-[var(--border)] pt-4">
         <p className="text-[10.5px] font-[500] uppercase tracking-[0.1em] text-[var(--status-focus)]">
           Inspect a tier
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="mt-3 flex flex-wrap gap-2">
           {placementFlagshipTiers.map((tier) => (
             <Explorable.Toggle
               key={tier.id}
@@ -109,19 +114,21 @@ export function PlacementFlagship() {
             </Explorable.Toggle>
           ))}
         </div>
-        {placementFlagshipTiers.map((tier) => (
-          <Explorable.Panel
-            key={tier.id}
-            id={tier.id}
-            className={cn(
-              "rounded-[10px] p-3 transition-shadow",
-              "data-[active]:ring-1 data-[active]:ring-[var(--primary)]",
-            )}
-          >
-            <TierAllocation tier={tier} />
-          </Explorable.Panel>
-        ))}
-        <StatPill label="Allocation adjusts as pool performance shifts" tone="indigo" />
+        <div className="mt-3 flex flex-col gap-3">
+          {placementFlagshipTiers.map((tier) => (
+            <Explorable.Panel
+              key={tier.id}
+              id={tier.id}
+              className={cn(
+                "rounded-[10px] p-3 transition-shadow",
+                "data-[active]:bg-white/[0.02] data-[active]:ring-1 data-[active]:ring-[var(--primary)]",
+              )}
+            >
+              <TierAllocation tier={tier} />
+            </Explorable.Panel>
+          ))}
+          <StatPill label="Allocation adjusts as pool performance shifts" tone="indigo" />
+        </div>
       </div>
     </Explorable>
   );
