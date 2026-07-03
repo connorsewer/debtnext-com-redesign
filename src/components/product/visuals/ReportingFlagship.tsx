@@ -2,14 +2,11 @@
 
 // Reporting explorable flagship (PLATVIS-02 + PLATVIS-03, D-06/D-07).
 //
-// Refactors ReportingDashboard into an Explorable-composed Console-archetype
-// instance fed the typed `reportingFlagshipConsole` payload. The console renders
-// the liquidation-by-tier rows by default via Console.Header / Console.Rows /
-// Console.Pills slots (no boolean props); the pills carry the net-back and SLA
-// headline metrics so they are present on load. The four ReportingDashboard cards
-// are preserved as Explorable toggles: liquidation by tier, net-back · 12 months,
-// top vendors · liquidation, and SLA adherence · 30D. Each toggle reveals that
-// metric's headline figure, delta, and a sparkline trend in an Explorable.Panel.
+// UNIFIED VISUAL (fix/platform-flagship-unified): the console rows and the
+// inspect region now live inside ONE ProductCanvas frame (see PlacementFlagship
+// for the full rationale). <Console bare> renders its slots in a plain div; the
+// pill toolbar and per-metric panel are siblings inside the same frame, outside
+// the console's role="img".
 //
 // D-05 parity contract (Phase 10 locked, mirrored from IssuesFlagship):
 //   - Every headline value (liquidation-by-tier rates, net-back, SLA adherence)
@@ -80,19 +77,19 @@ export function ReportingFlagship() {
     <Explorable
       label="Reporting executive view, inspect a portfolio metric's detail and trend"
       defaultActive={reportingFlagshipMetrics[0]?.id ?? null}
-      className="flex flex-col gap-4"
+      className="rounded-[16px] bg-[var(--product-canvas)] p-[26px] text-[var(--product-text)]"
     >
-      <Console data={reportingFlagshipConsole}>
+      <Console data={reportingFlagshipConsole} bare>
         <Console.Header />
         <Console.Rows />
         <Console.Pills />
       </Console>
 
-      <div className="flex flex-col gap-3 rounded-[14px] bg-[var(--product-canvas)] p-4 ring-1 ring-[var(--border)]">
+      <div className="mt-4 border-t border-[var(--border)] pt-4">
         <p className="text-[10.5px] font-[500] uppercase tracking-[0.1em] text-[var(--status-focus)]">
           Inspect a metric
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="mt-3 flex flex-wrap gap-2">
           {reportingFlagshipMetrics.map((metric) => (
             <Explorable.Toggle
               key={metric.id}
@@ -111,19 +108,21 @@ export function ReportingFlagship() {
             </Explorable.Toggle>
           ))}
         </div>
-        {reportingFlagshipMetrics.map((metric) => (
-          <Explorable.Panel
-            key={metric.id}
-            id={metric.id}
-            className={cn(
-              "rounded-[10px] p-3 transition-shadow",
-              "data-[active]:ring-1 data-[active]:ring-[var(--primary)]",
-            )}
-          >
-            <MetricDetail metric={metric} />
-          </Explorable.Panel>
-        ))}
-        <StatPill label="Drill into any metric, then feed the same data to your BI environment" tone="indigo" />
+        <div className="mt-3 flex flex-col gap-3">
+          {reportingFlagshipMetrics.map((metric) => (
+            <Explorable.Panel
+              key={metric.id}
+              id={metric.id}
+              className={cn(
+                "rounded-[10px] p-3 transition-shadow",
+                "data-[active]:bg-white/[0.02] data-[active]:ring-1 data-[active]:ring-[var(--primary)]",
+              )}
+            >
+              <MetricDetail metric={metric} />
+            </Explorable.Panel>
+          ))}
+          <StatPill label="Drill into any metric, then feed the same data to your BI environment" tone="indigo" />
+        </div>
       </div>
     </Explorable>
   );
