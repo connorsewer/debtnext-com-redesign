@@ -95,7 +95,7 @@ export function HandoffPlacementShowcase() {
         </span>
         {showcase.ticks.map((tick) => (
           <span key={tick.label} className="flex items-baseline gap-1.5 text-[11px]">
-            <span className="text-[var(--product-text-3)]">{tick.label}</span>
+            <span className="text-[var(--product-text-2)]">{tick.label}</span>
             <span className="font-[500] tabular-nums text-[var(--product-text)]">
               {tick.value}
             </span>
