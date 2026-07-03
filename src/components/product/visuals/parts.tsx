@@ -149,18 +149,27 @@ export const AreaLine = React.memo(function AreaLine({
   const uid = React.useId();
   const fillId = `al-fill-${uid}`;
   const glowId = `al-glow-${uid}`;
+  // viewBox + inset margins, same containment approach as DualTrend below:
+  // the plot area is inset on every side so the line and its endpoint marker
+  // (glow r=4) sit fully inside the viewBox instead of clipping at the
+  // right/top edge.
   const w = 100;
   const h = 40;
-  const step = points.length > 1 ? w / (points.length - 1) : w;
+  const padX = 5; // left/right inset -> last point at x = 95 (glow r4 -> 99 < 100)
+  const padTop = 5; // top headroom so a peak (value 1) never clips the top edge
+  const padBottom = 2; // baseline headroom for the area fill
+  const plotW = w - padX * 2;
+  const plotH = h - padTop - padBottom;
+  const step = points.length > 1 ? plotW / (points.length - 1) : plotW;
   const coords = points.map((p, i) => [
-    Number((i * step).toFixed(1)),
-    Number((h - p * h).toFixed(1)),
+    Number((padX + i * step).toFixed(1)),
+    Number((padTop + (1 - Math.max(0, Math.min(1, p))) * plotH).toFixed(1)),
   ]);
   const line = coords
     .map(([x, y], i) => `${i === 0 ? "M" : "L"}${x},${y}`)
     .join(" ");
-  const area = `${line} L${w},${h} L0,${h} Z`;
-  const last = coords[coords.length - 1] ?? [w, h];
+  const area = `${line} L${w - padX},${h - padBottom} L${padX},${h - padBottom} Z`;
+  const last = coords[coords.length - 1] ?? [w - padX, padTop];
   return (
     <svg
       ref={ref}
@@ -186,14 +195,21 @@ export const AreaLine = React.memo(function AreaLine({
         animate={{ opacity: shown ? 1 : 0 }}
         transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: 0.2 }}
       />
+      {/* Entrance is an opacity fade, NOT a pathLength draw-in: framer's
+          pathLength dash animation breaks under vector-effect:
+          non-scaling-stroke in Chromium, blanking a width-proportional band
+          of the stroke even when settled and in reduced motion. See the
+          identical fix + full rationale on DualTrend's line path below. */}
       <motion.path
         d={line}
         fill="none"
         stroke="var(--primary)"
         strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         vectorEffect="non-scaling-stroke"
-        initial={reduce ? false : { pathLength: 0 }}
-        animate={{ pathLength: shown ? 1 : 0 }}
+        initial={reduce ? false : { opacity: 0 }}
+        animate={{ opacity: shown ? 1 : 0 }}
         transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE }}
       />
       <motion.circle
@@ -222,6 +238,7 @@ export const AreaLine = React.memo(function AreaLine({
         fill="#fff"
         stroke="var(--primary)"
         strokeWidth="1.5"
+        vectorEffect="non-scaling-stroke"
         initial={reduce ? false : { scale: 0, opacity: 0 }}
         animate={reduce ? { scale: 1, opacity: 1 } : { scale: shown ? 1 : 0, opacity: shown ? 1 : 0 }}
         transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE }}
