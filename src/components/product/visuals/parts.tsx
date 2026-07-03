@@ -238,9 +238,11 @@ export const AreaLine = React.memo(function AreaLine({
  *   - give each series a distinct sanctioned token color (primary blue for the
  *     lead series, success green for the recovery series) instead of the same
  *     blue at two opacities,
- *   - solid strokes with gradient area fills (no dashed look; the "dashes" in
- *     the old layered version came from pathLength dash animation reading as
- *     broken where two same-color lines crossed),
+ *   - solid strokes with gradient area fills and a plain opacity-fade entrance
+ *     (no dashed look; the old layered version's broken strokes came from
+ *     framer's pathLength dash animation colliding with Chromium's screen-space
+ *     dashing under vector-effect: non-scaling-stroke, see the inline comment
+ *     on the line path below),
  *   - keep endpoint dots fully inside the viewBox via an explicit inset margin
  *     so the white-in-color marker never clips the right/top edge,
  *   - stack fills so they never muddy: the lower (green) fill sits under the
@@ -368,6 +370,16 @@ export const DualTrend = React.memo(function DualTrend({
               animate={{ opacity: shown ? 1 : 0 }}
               transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: 0.15 + si * 0.06 }}
             />
+            {/* Entrance is an opacity fade, NOT a pathLength draw-in. Framer's
+                pathLength animation drives the draw via pathLength="1" plus
+                stroke-dasharray "1px 1px", and Chromium applies stroke dashing
+                in SCREEN space when vector-effect: non-scaling-stroke is set,
+                which breaks pathLength dash normalization: the dash meant to
+                span the whole normalized path only spans the user-space path
+                length in screen pixels, blanking a width-proportional middle
+                band of the stroke. A fade sets no dasharray at all, so the
+                stroke renders continuously at every rendered width (and
+                fade-in is the site's sanctioned motion anyway). */}
             <motion.path
               d={line}
               fill="none"
@@ -376,8 +388,8 @@ export const DualTrend = React.memo(function DualTrend({
               strokeLinecap="round"
               strokeLinejoin="round"
               vectorEffect="non-scaling-stroke"
-              initial={reduce ? false : { pathLength: 0 }}
-              animate={{ pathLength: shown ? 1 : 0 }}
+              initial={reduce ? false : { opacity: 0 }}
+              animate={{ opacity: shown ? 1 : 0 }}
               transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: si * 0.06 }}
             />
             {/* Endpoint marker: filled halo in the series color + a white core
