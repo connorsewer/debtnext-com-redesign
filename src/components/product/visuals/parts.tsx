@@ -231,6 +231,215 @@ export const AreaLine = React.memo(function AreaLine({
   );
 });
 
+/* --------------------------------------------------------------------------
+ * DualTrend: a purpose-built two-series area + line chart for the reporting
+ * showcase (inventory vs liquidation). Unlike two layered AreaLine atoms, this
+ * renders both series in ONE SVG so it can:
+ *   - give each series a distinct sanctioned token color (primary blue for the
+ *     lead series, success green for the recovery series) instead of the same
+ *     blue at two opacities,
+ *   - solid strokes with gradient area fills and a plain opacity-fade entrance
+ *     (no dashed look; the old layered version's broken strokes came from
+ *     framer's pathLength dash animation colliding with Chromium's screen-space
+ *     dashing under vector-effect: non-scaling-stroke, see the inline comment
+ *     on the line path below),
+ *   - keep endpoint dots fully inside the viewBox via an explicit inset margin
+ *     so the white-in-color marker never clips the right/top edge,
+ *   - stack fills so they never muddy: the lower (green) fill sits under the
+ *     lead (blue) fill, both low-alpha, no mix-blend.
+ *
+ * The viewBox aspect (320x100 -> 3.2:1) is tuned to the rendered container so
+ * preserveAspectRatio="none" keeps the endpoint circles near-round. Decorative:
+ * aria-hidden; the ChartFrame parent owns the text alternative.
+ * ------------------------------------------------------------------------- */
+
+/** Build a smooth cubic-Bézier path through points using a Catmull-Rom spline,
+ *  with a gentle tension so the curve stays honest (no big overshoots). */
+function smoothPath(coords: [number, number][], tension = 0.85): string {
+  if (coords.length === 0) return "";
+  if (coords.length === 1) return `M${coords[0][0]},${coords[0][1]}`;
+  const t = tension / 6;
+  let d = `M${coords[0][0]},${coords[0][1]}`;
+  for (let i = 0; i < coords.length - 1; i++) {
+    const p0 = coords[i - 1] ?? coords[i];
+    const p1 = coords[i];
+    const p2 = coords[i + 1];
+    const p3 = coords[i + 2] ?? coords[i + 1];
+    const c1x = p1[0] + (p2[0] - p0[0]) * t;
+    const c1y = p1[1] + (p2[1] - p0[1]) * t;
+    const c2x = p2[0] - (p3[0] - p1[0]) * t;
+    const c2y = p2[1] - (p3[1] - p1[1]) * t;
+    d += ` C${c1x.toFixed(2)},${c1y.toFixed(2)} ${c2x.toFixed(2)},${c2y.toFixed(2)} ${p2[0].toFixed(2)},${p2[1].toFixed(2)}`;
+  }
+  return d;
+}
+
+type TrendSeries = {
+  points: number[]; // 0..1
+  stroke: string; // CSS color / token
+  fillFrom: string; // top of the gradient (near the line)
+  lead?: boolean; // the primary series draws slightly heavier + on top
+};
+
+export const DualTrend = React.memo(function DualTrend({
+  series,
+  className,
+}: {
+  series: TrendSeries[];
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  const ref = React.useRef<SVGSVGElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const shown = reduce || inView;
+  const uid = React.useId();
+
+  // viewBox + inset margins. The plot area is inset on every side so the line,
+  // its endpoint marker (r up to ~4), and the peak all sit fully inside bounds.
+  const W = 320;
+  const H = 100;
+  const padX = 8; // left/right inset -> last point at x = W - padX = 312 (dot r4 -> 316 < 320)
+  const padTop = 9; // top headroom so a peak (value 1) never clips the top edge
+  const padBottom = 6; // baseline headroom for the area fill + a low point
+  const plotW = W - padX * 2;
+  const plotH = H - padTop - padBottom;
+
+  const toCoords = (pts: number[]): [number, number][] => {
+    const step = pts.length > 1 ? plotW / (pts.length - 1) : plotW;
+    return pts.map((p, i) => [
+      Number((padX + i * step).toFixed(2)),
+      Number((padTop + (1 - Math.max(0, Math.min(1, p))) * plotH).toFixed(2)),
+    ]);
+  };
+
+  // Deterministic z-order: non-lead series first (underneath), lead series
+  // last (on top). `lead` is optional, so coerce through Boolean before
+  // Number (Number(undefined) is NaN, which makes a sort comparator's order
+  // unspecified across engines).
+  const ordered = [...series]
+    .sort((a, b) => Number(Boolean(a.lead)) - Number(Boolean(b.lead)))
+    .map((s) => {
+      const coords = toCoords(s.points);
+      const line = smoothPath(coords);
+      return {
+        ...s,
+        line,
+        area: `${line} L${(W - padX).toFixed(2)},${H - padBottom} L${padX},${H - padBottom} Z`,
+        last: coords[coords.length - 1] ?? ([W - padX, padTop] as [number, number]),
+      };
+    });
+
+  return (
+    <svg
+      ref={ref}
+      viewBox={`0 0 ${W} ${H}`}
+      preserveAspectRatio="none"
+      className={cn("h-full w-full", className)}
+      aria-hidden="true"
+    >
+      <defs>
+        {ordered.map((s, si) => (
+          <linearGradient
+            key={`grad-${si}`}
+            id={`dt-fill-${uid}-${si}`}
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="1"
+          >
+            <stop offset="0%" stopColor={s.fillFrom} />
+            <stop offset="100%" stopColor="transparent" />
+          </linearGradient>
+        ))}
+      </defs>
+
+      {/* Faint horizontal gridlines for read-off; token-tinted, decorative. */}
+      {[0.25, 0.5, 0.75].map((g) => {
+        const y = padTop + (1 - g) * plotH;
+        return (
+          <line
+            key={`grid-${g}`}
+            x1={padX}
+            x2={W - padX}
+            y1={y}
+            y2={y}
+            stroke="rgba(255,255,255,0.05)"
+            strokeWidth="1"
+            vectorEffect="non-scaling-stroke"
+          />
+        );
+      })}
+
+      {/* Pass 1: both area fills, underneath every stroke so neither fill can
+          dim the other series' line. */}
+      {ordered.map((s, si) => (
+        <motion.path
+          key={`area-${si}`}
+          d={s.area}
+          fill={`url(#dt-fill-${uid}-${si})`}
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: shown ? 1 : 0 }}
+          transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: 0.15 + si * 0.06 }}
+        />
+      ))}
+
+      {/* Pass 2: strokes + endpoint markers, non-lead first, lead on top. */}
+      {ordered.map((s, si) => (
+        <g key={`series-${si}`}>
+          {/* Entrance is an opacity fade, NOT a pathLength draw-in. Framer's
+              pathLength animation drives the draw via pathLength="1" plus
+              stroke-dasharray "1px 1px", and Chromium applies stroke dashing
+              in SCREEN space when vector-effect: non-scaling-stroke is set,
+              which breaks pathLength dash normalization: the dash meant to
+              span the whole normalized path only spans the user-space path
+              length in screen pixels, blanking a width-proportional middle
+              band of the stroke. A fade sets no dasharray at all, so the
+              stroke renders continuously at every rendered width (and
+              fade-in is the site's sanctioned motion anyway). */}
+          <motion.path
+            d={s.line}
+            fill="none"
+            stroke={s.stroke}
+            strokeWidth={s.lead ? 2 : 1.75}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: shown ? 1 : 0 }}
+            transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: si * 0.06 }}
+          />
+          {/* Endpoint marker: filled halo in the series color + a white core
+              ring, fully inside the inset plot area so it never clips. */}
+          <motion.circle
+            cx={s.last[0]}
+            cy={s.last[1]}
+            r="4"
+            fill={s.stroke}
+            opacity={s.lead ? 0.22 : 0.18}
+            initial={reduce ? false : { scale: 0, opacity: 0 }}
+            animate={reduce ? { scale: 1 } : { scale: shown ? 1 : 0 }}
+            transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: DUR_BAR * 0.6 }}
+            style={{ transformOrigin: `${s.last[0]}px ${s.last[1]}px` }}
+          />
+          <motion.circle
+            cx={s.last[0]}
+            cy={s.last[1]}
+            r="2.4"
+            fill="#fff"
+            stroke={s.stroke}
+            strokeWidth="1.5"
+            vectorEffect="non-scaling-stroke"
+            initial={reduce ? false : { scale: 0, opacity: 0 }}
+            animate={reduce ? { scale: 1, opacity: 1 } : { scale: shown ? 1 : 0, opacity: shown ? 1 : 0 }}
+            transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: DUR_BAR * 0.6 }}
+            style={{ transformOrigin: `${s.last[0]}px ${s.last[1]}px` }}
+          />
+        </g>
+      ))}
+    </svg>
+  );
+});
+
 const TAG_TONE = {
   success: "var(--status-success)",
   warning: "var(--status-warning)",
