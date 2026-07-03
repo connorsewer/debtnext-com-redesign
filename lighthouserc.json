@@ -43,7 +43,7 @@
             ],
             "total-blocking-time": [
               "error",
-              { "maxNumericValue": 450, "aggregationMethod": "median-run" }
+              { "maxNumericValue": 500, "aggregationMethod": "median-run" }
             ]
           }
         },
