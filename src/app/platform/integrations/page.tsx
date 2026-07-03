@@ -69,7 +69,7 @@ export default function IntegrationsPage() {
         body={integrationsErp.body}
         rows={integrationsErp.rows}
         footnote={integrationsErp.footnote}
-        caption="Enterprise and ERP integrations by platform, category, and active integration count"
+        caption="Enterprise and ERP integrations by platform and category"
       />
 
       <IntegrationTable
@@ -77,7 +77,7 @@ export default function IntegrationsPage() {
         heading={integrationsCis.heading}
         body={integrationsCis.body}
         rows={integrationsCis.rows}
-        caption="Customer service and billing platform integrations by platform, category, and active integration count"
+        caption="Customer service and billing platform integrations by platform and category"
         surface="elevated-dark"
       />
 
@@ -86,7 +86,7 @@ export default function IntegrationsPage() {
         heading={integrationsProprietary.heading}
         body={integrationsProprietary.body}
         rows={integrationsProprietary.rows}
-        caption="Proprietary and custom system integrations by category and active integration count"
+        caption="Proprietary and custom system integrations by category"
       />
 
       <IntegrationTable
@@ -94,7 +94,7 @@ export default function IntegrationsPage() {
         heading={integrationsRecovery.heading}
         body={integrationsRecovery.body}
         rows={integrationsRecovery.rows}
-        caption="Recovery and workflow platform integrations by platform, category, and active integration count"
+        caption="Recovery and workflow platform integrations by platform and category"
         surface="elevated-dark"
       />
 
