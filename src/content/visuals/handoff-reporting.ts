@@ -67,12 +67,21 @@ export const handoffReportingConsole = {
       { caption: "Inventory", value: 2.48, prefix: "$", suffix: "B", decimals: 2, delta: "+6.7%", deltaTone: "success" },
       { caption: "Liquidation", value: 38.7, prefix: "$", suffix: "M", decimals: 1, delta: "+8.9%", deltaTone: "success" },
     ],
-    // Dual 8-week trend, both rising (matches "up across 8 weeks" in the rows).
-    // Values normalized 0..1 for the area/line atoms; honest upward shape.
+    // Dual 8-week trend, both rising net across the window (matches "up across 8
+    // weeks" in the rows) but with honest, real-shaped month-over-month wobble
+    // rather than a clean ramp. Values normalized 0..1 for the trend atom and
+    // held inside ~0.08..0.95 so peaks and endpoints keep vertical headroom.
+    //
+    // Inventory (placed balances): a book that grows as new placements arrive but
+    // dips when a batch liquidates or ages off (Wk 3 pullback, Wk 6 plateau).
+    // Liquidation (recovered to date): a recovery curve that accelerates mid-cycle
+    // then softens, with the weekly noise real collections carry (a strong Wk 4, a
+    // slow Wk 5). Liquidation stays visibly below inventory the whole way, keeping
+    // the honest gap: you recover a fraction of what is placed.
     trend: {
       weeks: ["Wk 1", "Wk 2", "Wk 3", "Wk 4", "Wk 5", "Wk 6", "Wk 7", "Wk 8"],
-      inventory: [0.7, 0.73, 0.76, 0.79, 0.83, 0.88, 0.93, 1.0],
-      liquidation: [0.42, 0.48, 0.53, 0.58, 0.64, 0.71, 0.78, 0.86],
+      inventory: [0.62, 0.69, 0.64, 0.72, 0.78, 0.76, 0.86, 0.93],
+      liquidation: [0.31, 0.36, 0.42, 0.55, 0.51, 0.63, 0.7, 0.81],
     },
     // SLA adherence per pool; one pool carries a label-paired "Review" outlier
     // (color never alone). Real-shaped, sub-100 percentages.

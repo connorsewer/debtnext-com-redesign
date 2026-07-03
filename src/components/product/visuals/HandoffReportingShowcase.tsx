@@ -5,22 +5,27 @@
 // executive slice of the approved Portfolio Overview: a KPI tile row, a dual
 // 8-week trend, and SLA-adherence bars with a label-paired REVIEW outlier.
 //
-// Composition: reuses the repo's atoms only (EyebrowLabel, MetricCell, StatPill,
-// AreaLine, ValueBar, ChartFrame, RevealStagger/RevealItem, AnimatedNumber). The
-// dual trend layers two AreaLine atoms (inventory + liquidation) inside one
-// ChartFrame; a text legend pairs each series with its name (color never alone).
-// The adherence outlier is labeled "Review" as text.
+// Composition: reuses the repo's atoms (EyebrowLabel, StatPill, ValueBar,
+// ChartFrame, RevealStagger/RevealItem, AnimatedNumber) plus the DualTrend chart
+// part. The dual trend renders both series (inventory + liquidation) in one
+// DualTrend SVG inside one ChartFrame: inventory leads in primary blue, liquidation
+// rides underneath in success green, each with a solid stroke and a low-alpha
+// gradient area fill (no dashed strokes, no same-color mix-blend mud). Endpoint
+// markers are inset so they never clip the viewBox. A text legend pairs each
+// series with its name (color never alone). The adherence outlier is labeled
+// "Review" as text.
 //
 // A11y: bare role="img" root with aria-label={data.ariaSummary}; no focusable
-// children. The stacked chart region carries its own aria via ChartFrame; the
-// AreaLine SVGs are aria-hidden decoration. Fail-open entrance via RevealStagger.
+// children. The trend chart region carries its own aria via ChartFrame; the
+// DualTrend SVG is aria-hidden decoration. Entrance respects prefers-reduced-motion
+// (DualTrend and RevealStagger both fail open to the resting state).
 
 import * as React from "react";
 
 import { RevealItem, RevealStagger } from "@/components/motion";
 import { AnimatedNumber } from "@/components/product/motion";
 import { ChartFrame, EyebrowLabel, StatPill } from "@/components/product/primitives";
-import { AreaLine, ValueBar } from "@/components/product/visuals/parts";
+import { DualTrend, ValueBar } from "@/components/product/visuals/parts";
 import { handoffReportingConsole } from "@/content/visuals";
 
 const data = handoffReportingConsole;
@@ -73,16 +78,28 @@ export function HandoffReportingShowcase() {
         ))}
       </RevealStagger>
 
-      {/* Dual 8-week trend: two layered AreaLines + a text legend */}
+      {/* Dual 8-week trend: one DualTrend SVG (two distinct sanctioned colors)
+          plus a label-paired legend. Inventory leads in primary blue; liquidation
+          rides underneath in success green. */}
       <ChartFrame
-        ariaSummary="Inventory and liquidation both rise across 8 weeks. Inventory climbs from the low 70s to the series peak; liquidation climbs from the low 40s to the mid 80s."
+        ariaSummary="Inventory and liquidation both rise across 8 weeks with week-to-week variance. Placed inventory grows from the low band to near the series peak, pulling back midway before climbing again. Liquidation stays below inventory throughout and recovers from the low band to the high band, with a strong week 4 and a slower week 5."
         caption="Inventory and liquidation · 8 weeks"
       >
-        <div className="relative h-28">
-          <AreaLine points={[...showcase.trend.inventory]} className="absolute inset-0 h-full" />
-          <AreaLine
-            points={[...showcase.trend.liquidation]}
-            className="absolute inset-0 h-full opacity-70 mix-blend-screen"
+        <div className="h-28">
+          <DualTrend
+            series={[
+              {
+                points: [...showcase.trend.inventory],
+                stroke: "var(--primary)",
+                fillFrom: "color-mix(in srgb, var(--primary) 30%, transparent)",
+                lead: true,
+              },
+              {
+                points: [...showcase.trend.liquidation],
+                stroke: "var(--status-success)",
+                fillFrom: "color-mix(in srgb, var(--status-success) 22%, transparent)",
+              },
+            ]}
           />
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10.5px]">
@@ -93,7 +110,7 @@ export function HandoffReportingShowcase() {
           <span className="flex items-center gap-1.5 text-[var(--product-text-2)]">
             <span
               aria-hidden="true"
-              className="h-2 w-2 rounded-full border border-[var(--primary)] bg-[color-mix(in_srgb,var(--primary)_40%,transparent)]"
+              className="h-2 w-2 rounded-full bg-[var(--status-success)]"
             />
             Liquidation
           </span>
