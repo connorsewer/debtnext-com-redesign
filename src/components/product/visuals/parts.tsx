@@ -312,8 +312,22 @@ export const DualTrend = React.memo(function DualTrend({
     ]);
   };
 
-  // Draw non-lead series first (underneath), lead series last (on top).
-  const ordered = [...series].sort((a, b) => Number(a.lead) - Number(b.lead));
+  // Deterministic z-order: non-lead series first (underneath), lead series
+  // last (on top). `lead` is optional, so coerce through Boolean before
+  // Number (Number(undefined) is NaN, which makes a sort comparator's order
+  // unspecified across engines).
+  const ordered = [...series]
+    .sort((a, b) => Number(Boolean(a.lead)) - Number(Boolean(b.lead)))
+    .map((s) => {
+      const coords = toCoords(s.points);
+      const line = smoothPath(coords);
+      return {
+        ...s,
+        line,
+        area: `${line} L${(W - padX).toFixed(2)},${H - padBottom} L${padX},${H - padBottom} Z`,
+        last: coords[coords.length - 1] ?? ([W - padX, padTop] as [number, number]),
+      };
+    });
 
   return (
     <svg
@@ -356,71 +370,72 @@ export const DualTrend = React.memo(function DualTrend({
         );
       })}
 
-      {ordered.map((s, si) => {
-        const coords = toCoords(s.points);
-        const line = smoothPath(coords);
-        const area = `${line} L${(W - padX).toFixed(2)},${H - padBottom} L${padX},${H - padBottom} Z`;
-        const last = coords[coords.length - 1] ?? [W - padX, padTop];
-        return (
-          <g key={`series-${si}`}>
-            <motion.path
-              d={area}
-              fill={`url(#dt-fill-${uid}-${si})`}
-              initial={reduce ? false : { opacity: 0 }}
-              animate={{ opacity: shown ? 1 : 0 }}
-              transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: 0.15 + si * 0.06 }}
-            />
-            {/* Entrance is an opacity fade, NOT a pathLength draw-in. Framer's
-                pathLength animation drives the draw via pathLength="1" plus
-                stroke-dasharray "1px 1px", and Chromium applies stroke dashing
-                in SCREEN space when vector-effect: non-scaling-stroke is set,
-                which breaks pathLength dash normalization: the dash meant to
-                span the whole normalized path only spans the user-space path
-                length in screen pixels, blanking a width-proportional middle
-                band of the stroke. A fade sets no dasharray at all, so the
-                stroke renders continuously at every rendered width (and
-                fade-in is the site's sanctioned motion anyway). */}
-            <motion.path
-              d={line}
-              fill="none"
-              stroke={s.stroke}
-              strokeWidth={s.lead ? 2 : 1.75}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              vectorEffect="non-scaling-stroke"
-              initial={reduce ? false : { opacity: 0 }}
-              animate={{ opacity: shown ? 1 : 0 }}
-              transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: si * 0.06 }}
-            />
-            {/* Endpoint marker: filled halo in the series color + a white core
-                ring, fully inside the inset plot area so it never clips. */}
-            <motion.circle
-              cx={last[0]}
-              cy={last[1]}
-              r="4"
-              fill={s.stroke}
-              opacity={s.lead ? 0.22 : 0.18}
-              initial={reduce ? false : { scale: 0, opacity: 0 }}
-              animate={reduce ? { scale: 1 } : { scale: shown ? 1 : 0 }}
-              transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: DUR_BAR * 0.6 }}
-              style={{ transformOrigin: `${last[0]}px ${last[1]}px` }}
-            />
-            <motion.circle
-              cx={last[0]}
-              cy={last[1]}
-              r="2.4"
-              fill="#fff"
-              stroke={s.stroke}
-              strokeWidth="1.5"
-              vectorEffect="non-scaling-stroke"
-              initial={reduce ? false : { scale: 0, opacity: 0 }}
-              animate={reduce ? { scale: 1, opacity: 1 } : { scale: shown ? 1 : 0, opacity: shown ? 1 : 0 }}
-              transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: DUR_BAR * 0.6 }}
-              style={{ transformOrigin: `${last[0]}px ${last[1]}px` }}
-            />
-          </g>
-        );
-      })}
+      {/* Pass 1: both area fills, underneath every stroke so neither fill can
+          dim the other series' line. */}
+      {ordered.map((s, si) => (
+        <motion.path
+          key={`area-${si}`}
+          d={s.area}
+          fill={`url(#dt-fill-${uid}-${si})`}
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: shown ? 1 : 0 }}
+          transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: 0.15 + si * 0.06 }}
+        />
+      ))}
+
+      {/* Pass 2: strokes + endpoint markers, non-lead first, lead on top. */}
+      {ordered.map((s, si) => (
+        <g key={`series-${si}`}>
+          {/* Entrance is an opacity fade, NOT a pathLength draw-in. Framer's
+              pathLength animation drives the draw via pathLength="1" plus
+              stroke-dasharray "1px 1px", and Chromium applies stroke dashing
+              in SCREEN space when vector-effect: non-scaling-stroke is set,
+              which breaks pathLength dash normalization: the dash meant to
+              span the whole normalized path only spans the user-space path
+              length in screen pixels, blanking a width-proportional middle
+              band of the stroke. A fade sets no dasharray at all, so the
+              stroke renders continuously at every rendered width (and
+              fade-in is the site's sanctioned motion anyway). */}
+          <motion.path
+            d={s.line}
+            fill="none"
+            stroke={s.stroke}
+            strokeWidth={s.lead ? 2 : 1.75}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: shown ? 1 : 0 }}
+            transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: si * 0.06 }}
+          />
+          {/* Endpoint marker: filled halo in the series color + a white core
+              ring, fully inside the inset plot area so it never clips. */}
+          <motion.circle
+            cx={s.last[0]}
+            cy={s.last[1]}
+            r="4"
+            fill={s.stroke}
+            opacity={s.lead ? 0.22 : 0.18}
+            initial={reduce ? false : { scale: 0, opacity: 0 }}
+            animate={reduce ? { scale: 1 } : { scale: shown ? 1 : 0 }}
+            transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: DUR_BAR * 0.6 }}
+            style={{ transformOrigin: `${s.last[0]}px ${s.last[1]}px` }}
+          />
+          <motion.circle
+            cx={s.last[0]}
+            cy={s.last[1]}
+            r="2.4"
+            fill="#fff"
+            stroke={s.stroke}
+            strokeWidth="1.5"
+            vectorEffect="non-scaling-stroke"
+            initial={reduce ? false : { scale: 0, opacity: 0 }}
+            animate={reduce ? { scale: 1, opacity: 1 } : { scale: shown ? 1 : 0, opacity: shown ? 1 : 0 }}
+            transition={{ duration: DUR_BAR, ease: EASE_ENTRANCE, delay: DUR_BAR * 0.6 }}
+            style={{ transformOrigin: `${s.last[0]}px ${s.last[1]}px` }}
+          />
+        </g>
+      ))}
     </svg>
   );
 });
