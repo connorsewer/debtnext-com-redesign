@@ -76,10 +76,9 @@ test.describe("SSR fail-open (raw HTML, no JS)", () => {
     // Strip tags, collapse whitespace, then look for known ledger text.
     const text = main.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
     expect(text.length).toBeGreaterThan(200);
-    // A LiveValue count column must SSR its final value, never 0. Every
-    // integration count is a positive integer; assert at least one multi-digit
-    // number sits in the rendered text (the counts), i.e. counters are not all
-    // captured at 0.
+    // The page's proof and footprint stats (e.g. "60+", "538") must SSR their
+    // final values; assert at least one multi-digit number sits in the
+    // rendered text, i.e. counters are not all captured at 0.
     expect(text).toMatch(/\d{2,}/);
   });
 });

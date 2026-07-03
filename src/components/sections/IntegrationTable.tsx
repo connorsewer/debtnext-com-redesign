@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
 import {
-  AnimatedNumber,
   fadeUpItem,
   staggerContainer,
   useInViewProps,
@@ -14,7 +13,6 @@ import {
 export interface IntegrationRow {
   platform: string;
   category: string;
-  count: number;
 }
 
 export interface IntegrationTableProps {
@@ -31,8 +29,7 @@ export interface IntegrationTableProps {
 }
 
 /**
- * A live integration ledger: platform, category, and a count that ticks up
- * from zero as the row scrolls into view. Used four times on
+ * A live integration ledger: platform and category. Used four times on
  * /platform/integrations (ERP, CIS, proprietary, recovery).
  *
  * Category collapses into a sub-line under the platform name below the `sm`
@@ -85,12 +82,6 @@ export function IntegrationTable({
               >
                 Category
               </th>
-              <th
-                scope="col"
-                className="px-5 py-3.5 text-right text-caption font-[480] uppercase tracking-wider text-[var(--text-tertiary)]"
-              >
-                Active
-              </th>
             </tr>
           </thead>
           <motion.tbody {...reveal} variants={staggerContainer}>
@@ -111,12 +102,6 @@ export function IntegrationTable({
                 </th>
                 <td className="hidden px-5 py-4 text-body-sm text-[var(--text-tertiary)] sm:table-cell">
                   {row.category}
-                </td>
-                <td
-                  className="px-5 py-4 text-right text-body-strong font-[480] text-[var(--foreground)]"
-                  style={{ fontVariantNumeric: "tabular-nums" }}
-                >
-                  <AnimatedNumber value={row.count} />
                 </td>
               </motion.tr>
             ))}

@@ -83,11 +83,11 @@ export const integrationsErp: {
   body:
     "The largest concentration of dPlat deployments lives inside enterprise resource planning environments. Utility billing engines and ERP-class platforms run on these systems, and dPlat is already inside them at production scale.",
   rows: [
-    { platform: "SAP", category: "Enterprise ERP", count: 23 },
-    { platform: "Oracle CC&B", category: "Utility CIS", count: 10 },
-    { platform: "Oracle Utilities C2M", category: "Utility CIS", count: 1 },
-    { platform: "CR Software", category: "Collections", count: 1 },
-    { platform: "Artiva", category: "Collections", count: 1 },
+    { platform: "SAP", category: "Enterprise ERP" },
+    { platform: "Oracle CC&B", category: "Utility CIS" },
+    { platform: "Oracle Utilities C2M", category: "Utility CIS" },
+    { platform: "CR Software", category: "Collections" },
+    { platform: "Artiva", category: "Collections" },
   ],
   footnote:
     "The bulk of these run inside large utility and telecom operations where SAP and Oracle handle billing, service requests, and customer-master data. dPlat reads placement files, applies your business rules, and pushes account status, payments, and reconciliation results back to those systems on schedule.",
@@ -104,14 +104,14 @@ export const integrationsCis: {
   body:
     "Traditional servicing and billing ecosystems used across utilities, telecom, and consumer financial services. These integrations pull placement and update files on a defined cadence, with field mapping customized for each source.",
   rows: [
-    { platform: "ICOMS", category: "Cable/Telecom CIS", count: 2 },
-    { platform: "CSG", category: "Telecom billing", count: 1 },
-    { platform: "CSS", category: "Customer servicing", count: 1 },
-    { platform: "PCC", category: "Customer servicing", count: 1 },
-    { platform: "CRS", category: "Customer servicing", count: 1 },
-    { platform: "CIS+", category: "Utility CIS", count: 1 },
-    { platform: "CACS", category: "Collections", count: 1 },
-    { platform: "DPI", category: "Servicing", count: 1 },
+    { platform: "ICOMS", category: "Cable/Telecom CIS" },
+    { platform: "CSG", category: "Telecom billing" },
+    { platform: "CSS", category: "Customer servicing" },
+    { platform: "PCC", category: "Customer servicing" },
+    { platform: "CRS", category: "Customer servicing" },
+    { platform: "CIS+", category: "Utility CIS" },
+    { platform: "CACS", category: "Collections" },
+    { platform: "DPI", category: "Servicing" },
   ],
 };
 
@@ -128,7 +128,7 @@ export const integrationsProprietary: {
     "Client systems in this category include proprietary servicing platforms operated by Fortune 100 financial institutions, large investor-grade utilities, education-services networks, and consumer-products manufacturers.",
   ],
   rows: [
-    { platform: "Proprietary servicing platforms", category: "Custom", count: 10 },
+    { platform: "Proprietary servicing platforms", category: "Custom" },
   ],
 };
 
@@ -143,8 +143,8 @@ export const integrationsRecovery: {
   body:
     "Operational workflow and recovery management integrations. The dPlat-to-dPlat pattern is notable: a client running dPlat at their corporate placement layer with a recovery vendor also running dPlat at their operational layer, both instances exchanging placement, status, and reconciliation data.",
   rows: [
-    { platform: "Pega", category: "Workflow/BPM", count: 1 },
-    { platform: "dPlat-to-dPlat", category: "Recovery", count: 4 },
+    { platform: "Pega", category: "Workflow/BPM" },
+    { platform: "dPlat-to-dPlat", category: "Recovery" },
   ],
 };
 
