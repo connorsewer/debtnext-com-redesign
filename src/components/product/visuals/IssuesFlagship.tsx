@@ -2,13 +2,11 @@
 
 // Issues explorable flagship (PLATVIS-02 + PLATVIS-03, D-06/D-07).
 //
-// Refactors IssuesWorklist into an Explorable-composed Console-archetype instance
-// fed the typed `issuesFlagshipConsole` payload. The console rows (the four active
-// worklist issues), the SLA timer bars, and the three metric cells (SLA adherence,
-// average resolution, auto-resolved, carried as pills) render by default via
-// Console.Header / Console.Rows / Console.Pills slots (no boolean props). Below the
-// console, one Explorable.Toggle per issue reveals that issue's type, assigned
-// party, SLA window, and resolution status in an Explorable.Panel.
+// UNIFIED VISUAL (fix/platform-flagship-unified): the console rows and the
+// inspect region now live inside ONE ProductCanvas frame (see PlacementFlagship
+// for the full rationale). <Console bare> renders its slots in a plain div; the
+// pill toolbar and per-issue panel are siblings inside the same frame, outside
+// the console's role="img".
 //
 // D-05 parity contract (Phase 10 locked, mirrored from OptimizationFlagship):
 //   - Every worklist value (issue label, SLA bar, time-left, the three metric
@@ -95,19 +93,19 @@ export function IssuesFlagship() {
     <Explorable
       label="Issues worklist, inspect an issue's SLA detail and resolution status"
       defaultActive={issuesFlagshipItems[0]?.id ?? null}
-      className="flex flex-col gap-4"
+      className="rounded-[16px] bg-[var(--product-canvas)] p-[26px] text-[var(--product-text)]"
     >
-      <Console data={issuesFlagshipConsole}>
+      <Console data={issuesFlagshipConsole} bare>
         <Console.Header />
         <Console.Rows />
         <Console.Pills />
       </Console>
 
-      <div className="flex flex-col gap-3 rounded-[14px] bg-[var(--product-canvas)] p-4 ring-1 ring-[var(--border)]">
+      <div className="mt-4 border-t border-[var(--border)] pt-4">
         <p className="text-[10.5px] font-[500] uppercase tracking-[0.1em] text-[var(--status-focus)]">
           Inspect an issue
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="mt-3 flex flex-wrap gap-2">
           {issuesFlagshipItems.map((item) => (
             <Explorable.Toggle
               key={item.id}
@@ -126,19 +124,21 @@ export function IssuesFlagship() {
             </Explorable.Toggle>
           ))}
         </div>
-        {issuesFlagshipItems.map((item) => (
-          <Explorable.Panel
-            key={item.id}
-            id={item.id}
-            className={cn(
-              "rounded-[10px] p-3 transition-shadow",
-              "data-[active]:ring-1 data-[active]:ring-[var(--primary)]",
-            )}
-          >
-            <IssueDetail item={item} />
-          </Explorable.Panel>
-        ))}
-        <StatPill label="Aging issues escalate on the rules you configure" tone="indigo" />
+        <div className="mt-3 flex flex-col gap-3">
+          {issuesFlagshipItems.map((item) => (
+            <Explorable.Panel
+              key={item.id}
+              id={item.id}
+              className={cn(
+                "rounded-[10px] p-3 transition-shadow",
+                "data-[active]:bg-white/[0.02] data-[active]:ring-1 data-[active]:ring-[var(--primary)]",
+              )}
+            >
+              <IssueDetail item={item} />
+            </Explorable.Panel>
+          ))}
+          <StatPill label="Aging issues escalate on the rules you configure" tone="indigo" />
+        </div>
       </div>
     </Explorable>
   );

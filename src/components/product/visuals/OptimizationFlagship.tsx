@@ -2,12 +2,11 @@
 
 // Optimization explorable flagship (PLATVIS-02 + PLATVIS-03, D-06/D-07).
 //
-// Refactors OptimizationEngine into an Explorable-composed Console-archetype
-// instance fed the typed `optimizationFlagshipConsole` payload. The console rows
-// (the three evaluated vendors) render by default via Console.Header /
-// Console.Callout / Console.Rows / Console.Pills slots (no boolean props). Below
-// the console, one Explorable.Toggle per vendor reveals that vendor's band detail
-// and this-cycle to next-cycle share shift in an Explorable.Panel.
+// UNIFIED VISUAL (fix/platform-flagship-unified): the console rows and the
+// inspect region now live inside ONE ProductCanvas frame (see PlacementFlagship
+// for the full rationale). <Console bare> renders its slots in a plain div; the
+// pill toolbar and per-vendor panel are siblings inside the same frame, outside
+// the console's role="img".
 //
 // D-05 parity contract (Phase 10 locked, mirrored from PlacementFlagship):
 //   - Every headline value (vendor liquidation, next-cycle share bars, the bonus
@@ -84,20 +83,20 @@ export function OptimizationFlagship() {
     <Explorable
       label="Optimization engine, inspect a vendor's band detail and share shift"
       defaultActive={optimizationFlagshipVendors[0]?.id ?? null}
-      className="flex flex-col gap-4"
+      className="rounded-[16px] bg-[var(--product-canvas)] p-[26px] text-[var(--product-text)]"
     >
-      <Console data={optimizationFlagshipConsole}>
+      <Console data={optimizationFlagshipConsole} bare>
         <Console.Header />
         <Console.Callout />
         <Console.Rows />
         <Console.Pills />
       </Console>
 
-      <div className="flex flex-col gap-3 rounded-[14px] bg-[var(--product-canvas)] p-4 ring-1 ring-[var(--border)]">
+      <div className="mt-4 border-t border-[var(--border)] pt-4">
         <p className="text-[10.5px] font-[500] uppercase tracking-[0.1em] text-[var(--status-focus)]">
           Inspect a vendor
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="mt-3 flex flex-wrap gap-2">
           {optimizationFlagshipVendors.map((vendor) => (
             <Explorable.Toggle
               key={vendor.id}
@@ -116,19 +115,21 @@ export function OptimizationFlagship() {
             </Explorable.Toggle>
           ))}
         </div>
-        {optimizationFlagshipVendors.map((vendor) => (
-          <Explorable.Panel
-            key={vendor.id}
-            id={vendor.id}
-            className={cn(
-              "rounded-[10px] p-3 transition-shadow",
-              "data-[active]:ring-1 data-[active]:ring-[var(--primary)]",
-            )}
-          >
-            <VendorDetail vendor={vendor} />
-          </Explorable.Panel>
-        ))}
-        <StatPill label="Share moves on the next cycle inside your caps and floors" tone="indigo" />
+        <div className="mt-3 flex flex-col gap-3">
+          {optimizationFlagshipVendors.map((vendor) => (
+            <Explorable.Panel
+              key={vendor.id}
+              id={vendor.id}
+              className={cn(
+                "rounded-[10px] p-3 transition-shadow",
+                "data-[active]:bg-white/[0.02] data-[active]:ring-1 data-[active]:ring-[var(--primary)]",
+              )}
+            >
+              <VendorDetail vendor={vendor} />
+            </Explorable.Panel>
+          ))}
+          <StatPill label="Share moves on the next cycle inside your caps and floors" tone="indigo" />
+        </div>
       </div>
     </Explorable>
   );
