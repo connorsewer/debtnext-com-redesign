@@ -97,7 +97,7 @@ export function HandoffReportingShowcase() {
             />
             Liquidation
           </span>
-          <span className="text-[var(--product-text-3)]">
+          <span className="text-[var(--product-text-2)]">
             {showcase.trend.weeks[0]} to {showcase.trend.weeks[showcase.trend.weeks.length - 1]}
           </span>
         </div>
