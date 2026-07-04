@@ -90,17 +90,17 @@ export const aboutStats: {
   stats: [
     { number: "Since 2003", label: "Building recovery management software" },
     {
-      number: "74",
-      label: "Clients on the platform",
+      number: "Dozens",
+      label: "Credit originators on the platform",
       caption: "Across financial services, fintech, utilities, telecom, and more",
     },
     {
-      number: "116.8M+",
+      number: "100M+",
       label: "Active accounts",
       caption: "Across client deployments",
     },
     {
-      number: "$1.9B+",
+      number: "$1B+",
       label: "Transactional dollars managed annually",
       caption: "Processed through the platform on behalf of clients",
     },
