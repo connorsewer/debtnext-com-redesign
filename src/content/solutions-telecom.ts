@@ -22,7 +22,7 @@ export const telecomHero = {
   body:
     "Post-disconnect recovery for wireless, wireline, and broadband carriers means high placement volume, short treatment windows, and aggressive write-off cycles. dPlat is built to move at that speed.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  secondaryCta: { label: "See the platform", href: "/platform" },
+  secondaryCta: { label: "See the optimization engine", href: "/platform/optimization" },
 };
 
 export const telecomChallenges: {

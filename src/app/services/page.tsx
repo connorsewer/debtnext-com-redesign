@@ -33,6 +33,7 @@ export default function ServicesPage() {
         h1={servicesHero.h1}
         body={servicesHero.body}
         primaryCta={servicesHero.primaryCta}
+        secondaryCta={servicesHero.secondaryCta}
         variant="centered"
         location="services_hero"
       />

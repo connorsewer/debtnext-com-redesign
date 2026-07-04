@@ -23,7 +23,7 @@ export const fintechHero = {
   body:
     "Direct lending, BNPL, and digital banking portfolios run on modern systems and change fast. dPlat connects through API, configures without a release cycle, and handles the multi-state regulatory load that comes with lending at national scale.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  secondaryCta: { label: "See the platform", href: "/platform" },
+  secondaryCta: { label: "See integrations", href: "/platform/integrations" },
 };
 
 export const fintechChallenges: {

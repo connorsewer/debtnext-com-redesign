@@ -18,7 +18,7 @@ export const optimizationHero = {
   body:
     "The dPlat Optimization Engine evaluates liquidation performance across closed vendor pools and adjusts future placement volume accordingly. High performers get more share. The rules are yours. The math runs automatically.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  secondaryCta: { label: "Explore the platform", href: "/platform" },
+  secondaryCta: { label: "See placement management", href: "/platform/placement" },
 };
 
 export const optimizationIntro = {

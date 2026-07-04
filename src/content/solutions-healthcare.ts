@@ -24,7 +24,7 @@ export const healthcareHero = {
   body:
     "Patient-responsibility balances, bad-debt after the billing cycle, and the extended business office work that follows. Healthcare recovery has its own shape, and dPlat is configured for it. It manages placement, the vendor network, reconciliation, and the audit trail across hospital systems, physician groups, and RCM providers.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  secondaryCta: { label: "See the platform", href: "/platform" },
+  secondaryCta: { label: "See issues management", href: "/platform/issues" },
 };
 
 export const healthcareChallenges: {

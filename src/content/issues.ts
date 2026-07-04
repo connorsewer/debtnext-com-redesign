@@ -19,7 +19,7 @@ export const issuesHero = {
   body:
     "Every dispute logged. Every SLA timed. Every action audited. dPlat's issues module gives your team and your recovery vendors a single workspace for resolving account-level problems, with automated handling for the conditions that need to move fast.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  secondaryCta: { label: "Explore the platform", href: "/platform" },
+  secondaryCta: { label: "See reporting and dashboards", href: "/platform/reporting" },
 };
 
 // [COI REVIEW] Andrew to review framing on regulatory-exposure language.

@@ -24,6 +24,7 @@ export const whyDplatHero = {
   body:
     "dPlat is the system credit originators reach for when their current setup stops scaling: when spreadsheets break under vendor volume, when single-vendor portals don't cover the network, when custom builds run over budget. Twenty years of configuration patterns, drawn from real client placements, are built into the platform.",
   primaryCta: { label: "Request a demo", href: "/demo" },
+  secondaryCta: { label: "Implementation and services", href: "/services" },
 };
 
 // [COI REVIEW] Andrew to verify "connected to the full network" framing.

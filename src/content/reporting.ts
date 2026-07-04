@@ -18,7 +18,7 @@ export const reportingHero = {
   body:
     "dPlat ships with the reports recovery teams actually use: inventory, liquidation, net-back, cost, vendor performance, SLA adherence, and exception trends. Pre-built dashboards visualize the data. Configurable extracts feed your warehouse. Custom filters save and reapply.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  secondaryCta: { label: "Explore the platform", href: "/platform" },
+  secondaryCta: { label: "See issues management", href: "/platform/issues" },
 };
 
 export const reportingIntro = {

@@ -29,6 +29,7 @@ export const servicesHero = {
   body:
     "dPlat is the platform. The team behind it is part of why it works. Implementation runs to a structured method, and two dedicated teams stay on after launch. All of it onshore.",
   primaryCta: { label: "Request a demo", href: "/demo" },
+  secondaryCta: { label: "Why dPlat", href: "/why-dplat" },
 };
 
 export const servicesMethodIntro = {
