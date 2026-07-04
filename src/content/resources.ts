@@ -7,7 +7,7 @@ import type { GridCard } from "@/components/sections/CardGrid";
 import type { CaseStudy } from "@/components/sections/CaseStudyBand";
 
 export const resourcesMeta = {
-  title: "Resources",
+  title: "Recovery operations resources and case studies",
   description:
     "Operational guides, regulatory updates, and platform documentation for recovery operations teams. Built by the people who run the platform.",
   canonical: "https://debtnext.com/resources",

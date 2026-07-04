@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
+
+import { buildMetadata } from "@/lib/seo/metadata";
 import Link from "next/link";
 
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema, organizationSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
@@ -18,16 +22,15 @@ import {
   aboutStats,
 } from "@/content/company-about";
 
-export const metadata: Metadata = {
-  title: aboutMeta.title,
-  description: aboutMeta.description,
-  alternates: { canonical: aboutMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(aboutMeta);
 
 export default function AboutPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Company", path: "/company" }, { name: "About", path: "/company/about" }])} />
+      <JsonLd data={organizationSchema()} />
 
       <PageHero
         eyebrow={aboutHero.eyebrow}

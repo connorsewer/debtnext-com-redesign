@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BenefitSplit } from "@/components/sections/BenefitSplit";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
@@ -28,16 +32,14 @@ import {
   placementVendorPools,
 } from "@/content/visuals";
 
-export const metadata: Metadata = {
-  title: placementMeta.title,
-  description: placementMeta.description,
-  alternates: { canonical: placementMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(placementMeta);
 
 export default function PlacementPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Platform", path: "/platform" }, { name: "Placement", path: "/platform/placement" }])} />
 
       <PageHero
         eyebrow={placementHero.eyebrow}

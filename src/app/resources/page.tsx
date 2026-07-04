@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { CardGrid } from "@/components/sections/CardGrid";
 import { CaseStudyBand } from "@/components/sections/CaseStudyBand";
@@ -16,11 +18,7 @@ import {
   resourcesNewsletter,
 } from "@/content/resources";
 
-export const metadata: Metadata = {
-  title: resourcesMeta.title,
-  description: resourcesMeta.description,
-  alternates: { canonical: resourcesMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(resourcesMeta);
 
 export default function ResourcesPage() {
   return (

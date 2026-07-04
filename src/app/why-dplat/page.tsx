@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { CardGrid } from "@/components/sections/CardGrid";
 import { ComparisonTable } from "@/components/sections/ComparisonTable";
@@ -15,11 +17,7 @@ import {
   whyDplatProof,
 } from "@/content/why-dplat";
 
-export const metadata: Metadata = {
-  title: whyDplatMeta.title,
-  description: whyDplatMeta.description,
-  alternates: { canonical: whyDplatMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(whyDplatMeta);
 
 export default function WhyDplatPage() {
   return (

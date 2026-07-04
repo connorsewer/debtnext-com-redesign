@@ -8,7 +8,7 @@ import type { ProcessStep } from "@/components/sections/ProcessStrip";
 export const placementMeta = {
   title: "Placement Management",
   description:
-    "Automate vendor placement across treatment tiers with the dPlat decision engine. Configurable business rules, daily reconciliation, and recall logic in one platform.",
+    "Automate vendor placement across treatment tiers with the dPlat decision engine. Configurable business rules, daily reconciliation, and recall logic.",
   canonical: "https://debtnext.com/platform/placement",
 };
 
