@@ -53,12 +53,12 @@ export const companyLeadership: {
     {
       eyebrow: "Co-founder & President",
       title: "Paul Goske",
-      body: "Co-founded dPlat in 2003. 25 years in recovery operations and platform leadership.",
+      body: "Co-founded DebtNext in 2003. 25 years in recovery operations and platform leadership.",
     },
     {
       eyebrow: "Co-founder & CTO",
       title: "Rob Novosel",
-      body: "Co-founded dPlat in 2003. Owns product, operations, and technology, from middleware and implementation to support.",
+      body: "Co-founded DebtNext in 2003. 25 years across product, operations, and technology, from middleware and implementation to support.",
     },
     {
       eyebrow: "Director of Strategic Initiatives",
@@ -71,7 +71,7 @@ export const companyLeadership: {
       body: "17 years in recovery operations leadership.",
     },
     {
-      eyebrow: "Director, Product Innovation",
+      eyebrow: "Director of Product Innovation",
       title: "Andrew Hannan",
       body: "20 years in recovery platform product management.",
     },
@@ -87,12 +87,12 @@ export const companyStats: { eyebrow: string; stats: ProofStat[] } = {
       label: "Building recovery management software",
     },
     {
-      number: "116.8M+",
+      number: "100M+",
       label: "Active accounts",
       caption: "Across client deployments",
     },
     {
-      number: "$1.9B+",
+      number: "$1B+",
       label: "Transactional dollars managed annually",
       caption: "Processed through the platform on behalf of clients",
     },
@@ -114,8 +114,7 @@ export const companySecurity = {
     "Column-level AES-128 encryption for PII",
     "PGP file exchange for vendor data",
     "LUKS encryption at the OS level",
-    "SOC 2 Type II (TSI-level)",
-    "HITRUST (TSI-level, for healthcare-adjacent operations)",
+    "Aligned with SSAE 18 SOC 2 standards at the TSI level",
     "Built to support FDCPA, Regulation F, FCRA, TCPA, and SCRA workflows",
   ],
 };

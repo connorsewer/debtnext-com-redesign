@@ -10,6 +10,10 @@ export const ROUTES = [
   "/company",
   "/resources",
   "/demo",
+  "/privacy",
+  "/terms",
+  "/cookies",
+  "/accessibility",
 ] as const;
 
 // Routes that carry product visuals / archetypes (Phases 11-15 add the most here).
@@ -39,6 +43,10 @@ export const VISUAL_ROUTES = [
   "/company/contact",
   "/resources",
   "/demo",
+  "/privacy",
+  "/terms",
+  "/cookies",
+  "/accessibility",
 ] as const;
 
 export const BREAKPOINTS = [
