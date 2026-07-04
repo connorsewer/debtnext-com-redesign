@@ -55,7 +55,12 @@ export default function CookiesPage() {
         <h2 className="mt-3 text-h2 font-[480] text-[var(--foreground)]">
           What each cookie is for
         </h2>
-        <div className="mt-6 overflow-x-auto">
+        <div
+          className="mt-6 overflow-x-auto"
+          tabIndex={0}
+          role="region"
+          aria-label={cookieTable.caption}
+        >
           <table className="w-full border-collapse text-left text-body-md text-[var(--text-tertiary)]">
             <caption className="sr-only">{cookieTable.caption}</caption>
             <thead>
