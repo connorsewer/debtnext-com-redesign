@@ -20,7 +20,7 @@ export const insuranceMeta = {
 
 export const insuranceHero = {
   eyebrow: "Insurance",
-  h1: "Recovery built for the way carriers actually recover.",
+  h1: "Subrogation, deductible, and salvage recovery in one system.",
   body:
     "Subrogation balances, deductible recovery, salvage proceeds, premium and policy receivables, and unpaid consumer balances. Insurance recovery spans both business obligors and consumers, and dPlat is configured for both. It manages placement, the vendor network, and reconciliation across every recovery type you run.",
   primaryCta: { label: "Request a demo", href: "/demo" },
@@ -62,7 +62,7 @@ export const insuranceHowItRuns: {
   eyebrow: "How dPlat runs it",
   heading: "How dPlat runs an insurance portfolio.",
   intro:
-    "The platform takes recovery accounts from your claims and policy systems, applies your placement strategy, and manages the vendor network that works them.",
+    "The platform loads recovery accounts from your claims, policy, and billing systems, separates business obligors from consumers, and manages the agencies and law firms that work each recovery type.",
   items: [
     {
       id: "placement",
@@ -93,10 +93,10 @@ export const insuranceHowItRuns: {
 
 export const insuranceProof = {
   eyebrow: "Proof",
-  heading: "An insurance recovery operation, centralized.",
+  heading: "Every recovery type, worked on its own terms.",
   paragraphs: [
-    "Recovery teams at carriers on dPlat replace fragmented agency and law-firm reporting with a single command center. The platform consolidates every vendor's activity into one view, so the team works from one source of truth instead of stitching together separate reports.",
-    "As reporting surfaces downstream vendor performance, the team can see what's producing and reallocate accounts accordingly, without the manual handling that slows a multi-vendor operation down.",
+    "A subrogation balance against a third party, a deductible owed by a policyholder, and salvage proceeds each follow a different path. dPlat keeps them segmented from load through reconciliation, routing by claim type, loss date, and obligor type, so no recovery type gets forced into the wrong treatment.",
+    "Business and consumer books carry different rules, and dPlat applies the right compliance treatment per obligor. Carriers see agency and law-firm performance across both books in one view, then reallocate to what's producing without stitching together separate reports.",
   ],
 };
 
@@ -112,10 +112,39 @@ export const insuranceRegulatory = {
   ],
 };
 
+export const insuranceFaq: {
+  heading: string;
+  intro: string;
+  items: { id: string; question: string; answer: string }[];
+} = {
+  heading: "Insurance recovery on dPlat, answered",
+  intro: "How the platform handles recovery that spans business obligors and consumers.",
+  items: [
+    {
+      id: "how-insurance-recovery",
+      question: "How does dPlat handle insurance recovery specifically?",
+      answer:
+        "dPlat segments subrogation, deductible, salvage, and premium receivables at load, then routes each by claim type, loss date, obligor type, and balance age. Commercial and consumer recovery run their own workflows on vendor pools you can share or split. The platform reconciles daily with every agency and law firm, so balances and payments stay accurate across every recovery type you run.",
+    },
+    {
+      id: "insurance-regulations",
+      question: "Which regulations does the compliance layer support for insurance?",
+      answer:
+        "The compliance layer configures per jurisdiction to each state's insurance rules on contact, recovery, and salvage. It applies FDCPA and Regulation F where the obligor is a consumer, FCRA where credit reporting applies, and keeps subrogation, deductible, and salvage audit trails. Every account carries a full activity history available for regulatory review.",
+    },
+    {
+      id: "insurance-obligor-types",
+      question: "How does dPlat treat business versus consumer obligors?",
+      answer:
+        "A premium balance owed by a commercial account and a balance owed by a consumer follow different rules, so dPlat applies the right compliance treatment per obligor. Consumer accounts bring FDCPA and Regulation F into scope automatically; business accounts follow commercial terms. Both books run under one platform, loaded from your claims, policy, and billing systems with obligor type as a placement attribute.",
+    },
+  ],
+};
+
 export const insuranceFinalCta = {
-  heading: "See dPlat configured for your insurance portfolio.",
+  heading: "Walk dPlat through your recovery types.",
   body:
-    "A 30-minute walkthrough scoped to your recovery types, your regulatory environment, and your vendor mix.",
+    "See subrogation, deductible, and salvage segmented, business and consumer books split, and each obligor's compliance treatment applied.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  reassurance: "30-minute walkthrough. No commitment.",
+  reassurance: "30-minute walkthrough scoped to your recovery types and vendor mix.",
 };

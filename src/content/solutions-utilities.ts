@@ -20,7 +20,7 @@ export const utilitiesMeta = {
 
 export const utilitiesHero = {
   eyebrow: "Utilities",
-  h1: "Recovery built for the way utilities actually bill.",
+  h1: "Final-bill and deposit recovery, run under one platform.",
   body:
     "Final-bill accounts, active-service delinquency, residential and commercial portfolios, deposit balances, and state-by-state rules. Utility recovery has its own shape, and dPlat is configured for it. It's in production at gas, electric, and water providers today.",
   primaryCta: { label: "Request a demo", href: "/demo" },
@@ -62,7 +62,7 @@ export const utilitiesHowItRuns: {
   eyebrow: "How dPlat runs it",
   heading: "How dPlat runs a utility portfolio.",
   intro:
-    "The platform takes residential and commercial accounts from your CIS or billing system, applies your placement strategy, and manages the vendor network that works them.",
+    "The platform loads residential and commercial accounts from SAP, Oracle CC&B, or your utility CIS, segments final-bill from active-service, and manages the vendor network that works them.",
   items: [
     {
       id: "placement",
@@ -93,10 +93,10 @@ export const utilitiesHowItRuns: {
 
 export const utilitiesProof = {
   eyebrow: "Proof",
-  heading: "A utility recovery operation, centralized.",
+  heading: "Deposits and disconnects, reconciled every day.",
   paragraphs: [
-    "Utility recovery teams on dPlat replace fragmented agency reporting with a single command center. The platform consolidates every agency's activity into one view, so the team works from one source of truth instead of stitching together vendor spreadsheets.",
-    "As reporting surfaces downstream agency performance, the team can see what's producing and reallocate accounts accordingly, without the manual handling that slows a multi-vendor operation down.",
+    "A utility book carries deposit balances that net against arrears and write-off disputes that follow a disconnect. dPlat applies deposit balances, records each adjustment, and reconciles daily with every agency, so the arrears a PUC examiner asks about tie out across the network.",
+    "Final-bill and active-service accounts stay segmented from load through recovery. The team routes each by disconnect reason, service class, and deposit balance, and sees downstream agency performance in one view instead of stitching together vendor spreadsheets.",
   ],
 };
 
@@ -112,10 +112,39 @@ export const utilitiesRegulatory = {
   ],
 };
 
+export const utilitiesFaq: {
+  heading: string;
+  intro: string;
+  items: { id: string; question: string; answer: string }[];
+} = {
+  heading: "Utility recovery on dPlat, answered",
+  intro: "How the platform handles the parts of utility recovery that behave on their own terms.",
+  items: [
+    {
+      id: "how-utility-recovery",
+      question: "How does dPlat handle utility recovery specifically?",
+      answer:
+        "dPlat segments final-bill accounts from active-service delinquency at load, then routes each by disconnect reason, service class, deposit balance, and account age. Residential and commercial books run their own workflows on vendor pools you can share or split. The platform applies deposit balances against arrears, manages the write-off dispute workflow, and reconciles daily with every agency across the network.",
+    },
+    {
+      id: "utility-regulations",
+      question: "Which regulations does the compliance layer support for utilities?",
+      answer:
+        "The compliance layer configures per jurisdiction to each state public utility commission's rules on contact, disconnection, and recovery. It covers FDCPA and Regulation F for third-party recovery, FCRA where credit reporting applies, and the deposit-handling and write-off dispute audit trails utility regulators expect. Every account keeps a full activity history available for regulatory review.",
+    },
+    {
+      id: "utility-source-systems",
+      question: "Which utility billing systems does dPlat load from?",
+      answer:
+        "dPlat loads from SAP, Oracle CC&B, Oracle C2M, and the utility CIS platforms you already run. Residential and commercial accounts come across with disconnect reason, service address, and deposit balance as placement attributes, so the decision engine can route on utility-specific data. It reconciles daily with every connected agency to keep balances and payments accurate across the network.",
+    },
+  ],
+};
+
 export const utilitiesFinalCta = {
-  heading: "See dPlat configured for your utility portfolio.",
+  heading: "Walk dPlat through your service territory.",
   body:
-    "A 30-minute walkthrough scoped to your service territory, your regulatory environment, and your vendor mix.",
+    "See final-bill and active-service accounts segmented, deposits reconciled, and your PUC rules applied per jurisdiction.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  reassurance: "30-minute walkthrough. No commitment.",
+  reassurance: "30-minute walkthrough scoped to your territory and vendor mix.",
 };

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
+import { FAQSection } from "@/components/sections/FAQSection";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
@@ -14,8 +16,10 @@ import {
 } from "@/components/product/visuals/archetypes";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
+import { faqPageSchema } from "@/lib/seo/schema";
 import {
   healthcareChallenges,
+  healthcareFaq,
   healthcareFinalCta,
   healthcareHero,
   healthcareHowItRuns,
@@ -101,6 +105,15 @@ export default function HealthcareSolutionPage() {
           surface="elevated-dark"
         />
       </RevealSection>
+
+      <FAQSection
+        heading={healthcareFaq.heading}
+        intro={healthcareFaq.intro}
+        items={healthcareFaq.items}
+        section="healthcare_faq"
+        surface="dark"
+      />
+      <JsonLd data={faqPageSchema(healthcareFaq.items)} />
 
       <FinalCTA
         heading={healthcareFinalCta.heading}

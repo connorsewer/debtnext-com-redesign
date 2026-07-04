@@ -109,10 +109,39 @@ export const fintechRegulatory = {
   ],
 };
 
+export const fintechFaq: {
+  heading: string;
+  intro: string;
+  items: { id: string; question: string; answer: string }[];
+} = {
+  heading: "Fintech recovery on dPlat, answered",
+  intro: "How the platform keeps up with fast-moving direct lending, BNPL, and digital banking.",
+  items: [
+    {
+      id: "how-fintech-recovery",
+      question: "How does dPlat handle fintech recovery specifically?",
+      answer:
+        "dPlat integrates through API for real-time exchange with your origination, billing, and servicing stack, so recovery data moves the way the rest of your infrastructure does. Your team adjusts placement rules, settlement thresholds, payment plans, and recall windows inside the application, so a product change doesn't trigger a recovery-platform project. One standardized connection consolidates updates across your entire vendor network.",
+    },
+    {
+      id: "fintech-regulations",
+      question: "Which regulations does the compliance layer support for fintech?",
+      answer:
+        "dPlat's compliance layer configures to NMLS multi-state licensing, TILA and Regulation Z lending disclosure, FCRA and ECOA for reporting and fair lending, and SCRA and the Military Lending Act. It supports CFPB larger-participant readiness as account volumes grow and keeps a full audit trail across every placement and vendor.",
+    },
+    {
+      id: "fintech-integration",
+      question: "How does dPlat integrate with a modern lending stack?",
+      answer:
+        "dPlat is API-first, integrating with modern origination, billing, and servicing systems for real-time data exchange. Configuration happens in-app with no release cycle, so a fast-moving fintech operation adjusts recovery without engineering work. One connection consolidates every vendor across the network, keeping a single current view of recovery as your product iterates.",
+    },
+  ],
+};
+
 export const fintechFinalCta = {
-  heading: "See dPlat configured for your fintech portfolio.",
+  heading: "Walk dPlat through your lending stack.",
   body:
-    "A 30-minute walkthrough scoped to your products, your integration stack, and your regulatory footprint.",
+    "See API integration in real time, placement rules configured in-app with no release cycle, and multi-state compliance applied.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  reassurance: "30-minute walkthrough. No commitment.",
+  reassurance: "30-minute walkthrough scoped to your products and integration stack.",
 };

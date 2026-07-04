@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
+import { FAQSection } from "@/components/sections/FAQSection";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
@@ -14,8 +16,10 @@ import {
 } from "@/components/product/visuals/archetypes";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
+import { faqPageSchema } from "@/lib/seo/schema";
 import {
   fintechChallenges,
+  fintechFaq,
   fintechFinalCta,
   fintechHero,
   fintechHowItRuns,
@@ -101,6 +105,15 @@ export default function FintechSolutionPage() {
           surface="elevated-dark"
         />
       </RevealSection>
+
+      <FAQSection
+        heading={fintechFaq.heading}
+        intro={fintechFaq.intro}
+        items={fintechFaq.items}
+        section="fintech_faq"
+        surface="dark"
+      />
+      <JsonLd data={faqPageSchema(fintechFaq.items)} />
 
       <FinalCTA
         heading={fintechFinalCta.heading}
