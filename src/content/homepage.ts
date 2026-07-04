@@ -98,9 +98,8 @@ export const homepageProof = {
   stats: [
     {
       number: "100M+",
-      value: 116.8,
-      suffix: "M",
-      decimals: 1,
+      value: 100,
+      suffix: "M+",
       label: "Accounts managed",
       caption: "Across client portfolios",
     },
@@ -112,8 +111,9 @@ export const homepageProof = {
       caption: "In continuous production since 2003",
     },
     {
-      number: "538",
-      value: 538,
+      number: "500+",
+      value: 500,
+      suffix: "+",
       label: "Agency and legal partners",
       caption: "Integrated across the recovery network",
     },
