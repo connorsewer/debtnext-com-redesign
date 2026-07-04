@@ -7,9 +7,10 @@ import type { GridCard } from "@/components/sections/CardGrid";
 import type { ProcessStep } from "@/components/sections/ProcessStrip";
 
 export const platformMeta = {
-  title: "The dPlat platform: recovery management software",
+  title: "dPlat platform: capabilities and modules for recovery teams",
+  titleAbsolute: true,
   description:
-    "dPlat is a configurable recovery management platform: placement, optimization, issues, media, reporting, and compliance in one system. Built for credit originators since 2003.",
+    "The dPlat platform in one place: placement, optimization, issues, media, reporting, and compliance. Configurable modules for credit originators since 2003.",
   canonical: "https://debtnext.com/platform",
 };
 

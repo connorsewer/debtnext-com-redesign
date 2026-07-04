@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BenefitSplit } from "@/components/sections/BenefitSplit";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
@@ -28,11 +30,7 @@ import {
   placementVendorPools,
 } from "@/content/visuals";
 
-export const metadata: Metadata = {
-  title: placementMeta.title,
-  description: placementMeta.description,
-  alternates: { canonical: placementMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(placementMeta);
 
 export default function PlacementPage() {
   return (

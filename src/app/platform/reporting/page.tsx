@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BenefitSplit } from "@/components/sections/BenefitSplit";
 import { CardGrid } from "@/components/sections/CardGrid";
@@ -29,11 +31,7 @@ import {
   reportingMeta,
 } from "@/content/reporting";
 
-export const metadata: Metadata = {
-  title: reportingMeta.title,
-  description: reportingMeta.description,
-  alternates: { canonical: reportingMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(reportingMeta);
 
 export default function ReportingPage() {
   return (

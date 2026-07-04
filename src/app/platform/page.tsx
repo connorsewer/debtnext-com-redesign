@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
@@ -18,11 +20,7 @@ import {
   platformSecurity,
 } from "@/content/platform";
 
-export const metadata: Metadata = {
-  title: platformMeta.title,
-  description: platformMeta.description,
-  alternates: { canonical: platformMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(platformMeta);
 
 export default function PlatformPage() {
   return (

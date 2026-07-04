@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
@@ -30,11 +32,7 @@ import {
   telecomRouting,
 } from "@/content/visuals/solutions-telecom";
 
-export const metadata: Metadata = {
-  title: telecomMeta.title,
-  description: telecomMeta.description,
-  alternates: { canonical: telecomMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(telecomMeta);
 
 export default function TelecomSolutionPage() {
   return (

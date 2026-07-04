@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+
+import { buildMetadata } from "@/lib/seo/metadata";
 import Link from "next/link";
 
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
@@ -18,11 +20,7 @@ import {
   aboutStats,
 } from "@/content/company-about";
 
-export const metadata: Metadata = {
-  title: aboutMeta.title,
-  description: aboutMeta.description,
-  alternates: { canonical: aboutMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(aboutMeta);
 
 export default function AboutPage() {
   return (

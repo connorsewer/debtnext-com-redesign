@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { CardGrid } from "@/components/sections/CardGrid";
 import { FinalCTA } from "@/components/sections/FinalCTA";
@@ -14,11 +16,7 @@ import {
   contactMeta,
 } from "@/content/company-contact";
 
-export const metadata: Metadata = {
-  title: contactMeta.title,
-  description: contactMeta.description,
-  alternates: { canonical: contactMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(contactMeta);
 
 export default function ContactPage() {
   return (

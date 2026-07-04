@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
@@ -30,11 +32,7 @@ import {
   fintechRouting,
 } from "@/content/visuals/solutions-fintech";
 
-export const metadata: Metadata = {
-  title: fintechMeta.title,
-  description: fintechMeta.description,
-  alternates: { canonical: fintechMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(fintechMeta);
 
 export default function FintechSolutionPage() {
   return (

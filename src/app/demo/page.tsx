@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { AmbientField } from "@/components/ambient/AmbientField";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -15,9 +17,7 @@ import {
 import { contactPageSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
-  title: demoMeta.title,
-  description: demoMeta.description,
-  alternates: { canonical: demoMeta.canonical },
+  ...buildMetadata(demoMeta),
   robots: { index: true, follow: true },
 };
 

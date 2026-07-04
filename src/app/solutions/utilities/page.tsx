@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
@@ -30,11 +32,7 @@ import {
   utilitiesRouting,
 } from "@/content/visuals/solutions-utilities";
 
-export const metadata: Metadata = {
-  title: utilitiesMeta.title,
-  description: utilitiesMeta.description,
-  alternates: { canonical: utilitiesMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(utilitiesMeta);
 
 export default function UtilitiesSolutionPage() {
   return (

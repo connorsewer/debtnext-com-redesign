@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BenefitSplit } from "@/components/sections/BenefitSplit";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
@@ -28,11 +30,7 @@ import {
   optimizationShare,
 } from "@/content/visuals";
 
-export const metadata: Metadata = {
-  title: optimizationMeta.title,
-  description: optimizationMeta.description,
-  alternates: { canonical: optimizationMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(optimizationMeta);
 
 export default function OptimizationPage() {
   return (

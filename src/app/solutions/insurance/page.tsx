@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
@@ -30,11 +32,7 @@ import {
   insuranceRouting,
 } from "@/content/visuals/solutions-insurance";
 
-export const metadata: Metadata = {
-  title: insuranceMeta.title,
-  description: insuranceMeta.description,
-  alternates: { canonical: insuranceMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(insuranceMeta);
 
 export default function InsuranceSolutionPage() {
   return (

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BenefitSplit } from "@/components/sections/BenefitSplit";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
@@ -30,11 +32,7 @@ import {
   issuesWorkflows,
 } from "@/content/visuals";
 
-export const metadata: Metadata = {
-  title: issuesMeta.title,
-  description: issuesMeta.description,
-  alternates: { canonical: issuesMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(issuesMeta);
 
 export default function IssuesPage() {
   return (

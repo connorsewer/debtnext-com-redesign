@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
@@ -30,11 +32,7 @@ import {
   financialServicesSettlement,
 } from "@/content/visuals/solutions-financial-services";
 
-export const metadata: Metadata = {
-  title: financialServicesMeta.title,
-  description: financialServicesMeta.description,
-  alternates: { canonical: financialServicesMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(financialServicesMeta);
 
 export default function FinancialServicesSolutionPage() {
   return (

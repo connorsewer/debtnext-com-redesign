@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { FinalCTA } from "@/components/sections/FinalCTA";
@@ -26,11 +28,7 @@ import {
   integrationsWhyMatters,
 } from "@/content/integrations";
 
-export const metadata: Metadata = {
-  title: integrationsMeta.title,
-  description: integrationsMeta.description,
-  alternates: { canonical: integrationsMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(integrationsMeta);
 
 export default function IntegrationsPage() {
   return (
