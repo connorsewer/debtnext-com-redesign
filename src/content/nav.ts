@@ -116,10 +116,10 @@ export const footerGroups: { title: string; links: NavLink[] }[] = [
   {
     title: "Legal",
     links: [
-      { label: "Privacy", href: "#" },
-      { label: "Terms", href: "#" },
-      { label: "Cookies", href: "#" },
-      { label: "Accessibility", href: "#" },
+      { label: "Privacy", href: "/privacy" },
+      { label: "Terms", href: "/terms" },
+      { label: "Cookies", href: "/cookies" },
+      { label: "Accessibility", href: "/accessibility" },
     ],
   },
 ];

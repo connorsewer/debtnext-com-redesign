@@ -27,7 +27,18 @@ const STATIC_ROUTES = [
   "/company/careers",
   "/company/contact",
   "/demo",
+  "/privacy",
+  "/terms",
+  "/cookies",
+  "/accessibility",
 ];
+
+const LEGAL_ROUTES = new Set([
+  "/privacy",
+  "/terms",
+  "/cookies",
+  "/accessibility",
+]);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -35,6 +46,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${BASE_URL}${path}`,
     lastModified: now,
     changeFrequency: path === "/" ? ("weekly" as const) : ("monthly" as const),
-    priority: path === "/" ? 1 : path === "/demo" ? 0.9 : 0.7,
+    priority:
+      path === "/"
+        ? 1
+        : path === "/demo"
+          ? 0.9
+          : LEGAL_ROUTES.has(path)
+            ? 0.3
+            : 0.7,
   }));
 }
