@@ -21,7 +21,7 @@
  *
  * Real-shaped raw material (src/content/integrations.ts): 60+ production
  * integrations across 16 platform types; SAP + Oracle ERP + billing / CIS
- * systems of record; 538 collection agencies, law firms, and recovery vendors
+ * systems of record; 500+ collection agencies, law firms, and recovery vendors
  * on the back end. All figures anonymized, generic, real-shaped.
  *
  * [CLAIMS REVIEW] Every figure below is a numeric claim (integration counts,
@@ -65,7 +65,7 @@ export const integrationsSystemMap = {
     {
       id: "vendors",
       label: "Recovery vendors",
-      sub: "Collection agencies · law firms · 538 partners",
+      sub: "Collection agencies · law firms · 500+ partners",
       kind: "vendor",
     },
     {
@@ -82,5 +82,5 @@ export const integrationsSystemMap = {
     { from: "engine", to: "sink", label: "Reconciliation" },
   ],
   ariaSummary:
-    "System map for how dPlat connects your systems to your recovery vendors. The system of record (SAP, Oracle ERP, and billing or CIS platforms) sends placement files into the dPlat routing engine, which spans over 60 production integrations across 16 platform types. dPlat routes each account across the originator's existing recovery vendors, a network of 538 collection agencies, law firms, and recovery vendors, with no vendor portal in between. Status updates and payments flow back to the engine, and recovered balances reconcile back to the source system.",
+    "System map for how dPlat connects your systems to your recovery vendors. The system of record (SAP, Oracle ERP, and billing or CIS platforms) sends placement files into the dPlat routing engine, which spans over 60 production integrations across 16 platform types. dPlat routes each account across the originator's existing recovery vendors, a network of 500+ collection agencies, law firms, and recovery vendors, with no vendor portal in between. Status updates and payments flow back to the engine, and recovered balances reconcile back to the source system.",
 } satisfies SchematicData;
