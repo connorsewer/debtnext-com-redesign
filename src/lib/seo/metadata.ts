@@ -40,6 +40,10 @@ export function buildMetadata(meta: RouteMeta): Metadata {
       url: meta.canonical,
     },
     twitter: {
+      // Next replaces (not merges) the layout's twitter object when a route
+      // defines its own, so the card type must be restated here or every
+      // route falls back to "summary".
+      card: "summary_large_image",
       title: meta.title,
       description: meta.description,
     },
