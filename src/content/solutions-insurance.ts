@@ -14,7 +14,7 @@ import type { FeatureAccordionItem } from "@/components/sections/FeatureAccordio
 export const insuranceMeta = {
   title: "Insurance recovery management software",
   description:
-    "dPlat runs recovery for carriers and insurers. Subrogation balances, deductible recovery, salvage, premium receivables, and unpaid balances, with state-by-state compliance.",
+    "dPlat runs recovery for carriers and insurers. Subrogation, deductible recovery, salvage, and premium receivables, with state-by-state compliance.",
   canonical: "https://debtnext.com/solutions/insurance",
 };
 

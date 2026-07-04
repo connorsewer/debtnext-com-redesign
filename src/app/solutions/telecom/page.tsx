@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
@@ -30,16 +34,14 @@ import {
   telecomRouting,
 } from "@/content/visuals/solutions-telecom";
 
-export const metadata: Metadata = {
-  title: telecomMeta.title,
-  description: telecomMeta.description,
-  alternates: { canonical: telecomMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(telecomMeta);
 
 export default function TelecomSolutionPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Solutions", path: "/solutions" }, { name: "Telecom", path: "/solutions/telecom" }])} />
 
       <PageHero
         eyebrow={telecomHero.eyebrow}

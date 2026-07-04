@@ -3,35 +3,38 @@ import type { MetadataRoute } from "next";
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://debtnext.com";
 
-const STATIC_ROUTES = [
-  "/",
-  "/platform",
-  "/platform/placement",
-  "/platform/optimization",
-  "/platform/issues",
-  "/platform/reporting",
-  "/platform/integrations",
-  "/solutions",
-  "/solutions/utilities",
-  "/solutions/financial-services",
-  "/solutions/telecom",
-  "/solutions/fintech",
-  "/solutions/insurance",
-  "/solutions/healthcare",
-  "/why-dplat",
-  "/compare",
-  "/resources",
-  "/company",
-  "/company/about",
-  "/company/leadership",
-  "/company/careers",
-  "/company/contact",
-  "/demo",
-  "/privacy",
-  "/terms",
-  "/cookies",
-  "/accessibility",
-];
+// Per-route static lastModified dates. A meaningful freshness signal beats
+// `new Date()` (which would mark every route as changed on every build).
+// Baseline 2026-07-04; bump a route's date in the same commit that changes it.
+const ROUTE_DATES: Record<string, string> = {
+  "/": "2026-07-04",
+  "/platform": "2026-07-04",
+  "/platform/placement": "2026-07-04",
+  "/platform/optimization": "2026-07-04",
+  "/platform/issues": "2026-07-04",
+  "/platform/reporting": "2026-07-04",
+  "/platform/integrations": "2026-07-04",
+  "/solutions": "2026-07-04",
+  "/solutions/utilities": "2026-07-04",
+  "/solutions/financial-services": "2026-07-04",
+  "/solutions/telecom": "2026-07-04",
+  "/solutions/fintech": "2026-07-04",
+  "/solutions/insurance": "2026-07-04",
+  "/solutions/healthcare": "2026-07-04",
+  "/why-dplat": "2026-07-04",
+  "/compare": "2026-07-04",
+  "/resources": "2026-07-04",
+  "/company": "2026-07-04",
+  "/company/about": "2026-07-04",
+  "/company/leadership": "2026-07-04",
+  "/company/careers": "2026-07-04",
+  "/company/contact": "2026-07-04",
+  "/demo": "2026-07-04",
+  "/privacy": "2026-07-04",
+  "/terms": "2026-07-04",
+  "/cookies": "2026-07-04",
+  "/accessibility": "2026-07-04",
+};
 
 const LEGAL_ROUTES = new Set([
   "/privacy",
@@ -40,19 +43,19 @@ const LEGAL_ROUTES = new Set([
   "/accessibility",
 ]);
 
+function priorityFor(path: string): number {
+  if (path === "/") return 1;
+  if (path === "/demo") return 0.9;
+  if (path === "/platform" || path === "/solutions") return 0.8;
+  if (LEGAL_ROUTES.has(path)) return 0.3;
+  return 0.7;
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-  return STATIC_ROUTES.map((path) => ({
+  return Object.keys(ROUTE_DATES).map((path) => ({
     url: `${BASE_URL}${path}`,
-    lastModified: now,
+    lastModified: new Date(ROUTE_DATES[path]),
     changeFrequency: path === "/" ? ("weekly" as const) : ("monthly" as const),
-    priority:
-      path === "/"
-        ? 1
-        : path === "/demo"
-          ? 0.9
-          : LEGAL_ROUTES.has(path)
-            ? 0.3
-            : 0.7,
+    priority: priorityFor(path),
   }));
 }

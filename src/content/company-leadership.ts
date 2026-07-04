@@ -13,7 +13,7 @@
 import type { GridCard } from "@/components/sections/CardGrid";
 
 export const leadershipMeta = {
-  title: "DebtNext leadership: a team built inside recovery",
+  title: "DebtNext leadership: a team built inside recovery operations",
   description:
     "dPlat is led by a team with more than 100 combined years in recovery operations. The people who build the platform have run the operations it serves.",
   canonical: "https://debtnext.com/company/leadership",

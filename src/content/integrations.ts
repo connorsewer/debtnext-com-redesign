@@ -17,6 +17,7 @@ import type { ProofStat } from "@/components/sections/ProofBand";
 
 export const integrationsMeta = {
   title: "dPlat integrations: ERP, billing, CIS, and recovery platforms",
+  titleAbsolute: true,
   description:
     "dPlat connects to SAP, Oracle, proprietary servicing systems, and recovery platforms credit originators already run. 60+ production integrations.",
   canonical: "https://debtnext.com/platform/integrations",

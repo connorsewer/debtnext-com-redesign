@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
@@ -30,16 +34,14 @@ import {
   financialServicesSettlement,
 } from "@/content/visuals/solutions-financial-services";
 
-export const metadata: Metadata = {
-  title: financialServicesMeta.title,
-  description: financialServicesMeta.description,
-  alternates: { canonical: financialServicesMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(financialServicesMeta);
 
 export default function FinancialServicesSolutionPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Solutions", path: "/solutions" }, { name: "Financial services", path: "/solutions/financial-services" }])} />
 
       <PageHero
         eyebrow={financialServicesHero.eyebrow}
