@@ -94,6 +94,15 @@ export const homepageFeatureAccordion = {
 // [CLAIMS REVIEW] Andrew to confirm exact framing on each metric.
 export const homepageProof = {
   eyebrow: "At scale, in production",
+  /**
+   * Stats-in-prose with a date. Figures are the canonical scaleHeadline
+   * values from src/content/stats.ts (single source); kept in sync with the
+   * stat tiles below and referenced here so AI search can extract one
+   * self-contained, dated sentence.
+   */
+  notes: [
+    "Since 2003, dPlat has managed 116.8M+ accounts across a network of 538 agency and legal partners, processing more than 10B transactions in continuous production.",
+  ],
   link: { label: "See how dPlat compares", href: "/compare" },
   stats: [
     {
