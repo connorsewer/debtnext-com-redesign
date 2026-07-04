@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 
 import { buildMetadata } from "@/lib/seo/metadata";
 
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { FinalCTA } from "@/components/sections/FinalCTA";
@@ -34,6 +36,8 @@ export default function IntegrationsPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Platform", path: "/platform" }, { name: "Integrations", path: "/platform/integrations" }])} />
 
       <PageHero
         eyebrow={integrationsHero.eyebrow}

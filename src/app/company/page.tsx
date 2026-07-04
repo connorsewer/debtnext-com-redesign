@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo/metadata";
 import Link from "next/link";
 
+import { JsonLd } from "@/components/seo/JsonLd";
+import { organizationSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
@@ -27,6 +29,8 @@ export default function CompanyPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={organizationSchema()} />
 
       <PageHero
         eyebrow={companyHero.eyebrow}

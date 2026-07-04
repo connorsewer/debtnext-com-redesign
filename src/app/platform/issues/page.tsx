@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 
 import { buildMetadata } from "@/lib/seo/metadata";
 
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BenefitSplit } from "@/components/sections/BenefitSplit";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
@@ -38,6 +40,8 @@ export default function IssuesPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Platform", path: "/platform" }, { name: "Issues", path: "/platform/issues" }])} />
 
       <PageHero
         eyebrow={issuesHero.eyebrow}

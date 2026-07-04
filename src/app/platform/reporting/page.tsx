@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 
 import { buildMetadata } from "@/lib/seo/metadata";
 
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BenefitSplit } from "@/components/sections/BenefitSplit";
 import { CardGrid } from "@/components/sections/CardGrid";
@@ -37,6 +39,8 @@ export default function ReportingPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Platform", path: "/platform" }, { name: "Reporting", path: "/platform/reporting" }])} />
 
       <PageHero
         eyebrow={reportingHero.eyebrow}
