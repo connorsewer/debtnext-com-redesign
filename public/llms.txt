@@ -1,0 +1,39 @@
+# dPlat by DebtNext
+
+dPlat is recovery management SaaS. It is the system of record for the third-party placement lifecycle: routing delinquent and charged-off accounts to outside agencies, law firms, and recovery vendors, then tracking placements, results, disputes, and compliance across the whole network from one platform.
+
+DebtNext, LLC built dPlat and has run it since 2003. DebtNext is a Transworld Systems Inc. company.
+
+## Who it's for
+
+Credit originators who place accounts with a network of outside recovery vendors: utilities, financial services, telecom, fintech, insurance, and healthcare or revenue-cycle teams. dPlat is an enterprise platform, sold by demo and configured per portfolio. dPlat works with any collection agency, law firm, or recovery vendor already in a client's network.
+
+## What it does
+
+- Vendor placement and assignment strategy across treatment tiers
+- Optimization that shifts volume toward vendors who recover more
+- Issue, dispute, and complaint handling with SLA timers and audit trails
+- Compliance workflows for FDCPA, Reg F, FCRA, TCPA, and SCRA
+- Reporting and dashboards for liquidation, cost, net-back, and vendor performance
+- Integration with servicing, billing, ERP, CIS, and recovery systems
+
+## Key pages
+
+- [Home](https://debtnext.com/): what dPlat is and who runs recovery on it.
+- [Platform](https://debtnext.com/platform): the modules that make up dPlat, in one place.
+- [Placement](https://debtnext.com/platform/placement): the decision engine that routes accounts to vendors across treatment tiers.
+- [Optimization](https://debtnext.com/platform/optimization): how placement volume shifts toward higher-performing vendors.
+- [Issues](https://debtnext.com/platform/issues): dispute, complaint, and exception handling with SLA timers and audit trails.
+- [Reporting](https://debtnext.com/platform/reporting): reports and dashboards for liquidation, cost, net-back, and vendor performance.
+- [Integrations](https://debtnext.com/platform/integrations): how dPlat connects to servicing, billing, ERP, and recovery systems.
+- [Solutions](https://debtnext.com/solutions): the industries dPlat runs recovery for.
+- [Utilities](https://debtnext.com/solutions/utilities): final-bill placement, deposit handling, and PUC-ready compliance.
+- [Financial services](https://debtnext.com/solutions/financial-services): card, installment, line-of-credit, and overdraft recovery with Reg F workflows.
+- [Telecom](https://debtnext.com/solutions/telecom): high-volume post-disconnect recovery with short treatment windows.
+- [Fintech](https://debtnext.com/solutions/fintech): API-first recovery for direct lenders, BNPL, and digital banking.
+- [Insurance](https://debtnext.com/solutions/insurance): subrogation, deductible recovery, salvage, and premium receivables.
+- [Healthcare](https://debtnext.com/solutions/healthcare): patient-responsibility balances and bad-debt placement for RCM teams.
+- [Why dPlat](https://debtnext.com/why-dplat): when to buy recovery software instead of building it or stretching spreadsheets.
+- [Compare](https://debtnext.com/compare): how dPlat compares to NeuAnalytics, Convoke, Imagine Cloud, Symend, and HighRadius.
+- [About](https://debtnext.com/company/about): DebtNext, its focus on one product, and its Transworld Systems Inc. ownership.
+- [Request a demo](https://debtnext.com/demo): a 30-minute walkthrough scoped to a portfolio and vendor mix.
