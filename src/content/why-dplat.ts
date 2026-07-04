@@ -68,7 +68,7 @@ export const whyDplatComparison: {
   ],
   rows: [
     {
-      capability: "Recovery-specific data model",
+      capability: "Data model built for debt recovery",
       values: ["Build it yourself", "Map and customize", "Configured"],
     },
     {

@@ -8,7 +8,7 @@
  */
 
 export const heroCinematic = {
-  headline: "Recovery operations, unified.",
+  headline: "Run your entire recovery vendor network from one platform.",
   subhead:
     "Place accounts, manage agencies, track outcomes, and prove compliance from a single platform.",
   attachedForm: {
@@ -74,7 +74,7 @@ export const heroCinematic = {
  * portfolio snapshots without misrepresenting platform performance.
  */
 export const heroAccountsPanel = {
-  workspaceLabel: "Recovery operations",
+  workspaceLabel: "Vendor network",
   workspaceSubLabel: "Portfolio · YTD",
   rows: [
     {

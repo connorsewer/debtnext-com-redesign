@@ -22,7 +22,7 @@ export interface LeadershipTableProps {
   heading: string;
   body?: string;
   leaders: LeaderRow[];
-  /** Label for the count column, e.g. "Years in recovery". */
+  /** Label for the count column, e.g. "Years in recovery operations". */
   yearsLabel?: string;
   surface?: SectionSurface;
 }
@@ -36,7 +36,7 @@ export function LeadershipTable({
   heading,
   body,
   leaders,
-  yearsLabel = "Years in recovery",
+  yearsLabel = "Years in recovery operations",
   surface = "elevated-dark",
 }: LeadershipTableProps) {
   const reveal = useInViewProps();

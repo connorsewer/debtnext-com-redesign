@@ -149,7 +149,7 @@ export const compareLeadership: {
   body: string;
   leaders: LeaderRow[];
 } = {
-  heading: "More than 100 combined years inside recovery.",
+  heading: "More than 100 combined years in recovery operations.",
   body:
     "The DebtNext leadership team has spent careers in collections and receivables management. The people who configure your platform are the same people who designed it.",
   leaders: [

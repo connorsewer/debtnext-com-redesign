@@ -70,7 +70,7 @@ export const resourcesCaseStudies: {
         { number: "+24%", label: "Increase in collections" },
         { number: "$8.7M", label: "Net-back gain" },
         { number: "5 to 1", label: "Agencies onto one system of record" },
-        { number: "Lower", label: "Recovery FTE load" },
+        { number: "Lower", label: "Collections FTE load" },
       ],
       problem:
         "A multi-state utility placed charged-off accounts across five agencies, each reporting on its own schedule and format. Performance gaps stayed hidden, reconciliation ate analyst time, and oversight couldn't be proven on demand.",
