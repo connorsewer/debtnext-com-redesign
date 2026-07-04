@@ -107,10 +107,10 @@ export const footerGroups: { title: string; links: NavLink[] }[] = [
   {
     title: "Resources",
     links: [
-      { label: "Blog", href: "/resources" },
-      { label: "Case studies", href: "/resources" },
-      { label: "Security", href: "/resources" },
-      { label: "Compliance", href: "/resources" },
+      // Blog / Case studies / Security / Compliance all resolved to the same
+      // /resources page; collapsed to one working link until those libraries
+      // exist as distinct routes.
+      { label: "Resources", href: "/resources" },
     ],
   },
   {

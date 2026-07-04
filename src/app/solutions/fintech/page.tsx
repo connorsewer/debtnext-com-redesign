@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
+import { FAQSection } from "@/components/sections/FAQSection";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
@@ -14,8 +19,10 @@ import {
 } from "@/components/product/visuals/archetypes";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
+import { faqPageSchema } from "@/lib/seo/schema";
 import {
   fintechChallenges,
+  fintechFaq,
   fintechFinalCta,
   fintechHero,
   fintechHowItRuns,
@@ -30,16 +37,14 @@ import {
   fintechRouting,
 } from "@/content/visuals/solutions-fintech";
 
-export const metadata: Metadata = {
-  title: fintechMeta.title,
-  description: fintechMeta.description,
-  alternates: { canonical: fintechMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(fintechMeta);
 
 export default function FintechSolutionPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Solutions", path: "/solutions" }, { name: "Fintech", path: "/solutions/fintech" }])} />
 
       <PageHero
         eyebrow={fintechHero.eyebrow}
@@ -101,6 +106,15 @@ export default function FintechSolutionPage() {
           surface="elevated-dark"
         />
       </RevealSection>
+
+      <FAQSection
+        heading={fintechFaq.heading}
+        intro={fintechFaq.intro}
+        items={fintechFaq.items}
+        section="fintech_faq"
+        surface="dark"
+      />
+      <JsonLd data={faqPageSchema(fintechFaq.items)} />
 
       <FinalCTA
         heading={fintechFinalCta.heading}

@@ -14,13 +14,13 @@ import type { FeatureAccordionItem } from "@/components/sections/FeatureAccordio
 export const healthcareMeta = {
   title: "Healthcare and RCM recovery management software",
   description:
-    "dPlat runs recovery for healthcare and revenue cycle management providers. Patient-responsibility balances and bad-debt placement, vendor network management, and audit-ready compliance.",
+    "dPlat runs recovery for healthcare and revenue cycle management providers. Patient-responsibility balances, bad-debt placement, and audit-ready compliance.",
   canonical: "https://debtnext.com/solutions/healthcare",
 };
 
 export const healthcareHero = {
   eyebrow: "Healthcare / RCM",
-  h1: "Recovery built for the way providers actually bill.",
+  h1: "Patient-responsibility and bad-debt recovery, after the billing cycle.",
   body:
     "Patient-responsibility balances, bad-debt after the billing cycle, and the extended business office work that follows. Healthcare recovery has its own shape, and dPlat is configured for it. It manages placement, the vendor network, reconciliation, and the audit trail across hospital systems, physician groups, and RCM providers.",
   primaryCta: { label: "Request a demo", href: "/demo" },
@@ -62,7 +62,7 @@ export const healthcareHowItRuns: {
   eyebrow: "How dPlat runs it",
   heading: "How dPlat runs a healthcare portfolio.",
   intro:
-    "The platform takes patient-responsibility and bad-debt accounts from your patient accounting or RCM system, applies your placement strategy, and manages the vendor network that works them.",
+    "The platform loads patient-responsibility and bad-debt accounts from your patient accounting or RCM system once insurance has adjudicated, separates EBO from bad-debt work, and manages the vendor network under HIPAA-adjacent controls.",
   items: [
     {
       id: "placement",
@@ -93,10 +93,10 @@ export const healthcareHowItRuns: {
 
 export const healthcareProof = {
   eyebrow: "Proof",
-  heading: "A healthcare recovery operation, centralized.",
+  heading: "Patient data handled, every action traced.",
   paragraphs: [
-    "Recovery and revenue cycle teams on dPlat replace fragmented agency reporting with a single command center. The platform consolidates every agency's activity into one view, so the team works from one source of truth instead of stitching together vendor spreadsheets.",
-    "As reporting surfaces downstream agency performance, the team can see what's producing and reallocate accounts accordingly, without the manual handling that slows a multi-vendor operation down.",
+    "Healthcare accounts carry patient data, so dPlat works them under HIPAA-adjacent controls and records every action for the audit trail a compliance team expects. Recovery activity stays traceable end to end, from the moment insurance adjudicates the balance through final resolution.",
+    "Extended business office and post-write-off bad debt run on separate tracks, often with different vendors. dPlat keeps them split, routes by balance age and account status, and surfaces downstream agency performance in one view so the team reallocates to what's producing.",
   ],
 };
 
@@ -112,10 +112,39 @@ export const healthcareRegulatory = {
   ],
 };
 
+export const healthcareFaq: {
+  heading: string;
+  intro: string;
+  items: { id: string; question: string; answer: string }[];
+} = {
+  heading: "Healthcare recovery on dPlat, answered",
+  intro: "How the platform handles patient-responsibility and bad-debt work after the billing cycle.",
+  items: [
+    {
+      id: "how-healthcare-recovery",
+      question: "How does dPlat handle healthcare recovery specifically?",
+      answer:
+        "dPlat takes accounts once insurance has adjudicated and the patient portion is set, then segments them by where they sit in the cycle. Extended business office and post-write-off bad debt run on separate tracks with vendor pools you can share or split. The platform routes by balance age, service date, and account status, and reconciles daily with every agency across the network.",
+    },
+    {
+      id: "healthcare-regulations",
+      question: "Which regulations and controls does the compliance layer support for healthcare?",
+      answer:
+        "dPlat handles patient data under HIPAA-adjacent controls across the recovery lifecycle and records every action for the audit trail. It applies FDCPA and Regulation F for third-party recovery, FCRA where credit reporting applies, and keeps patient-responsibility and bad-debt audit trails. Every account carries a full activity history available for compliance review.",
+    },
+    {
+      id: "healthcare-source-systems",
+      question: "Which patient accounting systems does dPlat load from?",
+      answer:
+        "dPlat loads from the patient accounting and RCM systems you already run, bringing accounts across with balance age, service date, account status, and balance size as placement attributes. Early-stage EBO and bad-debt accounts each follow their own path, so the decision engine routes on the right data for hospital systems, physician groups, and RCM providers.",
+    },
+  ],
+};
+
 export const healthcareFinalCta = {
-  heading: "See dPlat configured for your healthcare portfolio.",
+  heading: "Walk dPlat through your patient accounting flow.",
   body:
-    "A 30-minute walkthrough scoped to your patient accounting environment, your compliance requirements, and your vendor mix.",
+    "See balances taken after adjudication, EBO and bad-debt split, and patient data handled under HIPAA-adjacent controls.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  reassurance: "30-minute walkthrough. No commitment.",
+  reassurance: "30-minute walkthrough scoped to your compliance requirements and vendor mix.",
 };

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { IntegrationIcon } from "@/components/icons/IntegrationIcons";
@@ -32,11 +34,7 @@ import {
   softwareApplicationSchema,
 } from "@/lib/seo/schema";
 
-export const metadata: Metadata = {
-  title: homepageMeta.title,
-  description: homepageMeta.description,
-  alternates: { canonical: homepageMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(homepageMeta);
 
 export default function HomePage() {
   return (
@@ -75,6 +73,7 @@ export default function HomePage() {
       <ProofBand
         eyebrow={homepageProof.eyebrow}
         stats={[...homepageProof.stats]}
+        notes={[...homepageProof.notes]}
         link={homepageProof.link}
         linkLocation="homepage_proof"
         surface="elevated-dark"

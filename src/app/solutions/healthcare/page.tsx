@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
+import { FAQSection } from "@/components/sections/FAQSection";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
@@ -14,8 +19,10 @@ import {
 } from "@/components/product/visuals/archetypes";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
+import { faqPageSchema } from "@/lib/seo/schema";
 import {
   healthcareChallenges,
+  healthcareFaq,
   healthcareFinalCta,
   healthcareHero,
   healthcareHowItRuns,
@@ -30,16 +37,14 @@ import {
   healthcareRouting,
 } from "@/content/visuals/solutions-healthcare";
 
-export const metadata: Metadata = {
-  title: healthcareMeta.title,
-  description: healthcareMeta.description,
-  alternates: { canonical: healthcareMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(healthcareMeta);
 
 export default function HealthcareSolutionPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Solutions", path: "/solutions" }, { name: "Healthcare", path: "/solutions/healthcare" }])} />
 
       <PageHero
         eyebrow={healthcareHero.eyebrow}
@@ -101,6 +106,15 @@ export default function HealthcareSolutionPage() {
           surface="elevated-dark"
         />
       </RevealSection>
+
+      <FAQSection
+        heading={healthcareFaq.heading}
+        intro={healthcareFaq.intro}
+        items={healthcareFaq.items}
+        section="healthcare_faq"
+        surface="dark"
+      />
+      <JsonLd data={faqPageSchema(healthcareFaq.items)} />
 
       <FinalCTA
         heading={healthcareFinalCta.heading}

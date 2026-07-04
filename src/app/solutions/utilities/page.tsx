@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
+import { FAQSection } from "@/components/sections/FAQSection";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
@@ -14,8 +19,10 @@ import {
 } from "@/components/product/visuals/archetypes";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
+import { faqPageSchema } from "@/lib/seo/schema";
 import {
   utilitiesChallenges,
+  utilitiesFaq,
   utilitiesFinalCta,
   utilitiesHero,
   utilitiesHowItRuns,
@@ -30,16 +37,14 @@ import {
   utilitiesRouting,
 } from "@/content/visuals/solutions-utilities";
 
-export const metadata: Metadata = {
-  title: utilitiesMeta.title,
-  description: utilitiesMeta.description,
-  alternates: { canonical: utilitiesMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(utilitiesMeta);
 
 export default function UtilitiesSolutionPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Solutions", path: "/solutions" }, { name: "Utilities", path: "/solutions/utilities" }])} />
 
       <PageHero
         eyebrow={utilitiesHero.eyebrow}
@@ -102,6 +107,15 @@ export default function UtilitiesSolutionPage() {
           surface="elevated-dark"
         />
       </RevealSection>
+
+      <FAQSection
+        heading={utilitiesFaq.heading}
+        intro={utilitiesFaq.intro}
+        items={utilitiesFaq.items}
+        section="utilities_faq"
+        surface="dark"
+      />
+      <JsonLd data={faqPageSchema(utilitiesFaq.items)} />
 
       <FinalCTA
         heading={utilitiesFinalCta.heading}

@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
+import { FAQSection } from "@/components/sections/FAQSection";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
@@ -14,8 +19,10 @@ import {
 } from "@/components/product/visuals/archetypes";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
+import { faqPageSchema } from "@/lib/seo/schema";
 import {
   insuranceChallenges,
+  insuranceFaq,
   insuranceFinalCta,
   insuranceHero,
   insuranceHowItRuns,
@@ -30,16 +37,14 @@ import {
   insuranceRouting,
 } from "@/content/visuals/solutions-insurance";
 
-export const metadata: Metadata = {
-  title: insuranceMeta.title,
-  description: insuranceMeta.description,
-  alternates: { canonical: insuranceMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(insuranceMeta);
 
 export default function InsuranceSolutionPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Solutions", path: "/solutions" }, { name: "Insurance", path: "/solutions/insurance" }])} />
 
       <PageHero
         eyebrow={insuranceHero.eyebrow}
@@ -101,6 +106,15 @@ export default function InsuranceSolutionPage() {
           surface="elevated-dark"
         />
       </RevealSection>
+
+      <FAQSection
+        heading={insuranceFaq.heading}
+        intro={insuranceFaq.intro}
+        items={insuranceFaq.items}
+        section="insurance_faq"
+        surface="dark"
+      />
+      <JsonLd data={faqPageSchema(insuranceFaq.items)} />
 
       <FinalCTA
         heading={insuranceFinalCta.heading}

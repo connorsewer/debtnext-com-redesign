@@ -11,9 +11,10 @@
  */
 
 import type { GridCard } from "@/components/sections/CardGrid";
+import { leaders } from "@/content/leadership";
 
 export const leadershipMeta = {
-  title: "DebtNext leadership: a team built inside recovery",
+  title: "DebtNext leadership: a team built inside recovery operations",
   description:
     "dPlat is led by a team with more than 100 combined years in recovery operations. The people who build the platform have run the operations it serves.",
   canonical: "https://debtnext.com/company/leadership",
@@ -37,6 +38,22 @@ export const leadershipApproach = {
   ],
 };
 
+/**
+ * Bios keyed by name. Name, role, and tenure come from the canonical roster
+ * in src/content/leadership.ts; only the presentation copy lives here.
+ */
+const leadershipBios: Record<string, string> = {
+  "Paul Goske":
+    "Co-founder & President. Leads corporate strategy, sales, and client engagement across the dPlat business.",
+  "Rob Novosel":
+    "Co-founder & CTO. Co-founded DebtNext in 2003. Oversees product, operations, and technology, including platform development, implementation success, and support.",
+  "Andrew Hannan":
+    "Director of Product Innovation. Owns product direction and the platform roadmap.",
+  "Eric Port": "Operations Director. Directs platform operations and client delivery.",
+  "Frank Ellenberger":
+    "Director of Strategic Initiatives. Leads client implementation and strategic programs.",
+};
+
 export const leadershipTeam: {
   eyebrow: string;
   heading: string;
@@ -44,37 +61,11 @@ export const leadershipTeam: {
 } = {
   eyebrow: "The team",
   heading: "Who runs dPlat.",
-  cards: [
-    {
-      eyebrow: "25 years in recovery operations",
-      title: "Paul Goske",
-      body:
-        "Co-founder & President. Leads corporate strategy, sales, and client engagement across the dPlat business.",
-    },
-    {
-      eyebrow: "25 years in recovery operations",
-      title: "Rob Novosel",
-      body:
-        "Co-founder & CTO. Co-founded DebtNext in 2003. Oversees product, operations, and technology, including platform development, implementation success, and support.",
-    },
-    {
-      eyebrow: "20 years in recovery operations",
-      title: "Andrew Hannan",
-      body:
-        "Director of Product Innovation. Owns product direction and the platform roadmap.",
-    },
-    {
-      eyebrow: "17 years in recovery operations",
-      title: "Eric Port",
-      body: "Operations Director. Directs platform operations and client delivery.",
-    },
-    {
-      eyebrow: "15 years in recovery operations",
-      title: "Frank Ellenberger",
-      body:
-        "Director of Strategic Initiatives. Leads client implementation and strategic programs.",
-    },
-  ],
+  cards: leaders.map((leader) => ({
+    eyebrow: `${leader.years} years in recovery operations`,
+    title: leader.name,
+    body: leadershipBios[leader.name],
+  })),
 };
 
 export const leadershipHow = {

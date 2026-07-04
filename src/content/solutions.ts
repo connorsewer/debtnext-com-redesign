@@ -8,7 +8,7 @@ import type { GridCard } from "@/components/sections/CardGrid";
 export const solutionsMeta = {
   title: "Solutions: recovery management across regulated industries",
   description:
-    "dPlat is in production with utilities, financial services, telecom, fintech, insurance, and healthcare recovery teams. If your business manages receivables, B2B or B2C, the platform fits. One configurable system.",
+    "dPlat runs recovery for utilities, financial services, telecom, fintech, insurance, and healthcare teams. If you manage receivables, the platform fits.",
   canonical: "https://debtnext.com/solutions",
 };
 
@@ -100,8 +100,8 @@ export const solutionsCompliance = {
 };
 
 export const solutionsFinalCta = {
-  heading: "See dPlat configured for your industry.",
+  heading: "Start from the vertical you run.",
   body:
-    "A demo walkthrough scoped to your portfolio type, vendor mix, and regulatory environment.",
+    "Every industry places accounts differently and answers to different regulators. Bring yours to the demo and we'll show you the placement rules, exceptions, and compliance treatment dPlat would apply.",
   primaryCta: { label: "Request a demo", href: "/demo" },
 };

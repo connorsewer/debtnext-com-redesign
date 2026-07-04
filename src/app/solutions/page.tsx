@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BenefitSplit } from "@/components/sections/BenefitSplit";
 import { BulletList } from "@/components/sections/BulletList";
@@ -17,11 +19,7 @@ import {
 } from "@/content/solutions";
 import { solutionsHubStory } from "@/content/visuals/solutions-hub";
 
-export const metadata: Metadata = {
-  title: solutionsMeta.title,
-  description: solutionsMeta.description,
-  alternates: { canonical: solutionsMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(solutionsMeta);
 
 export default function SolutionsPage() {
   return (

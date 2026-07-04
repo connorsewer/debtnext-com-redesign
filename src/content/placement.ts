@@ -8,7 +8,7 @@ import type { ProcessStep } from "@/components/sections/ProcessStrip";
 export const placementMeta = {
   title: "Placement Management",
   description:
-    "Automate vendor placement across treatment tiers with the dPlat decision engine. Configurable business rules, daily reconciliation, and recall logic in one platform.",
+    "Automate vendor placement across treatment tiers with the dPlat decision engine. Configurable business rules, daily reconciliation, and recall logic.",
   canonical: "https://debtnext.com/platform/placement",
 };
 
@@ -92,9 +92,9 @@ export const placementAccordion: {
 };
 
 export const placementBenefit = {
-  heading: "Change your strategy without changing your platform.",
+  heading: "Test a strategy against your own history before it goes live.",
   body:
-    "Most recovery platforms make you choose between configurability and operational stability. dPlat lets your team update placement rules directly inside the application. Add a vendor to a tier. Shift allocation percentages. Adjust a recall window. The engine picks up the change on the next run.",
+    "dPlat lets your team update placement rules directly inside the application, then validate them against historical placement data before activating, with the stability of an engine that has run in production since 2003. Add a vendor to a tier. Shift allocation percentages. Adjust a recall window. The engine picks up the change on the next run.",
   bullets: [
     "Configuration changes don't require code releases or implementation hours",
     "Audit history shows who changed what, when, and why",
@@ -103,8 +103,8 @@ export const placementBenefit = {
 };
 
 export const placementFinalCta = {
-  heading: "See placement against your portfolio.",
+  heading: "Route a real scenario with us.",
   body:
-    "Bring a sample placement scenario to the demo. We'll show you how dPlat would route it.",
+    "Bring a sample placement scenario to the demo. We'll show you how dPlat would route it across your vendor network.",
   primaryCta: { label: "Request a demo", href: "/demo" },
 };

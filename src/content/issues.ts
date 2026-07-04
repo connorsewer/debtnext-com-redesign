@@ -9,7 +9,7 @@ import type { ProcessStep } from "@/components/sections/ProcessStrip";
 export const issuesMeta = {
   title: "Issues Management",
   description:
-    "Resolve disputes, complaints, and account exceptions inside dPlat. SLA timers, configurable workflows, and full audit trails across your recovery vendor network.",
+    "Resolve disputes, complaints, and account exceptions inside dPlat. SLA timers, configurable workflows, and full audit trails across your vendor network.",
   canonical: "https://debtnext.com/platform/issues",
 };
 
@@ -71,9 +71,9 @@ export const issuesAccordion: {
   items: [
     {
       id: "auto-handling",
-      title: "Automated handling for regulated conditions",
+      title: "Deceased, bankruptcy, and SCRA accounts handled automatically",
       body:
-        "Out-of-the-box issue types cover deceased, bankruptcy, SCRA, and other regulated states. When one of these conditions surfaces, dPlat applies your configured account treatment automatically (status change, vendor notification, recall action) without operator intervention. The auto-handling reduces exposure on conditions that need to move fast.",
+        "Out-of-the-box issue types cover deceased, bankruptcy, SCRA, and other regulated states. When one of these conditions surfaces, dPlat applies your configured account treatment automatically (status change, vendor notification, recall action) without operator intervention. The auto-handling keeps deceased, bankruptcy, and SCRA accounts from drawing audit findings or missed-SLA penalties on conditions that need to move fast.",
       visualLabel: "Auto-handling configuration",
     },
     {
