@@ -16,6 +16,7 @@ import type { GridCard } from "@/components/sections/CardGrid";
 import type { ComparePlatform } from "@/components/sections/CompareMatrix";
 import type { LeaderRow } from "@/components/sections/LeadershipTable";
 import type { ProofStat } from "@/components/sections/ProofBand";
+import { leaders } from "@/content/leadership";
 
 export const compareMeta = {
   title: "Comparing dPlat to NeuAnalytics, Convoke, Symend, and HighRadius",
@@ -164,13 +165,11 @@ export const compareLeadership: {
   heading: "More than 100 combined years in recovery operations.",
   body:
     "The DebtNext leadership team has spent careers in collections and receivables management. The people who configure your platform are the same people who designed it.",
-  leaders: [
-    { name: "Paul Goske", role: "Co-founder & President", years: 25 },
-    { name: "Rob Novosel", role: "Co-founder & CTO", years: 25 },
-    { name: "Andrew Hannan", role: "Director of Product Innovation", years: 20 },
-    { name: "Eric Port", role: "Operations Director", years: 17 },
-    { name: "Frank Ellenberger", role: "Director of Strategic Initiatives", years: 15 },
-  ],
+  leaders: leaders.map((leader) => ({
+    name: leader.name,
+    role: leader.role,
+    years: leader.years,
+  })),
 };
 
 /**

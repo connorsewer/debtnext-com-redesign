@@ -6,6 +6,7 @@
 
 import type { GridCard } from "@/components/sections/CardGrid";
 import type { ProofStat } from "@/components/sections/ProofBand";
+import { combinedYearsPhrase, leaders } from "@/content/leadership";
 
 export const companyMeta = {
   title: "Company",
@@ -42,40 +43,32 @@ export const companyTsi = {
 };
 
 // [CLAIMS REVIEW] Verify titles and tenure with Paul before publication.
+/**
+ * Bios keyed by name. Name, role, and tenure come from the canonical roster
+ * in src/content/leadership.ts; only the presentation copy lives here.
+ */
+const companyLeadershipBios: Record<string, string> = {
+  "Paul Goske":
+    "Co-founded dPlat in 2003. 25 years in recovery operations and platform leadership.",
+  "Rob Novosel":
+    "Co-founded dPlat in 2003. Owns product, operations, and technology, from middleware and implementation to support.",
+  "Andrew Hannan": "20 years in recovery platform product management.",
+  "Eric Port": "17 years in recovery operations leadership.",
+  "Frank Ellenberger": "15 years in client implementation and platform operations.",
+};
+
 export const companyLeadership: {
   heading: string;
   body: string;
   cards: GridCard[];
 } = {
   heading: "Who runs dPlat.",
-  body: "dPlat is led by a team with 100+ combined years of recovery operations experience.",
-  cards: [
-    {
-      eyebrow: "Co-founder & President",
-      title: "Paul Goske",
-      body: "Co-founded dPlat in 2003. 25 years in recovery operations and platform leadership.",
-    },
-    {
-      eyebrow: "Co-founder & CTO",
-      title: "Rob Novosel",
-      body: "Co-founded dPlat in 2003. Owns product, operations, and technology, from middleware and implementation to support.",
-    },
-    {
-      eyebrow: "Director of Strategic Initiatives",
-      title: "Frank Ellenberger",
-      body: "15 years in client implementation and platform operations.",
-    },
-    {
-      eyebrow: "Operations Director",
-      title: "Eric Port",
-      body: "17 years in recovery operations leadership.",
-    },
-    {
-      eyebrow: "Director, Product Innovation",
-      title: "Andrew Hannan",
-      body: "20 years in recovery platform product management.",
-    },
-  ],
+  body: `dPlat is led by a team with ${combinedYearsPhrase} of recovery operations experience.`,
+  cards: leaders.map((leader) => ({
+    eyebrow: leader.role,
+    title: leader.name,
+    body: companyLeadershipBios[leader.name],
+  })),
 };
 
 // [CLAIMS REVIEW] Andrew to confirm exact framing.
