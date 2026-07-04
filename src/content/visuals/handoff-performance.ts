@@ -69,7 +69,7 @@ export const handoffPerformanceConsole = {
   ],
   pills: [{ label: "5 vendors scored" }, { label: "Liquidation, trailing 30d" }],
   ariaSummary:
-    "Vendor scorecard console. Liquidation across all pools is 14.7%, up 1.3% versus the prior 30 days. Four vendors are graded: ABC Recovery grade A at 18.7% liquidation, up 2.1; Global Collect grade A- at 16.3%, up 0.8; Summit Recovery grade B at 13.5%, down 0.4; GDW Recovery grade C at 9.6%, down 1.7.",
+    "Vendor scorecard console. Liquidation across all pools is 14.7%, up 1.3% versus the prior 30 days. Five vendors are graded: ABC Recovery grade A at 18.7% liquidation, up 2.1; Global Collect grade A- at 16.3%, up 0.8; Best Resolution grade B+ at 14.8%, up 0.3; Summit Recovery grade B at 13.5%, down 0.4; GDW Recovery grade C at 9.6%, down 1.7.",
   showcase: {
     // Vendor names are FIXED anonymized labels (do not rename). Liquidation %,
     // grade, and delta mirror the payload rows; ROI% and collections are

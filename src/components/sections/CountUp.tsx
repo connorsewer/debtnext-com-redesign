@@ -19,7 +19,7 @@ export interface CountUpProps {
  * Counts up to `to` when scrolled into view. Renders the final value during
  * SSR (so no-JS and reduced-motion users see the real number), then animates
  * from zero on the client. Supports prefix/suffix/decimals so composite figures
- * like "$1.9B+" or "116.8M" animate while keeping their formatting. Used by
+ * like "$1B+" or "100M+" animate while keeping their formatting. Used by
  * PartnerMap's stat row and the homepage proof band.
  */
 export function CountUp({
