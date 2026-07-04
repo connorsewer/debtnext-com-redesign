@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
 import { CompareMatrix } from "@/components/sections/CompareMatrix";
+import { FAQSection } from "@/components/sections/FAQSection";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { LeadershipTable } from "@/components/sections/LeadershipTable";
 import { PageHero } from "@/components/sections/PageHero";
@@ -12,18 +14,20 @@ import { ProofBand } from "@/components/sections/ProofBand";
 import { ProseIntro } from "@/components/sections/ProseIntro";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { DataStoryVisual } from "@/components/product/visuals/archetypes";
+import { faqPageSchema } from "@/lib/seo/schema";
 import { compareTimeToProduction } from "@/content/visuals/compare";
 import {
   compareBestFit,
   compareDifferentiators,
+  compareFaq,
   compareFinalCta,
   compareHero,
   compareLeadership,
   compareMarket,
   compareMatrix,
   compareMeta,
-  comparePillars,
   compareProof,
+  compareServicesPointer,
   compareTeamIntro,
 } from "@/content/compare";
 
@@ -84,10 +88,9 @@ export default function ComparePage() {
         surface="dark"
       />
 
-      <CardGrid
-        heading={comparePillars.heading}
-        cards={comparePillars.cards}
-        columns={3}
+      <ProseIntro
+        heading={compareServicesPointer.heading}
+        body={compareServicesPointer.body}
         surface="elevated-dark"
       />
 
@@ -105,6 +108,15 @@ export default function ComparePage() {
         stats={compareProof.stats}
         surface="elevated-dark"
       />
+
+      <FAQSection
+        heading={compareFaq.heading}
+        intro={compareFaq.intro}
+        items={compareFaq.items}
+        section="compare_faq"
+        surface="dark"
+      />
+      <JsonLd data={faqPageSchema(compareFaq.items)} />
 
       <FinalCTA
         heading={compareFinalCta.heading}
