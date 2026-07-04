@@ -21,7 +21,7 @@ export const whyDplatHero = {
   eyebrow: "Why dPlat",
   h1: "Recovery software, built by people who only do recovery software.",
   body:
-    "dPlat is the system credit originators reach for when their current setup stops scaling: when spreadsheets break under vendor volume, when single-vendor portals don't cover the network, when custom builds run over budget. Twenty years of operational learning are configured into the platform.",
+    "dPlat is the system credit originators reach for when their current setup stops scaling: when spreadsheets break under vendor volume, when single-vendor portals don't cover the network, when custom builds run over budget. Twenty years of configuration patterns, drawn from real client placements, are built into the platform.",
   primaryCta: { label: "Request a demo", href: "/demo" },
 };
 

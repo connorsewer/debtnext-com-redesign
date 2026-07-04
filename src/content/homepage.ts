@@ -184,7 +184,7 @@ export const homepageService = {
     {
       title: "As fast as you need to move",
       body:
-        "When the integrations line up, programs go live in weeks. One recent multi-tenant launch went live in under a month. If you ever need to move off a platform fast, we can do that too.",
+        "When the integrations line up, programs go live in weeks. One recent client launched a new business unit on the platform in under a month. If you ever need to move off a platform fast, we can do that too.",
     },
   ],
 } as const;

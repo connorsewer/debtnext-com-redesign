@@ -30,4 +30,18 @@ export const orgFacts = {
     operatingSystem: "Web",
   },
   areaServed: ["US", "CA"],
+  // [CLAIMS] Channels sourced from live debtnext.com contact/company/careers pages.
+  address: {
+    streetAddress: "175 Montrose West Avenue, Suite 170",
+    addressLocality: "Copley",
+    addressRegion: "OH",
+    postalCode: "44321",
+    addressCountry: "US",
+  },
+  telephone: "+1-330-665-0400",
+  email: {
+    sales: "sales@debtnext.com",
+    info: "info@debtnext.com",
+    careers: "careers@debtnext.com",
+  },
 } as const;
