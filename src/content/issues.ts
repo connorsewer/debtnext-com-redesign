@@ -9,7 +9,7 @@ import type { ProcessStep } from "@/components/sections/ProcessStrip";
 export const issuesMeta = {
   title: "Issues Management",
   description:
-    "Resolve disputes, complaints, and account exceptions inside dPlat. SLA timers, configurable workflows, and full audit trails across your recovery vendor network.",
+    "Resolve disputes, complaints, and account exceptions inside dPlat. SLA timers, configurable workflows, and full audit trails across your vendor network.",
   canonical: "https://debtnext.com/platform/issues",
 };
 

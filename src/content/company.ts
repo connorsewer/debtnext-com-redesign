@@ -9,9 +9,9 @@ import type { ProofStat } from "@/components/sections/ProofBand";
 import { combinedYearsPhrase, leaders } from "@/content/leadership";
 
 export const companyMeta = {
-  title: "Company",
+  title: "About DebtNext: recovery software since 2003",
   description:
-    "DebtNext has been building recovery management software for credit originators since 2003. A TSI company.",
+    "DebtNext has been building recovery management software for credit originators since 2003. A Transworld Systems Inc. company.",
   canonical: "https://debtnext.com/company",
 };
 

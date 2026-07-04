@@ -8,7 +8,7 @@ import type { GridCard } from "@/components/sections/CardGrid";
 export const solutionsMeta = {
   title: "Solutions: recovery management across regulated industries",
   description:
-    "dPlat is in production with utilities, financial services, telecom, fintech, insurance, and healthcare recovery teams. If your business manages receivables, B2B or B2C, the platform fits. One configurable system.",
+    "dPlat runs recovery for utilities, financial services, telecom, fintech, insurance, and healthcare teams. If you manage receivables, the platform fits.",
   canonical: "https://debtnext.com/solutions",
 };
 

@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
+
+import { buildMetadata } from "@/lib/seo/metadata";
 import Link from "next/link";
 
+import { JsonLd } from "@/components/seo/JsonLd";
+import { organizationSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
@@ -19,16 +23,14 @@ import {
   companyTsi,
 } from "@/content/company";
 
-export const metadata: Metadata = {
-  title: companyMeta.title,
-  description: companyMeta.description,
-  alternates: { canonical: companyMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(companyMeta);
 
 export default function CompanyPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={organizationSchema()} />
 
       <PageHero
         eyebrow={companyHero.eyebrow}

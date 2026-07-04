@@ -11,6 +11,7 @@
 
 export const homepageMeta = {
   title: "dPlat: recovery management software for credit originators",
+  titleAbsolute: true,
   description:
     "dPlat connects credit originators with their recovery vendor network. Configurable placement, real-time reporting, and compliance built in. Since 2003.",
   canonical: "https://debtnext.com/",

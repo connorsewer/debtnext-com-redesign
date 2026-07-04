@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { FinalCTA } from "@/components/sections/FinalCTA";
@@ -15,16 +19,14 @@ import {
   careersWork,
 } from "@/content/company-careers";
 
-export const metadata: Metadata = {
-  title: careersMeta.title,
-  description: careersMeta.description,
-  alternates: { canonical: careersMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(careersMeta);
 
 export default function CareersPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Company", path: "/company" }, { name: "Careers", path: "/company/careers" }])} />
 
       <PageHero
         eyebrow={careersHero.eyebrow}
