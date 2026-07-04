@@ -19,6 +19,7 @@ export const resourcesHero = {
   body:
     "The content here is written by the team that builds and operates dPlat, for the people running recovery teams. No vendor pitches dressed up as thought leadership.",
   primaryCta: { label: "Request a demo", href: "/demo" },
+  secondaryCta: { label: "Read the glossary", href: "/resources/glossary" },
 };
 
 export const resourcesCategories: {

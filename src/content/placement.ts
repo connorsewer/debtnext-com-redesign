@@ -18,7 +18,7 @@ export const placementHero = {
   body:
     "The dPlat decision engine takes your placement strategy and runs it. Treatment tiers, vendor pools, allocation percentages, and recall windows execute against your live portfolio without manual handling. Daily reconciliation keeps balances accurate across every vendor in your network.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  secondaryCta: { label: "Explore the platform", href: "/platform" },
+  secondaryCta: { label: "See the optimization engine", href: "/platform/optimization" },
 };
 
 export const placementProcess: {

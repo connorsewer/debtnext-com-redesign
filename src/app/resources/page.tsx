@@ -30,6 +30,7 @@ export default function ResourcesPage() {
         h1={resourcesHero.h1}
         body={resourcesHero.body}
         primaryCta={resourcesHero.primaryCta}
+        secondaryCta={resourcesHero.secondaryCta}
         variant="centered"
         location="resources_hero"
       />

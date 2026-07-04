@@ -24,7 +24,7 @@ export const utilitiesHero = {
   body:
     "Final-bill accounts, active-service delinquency, residential and commercial portfolios, deposit balances, and state-by-state rules. Utility recovery has its own shape, and dPlat is configured for it. It's in production at gas, electric, and water providers today.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  secondaryCta: { label: "See the platform", href: "/platform" },
+  secondaryCta: { label: "See placement management", href: "/platform/placement" },
 };
 
 export const utilitiesChallenges: {

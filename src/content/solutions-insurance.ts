@@ -24,7 +24,7 @@ export const insuranceHero = {
   body:
     "Subrogation balances, deductible recovery, salvage proceeds, premium and policy receivables, and unpaid consumer balances. Insurance recovery spans both business obligors and consumers, and dPlat is configured for both. It manages placement, the vendor network, and reconciliation across every recovery type you run.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  secondaryCta: { label: "See the platform", href: "/platform" },
+  secondaryCta: { label: "See reporting and dashboards", href: "/platform/reporting" },
 };
 
 export const insuranceChallenges: {

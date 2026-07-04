@@ -29,6 +29,7 @@ export default function WhyDplatPage() {
         h1={whyDplatHero.h1}
         body={whyDplatHero.body}
         primaryCta={whyDplatHero.primaryCta}
+        secondaryCta={whyDplatHero.secondaryCta}
         variant="centered"
         location="why_dplat_hero"
       />

@@ -80,6 +80,8 @@ export const footerGroups: { title: string; links: NavLink[] }[] = [
       { label: "Reporting", href: "/platform/reporting" },
       { label: "Integrations", href: "/platform/integrations" },
       { label: "Compare platforms", href: "/compare" },
+      { label: "Services", href: "/services" },
+      { label: "Pricing", href: "/pricing" },
       { label: "All capabilities", href: "/platform" },
     ],
   },
@@ -111,6 +113,7 @@ export const footerGroups: { title: string; links: NavLink[] }[] = [
       // /resources page; collapsed to one working link until those libraries
       // exist as distinct routes.
       { label: "Resources", href: "/resources" },
+      { label: "Glossary", href: "/resources/glossary" },
     ],
   },
   {

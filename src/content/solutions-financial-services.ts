@@ -22,7 +22,7 @@ export const financialServicesHero = {
   body:
     "Bank card, installment loan, line of credit, and overdraft recovery, run across a network of agencies and law firms, under FDCPA, Regulation F, FCRA, and TCPA. dPlat is in production at some of the largest financial institutions in the US.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  secondaryCta: { label: "See the platform", href: "/platform" },
+  secondaryCta: { label: "See issues and compliance workflows", href: "/platform/issues" },
 };
 
 export const financialServicesChallenges: {
