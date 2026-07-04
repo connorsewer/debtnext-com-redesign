@@ -63,6 +63,10 @@ These are enforced. Run a self-check before committing any copy change.
 
 **Tone**: confident, calm, product-led. Concrete nouns. Specific verbs. Buyer-focused, not company-focused. If a sentence could appear on any B2B SaaS site, rewrite it.
 
+**"Recovery" never stands alone in short UI fragments.** In headings, table cells, badges, stat labels, and panel labels, "recovery" must sit next to an anchoring noun (operations, software, vendors, network, lifecycle, rates, management). The phrase "in recovery" never appears without "operations" or an equivalent attached. This keeps the word from reading as addiction recovery in fragments that lack surrounding context.
+
+**Title Case exception (ratified by Connor 2026-07-04).** These module names are proper-noun product names and stay Title Case, exempt from the sentence-case rule: "Placement Management," "Optimization Engine," "Issues Management," "Reporting and Dashboards," "Media Management," "Debt Sales," "Compliance and Work Standards." All other headings stay sentence case.
+
 ## 6. TSI ownership disclosure (COI-sensitive)
 
 DebtNext is wholly owned by Transworld Systems Inc. TSI also operates an accounts receivable management business that uses third-party collection agencies inside the dPlat recovery network. This is a real structural relationship. Marketing copy must not obscure it.

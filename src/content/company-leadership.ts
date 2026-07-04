@@ -46,30 +46,30 @@ export const leadershipTeam: {
   heading: "Who runs dPlat.",
   cards: [
     {
-      eyebrow: "25 years",
+      eyebrow: "25 years in recovery operations",
       title: "Paul Goske",
       body:
         "Co-founder & President. Leads corporate strategy, sales, and client engagement across the dPlat business.",
     },
     {
-      eyebrow: "25 years",
+      eyebrow: "25 years in recovery operations",
       title: "Rob Novosel",
       body:
         "Co-founder & CTO. Co-founded DebtNext in 2003. Oversees product, operations, and technology, including platform development, implementation success, and support.",
     },
     {
-      eyebrow: "20 years",
+      eyebrow: "20 years in recovery operations",
       title: "Andrew Hannan",
       body:
         "Director of Product Innovation. Owns product direction and the platform roadmap.",
     },
     {
-      eyebrow: "17 years",
+      eyebrow: "17 years in recovery operations",
       title: "Eric Port",
       body: "Operations Director. Directs platform operations and client delivery.",
     },
     {
-      eyebrow: "15 years",
+      eyebrow: "15 years in recovery operations",
       title: "Frank Ellenberger",
       body:
         "Director of Strategic Initiatives. Leads client implementation and strategic programs.",
