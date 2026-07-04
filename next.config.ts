@@ -22,9 +22,7 @@ const nextConfig: NextConfig = {
   // Deviations from the mapping doc, cleared for this PR:
   //   - /implementation-2-2-2/ and /professional-services-2/ target /services
   //     (the doc's interim /platform is superseded now that /services ships).
-  //   - /privacy-policy/ targets /company/about (the legal /privacy route is
-  //     not built yet; /company/about carries corporate disclosure). Retarget
-  //     to /privacy once that route exists.
+  //   - /privacy-policy/ targets /privacy (shipped in PR #35).
   async redirects() {
     return [
       // --- Legacy pages (page-sitemap) ---
@@ -37,7 +35,7 @@ const nextConfig: NextConfig = {
       { source: "/resources-3", destination: "/resources", permanent: true },
       { source: "/boost", destination: "/resources", permanent: true },
       { source: "/debtnext-boost", destination: "/resources", permanent: true },
-      { source: "/privacy-policy", destination: "/company/about", permanent: true },
+      { source: "/privacy-policy", destination: "/privacy", permanent: true },
       { source: "/company-2-2", destination: "/company/about", permanent: true },
       { source: "/faq", destination: "/resources", permanent: true },
       { source: "/careers-2", destination: "/company/careers", permanent: true },
