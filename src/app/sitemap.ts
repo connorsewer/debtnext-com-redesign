@@ -30,12 +30,22 @@ const ROUTE_DATES: Record<string, string> = {
   "/company/careers": "2026-07-04",
   "/company/contact": "2026-07-04",
   "/demo": "2026-07-04",
+  "/resources/glossary": "2026-07-04",
+  "/pricing": "2026-07-04",
+  "/services": "2026-07-04",
+  "/compare/neuanalytics": "2026-07-04",
+  "/compare/convoke": "2026-07-04",
+  "/compare/imagine-cloud": "2026-07-04",
+  "/compare/symend": "2026-07-04",
+  "/compare/highradius": "2026-07-04",
 };
 
 function priorityFor(path: string): number {
   if (path === "/") return 1;
   if (path === "/demo") return 0.9;
   if (path === "/platform" || path === "/solutions") return 0.8;
+  // Per-competitor comparison pages sit just below the general routes.
+  if (path.startsWith("/compare/")) return 0.6;
   return 0.7;
 }
 
