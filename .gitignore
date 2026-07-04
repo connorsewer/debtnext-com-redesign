@@ -61,3 +61,12 @@ next-env.d.ts
 
 # Visual brainstorm companion
 .superpowers/
+
+# Internal docs and agent tooling (kept locally, not published in the public repo)
+/CLAUDE.md
+/DESIGN.md
+/.impeccable.md
+/docs/
+/.planning/
+/.claude/
+/source-materials/
