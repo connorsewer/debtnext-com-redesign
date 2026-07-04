@@ -38,7 +38,18 @@ const ROUTE_DATES: Record<string, string> = {
   "/compare/imagine-cloud": "2026-07-04",
   "/compare/symend": "2026-07-04",
   "/compare/highradius": "2026-07-04",
+  "/privacy": "2026-07-04",
+  "/terms": "2026-07-04",
+  "/cookies": "2026-07-04",
+  "/accessibility": "2026-07-04",
 };
+
+const LEGAL_ROUTES = new Set([
+  "/privacy",
+  "/terms",
+  "/cookies",
+  "/accessibility",
+]);
 
 function priorityFor(path: string): number {
   if (path === "/") return 1;
@@ -46,6 +57,7 @@ function priorityFor(path: string): number {
   if (path === "/platform" || path === "/solutions") return 0.8;
   // Per-competitor comparison pages sit just below the general routes.
   if (path.startsWith("/compare/")) return 0.6;
+  if (LEGAL_ROUTES.has(path)) return 0.3;
   return 0.7;
 }
 

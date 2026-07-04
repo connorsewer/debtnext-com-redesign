@@ -42,7 +42,7 @@ export const compareMarket = {
     "Buyers usually pick a platform for the part of the problem that's burning hottest. A risk officer who's been told to fix vendor compliance buys NeuAnalytics, Convoke, or Imagine Cloud. A telecom that needs to keep subscribers from churning buys Symend. A CFO who's been told to fix DSO buys HighRadius.",
     "Each of those is a defensible choice in isolation. The structural problem shows up later, when the recovery operation needs a capability the chosen platform wasn't built for, and the integration cost back to a fragmented stack starts climbing.",
     "dPlat was built to be the platform underneath all of those operations: the system of record for the placement lifecycle, the vendor management layer, and the data substrate the rest of the recovery ecosystem plugs into.",
-    "Since 2003, dPlat has run in continuous production, and today manages 116.8M+ accounts across a network of 538 agency and legal partners.",
+    "Since 2003, dPlat has run in continuous production, and today manages 100M+ accounts across a network of 500+ agency and legal partners.",
   ],
 };
 
@@ -229,12 +229,12 @@ export const compareProof: {
   heading: "In production, at scale, since 2003.",
   stats: [
     {
-      number: "116.8M+",
+      number: "100M+",
       label: "Active accounts under management",
       caption: "Across client portfolios",
     },
     {
-      number: "$1.9B+",
+      number: "$1B+",
       label: "Transactional dollars managed annually",
       caption: "Processed through the platform on behalf of clients",
     },
