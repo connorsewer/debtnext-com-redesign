@@ -59,10 +59,10 @@ dPlat operates as TSI's recovery management software business. The platform conn
 **Leadership cards** (placeholder for headshots and titles; verify with Paul Goske before publication):
 
 **Paul Goske**, Co-founder & President
-Co-founded dPlat in 2003. 25 years in recovery operations and platform leadership.
+Created dPlat in 2003. 25 years in recovery operations and platform leadership.
 
 **Rob Novosel**, Co-founder & CTO
-Co-founded dPlat in 2003. Owns product, operations, and technology, from middleware and implementation to support.
+Created dPlat in 2003. Owns product, operations, and technology, from middleware and implementation to support.
 
 **Frank Ellenberger**, Director of Strategic Initiatives
 15 years in client implementation and platform operations.
