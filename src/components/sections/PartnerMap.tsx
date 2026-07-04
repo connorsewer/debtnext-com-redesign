@@ -43,10 +43,11 @@ const ARCS: string[] = MAP_ARCS_RAW.split(";").map((s) => {
   return `M ${x1} ${y1} Q ${mx} ${cy} ${x2} ${y2}`;
 });
 
-// [CLAIMS REVIEW] The stat row is illustrative. 538 is the canonical partner
-// count; "placements routed today" is a representative figure, not a live feed.
-const STATS: Array<{ value: number | string; label: string; count?: boolean }> = [
-  { value: 538, label: "Agency and legal partners", count: true },
+// [CLAIMS REVIEW] The stat row is illustrative. "500+" is the softened public
+// form of the partner count (Connor, 2026-07-04); "placements routed today" is
+// a representative figure, not a live feed.
+const STATS: Array<{ value: number | string; label: string; count?: boolean; suffix?: string }> = [
+  { value: 500, label: "Agency and legal partners", count: true, suffix: "+" },
   { value: "50", label: "States covered" },
   { value: 2847, label: "Placements routed today", count: true },
 ];
@@ -100,7 +101,7 @@ export function PartnerMap({
                 <div key={stat.label}>
                   <dt className="text-h3 font-[480] tabular-nums text-[var(--foreground)]">
                     {stat.count ? (
-                      <CountUp to={stat.value as number} />
+                      <CountUp to={stat.value as number} suffix={stat.suffix} />
                     ) : (
                       stat.value
                     )}

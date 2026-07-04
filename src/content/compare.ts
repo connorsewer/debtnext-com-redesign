@@ -177,7 +177,7 @@ export const comparePillars: { heading: string; cards: GridCard[] } = {
     {
       title: "One product, built onshore",
       body:
-        "DebtNext builds, supports, and operates one product: dPlat. The entire development and support organization is onshore in the United States. 74 clients run on dPlat today across utility, telecom, financial services, fintech, and healthcare. Two major releases a year, most new functionality driven by client feedback.",
+        "DebtNext builds, supports, and operates one product: dPlat. The entire development and support organization is onshore in the United States. Dozens of clients run on dPlat today across utility, telecom, financial services, fintech, and healthcare. Two major releases a year, most new functionality driven by client feedback.",
     },
   ],
 };
@@ -204,12 +204,12 @@ export const compareProof: {
   heading: "In production, at scale, since 2003.",
   stats: [
     {
-      number: "116.8M+",
+      number: "100M+",
       label: "Active accounts under management",
       caption: "Across client portfolios",
     },
     {
-      number: "$1.9B+",
+      number: "$1B+",
       label: "Transactional dollars managed annually",
       caption: "Processed through the platform on behalf of clients",
     },

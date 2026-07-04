@@ -30,12 +30,24 @@ const ROUTE_DATES: Record<string, string> = {
   "/company/careers": "2026-07-04",
   "/company/contact": "2026-07-04",
   "/demo": "2026-07-04",
+  "/privacy": "2026-07-04",
+  "/terms": "2026-07-04",
+  "/cookies": "2026-07-04",
+  "/accessibility": "2026-07-04",
 };
+
+const LEGAL_ROUTES = new Set([
+  "/privacy",
+  "/terms",
+  "/cookies",
+  "/accessibility",
+]);
 
 function priorityFor(path: string): number {
   if (path === "/") return 1;
   if (path === "/demo") return 0.9;
   if (path === "/platform" || path === "/solutions") return 0.8;
+  if (LEGAL_ROUTES.has(path)) return 0.3;
   return 0.7;
 }
 

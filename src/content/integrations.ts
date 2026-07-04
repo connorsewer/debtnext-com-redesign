@@ -62,12 +62,12 @@ export const integrationsFootprint: {
   stats: [
     { number: "60+", label: "Production integrations" },
     { number: "16", label: "Platform types" },
-    { number: "538", label: "Agency and legal partners integrated" },
+    { number: "500+", label: "Agency and legal partners integrated" },
     { number: "Since 2003", label: "In continuous production" },
   ],
   notes: [
     "The concentration sits in the systems large credit originators actually use to bill, service, and manage customer accounts. SAP and Oracle utility environments alone account for 34 active integrations. Add proprietary servicing platforms and dPlat already covers most of the footprint an enterprise originator needs.",
-    "Past the enterprise systems, dPlat is integrated on the back end with 538 collection agencies, law firms, and recovery vendors. Placement files, status updates, payments, and reconciliation move between dPlat and your network directly, with no vendor portal in between.",
+    "Past the enterprise systems, dPlat is integrated on the back end with 500+ collection agencies, law firms, and recovery vendors. Placement files, status updates, payments, and reconciliation move between dPlat and your network directly, with no vendor portal in between.",
     "For your engineering team, that means most of the integration work has already been done. The patterns, the field mappings, the reconciliation logic, and the exception handling are built, tested, and deployed against production volumes.",
   ],
 };
@@ -183,12 +183,12 @@ export const integrationsProof: {
   heading: "In production, at scale, since 2003.",
   stats: [
     {
-      number: "116.8M+",
+      number: "100M+",
       label: "Active accounts under management",
       caption: "Across client portfolios",
     },
     {
-      number: "$1.9B+",
+      number: "$1B+",
       label: "Transactional dollars managed annually",
       caption: "Processed through the platform on behalf of clients",
     },

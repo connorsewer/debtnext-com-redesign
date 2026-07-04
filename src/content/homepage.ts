@@ -98,10 +98,9 @@ export const homepageProof = {
   link: { label: "See how dPlat compares", href: "/compare" },
   stats: [
     {
-      number: "116.8M",
-      value: 116.8,
-      suffix: "M",
-      decimals: 1,
+      number: "100M+",
+      value: 100,
+      suffix: "M+",
       label: "Accounts managed",
       caption: "Across client portfolios",
     },
@@ -113,8 +112,9 @@ export const homepageProof = {
       caption: "In continuous production since 2003",
     },
     {
-      number: "538",
-      value: 538,
+      number: "500+",
+      value: 500,
+      suffix: "+",
       label: "Agency and legal partners",
       caption: "Integrated across the recovery network",
     },

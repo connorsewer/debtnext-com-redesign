@@ -87,7 +87,7 @@ export default function HomePage() {
       <PartnerMap
         eyebrow="Coast to coast"
         heading="A recovery network that spans the country."
-        body="538 agency and legal partners plus client portfolios, connected on one platform. Placements route to the right vendor wherever the account sits."
+        body="500+ agency and legal partners plus client portfolios, connected on one platform. Placements route to the right vendor wherever the account sits."
         caption="Representative of the agency and client network across the United States."
       />
 

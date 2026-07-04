@@ -17,9 +17,9 @@ export interface Stat {
 
 /** Headline scale trio. Replaces the retired 60M / $1.5B figures. */
 export const scaleHeadline: Stat[] = [
-  { number: "116.8M", label: "Accounts managed" },
+  { number: "100M+", label: "Accounts managed" },
   { number: "10B+", label: "Transactions processed" },
-  { number: "538", label: "Agency and legal partners" },
+  { number: "500+", label: "Agency and legal partners" },
 ];
 
 /** Annual platform activity. Drives the homepage marquee. */
@@ -29,5 +29,5 @@ export const annualActivity: Stat[] = [
   { number: "80M+", label: "Agency interactions processed" },
   { number: "2M+", label: "Legal and collection documents delivered" },
   { number: "18M+", label: "Payment transactions processed" },
-  { number: "$1.9B+", label: "Transactional dollars managed" },
+  { number: "$1B+", label: "Transactional dollars managed" },
 ];
