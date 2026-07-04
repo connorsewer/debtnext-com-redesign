@@ -53,12 +53,12 @@ export const companyLeadership: {
     {
       eyebrow: "Co-founder & President",
       title: "Paul Goske",
-      body: "Co-founded dPlat in 2003. 25 years in recovery operations and platform leadership.",
+      body: "Co-founded DebtNext in 2003. 25 years in recovery operations and platform leadership.",
     },
     {
       eyebrow: "Co-founder & CTO",
       title: "Rob Novosel",
-      body: "Co-founded dPlat in 2003. 25 years across product, operations, and technology, from middleware and implementation to support.",
+      body: "Co-founded DebtNext in 2003. 25 years across product, operations, and technology, from middleware and implementation to support.",
     },
     {
       eyebrow: "Director of Strategic Initiatives",
@@ -87,12 +87,12 @@ export const companyStats: { eyebrow: string; stats: ProofStat[] } = {
       label: "Building recovery management software",
     },
     {
-      number: "116.8M+",
+      number: "100M+",
       label: "Active accounts",
       caption: "Across client deployments",
     },
     {
-      number: "$1.9B+",
+      number: "$1B+",
       label: "Transactional dollars managed annually",
       caption: "Processed through the platform on behalf of clients",
     },

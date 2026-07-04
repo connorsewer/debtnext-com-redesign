@@ -20,7 +20,7 @@ export const financialServicesHero = {
   eyebrow: "Financial services",
   h1: "Recovery management for portfolios that answer to the CFPB.",
   body:
-    "Bank card, installment loan, line of credit, and overdraft recovery, run across a network of agencies and law firms, under FDCPA, Regulation F, FCRA, and TCPA. dPlat is in production at financial institutions, including top 10 financial services firms.",
+    "Bank card, installment loan, line of credit, and overdraft recovery, run across a network of agencies and law firms, under FDCPA, Regulation F, FCRA, and TCPA. dPlat is in production at some of the largest financial institutions in the US.",
   primaryCta: { label: "Request a demo", href: "/demo" },
   secondaryCta: { label: "See the platform", href: "/platform" },
 };

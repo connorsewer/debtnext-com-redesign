@@ -97,7 +97,7 @@ export const homepageProof = {
   link: { label: "See how dPlat compares", href: "/compare" },
   stats: [
     {
-      number: "116.8M",
+      number: "100M+",
       value: 116.8,
       suffix: "M",
       decimals: 1,
