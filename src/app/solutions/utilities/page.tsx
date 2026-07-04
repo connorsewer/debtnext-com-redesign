@@ -7,6 +7,7 @@ import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
+import { FAQSection } from "@/components/sections/FAQSection";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
@@ -18,8 +19,10 @@ import {
 } from "@/components/product/visuals/archetypes";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
+import { faqPageSchema } from "@/lib/seo/schema";
 import {
   utilitiesChallenges,
+  utilitiesFaq,
   utilitiesFinalCta,
   utilitiesHero,
   utilitiesHowItRuns,
@@ -104,6 +107,15 @@ export default function UtilitiesSolutionPage() {
           surface="elevated-dark"
         />
       </RevealSection>
+
+      <FAQSection
+        heading={utilitiesFaq.heading}
+        intro={utilitiesFaq.intro}
+        items={utilitiesFaq.items}
+        section="utilities_faq"
+        surface="dark"
+      />
+      <JsonLd data={faqPageSchema(utilitiesFaq.items)} />
 
       <FinalCTA
         heading={utilitiesFinalCta.heading}

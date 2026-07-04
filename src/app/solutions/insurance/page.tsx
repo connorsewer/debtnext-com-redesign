@@ -7,6 +7,7 @@ import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
+import { FAQSection } from "@/components/sections/FAQSection";
 import { FeatureAccordion } from "@/components/sections/FeatureAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
@@ -18,8 +19,10 @@ import {
 } from "@/components/product/visuals/archetypes";
 import { ProseSection } from "@/components/sections/ProseSection";
 import { RevealSection } from "@/components/sections/RevealSection";
+import { faqPageSchema } from "@/lib/seo/schema";
 import {
   insuranceChallenges,
+  insuranceFaq,
   insuranceFinalCta,
   insuranceHero,
   insuranceHowItRuns,
@@ -103,6 +106,15 @@ export default function InsuranceSolutionPage() {
           surface="elevated-dark"
         />
       </RevealSection>
+
+      <FAQSection
+        heading={insuranceFaq.heading}
+        intro={insuranceFaq.intro}
+        items={insuranceFaq.items}
+        section="insurance_faq"
+        surface="dark"
+      />
+      <JsonLd data={faqPageSchema(insuranceFaq.items)} />
 
       <FinalCTA
         heading={insuranceFinalCta.heading}

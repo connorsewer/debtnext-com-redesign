@@ -3,15 +3,21 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo/metadata";
 
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
+import { FAQSection } from "@/components/sections/FAQSection";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProcessStrip } from "@/components/sections/ProcessStrip";
 import { ProductVisualBand } from "@/components/sections/ProductVisualBand";
+import { ProseIntro } from "@/components/sections/ProseIntro";
 import { LazyPlatformSystemMap } from "@/components/product/visuals/lazy";
+import { faqPageSchema } from "@/lib/seo/schema";
 import {
   platformCapabilities,
+  platformDefinition,
+  platformFaq,
   platformFinalCta,
   platformHero,
   platformIntegrations,
@@ -34,6 +40,11 @@ export default function PlatformPage() {
         primaryCta={platformHero.primaryCta}
         variant="centered"
         location="platform_hero"
+      />
+
+      <ProseIntro
+        heading={platformDefinition.heading}
+        body={`${platformDefinition.body} ${platformDefinition.proof}`}
       />
 
       <ProductVisualBand>
@@ -67,6 +78,15 @@ export default function PlatformPage() {
         bullets={platformSecurity.bullets}
         surface="elevated-dark"
       />
+
+      <FAQSection
+        heading={platformFaq.heading}
+        intro={platformFaq.intro}
+        items={platformFaq.items}
+        section="platform_faq"
+        surface="elevated-dark"
+      />
+      <JsonLd data={faqPageSchema(platformFaq.items)} />
 
       <FinalCTA
         heading={platformFinalCta.heading}

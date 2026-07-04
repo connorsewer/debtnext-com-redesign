@@ -73,6 +73,7 @@ export default function HomePage() {
       <ProofBand
         eyebrow={homepageProof.eyebrow}
         stats={[...homepageProof.stats]}
+        notes={[...homepageProof.notes]}
         link={homepageProof.link}
         linkLocation="homepage_proof"
         surface="elevated-dark"

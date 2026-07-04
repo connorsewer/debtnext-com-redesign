@@ -205,5 +205,5 @@ export const integrationsFinalCta = {
   body:
     "A 30-minute walkthrough against your portfolio, your source systems, and your vendor mix. The people running the demo are the people who configure the platform.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  reassurance: "30-minute walkthrough. No commitment.",
+  reassurance: "Bring your source systems and vendor list. We'll map the connections live.",
 };

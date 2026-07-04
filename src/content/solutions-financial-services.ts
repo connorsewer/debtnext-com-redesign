@@ -110,10 +110,39 @@ export const financialServicesRegulatory = {
   ],
 };
 
+export const financialServicesFaq: {
+  heading: string;
+  intro: string;
+  items: { id: string; question: string; answer: string }[];
+} = {
+  heading: "Financial services recovery on dPlat, answered",
+  intro: "The questions CFPB-supervised institutions ask about running recovery on dPlat.",
+  items: [
+    {
+      id: "how-fs-recovery",
+      question: "How does dPlat handle financial services recovery specifically?",
+      answer:
+        "dPlat runs bank card, installment loan, line of credit, and overdraft recovery across a network of agencies and law firms. One standardized connection to your core systems replaces individual vendor integrations. It enforces settlement floors at the vendor and tier level, tracks payment plans automatically, and flags delinquency the moment a payment is missed.",
+    },
+    {
+      id: "fs-regulations",
+      question: "Which regulations does the compliance layer support for financial services?",
+      answer:
+        "dPlat has FDCPA, Regulation F, FCRA, and TCPA workflows built in, with Regulation F contact-frequency and channel limits configured into work standards. It handles SCRA servicemember protections, applies bankruptcy and deceased conditions as automatic exceptions, and keeps a full audit trail for CFPB and state examination.",
+    },
+    {
+      id: "fs-exceptions",
+      question: "How does dPlat handle bankruptcy, deceased, and dispute conditions?",
+      answer:
+        "Bankruptcy, deceased, and SCRA conditions change how an account can be worked, and getting them wrong carries real liability. dPlat applies them as platform-level exceptions, automatically and recorded on the account. Dispute and documentation workflows are standardized and configurable, with every placement, status change, and dispute interaction attributed and timestamped for examination.",
+    },
+  ],
+};
+
 export const financialServicesFinalCta = {
-  heading: "See dPlat configured for your portfolio.",
+  heading: "Walk dPlat through your regulatory environment.",
   body:
-    "A 30-minute walkthrough scoped to your asset classes, your regulatory environment, and your vendor mix.",
+    "See settlement floors enforced, bankruptcy and SCRA applied as automatic exceptions, and the audit trail an examiner asks for already in place.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  reassurance: "30-minute walkthrough. No commitment.",
+  reassurance: "30-minute walkthrough scoped to your asset classes and vendor mix.",
 };

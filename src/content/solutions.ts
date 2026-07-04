@@ -100,8 +100,8 @@ export const solutionsCompliance = {
 };
 
 export const solutionsFinalCta = {
-  heading: "See dPlat configured for your industry.",
+  heading: "Start from the vertical you run.",
   body:
-    "A demo walkthrough scoped to your portfolio type, vendor mix, and regulatory environment.",
+    "Every industry places accounts differently and answers to different regulators. Bring yours to the demo and we'll show you the placement rules, exceptions, and compliance treatment dPlat would apply.",
   primaryCta: { label: "Request a demo", href: "/demo" },
 };

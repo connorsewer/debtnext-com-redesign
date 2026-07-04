@@ -108,10 +108,39 @@ export const telecomRegulatory = {
   ],
 };
 
+export const telecomFaq: {
+  heading: string;
+  intro: string;
+  items: { id: string; question: string; answer: string }[];
+} = {
+  heading: "Telecom recovery on dPlat, answered",
+  intro: "How the platform keeps up with high-volume, short-cycle telecom recovery.",
+  items: [
+    {
+      id: "how-telecom-recovery",
+      question: "How does dPlat handle telecom recovery specifically?",
+      answer:
+        "dPlat ingests high daily placement volume and routes it automatically against your tiers and vendor pools, with no manual handling between load and placement. Configurable short-cycle recall and reallocation runs on the cadence you set, tuned to telecom write-off timelines, so accounts don't sit idle in a pool that isn't producing. Prepaid and postpaid run separate workflows under one platform.",
+    },
+    {
+      id: "telecom-regulations",
+      question: "Which regulations does the compliance layer support for telecom?",
+      answer:
+        "dPlat covers TCPA consent, contact frequency, and autodialer rules, FDCPA and Regulation F for third-party recovery, and CPNI handling for customer proprietary network information. It supports FCRA where credit reporting applies and keeps a full audit trail across every placement and vendor.",
+    },
+    {
+      id: "telecom-source-systems",
+      question: "Which telecom billing systems does dPlat connect to?",
+      answer:
+        "dPlat connects to telecom CIS and billing platforms including ICOMS, CSG, and the systems your carrier runs, using the data-exchange formats those systems use. It handles high-volume daily placement with automated routing, and configures separate prepaid and postpaid workflows so each account type follows the treatment path it calls for.",
+    },
+  ],
+};
+
 export const telecomFinalCta = {
-  heading: "See dPlat configured for your telecom portfolio.",
+  heading: "Walk dPlat through your placement cadence.",
   body:
-    "A 30-minute walkthrough scoped to your volume, your write-off cycle, and your vendor mix.",
+    "See high-volume daily placement routed automatically, short-cycle recall on your timeline, and prepaid and postpaid worked separately.",
   primaryCta: { label: "Request a demo", href: "/demo" },
-  reassurance: "30-minute walkthrough. No commitment.",
+  reassurance: "30-minute walkthrough scoped to your volume and write-off cycle.",
 };

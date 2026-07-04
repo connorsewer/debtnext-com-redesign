@@ -92,7 +92,7 @@ export const optimizationAccordion: {
 export const optimizationBenefit = {
   heading: "Performance-based placement, without the spreadsheets.",
   body:
-    "Recovery teams spend significant time pulling vendor performance into spreadsheets, modeling allocation changes, and pushing those changes back into a placement system. dPlat collapses that loop. The data lives in the platform. The rules live in the platform. The adjustments execute in the platform.",
+    "Recovery teams lose hours each cycle pulling vendor performance into spreadsheets, modeling allocation changes, and pushing those changes back into a placement system. dPlat collapses that loop. The data lives in the platform. The rules live in the platform. The adjustments execute in the platform.",
   bullets: [
     "Closed pool data feeds optimization without manual export",
     "Adjustment cycles run on your defined cadence, not a quarterly review",

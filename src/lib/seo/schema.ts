@@ -69,6 +69,28 @@ export function softwareApplicationSchema() {
   };
 }
 
+/**
+ * FAQPage schema. Deploy ONLY where the same Q&A is visibly rendered by
+ * <FAQSection>; the `question`/`answer` text must match the on-page text
+ * verbatim or the markup is non-compliant.
+ */
+export function faqPageSchema(
+  items: ReadonlyArray<{ question: string; answer: string }>
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}
+
 export function contactPageSchema() {
   return {
     "@context": "https://schema.org",
