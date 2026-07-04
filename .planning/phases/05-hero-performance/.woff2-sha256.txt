@@ -1,1 +1,0 @@
-94a2a0e1ef59728eb65498ed7fe26e5af7e2858a3a4a278a89ac1f83a0544945  src/app/fonts/GeneralSans-Semibold.woff2

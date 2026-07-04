@@ -20,7 +20,7 @@ export const platformDefinition = {
    * kept in sync by referencing scaleHeadline at render time.
    */
   proof:
-    "Since 2003, dPlat has managed 116.8M+ accounts across a network of 538 agency and legal partners, processing more than 10B transactions.",
+    "Since 2003, dPlat has managed 100M+ accounts across a network of 500+ agency and legal partners, processing more than 10B transactions.",
 };
 
 export const platformMeta = {

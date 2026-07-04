@@ -114,8 +114,7 @@ In continuous production with credit originators.
 - Column-level AES-128 encryption for PII
 - PGP file exchange for vendor data
 - LUKS encryption at the OS level
-- SOC 2 Type II (TSI-level)
-- HITRUST (TSI-level, for healthcare-adjacent operations)
+- Aligned with SSAE 18 SOC 2 standards at the TSI level
 - Built to support FDCPA, Regulation F, FCRA, TCPA, and SCRA workflows
 
 `[CLAIMS REVIEW]` Andrew to verify which compliance certifications can be referenced at the DebtNext level vs. TSI parent level, and confirm the encryption claim list matches current platform configuration.
