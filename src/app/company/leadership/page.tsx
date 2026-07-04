@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { BulletList } from "@/components/sections/BulletList";
 import { CardGrid } from "@/components/sections/CardGrid";
@@ -16,16 +20,14 @@ import {
   leadershipTeam,
 } from "@/content/company-leadership";
 
-export const metadata: Metadata = {
-  title: leadershipMeta.title,
-  description: leadershipMeta.description,
-  alternates: { canonical: leadershipMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(leadershipMeta);
 
 export default function LeadershipPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Company", path: "/company" }, { name: "Leadership", path: "/company/leadership" }])} />
 
       <PageHero
         eyebrow={leadershipHero.eyebrow}

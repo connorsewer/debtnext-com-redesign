@@ -19,9 +19,10 @@ import type { ProofStat } from "@/components/sections/ProofBand";
 import { leaders } from "@/content/leadership";
 
 export const compareMeta = {
-  title: "Comparing dPlat to NeuAnalytics, Convoke, Symend, and HighRadius",
+  title: "dPlat vs NeuAnalytics, Convoke, Imagine Cloud, Symend, HighRadius",
+  titleAbsolute: true,
   description:
-    "How dPlat compares to NeuAnalytics, Convoke, Imagine Cloud, Symend, and HighRadius. Where each platform was built for, and where it stops.",
+    "How dPlat compares to NeuAnalytics, Convoke, Imagine Cloud, Symend, and HighRadius. What each platform was built for, and where it stops.",
   canonical: "https://debtnext.com/compare",
 };
 

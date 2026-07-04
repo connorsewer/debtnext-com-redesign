@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { BulletList } from "@/components/sections/BulletList";
@@ -31,11 +33,7 @@ import {
   compareTeamIntro,
 } from "@/content/compare";
 
-export const metadata: Metadata = {
-  title: compareMeta.title,
-  description: compareMeta.description,
-  alternates: { canonical: compareMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(compareMeta);
 
 export default function ComparePage() {
   return (

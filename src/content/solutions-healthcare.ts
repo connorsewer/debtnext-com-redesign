@@ -14,7 +14,7 @@ import type { FeatureAccordionItem } from "@/components/sections/FeatureAccordio
 export const healthcareMeta = {
   title: "Healthcare and RCM recovery management software",
   description:
-    "dPlat runs recovery for healthcare and revenue cycle management providers. Patient-responsibility balances and bad-debt placement, vendor network management, and audit-ready compliance.",
+    "dPlat runs recovery for healthcare and revenue cycle management providers. Patient-responsibility balances, bad-debt placement, and audit-ready compliance.",
   canonical: "https://debtnext.com/solutions/healthcare",
 };
 

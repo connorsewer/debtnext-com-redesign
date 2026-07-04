@@ -6,7 +6,7 @@
 export const demoMeta = {
   title: "Request a demo",
   description:
-    "Schedule a 30-minute walkthrough of dPlat scoped to your portfolio, vendor mix, and operational requirements. Run by platform specialists, not generic sales reps.",
+    "Schedule a 30-minute walkthrough of dPlat scoped to your portfolio, vendor mix, and operational requirements. Run by platform specialists.",
   canonical: "https://debtnext.com/demo",
 };
 

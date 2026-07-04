@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { BulletList } from "@/components/sections/BulletList";
@@ -34,16 +38,14 @@ import {
   fintechRouting,
 } from "@/content/visuals/solutions-fintech";
 
-export const metadata: Metadata = {
-  title: fintechMeta.title,
-  description: fintechMeta.description,
-  alternates: { canonical: fintechMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(fintechMeta);
 
 export default function FintechSolutionPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Solutions", path: "/solutions" }, { name: "Fintech", path: "/solutions/fintech" }])} />
 
       <PageHero
         eyebrow={fintechHero.eyebrow}

@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo/metadata";
+
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { BulletList } from "@/components/sections/BulletList";
@@ -34,16 +38,14 @@ import {
   insuranceRouting,
 } from "@/content/visuals/solutions-insurance";
 
-export const metadata: Metadata = {
-  title: insuranceMeta.title,
-  description: insuranceMeta.description,
-  alternates: { canonical: insuranceMeta.canonical },
-};
+export const metadata: Metadata = buildMetadata(insuranceMeta);
 
 export default function InsuranceSolutionPage() {
   return (
     <>
       <ScrollDepthTracker />
+
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Solutions", path: "/solutions" }, { name: "Insurance", path: "/solutions/insurance" }])} />
 
       <PageHero
         eyebrow={insuranceHero.eyebrow}

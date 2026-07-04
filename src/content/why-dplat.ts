@@ -11,9 +11,10 @@ import type {
 } from "@/components/sections/ComparisonTable";
 
 export const whyDplatMeta = {
-  title: "Why dPlat: recovery management software built for credit originators",
+  title: "Why choose dPlat: build vs buy for recovery management",
+  titleAbsolute: true,
   description:
-    "dPlat is the recovery management platform credit originators choose when spreadsheets break, single-vendor systems don't fit, and custom builds run over budget.",
+    "Why credit originators choose dPlat over spreadsheets, single-vendor systems, and custom builds. What buying recovery software gives you over building it.",
   canonical: "https://debtnext.com/why-dplat",
 };
 
