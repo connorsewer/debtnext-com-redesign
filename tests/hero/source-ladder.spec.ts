@@ -44,12 +44,19 @@ test.describe("HERO-01: hero video source ladder", () => {
     }
   });
 
-  test("mobile viewport (≤767px) renders no <video> element (D-04 mobile-video-free)", async ({ page }) => {
+  test("mobile viewport (≤767px) never displays the <video> element (D-04 mobile-video-free)", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto("/");
     await page.waitForLoadState("networkidle");
 
+    // Since the hero RSC split (2026-07-08) the <video> is server-rendered for
+    // every session (there is no client isMobile state left to remove it), but
+    // it is CSS-hidden below 768px (`max-md:hidden`) and every <source> media
+    // query is bounded to (min-width: 768px), so phones paint nothing and
+    // download nothing. The zero-download guarantee is asserted at the network
+    // layer by tests/responsive/hero-mobile-video-free.spec.ts.
     const video = page.locator("section[data-slot=homepage-hero] video");
-    await expect(video, "mobile should not render the <video> element per D-04").toHaveCount(0);
+    await expect(video, "the server-rendered <video> exists once").toHaveCount(1);
+    await expect(video, "mobile must not display the <video> per D-04").toBeHidden();
   });
 });

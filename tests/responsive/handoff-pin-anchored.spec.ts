@@ -29,7 +29,9 @@ test.describe("Handoff desktop pin anchored", () => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
 
-    const section = page.locator("[data-handoff-section]");
+    // Value-scoped since the hero RSC split: the static fail-open tree also
+    // carries data-handoff-section (value "static") in the same DOM.
+    const section = page.locator('[data-handoff-section="cinematic"]');
 
     // The 400vh outer is the pin scroll range (matches platform-mobile.spec.ts:37).
     const sectionHeight = await section.evaluate(
@@ -41,7 +43,7 @@ test.describe("Handoff desktop pin anchored", () => {
     // section. There must be exactly one, selected by the sticky utility class
     // so the guard is resilient to content changes inside the frame.
     const stickyInner = page
-      .locator("[data-handoff-section] > div.sticky")
+      .locator('[data-handoff-section="cinematic"] > div.sticky')
       .first();
     await expect(stickyInner).toHaveCount(1);
 

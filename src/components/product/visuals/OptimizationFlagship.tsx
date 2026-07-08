@@ -60,7 +60,11 @@ function VendorDetail({ vendor }: { vendor: OptimizationFlagshipVendor }) {
           <span
             className={cn(
               "font-[500] tabular-nums",
-              moved ? "text-[var(--primary)]" : "text-[var(--product-text)]",
+              // --product-primary-text, not --primary: raw primary is only
+              // 3.6:1 on product surfaces — below AA for this 12px number.
+              moved
+                ? "text-[var(--product-primary-text)]"
+                : "text-[var(--product-text)]",
             )}
           >
             {vendor.toShare}%

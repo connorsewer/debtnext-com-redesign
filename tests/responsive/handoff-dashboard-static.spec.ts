@@ -39,6 +39,17 @@ test.describe("Handoff dashboard static across crossfade", () => {
     const inner = frame.locator("> div").first();
     await expect(inner).toHaveCount(1);
 
+    // Since the hero RSC split the FramedDashboard subtree arrives via a
+    // client portal (HeroCinematicMount), not server HTML — wait for it
+    // before measuring so the childCount assertion isn't effect-timing
+    // dependent.
+    await expect
+      .poll(async () => inner.evaluate((el) => el.childElementCount), {
+        message: "portaled FramedDashboard never arrived in the mockup slot",
+        timeout: 15_000,
+      })
+      .toBeGreaterThan(0);
+
     const geom = await inner.evaluate((el) => {
       const r = el.getBoundingClientRect();
       return {
