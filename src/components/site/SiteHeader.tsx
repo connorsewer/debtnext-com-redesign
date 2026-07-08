@@ -1,13 +1,10 @@
-"use client";
-
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import { HeaderState } from "@/components/site/HeaderState";
 import { MobileNav } from "@/components/site/MobileNav";
 import { Wordmark } from "@/components/site/Wordmark";
-import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import hover from "@/components/motion/hover.module.css";
 import type { NavLink } from "@/content/nav";
@@ -19,11 +16,6 @@ import {
   solutionsSubNav,
   whyDplatSubNav,
 } from "@/content/nav";
-
-function isCurrentRoute(linkHref: string, pathname: string): boolean {
-  if (linkHref === "/") return pathname === "/";
-  return pathname === linkHref || pathname.startsWith(`${linkHref}/`);
-}
 
 /** Top-level routes that open a hover/focus dropdown of related pages. */
 const DROPDOWNS: Record<string, { items: NavLink[]; label: string }> = {
@@ -39,34 +31,26 @@ const DROPDOWNS: Record<string, { items: NavLink[]; label: string }> = {
  * - Transparent over hero, solid (#171721) after scroll
  * - One filled primary CTA on the right
  * - Semantic <header> + <nav>; mobile drawer in MobileNav
+ *
+ * Server Component: the markup never hydrates. The HeaderState client leaf
+ * drives `data-scrolled` (solid nav) and `aria-current` (active link) via DOM
+ * attributes, styled here with `data-[scrolled=true]:` and
+ * `aria-[current=page]:` variants. The header CTA tracks via data-track-* +
+ * the layout ClickTracker; desktop dropdowns were already pure CSS.
  */
 export function SiteHeader() {
-  const pathname = usePathname() ?? "/";
-  const [scrolled, setScrolled] = React.useState(false);
-
-  React.useEffect(() => {
-    // Stay transparent through the very start of scroll so the navbar
-    // doesn't densify the instant a user starts touching the wheel. The
-    // cinematic hero is the first viewport — solid nav comes once the
-    // user has clearly committed to scrolling into the page.
-    const onScroll = () => setScrolled(window.scrollY > 80);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <header
+      data-site-header
       className={cn(
         // Fixed so the hero (and other section heroes) extend behind the
         // navbar — the dark body bg never shows above the hero. Padding
         // for non-home pages is added via PageHero.
-        "fixed inset-x-0 top-0 z-30 transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
-        scrolled
-          ? "bg-[var(--background)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--background)]/70 shadow-[var(--shadow-nav)]"
-          : "bg-transparent"
+        "fixed inset-x-0 top-0 z-30 bg-transparent transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
+        "data-[scrolled=true]:bg-[var(--background)]/95 data-[scrolled=true]:supports-[backdrop-filter]:bg-[var(--background)]/70 data-[scrolled=true]:backdrop-blur data-[scrolled=true]:shadow-[var(--shadow-nav)]"
       )}
     >
+      <HeaderState />
       <div className="mx-auto flex h-14 max-w-[var(--container-page)] items-center justify-between px-4 [padding-top:env(safe-area-inset-top)] [padding-left:max(env(safe-area-inset-left),1rem)] [padding-right:max(env(safe-area-inset-right),1rem)] md:h-16 md:px-6 lg:h-18 lg:px-8">
         <div className="flex items-center gap-2">
           <Link
@@ -83,18 +67,17 @@ export function SiteHeader() {
           className="hidden items-center gap-8 md:flex"
         >
           {primaryNav.map((link) => {
-            const isActive = isCurrentRoute(link.href, pathname);
             const dropdown = DROPDOWNS[link.href];
             const hasDropdown = Boolean(dropdown);
 
+            // Resting state is the tertiary link; aria-current="page" (set by
+            // HeaderState) flips it to white and adds the primary underline.
             const linkClass = cn(
-              "relative inline-flex items-center gap-1 text-body-strong font-[420] transition-colors duration-[var(--duration-instant)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)] aria-[current=page]:text-white",
-              // Indigo underline wipe-in on hover (skipped for the active link,
-              // which already carries the primary underline).
-              !isActive && hover.hoverUnderline,
-              isActive
-                ? "after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-px after:bg-[var(--primary)]"
-                : "text-[var(--text-tertiary)]"
+              "relative inline-flex items-center gap-1 text-body-strong font-[420] text-[var(--text-tertiary)] transition-colors duration-[var(--duration-instant)] hover:text-white focus-visible:outline-2 focus-visible:outline-[var(--focus)]",
+              hover.hoverUnderline,
+              // Active link: white text + primary underline; suppress the
+              // hoverUnderline wipe (it was skipped for the active link before).
+              "aria-[current=page]:text-white aria-[current=page]:[background-image:none] aria-[current=page]:after:absolute aria-[current=page]:after:left-0 aria-[current=page]:after:right-0 aria-[current=page]:after:-bottom-1 aria-[current=page]:after:h-px aria-[current=page]:after:bg-[var(--primary)]"
             );
 
             if (!hasDropdown) {
@@ -102,7 +85,7 @@ export function SiteHeader() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  aria-current={isActive ? "page" : undefined}
+                  data-nav-link
                   className={linkClass}
                 >
                   {link.label}
@@ -114,7 +97,7 @@ export function SiteHeader() {
               <div key={link.href} className="group relative">
                 <Link
                   href={link.href}
-                  aria-current={isActive ? "page" : undefined}
+                  data-nav-link
                   aria-haspopup="menu"
                   className={linkClass}
                 >
@@ -170,13 +153,9 @@ export function SiteHeader() {
               asChild
               variant="primary"
               size="md"
-              onClick={() =>
-                track({
-                  event: "cta_primary_click",
-                  location: "header",
-                  label: primaryCta.label,
-                })
-              }
+              data-track-event="cta_primary_click"
+              data-track-location="header"
+              data-track-label={primaryCta.label}
             >
               <Link href={primaryCta.href}>{primaryCta.label}</Link>
             </Button>
