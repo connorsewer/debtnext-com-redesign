@@ -220,10 +220,17 @@
   /* ---- Product-visual tokens (always dark; theme-independent) ----
      Used only by src/components/product/ visuals. Constant across light/dark
      because product visuals render their own dark surface. */
+  /* breach/special lightened 2026-07-08 for WCAG 2.2 AA: the Tag atom
+     (parts.tsx) renders these as 9.5px text over a 16% self-tint, which
+     computed to 4.00:1 (#E27676) and 4.35:1 (#BB86FC) — under the 4.5:1
+     small-text minimum. Hidden from axe before the hero RSC split only
+     because the fail-open static handoff tree never existed pre-hydration;
+     reduced-motion/no-JS users always saw the failing ratios. New values
+     hold ≥4.68:1 on the lighter row surfaces too. */
   --status-success: #5BCB89;
   --status-warning: #FFB86C;
-  --status-breach: #E27676;
-  --status-special: #BB86FC; /* SCRA */
+  --status-breach: #EC9A9A;
+  --status-special: #CBA4FD; /* SCRA */
   --status-focus: #9CB4E8;
   --product-canvas: #171721;
   --product-card: #1B1B27;
