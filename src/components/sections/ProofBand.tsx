@@ -1,15 +1,11 @@
-"use client";
-
 import * as React from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import { CountUp } from "@/components/sections/CountUp";
-import { useHydrated } from "@/components/motion/useHydrated";
+import { RevealGroup } from "@/components/sections/RevealGroup";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
-import { track } from "@/lib/analytics";
 
 export interface ProofStat {
   number: string;
@@ -43,9 +39,10 @@ export interface ProofBandProps {
  * Three (or more) stat cards. DESIGN.md §7.5: quiet trust without a logo wall.
  * Numbers render at H2 size with tabular figures so digits don't reflow.
  *
- * Each card fades and rises subtly on first intersection; the sequence
- * staggers per MD motion guidance. Respects prefers-reduced-motion via
- * useReducedMotion — animation collapses to instant in that case.
+ * Each card fades and rises subtly on first intersection with a small
+ * per-card stagger. Server Component: the reveal is the RevealGroup client
+ * leaf + CSS (respects prefers-reduced-motion, fails open on SSR/no-JS);
+ * CountUp is the only client leaf, and CTA analytics fire via data-track-*.
  */
 export function ProofBand({
   eyebrow,
@@ -56,19 +53,6 @@ export function ProofBand({
   link,
   linkLocation = "proof_band",
 }: ProofBandProps) {
-  const reduceMotion = useReducedMotion();
-  const hydrated = useHydrated();
-  // Fail open: arm the opacity:0 entrance only after hydration (and never under
-  // reduced motion) so the stat numbers render in the SSR / pre-hydration DOM.
-  const armed = !reduceMotion && hydrated;
-  const enter = armed
-    ? {
-        initial: { opacity: 0, y: 16 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true, margin: "-10% 0px" },
-      }
-    : { initial: false, animate: undefined };
-
   return (
     <SectionContainer surface={surface}>
       {eyebrow ? (
@@ -81,7 +65,8 @@ export function ProofBand({
           {heading}
         </h2>
       ) : null}
-      <ul
+      <RevealGroup
+        as="ul"
         className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 md:mt-12 md:[grid-template-columns:repeat(var(--proof-cols),minmax(0,1fr))]"
         style={
           {
@@ -90,14 +75,9 @@ export function ProofBand({
         }
       >
         {stats.map((stat, idx) => (
-          <motion.li
+          <li
             key={stat.number}
-            {...enter}
-            transition={{
-              duration: 0.4,
-              ease: [0.2, 0.7, 0.2, 1],
-              delay: reduceMotion ? 0 : idx * 0.08,
-            }}
+            style={{ "--reveal-i": idx } as React.CSSProperties}
             className="border-t border-[var(--border)] pt-8"
           >
             <p
@@ -123,9 +103,9 @@ export function ProofBand({
                 {stat.caption}
               </p>
             ) : null}
-          </motion.li>
+          </li>
         ))}
-      </ul>
+      </RevealGroup>
       {notes && notes.length ? (
         <div className="mx-auto mt-10 max-w-2xl space-y-4 text-left text-body-md text-[var(--text-tertiary)] [text-wrap:pretty]">
           {notes.map((note) => (
@@ -139,13 +119,9 @@ export function ProofBand({
             asChild
             variant="ghost"
             size="text"
-            onClick={() =>
-              track({
-                event: "cta_secondary_click",
-                location: linkLocation,
-                label: link.label,
-              })
-            }
+            data-track-event="cta_secondary_click"
+            data-track-location={linkLocation}
+            data-track-label={link.label}
           >
             <Link href={link.href}>
               {link.label} <span aria-hidden="true">→</span>

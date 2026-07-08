@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useInView, useReducedMotion } from "framer-motion";
 
 export interface CountUpProps {
   to: number;
@@ -30,25 +29,37 @@ export function CountUp({
   suffix = "",
   decimals = 0,
 }: CountUpProps) {
-  const reduce = useReducedMotion();
   const ref = React.useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
   const [value, setValue] = React.useState(to);
 
   React.useEffect(() => {
-    if (reduce || !inView) return;
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     let raf = 0;
-    const start = performance.now();
-    // First rAF frame computes value at p≈0, so no synchronous reset needed.
-    const step = (now: number) => {
-      const p = Math.min((now - start) / durationMs, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setValue(to * eased);
-      if (p < 1) raf = requestAnimationFrame(step);
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        io.disconnect();
+        const start = performance.now();
+        // First rAF frame computes value at p≈0, so no synchronous reset needed.
+        const step = (now: number) => {
+          const p = Math.min((now - start) / durationMs, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          setValue(to * eased);
+          if (p < 1) raf = requestAnimationFrame(step);
+        };
+        raf = requestAnimationFrame(step);
+      },
+      { rootMargin: "-10% 0px" },
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
     };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, reduce, to, durationMs]);
+  }, [to, durationMs]);
 
   const formatted = value.toLocaleString("en-US", {
     minimumFractionDigits: decimals,

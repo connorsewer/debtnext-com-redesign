@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 
 import { generalSans } from "./fonts";
+import { ClickTracker } from "@/components/analytics/ClickTracker";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 
@@ -71,6 +72,7 @@ export default function RootLayout({
           {children}
         </main>
         <SiteFooter />
+        <ClickTracker />
       </body>
     </html>
   );

@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +7,6 @@ import hover from "@/components/motion/hover.module.css";
 import { RevealSection } from "@/components/sections/RevealSection";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
-import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 export interface BenefitSplitProps {
@@ -43,6 +40,9 @@ export interface BenefitSplitProps {
 /**
  * Text + media split. DESIGN.md §7.6 split-feature variant.
  * Supports dark / elevated-dark / light surface contrast bands.
+ *
+ * Server Component: the reveal is the RevealSection client leaf (CSS-driven),
+ * and CTA analytics fire via data-track-* + the layout ClickTracker.
  */
 export function BenefitSplit({
   eyebrow,
@@ -105,13 +105,9 @@ export function BenefitSplit({
                 asChild
                 variant="ghost"
                 size="text"
-                onClick={() =>
-                  track({
-                    event: "cta_secondary_click",
-                    location: linkLocation ?? "benefit_split",
-                    label: link.label,
-                  })
-                }
+                data-track-event="cta_secondary_click"
+                data-track-location={linkLocation ?? "benefit_split"}
+                data-track-label={link.label}
               >
                 <Link href={link.href} className={hover.hoverArrow}>
                   {link.label}{" "}

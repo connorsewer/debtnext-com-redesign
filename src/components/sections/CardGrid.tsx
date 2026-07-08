@@ -1,12 +1,9 @@
-"use client";
-
 import * as React from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 
+import { RevealGroup } from "@/components/sections/RevealGroup";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
-import { fadeUpItem, staggerContainer, useHydrated } from "@/components/product/motion";
 import { cn } from "@/lib/utils";
 import hover from "@/components/motion/hover.module.css";
 
@@ -39,6 +36,10 @@ export interface CardGridProps {
  * cards, cols=3), and /platform/reporting "three layers" (cols=3).
  *
  * Cards are flat dark surfaces. Hover brightens the border per DESIGN.md §8.4.
+ *
+ * Server Component: the staggered scroll-reveal is the RevealGroup client
+ * leaf + CSS (globals.css), so the card markup never hydrates and
+ * framer-motion stays off the route. Fails open — SSR/no-JS render visible.
  */
 export function CardGrid({
   eyebrow,
@@ -49,11 +50,6 @@ export function CardGrid({
   surface = "dark",
   id,
 }: CardGridProps) {
-  const reduce = useReducedMotion();
-  const hydrated = useHydrated();
-  // Fail open: hold the hidden initial state off until reduced motion is
-  // resolved AND the client has hydrated, so SSR markup renders visible.
-  const armed = !reduce && hydrated;
   const colClass = {
     2: "@sm/card:grid-cols-2",
     3: "@sm/card:grid-cols-2 @5xl/card:grid-cols-3",
@@ -79,17 +75,11 @@ export function CardGrid({
       </div>
 
       <div className="container-card mt-10 md:mt-14">
-        <motion.ul
-          className={cn("grid gap-4", colClass)}
-          variants={staggerContainer}
-          initial={armed ? "hidden" : false}
-          whileInView={armed ? "show" : undefined}
-          viewport={{ once: true, amount: 0.15 }}
-        >
-          {cards.map((card) => (
-            <motion.li
+        <RevealGroup as="ul" className={cn("grid gap-4", colClass)}>
+          {cards.map((card, i) => (
+            <li
               key={card.title}
-              variants={reduce ? undefined : fadeUpItem}
+              style={{ "--reveal-i": i } as React.CSSProperties}
               className={cn(
                 "flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6 md:p-7",
                 hover.hoverCard
@@ -130,9 +120,9 @@ export function CardGrid({
                   </span>
                 </Link>
               ) : null}
-            </motion.li>
+            </li>
           ))}
-        </motion.ul>
+        </RevealGroup>
       </div>
     </SectionContainer>
   );
