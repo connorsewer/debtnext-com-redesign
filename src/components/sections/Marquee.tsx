@@ -28,9 +28,18 @@ export function Marquee({
 }: MarqueeProps) {
   return (
     <div
-      className={cn("dn-marquee", className)}
+      className={cn(
+        "dn-marquee focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]",
+        className,
+      )}
       role="group"
       aria-label={ariaLabel}
+      // Under prefers-reduced-motion the marquee collapses to a static
+      // overflow-x:auto row (globals.css), which keyboard users must be able
+      // to focus to scroll (axe scrollable-region-focusable). tabIndex is
+      // unconditional because the server can't know the motion preference;
+      // for motion-on users it's one labeled-group tab stop.
+      tabIndex={0}
     >
       <div
         className="dn-marquee__track"
