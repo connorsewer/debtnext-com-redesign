@@ -2,8 +2,6 @@
 
 import * as React from "react";
 
-import { motion, useReducedMotion } from "framer-motion";
-
 import { AccordionVisual, isAccordionVisualId } from "@/components/product/visuals";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import { track } from "@/lib/analytics";
@@ -57,7 +55,6 @@ export function FeatureAccordion({
   visuals,
 }: FeatureAccordionProps) {
   const [activeId, setActiveId] = React.useState(items[0]?.id);
-  const reduceMotion = useReducedMotion();
 
   function handleToggle(itemId: string, item: FeatureAccordionItem) {
     if (itemId === activeId) return; // keep the active item open
@@ -162,16 +159,16 @@ export function FeatureAccordion({
                 <AccordionVisual id={item.id} />
               ) : null);
             return (
-              <motion.div
+              // The key remounts the panel per active item, which re-runs the
+              // CSS .dn-visual-enter entrance (globals.css; inert under
+              // prefers-reduced-motion). Replaces the framer cross-fade so
+              // this component no longer imports framer-motion.
+              <div
                 key={item.id}
                 {...(liveVisual
                   ? {}
                   : { role: "img", "aria-label": item.visualLabel })}
-                initial={
-                  reduceMotion ? false : { opacity: 0, y: 16, filter: "blur(4px)" }
-                }
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="dn-visual-enter"
               >
                 {liveVisual ?? (
                   <div className="flex min-h-[22rem] w-full flex-col items-center justify-center gap-4 p-8 text-center">
@@ -183,7 +180,7 @@ export function FeatureAccordion({
                     </p>
                   </div>
                 )}
-              </motion.div>
+              </div>
             );
           })()}
         </div>

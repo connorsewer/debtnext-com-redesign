@@ -1,12 +1,9 @@
-"use client";
-
 import * as React from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 
+import { RevealGroup } from "@/components/sections/RevealGroup";
 import { SectionContainer } from "@/components/sections/SectionContainer";
 import type { SectionSurface } from "@/components/sections/SectionContainer";
-import { fadeUpItem, staggerContainer, useHydrated } from "@/components/product/motion";
 import { cn } from "@/lib/utils";
 import hover from "@/components/motion/hover.module.css";
 
@@ -30,6 +27,9 @@ export interface IntegrationStripProps {
 /**
  * 4 small icon cards for integration categories. DESIGN.md §7.6 stacked-proof
  * variant. Cards are flat dark surfaces with subtle borders.
+ *
+ * Server Component: the staggered scroll-reveal is the RevealGroup client
+ * leaf + CSS (globals.css). Fails open — SSR/no-JS render visible.
  */
 export function IntegrationStrip({
   eyebrow,
@@ -39,11 +39,6 @@ export function IntegrationStrip({
   surface = "dark",
   link,
 }: IntegrationStripProps) {
-  const reduce = useReducedMotion();
-  const hydrated = useHydrated();
-  // Fail open: arm the hidden initial state only after hydration (and never
-  // under reduced motion) so the SSR markup renders visible.
-  const armed = !reduce && hydrated;
   return (
     <SectionContainer surface={surface}>
       <div className="max-w-3xl">
@@ -62,17 +57,15 @@ export function IntegrationStrip({
         ) : null}
       </div>
 
-      <motion.ul
+      <RevealGroup
+        as="ul"
         className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-14 lg:grid-cols-4"
-        variants={staggerContainer}
-        initial={armed ? "hidden" : false}
-        whileInView={armed ? "show" : undefined}
-        viewport={{ once: true, amount: 0.2 }}
+        threshold={0.2}
       >
-        {cards.map((card) => (
-          <motion.li
+        {cards.map((card, i) => (
+          <li
             key={card.title}
-            variants={reduce ? undefined : fadeUpItem}
+            style={{ "--reveal-i": i } as React.CSSProperties}
             className={cn(
               "flex flex-col gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-6",
               hover.hoverCard
@@ -92,9 +85,9 @@ export function IntegrationStrip({
                 {card.body}
               </p>
             </div>
-          </motion.li>
+          </li>
         ))}
-      </motion.ul>
+      </RevealGroup>
 
       {link ? (
         <div className="mt-8">

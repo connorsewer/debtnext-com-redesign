@@ -1,10 +1,7 @@
-"use client";
-
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { SectionContainer } from "@/components/sections/SectionContainer";
-import { track } from "@/lib/analytics";
 
 export interface FinalCTAProps {
   heading: string;
@@ -18,6 +15,9 @@ export interface FinalCTAProps {
 /**
  * Final CTA band. DESIGN.md §7.7: dark canvas, one filled primary CTA,
  * short reassurance line, no competing actions.
+ *
+ * Server Component: CTA analytics fire via data-track-* attributes picked up
+ * by the layout-level ClickTracker, so no per-section client code ships.
  */
 export function FinalCTA({
   heading,
@@ -48,13 +48,9 @@ export function FinalCTA({
             variant="primary"
             size="md"
             className="min-h-touch"
-            onClick={() =>
-              track({
-                event: "cta_primary_click",
-                location,
-                label: primaryCta.label,
-              })
-            }
+            data-track-event="cta_primary_click"
+            data-track-location={location}
+            data-track-label={primaryCta.label}
           >
             <Link href={primaryCta.href}>{primaryCta.label}</Link>
           </Button>

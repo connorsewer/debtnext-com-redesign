@@ -1,9 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { motion, useReducedMotion } from "framer-motion";
 
-import { useHydrated } from "@/components/motion/useHydrated";
+import { useCssReveal } from "@/components/motion/useCssReveal";
 
 export interface RevealSectionProps {
   children: React.ReactNode;
@@ -12,39 +11,30 @@ export interface RevealSectionProps {
 }
 
 /**
- * Scroll-reveal wrapper for the otherwise-static section bands on the
- * /solutions child pages. A single fade-and-rise on first intersection,
- * matching the entrance curve used by ProofBand and the product visuals
- * (DESIGN.md motion guidance: fade-ins only, restrained).
+ * Scroll-reveal wrapper for otherwise-static section bands. A single
+ * fade-and-rise on first intersection, matching the entrance curve used by
+ * ProofBand and the product visuals (DESIGN.md motion guidance: fade-ins
+ * only, restrained).
  *
- * Respects prefers-reduced-motion: the wrapper renders its children
- * untouched, so content is fully visible with no transform under that
- * setting (and the section never ships blank).
+ * CSS-driven (globals.css `[data-reveal]`): this leaf only arms the reveal
+ * after mount, so the children stay untouched Server Component output — no
+ * framer-motion on the route and no hydration of the section markup.
  *
- * Fails open on SSR: the `opacity:0` initial state is armed only after the
- * client hydrates. Server-rendered HTML (and the pre-hydration DOM) renders the
- * children untouched at opacity 1, so a fast scroll before hydration, a
- * crawler, print, or a capture tool never sees a blank band. Once hydrated the
- * wrapper arms `initial`, so below-viewport sections fade up on scroll-in and
- * an above-fold section does a single clean entrance from its already-visible
- * resting state.
+ * Fails open: SSR/no-JS render the children visible (the hidden state is
+ * armed client-side only), and reduced-motion users never get armed at all.
  */
 export function RevealSection({ children, delay = 0 }: RevealSectionProps) {
-  const reduceMotion = useReducedMotion();
-  const hydrated = useHydrated();
-
-  // Reduced motion, and the SSR + first client render, both render children
-  // untouched (visible). Only arm the reveal once JS is confirmed in control.
-  if (reduceMotion || !hydrated) return <>{children}</>;
-
+  const ref = useCssReveal<HTMLDivElement>("data-reveal", "-12% 0px", 0);
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-12% 0px" }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay }}
+    <div
+      ref={ref}
+      style={
+        delay
+          ? ({ "--reveal-delay": `${delay}s` } as React.CSSProperties)
+          : undefined
+      }
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

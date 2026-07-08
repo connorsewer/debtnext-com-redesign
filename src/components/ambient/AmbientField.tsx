@@ -10,10 +10,10 @@
 //     <AmbientField />
 //     <div className="relative z-10">...content...</div>
 //   </section>
-"use client";
+//
+// Server Component: reduced-motion handling lives entirely in the module CSS
+// (bloom animation off, particles display:none), so no client JS ships.
 
-import { useMemo } from "react";
-import { useReducedMotion } from "framer-motion";
 import styles from "./AmbientField.module.css";
 
 interface Particle {
@@ -61,14 +61,12 @@ export function AmbientField({
   seed = 538,
   className,
 }: AmbientFieldProps) {
-  const reduce = useReducedMotion();
-  const particles = useMemo(() => makeParticles(particleCount, seed), [particleCount, seed]);
+  const particles = makeParticles(particleCount, seed);
 
   return (
     <div className={`${styles.field} ${className ?? ""}`} aria-hidden="true">
-      {bloom && <div className={reduce ? styles.bloomStatic : styles.bloom} />}
-      {!reduce &&
-        particles.map((p, i) => (
+      {bloom && <div className={styles.bloom} />}
+      {particles.map((p, i) => (
           <span
             key={i}
             className={styles.particle}

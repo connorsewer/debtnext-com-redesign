@@ -11,7 +11,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useReducedMotion } from "framer-motion";
 import styles from "./CursorGlow.module.css";
 
 interface CursorGlowProps {
@@ -21,10 +20,10 @@ interface CursorGlowProps {
 
 export function CursorGlow({ size = 480, className }: CursorGlowProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
 
   useEffect(() => {
-    if (reduce) return;
+    // Reduced motion: the module CSS hides the glow; skip the listeners too.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     // Only on devices with a precise pointer (skip touch).
     if (!window.matchMedia("(pointer: fine)").matches) return;
 
@@ -65,9 +64,7 @@ export function CursorGlow({ size = 480, className }: CursorGlowProps) {
       parent.removeEventListener("pointerleave", onLeave);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [reduce, size]);
-
-  if (reduce) return null;
+  }, [size]);
 
   return (
     <div
