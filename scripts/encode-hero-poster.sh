@@ -7,9 +7,12 @@
 # carries the same first frame, so we re-derive the poster from there
 # when the cinematic asset itself changes.
 #
-# The output drives two consumers in src/components/sections/HomepageHero.tsx:
-#   1. <Image src={startFrame} priority>  (Next/Image, transcodes per viewport)
-#   2. <video poster={startFrame}>        (raw fetch; this is the LCP path)
+# The output drives one consumer in src/components/sections/HomepageHero.tsx:
+#   <Image src={startFrame} preload fetchPriority="high">  (Next/Image,
+#   transcodes per viewport; this is the LCP path). The <video> carries no
+#   poster attribute — the start-frame <Image> layer sits behind it.
+# The AVIF must stay pixel-matched to the video's frame 0 (it IS frame 0)
+# or the cinematic's p=0->0.03 video fade-in pops.
 #
 # Usage: scripts/encode-hero-poster.sh
 # Requires: ffmpeg with libsvtav1 + avif muxer (Homebrew default).

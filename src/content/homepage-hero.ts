@@ -35,6 +35,17 @@ export const heroCinematic = {
     // downloads, even during the SSR-to-hydration window where the <video>
     // element still exists in the DOM.
     //
+    // Hero asset PR (2026-07-08): every <source> is ALSO bounded with
+    // (prefers-reduced-motion: no-preference). Reduced-motion sessions render
+    // the static fail-open tree (the video is motion-reduce:hidden and
+    // HeroCinematicMount never loads the controller), but preload="auto" was
+    // still downloading the full matching tier — measured 2.0 MB (360p) /
+    // 4.8 MB (540p) / 9.8 MB (720p) of dead bytes per session on deployed
+    // main. Bounding the sources extends the D-04 zero-download guarantee to
+    // reduced-motion at every width. A reduce -> no-preference flip lands in
+    // HeroCinematicMount's existing NETWORK_NO_SOURCE -> video.load() rescue
+    // (same path as the mobile -> desktop resize), so the pin still wires.
+    //
     // NOTE: Plan 05.1-01 originally left 720p unbounded with a comment
     // claiming it "applies only above 1440px implicitly because narrower
     // viewports match the bounded sources first." Plan 02 verified at the
@@ -46,19 +57,20 @@ export const heroCinematic = {
     // Source asset is 1280x720 (verified via ffprobe; see
     // .planning/phases/05-hero-performance/05-RESEARCH.md Key Finding #1).
     video: [
-      { src: "/hero/homepage-hero-360p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1023px)" },
-      { src: "/hero/homepage-hero-540p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1439px)" },
-      { src: "/hero/homepage-hero-720p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 1440px)" },
+      { src: "/hero/homepage-hero-360p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1023px) and (prefers-reduced-motion: no-preference)" },
+      { src: "/hero/homepage-hero-540p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1439px) and (prefers-reduced-motion: no-preference)" },
+      { src: "/hero/homepage-hero-720p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 1440px) and (prefers-reduced-motion: no-preference)" },
     ] as Array<{ src: string; type: string; media?: string }>,
     // Hero LCP poster. AVIF since Phase 5.2: 2.55 MB PNG → 112 KB AVIF
-    // (23x reduction at libsvtav1 CRF 30). Two consumers in HomepageHero.tsx:
-    //   1. <Image src={startFrame} preload fetchPriority="high">  Next/Image
-    //      transcodes per viewport (poster-avif-negotiation.spec.ts asserts
-    //      <200 KB AVIF on Accept: image/avif).
-    //   2. <video poster={startFrame}>  raw fetch on SSR; this is the path
-    //      that the PNG was blocking on mobile.
-    // The static .avif covers both. Regenerate with scripts/encode-hero-poster.sh
-    // when the cinematic source MP4 changes.
+    // (23x reduction at libsvtav1 CRF 30). One consumer in HomepageHero.tsx:
+    // <Image src={startFrame} preload fetchPriority="high"> — Next/Image
+    // transcodes per viewport (poster-avif-negotiation.spec.ts asserts
+    // <200 KB AVIF on Accept: image/avif). The <video> carries no poster
+    // attribute (the start-frame <Image> layer sits behind the opacity-0
+    // video, so a poster would be an invisible duplicate fetch).
+    // Regenerate with scripts/encode-hero-poster.sh when the cinematic
+    // source MP4 changes — the AVIF must stay pixel-matched to the video's
+    // frame 0 or the p=0->0.03 video fade-in pops.
     startFrame: "/hero/homepage-hero-start.avif",
   },
 } as const;

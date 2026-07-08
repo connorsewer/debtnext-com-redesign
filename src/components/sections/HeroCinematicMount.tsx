@@ -50,10 +50,13 @@ const HeroCinematicController = dynamic(
  *   - desktop → mobile/reduced: the controller unmounts (its cleanup kills all
  *     triggers, reverting the pin spacer) and the GSAP-scrubbed inline styles
  *     are reset so the static trees render untouched.
- *   - mobile → desktop: the <video> has been in the DOM since load but matched
- *     zero bounded sources at phone width, and browsers do not re-run source
- *     selection on resize — so we call video.load() before mounting the
- *     controller, letting `loadedmetadata` fire and the pin wire up.
+ *   - mobile → desktop (and, since the hero asset PR, reduced → no-preference):
+ *     the <video> has been in the DOM since load but matched zero bounded
+ *     sources (every source is gated on min-width: 768px AND
+ *     prefers-reduced-motion: no-preference), and browsers do not re-run
+ *     source selection on resize or media-preference changes — so we call
+ *     video.load() before mounting the controller, letting `loadedmetadata`
+ *     fire and the pin wire up.
  */
 
 type CinematicNodes = {
@@ -160,10 +163,11 @@ export function HeroCinematicMount() {
     }
     wasEnabledRef.current = true;
     const found = queryCinematicNodes();
-    // Mobile → desktop resize: source selection ran at phone width and matched
+    // Mobile → desktop resize, or reduced-motion → no-preference flip: source
+    // selection ran while every bounded source evaluated false and matched
     // nothing; re-run it so loadedmetadata can fire and the controller can
-    // wire the pin. NETWORK_NO_SOURCE (3) never occurs on a first desktop
-    // load, so this is inert there.
+    // wire the pin. NETWORK_NO_SOURCE (3) never occurs on a first
+    // desktop motion-safe load, so this is inert there.
     if (
       found.video &&
       found.video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE

@@ -36,10 +36,12 @@ import { heroCinematic } from "@/content/homepage-hero";
  *                   handoff into the Platform section
  *
  * Mobile (≤767px) and reduced motion: the desktop-only layers (video, finale)
- * are CSS-hidden (`max-md:hidden`), the controller never loads, and the
- * static start-frame + overlay render as the fail-open tree. The video's
- * <source media> queries are all bounded to (min-width: 768px), so phones
- * start zero video downloads even though the element is in the DOM (D-04).
+ * are CSS-hidden (`max-md:hidden` / `motion-reduce:hidden`), the controller
+ * never loads, and the static start-frame + overlay render as the fail-open
+ * tree. The video's <source media> queries are all bounded to
+ * (min-width: 768px) AND (prefers-reduced-motion: no-preference), so phones
+ * and reduced-motion sessions at any width start zero video downloads even
+ * though the element is in the DOM (D-04, extended by the hero asset PR).
  */
 export function HomepageHero() {
   return (
@@ -70,9 +72,12 @@ export function HomepageHero() {
         {/* Layer 2: video — scrubbed by scroll progress on desktop. <source>
             children mapped from the multi-resolution ladder (HERO-01). Browser
             walks them top-down; every media query is bounded to
-            (min-width: 768px) so phones match zero sources and download
-            nothing (D-04), which is why the element can safely stay in the
-            server markup. `max-md:hidden` keeps it out of the mobile paint. */}
+            (min-width: 768px) and (prefers-reduced-motion: no-preference) so
+            phones AND reduced-motion sessions match zero sources and download
+            nothing (D-04 + hero asset PR), which is why the element can safely
+            stay in the server markup with preload="auto" — only sessions where
+            the cinematic actually runs pay for video bytes. `max-md:hidden` /
+            `motion-reduce:hidden` keep it out of the paint on those trees. */}
         <video
           data-hero-video
           muted
@@ -105,13 +110,16 @@ export function HomepageHero() {
             framed dashboard picks up at the same screen position. This is the
             approved DebtNext "Executive Portfolio Overview" export; it ships
             its own dark product chrome, so it renders WITHOUT the FramedDashboard
-            bezel (the bezel is for the DOM Console mockups only). Desktop-only
-            layer: `max-md:hidden` also keeps the lazy next/image fetch off
-            phones (display:none defers a loading=lazy image). */}
+            bezel (the bezel is for the DOM Console mockups only). Desktop
+            motion-safe layer: `max-md:hidden` / `motion-reduce:hidden` also
+            keep the lazy next/image fetch off phones AND reduced-motion
+            sessions (display:none defers a loading=lazy image; under reduced
+            motion the controller never mounts to fade this in, so it would
+            stay an invisible opacity-0 fetch). */}
         <div
           data-hero-framed-dashboard
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 opacity-0 max-md:hidden md:px-8 lg:px-12"
+          className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 opacity-0 max-md:hidden motion-reduce:hidden md:px-8 lg:px-12"
         >
           <div className="w-full max-w-6xl overflow-hidden rounded-[var(--radius-md)] border border-[var(--border)] shadow-[var(--shadow-deep)]">
             <Image

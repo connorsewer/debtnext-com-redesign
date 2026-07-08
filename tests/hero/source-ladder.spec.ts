@@ -24,12 +24,17 @@ test.describe("HERO-01: hero video source ladder", () => {
 
     // The exact 3-entry MP4-only ladder, in the exact order. Browser walks
     // top-to-bottom: 360p (768-1023px), 540p (768-1439px), 720p (≥1440px).
-    // Every source is bounded so phones (<768px) match nothing; verified at
-    // the network layer by tests/responsive/hero-mobile-video-free.spec.ts.
+    // Every source is bounded on width so phones (<768px) match nothing
+    // (verified at the network layer by
+    // tests/responsive/hero-mobile-video-free.spec.ts) AND on
+    // (prefers-reduced-motion: no-preference) so reduced-motion sessions at
+    // any width match nothing (hero asset PR 2026-07-08; verified at the
+    // network layer by
+    // tests/responsive/hero-reduced-motion-video-free.spec.ts).
     const expected = [
-      { src: "homepage-hero-360p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1023px)" },
-      { src: "homepage-hero-540p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1439px)" },
-      { src: "homepage-hero-720p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 1440px)" },
+      { src: "homepage-hero-360p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1023px) and (prefers-reduced-motion: no-preference)" },
+      { src: "homepage-hero-540p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 768px) and (max-width: 1439px) and (prefers-reduced-motion: no-preference)" },
+      { src: "homepage-hero-720p.mp4", type: 'video/mp4; codecs="avc1.640028"', media: "(min-width: 1440px) and (prefers-reduced-motion: no-preference)" },
     ];
 
     for (let i = 0; i < expected.length; i++) {
