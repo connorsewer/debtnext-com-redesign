@@ -1,24 +1,28 @@
-"use client";
-
-import * as React from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 import { CursorGlow } from "@/components/motion/CursorGlow";
-import { track } from "@/lib/analytics";
 import { heroCinematic } from "@/content/homepage-hero";
 
 /**
  * Cinematic homepage hero with a real dashboard-screenshot finale.
  *
- * Pinned via GSAP for ~260vh of scroll. The GSAP wiring lives in
- * HeroCinematicController, which is now mounted ONCE by the shared
- * HomepageHeroHandoff wrapper (not here) so a single controller owns both the
- * hero pin and the handoff tab-progression trigger. This component is the
- * presentational hero: it receives its refs and the mobile/reduced-motion flags
- * from the wrapper and renders the static fail-open tree on its own.
+ * Server Component since the hero RSC split (2026-07-08): this file renders
+ * the full hero markup once, on the server, for every session. All client
+ * behavior lives elsewhere:
  *
- * A single master ScrollTrigger drives the cinematic via onUpdate(progress 0→1):
+ *   - HeroCinematicMount (thin client leaf, mounted by HomepageHeroHandoff)
+ *     gates on desktop + motion-safe, lazy-loads HeroCinematicController, and
+ *     hands it these DOM nodes via the `data-hero-*` markers below.
+ *   - The email form is a native GET form to /demo (works pre-hydration and
+ *     with JS disabled); its analytics fire through the root ClickTracker's
+ *     delegated listener via `data-track-*` on the submit button. Implicit
+ *     submission (Enter in the input) fires a click on the default submit
+ *     button, so keyboard submits are tracked too.
+ *   - CursorGlow stays the overlay's own client leaf, as elsewhere on the site.
+ *
+ * Pinned via GSAP for ~260vh of scroll on desktop. A single master
+ * ScrollTrigger (HeroCinematicController) drives the cinematic via
+ * onUpdate(progress 0→1):
  *
  *   p = 0        — start-frame PNG owns the viewport; overlay + form visible
  *   p = 0→0.03   — video fades IN once the user starts scrolling
@@ -31,67 +35,26 @@ import { heroCinematic } from "@/content/homepage-hero";
  *                   size, full opacity for the rest of the pin and through the
  *                   handoff into the Platform section
  *
- * Mobile (≤768px): scrubbing is disabled. Static start-frame with overlay
- * shown statically. Next section begins below.
+ * Mobile (≤767px) and reduced motion: the desktop-only layers (video, finale)
+ * are CSS-hidden (`max-md:hidden`), the controller never loads, and the
+ * static start-frame + overlay render as the fail-open tree. The video's
+ * <source media> queries are all bounded to (min-width: 768px), so phones
+ * start zero video downloads even though the element is in the DOM (D-04).
  */
-
-export type HeroRefs = {
-  section: React.RefObject<HTMLElement | null>;
-  sticky: React.RefObject<HTMLDivElement | null>;
-  video: React.RefObject<HTMLVideoElement | null>;
-  startFrame: React.RefObject<HTMLDivElement | null>;
-  framedDash: React.RefObject<HTMLDivElement | null>;
-  overlay: React.RefObject<HTMLDivElement | null>;
-};
-
-type HomepageHeroProps = {
-  refs: HeroRefs;
-  /** True on ≤768px viewports; suppresses the video + finale layers. */
-  isMobile: boolean;
-};
-
-export function HomepageHero({ refs, isMobile }: HomepageHeroProps) {
-  const router = useRouter();
-  const [email, setEmail] = React.useState("");
-
-  // Destructure the passed-in ref objects into locals. Assigning them to
-  // JSX `ref={...}` as plain identifiers keeps the react-hooks/refs lint rule
-  // happy (it flags member access like `refs.section` on a ref-typed field as
-  // "accessing a ref during render", even though these are RefObjects, not
-  // `.current` reads).
-  const {
-    section: sectionRef,
-    sticky: stickyRef,
-    video: videoRef,
-    startFrame: startFrameRef,
-    framedDash: framedDashRef,
-    overlay: overlayRef,
-  } = refs;
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    track({
-      event: "cta_primary_click",
-      location: "homepage_hero_form",
-      label: heroCinematic.attachedForm.buttonLabel,
-    });
-    const qs = email ? `?email=${encodeURIComponent(email)}` : "";
-    router.push(`/demo${qs}`);
-  }
-
+export function HomepageHero() {
   return (
     <section
-      ref={sectionRef}
+      data-hero-section
       data-slot="homepage-hero"
       className="relative bg-[var(--background)]"
     >
       <div
-        ref={stickyRef}
+        data-hero-sticky
         className="relative h-screen w-full overflow-hidden bg-[var(--background)]"
       >
         {/* Layer 1: start-frame PNG. LCP target; wrapped so we can fade
             the cliffside out as the dashboard finale takes over. */}
-        <div ref={startFrameRef} className="absolute inset-0">
+        <div data-hero-start-frame className="absolute inset-0">
           <Image
             src={heroCinematic.media.startFrame}
             alt=""
@@ -104,31 +67,30 @@ export function HomepageHero({ refs, isMobile }: HomepageHeroProps) {
           />
         </div>
 
-        {/* Layer 2: video — scrubbed by scroll progress. <source> children mapped
-            from the multi-resolution ladder (HERO-01). Browser walks them
-            top-down; within each codec, narrowest-viewport `media` query first.
-            GSAP scrub binding below is unchanged: video.duration and
-            video.currentTime work identically with mapped sources. */}
-        {!isMobile && (
-          <video
-            ref={videoRef}
-            muted
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-            style={{ opacity: 0 }}
-            className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
-          >
-            {heroCinematic.media.video.map((source) => (
-              <source
-                key={source.src}
-                src={source.src}
-                type={source.type}
-                media={source.media}
-              />
-            ))}
-          </video>
-        )}
+        {/* Layer 2: video — scrubbed by scroll progress on desktop. <source>
+            children mapped from the multi-resolution ladder (HERO-01). Browser
+            walks them top-down; every media query is bounded to
+            (min-width: 768px) so phones match zero sources and download
+            nothing (D-04), which is why the element can safely stay in the
+            server markup. `max-md:hidden` keeps it out of the mobile paint. */}
+        <video
+          data-hero-video
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+          style={{ opacity: 0 }}
+          className="absolute inset-0 h-full w-full object-cover max-md:hidden motion-reduce:hidden"
+        >
+          {heroCinematic.media.video.map((source) => (
+            <source
+              key={source.src}
+              src={source.src}
+              type={source.type}
+              media={source.media}
+            />
+          ))}
+        </video>
 
         {/* Single soft vignette — handles nav and disclaimer legibility
             without banding the middle of the image. */}
@@ -143,30 +105,29 @@ export function HomepageHero({ refs, isMobile }: HomepageHeroProps) {
             framed dashboard picks up at the same screen position. This is the
             approved DebtNext "Executive Portfolio Overview" export; it ships
             its own dark product chrome, so it renders WITHOUT the FramedDashboard
-            bezel (the bezel is for the DOM Console mockups only). */}
-        {!isMobile && (
-          <div
-            ref={framedDashRef}
-            data-hero-framed-dashboard
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 opacity-0 md:px-8 lg:px-12"
-          >
-            <div className="w-full max-w-6xl overflow-hidden rounded-[var(--radius-md)] border border-[var(--border)] shadow-[var(--shadow-deep)]">
-              <Image
-                src="/hero/dashboard-finale.png"
-                alt="dPlat executive portfolio overview dashboard showing total inventory, weekly liquidation and payments, SLA compliance, an inventory and payments trend chart, a portfolio mix donut, a vendor performance scorecard, and an SLA exception queue."
-                width={1536}
-                height={1024}
-                sizes="(min-width: 1280px) 1152px, 100vw"
-                className="h-auto w-full"
-              />
-            </div>
+            bezel (the bezel is for the DOM Console mockups only). Desktop-only
+            layer: `max-md:hidden` also keeps the lazy next/image fetch off
+            phones (display:none defers a loading=lazy image). */}
+        <div
+          data-hero-framed-dashboard
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 opacity-0 max-md:hidden md:px-8 lg:px-12"
+        >
+          <div className="w-full max-w-6xl overflow-hidden rounded-[var(--radius-md)] border border-[var(--border)] shadow-[var(--shadow-deep)]">
+            <Image
+              src="/hero/dashboard-finale.png"
+              alt="dPlat executive portfolio overview dashboard showing total inventory, weekly liquidation and payments, SLA compliance, an inventory and payments trend chart, a portfolio mix donut, a vendor performance scorecard, and an SLA exception queue."
+              width={1536}
+              height={1024}
+              sizes="(min-width: 1280px) 1152px, 100vw"
+              className="h-auto w-full"
+            />
           </div>
-        )}
+        </div>
 
         {/* Overlay — headline, subhead, form, disclaimer. */}
         <div
-          ref={overlayRef}
+          data-hero-overlay
           className="absolute inset-0 flex flex-col items-center justify-center px-4 md:px-6 lg:px-8"
         >
           <CursorGlow />
@@ -188,7 +149,8 @@ export function HomepageHero({ refs, isMobile }: HomepageHeroProps) {
             </p>
 
             <form
-              onSubmit={handleSubmit}
+              action="/demo"
+              method="get"
               className="mt-8 flex w-full max-w-md items-stretch md:mt-10"
             >
               <label htmlFor="hero-email" className="sr-only">
@@ -196,16 +158,18 @@ export function HomepageHero({ refs, isMobile }: HomepageHeroProps) {
               </label>
               <input
                 id="hero-email"
+                name="email"
                 type="email"
                 inputMode="email"
                 autoComplete="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 placeholder={heroCinematic.attachedForm.placeholder}
                 className="h-[46px] min-w-0 flex-1 rounded-l-[var(--radius-md)] border border-white/40 bg-black/40 px-5 text-body-strong text-white placeholder:text-white/70 backdrop-blur-xl focus:border-[var(--primary)] focus:outline-none focus:ring-3 focus:ring-[var(--focus)]/35"
               />
               <button
                 type="submit"
+                data-track-event="cta_primary_click"
+                data-track-location="homepage_hero_form"
+                data-track-label={heroCinematic.attachedForm.buttonLabel}
                 className="inline-flex h-[46px] items-center justify-center rounded-r-[var(--radius-md)] bg-[var(--primary)] px-5 text-body-strong font-[420] text-white transition-colors hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]"
               >
                 {heroCinematic.attachedForm.buttonLabel}

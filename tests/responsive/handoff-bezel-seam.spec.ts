@@ -35,7 +35,8 @@ test.describe("Handoff bezel seam", () => {
 
     // Scroll into the pinned handoff range so the handoff frame is laid out at
     // the viewport center.
-    const section = page.locator("[data-handoff-section]");
+    // Value-scoped since the hero RSC split (the static tree shares the attr).
+    const section = page.locator('[data-handoff-section="cinematic"]');
     const sectionTop = await section.evaluate(
       (el) => el.getBoundingClientRect().top + window.scrollY,
     );

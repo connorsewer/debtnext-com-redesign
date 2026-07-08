@@ -99,8 +99,11 @@ src/
 │   │   ├── MobileNav.tsx       Radix Dialog drawer, uses <Wordmark/>
 │   │   └── Wordmark.tsx        DebtNext in General Sans SemiBold + .dn-node indigo dot
 │   ├── sections/
-│   │   ├── HomepageHero.tsx    GSAP pin:true cinematic, crossfades into Platform at p=0.95→1.0
-│   │   ├── HomepageHandoffSection.tsx   "THE PLATFORM" — 400vh sticky-pinned, scroll-driven tabs
+│   │   ├── HomepageHeroHandoff.tsx      server composition: HeroCinematicMount + the two hero sections
+│   │   ├── HomepageHero.tsx    Server Component; data-hero-* markers; GSAP pin cinematic crossfades into Platform at p=0.95→1.0
+│   │   ├── HomepageHandoffSection.tsx   Server Component; "THE PLATFORM" — cinematic (332vh sticky-pinned tabs) + static fail-open trees, CSS-gated
+│   │   ├── HeroCinematicMount.tsx       the hero pair's only eager client leaf: MQ gate, lazy GSAP controller, tab wiring, mockup portal
+│   │   ├── HeroCinematicController.tsx  single GSAP owner (2026-07-02 contract: hero pin → handoff trigger → refresh)
 │   │   ├── PageHero.tsx        non-home routes (centered/split variants)
 │   │   ├── ProseIntro.tsx
 │   │   ├── TrustBand.tsx

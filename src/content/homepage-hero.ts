@@ -123,6 +123,20 @@ export type PlatformTab = {
   body: string;
 };
 
+/**
+ * Per-tab vertical scroll allocation (in viewport heights) for the desktop
+ * handoff pin. Tightened from 0.75 to 0.58 (2026-07-02) so 4 tabs step through
+ * in ~2.3vh of pinned scroll instead of 3vh — the band no longer feels slack
+ * while the active tab still settles for long enough to read.
+ *
+ * Lives here (not in HomepageHandoffSection) since the hero RSC split: the
+ * server section, the HeroCinematicMount client leaf, and the GSAP controller
+ * wiring all read it, and this content module is the one tiny dependency they
+ * already share. The section's `h-[332vh]` class hardcodes
+ * VH_PER_TAB * 4 tabs + 1 = 3.32 — keep them in sync.
+ */
+export const VH_PER_TAB = 0.58;
+
 export const heroHandoff = {
   eyebrow: "The platform",
   heading: "Everything you do for recovery. One platform.",
