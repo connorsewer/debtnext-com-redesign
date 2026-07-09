@@ -156,10 +156,11 @@ scripts/
 
 public/
 ├── hero/
-│   ├── homepage-hero-720p.mp4          ladder tier (Phase 5.1, gates ≥1440px viewports)
-│   ├── homepage-hero-540p.mp4          ladder tier (Phase 5.1, gates 1024-1439px viewports)
-│   ├── homepage-hero-360p.mp4          ladder tier (Phase 5.1, gates 768-1023px viewports)
-│   └── homepage-hero-start.avif        112 KB AVIF poster (Phase 5.2, drives <Image> + <video poster>)
+│   ├── homepage-hero-720p.mp4          ladder tier (Phase 5.1, gates ≥1440px motion-safe viewports)
+│   ├── homepage-hero-540p.mp4          ladder tier (Phase 5.1, gates 1024-1439px motion-safe viewports)
+│   ├── homepage-hero-360p.mp4          ladder tier (Phase 5.1, gates 768-1023px motion-safe viewports)
+│   ├── homepage-hero-start.avif        112 KB AVIF poster (Phase 5.2, drives the hero <Image>; the <video> has no poster attr)
+│   └── dashboard-finale.png            hero finale screenshot (2026-07-02 swap; lazy next/image, desktop motion-safe only)
 └── product/
     └── dashboard-dark.png              1536×1024 standalone dashboard
 ```
