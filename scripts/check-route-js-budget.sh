@@ -29,10 +29,11 @@ RSC_MANIFEST=".next/server/app/page_client-reference-manifest.js"
 # Shared App Router runtime chunks (framework + turbopack runtime).
 BUILD_MANIFEST=".next/build-manifest.json"
 
-# Pinned ceiling. Measured `/` First-Load-JS on the first green CI build was
-# 786,643 bytes; pinned to that + ~10% headroom (865,308) to absorb routine
-# chunk drift and cross-platform build variance without false failures.
-ROUTE_JS_BUDGET_BYTES=865308
+# Pinned ceiling. Measured `/` First-Load-JS after the hero RSC split
+# (PR #47/#48) was 767,563 bytes; pinned to that + ~10% headroom (844,320)
+# to absorb routine chunk drift and cross-platform build variance without
+# false failures.
+ROUTE_JS_BUDGET_BYTES=844320
 
 # Portable byte-size helper: macOS `stat -f %z`, Linux `stat -c %s`.
 file_size() {
